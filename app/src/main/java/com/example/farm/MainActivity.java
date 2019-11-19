@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
@@ -132,17 +134,17 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    public void getUsers() {
-//        DocumentReference docRef = db.collection("cities").document("SF");
+    public void getUsers() {
+//        DocumentReference docRef = db.collection("users").document("SF");
 //// asynchronously retrieve the document
-//        ApiFuture<DocumentSnapshot> future = docRef.get();
+//       // ApiFuture<DocumentSnapshot> future = docRef.get();
 //// ...
 //// future.get() blocks on response
-//        DocumentSnapshot document = future.get();
+//       // DocumentSnapshot document = future.get();
 //        if (document.exists()) {
 //            System.out.println("Document data: " + document.getData());
 //        } else {
 //            System.out.println("No such document!");
 //        }
-//    }
+    }
 }
