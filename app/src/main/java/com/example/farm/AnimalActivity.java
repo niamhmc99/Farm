@@ -20,6 +20,7 @@ public class AnimalActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
