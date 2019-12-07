@@ -44,15 +44,13 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     private static final String TAG = "AnimalActivity";
 
     private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private String filter = "";
-    //******Adapter adapter;
     //Firebase
     private FirebaseAuth.AuthStateListener mAuthListener;
     FirebaseFirestore db = FirebaseFirestore.getInstance(); //connects to DB
-    //private DocumentReference animal = db.document("Animals");
+
     //want to add animals to db
     private CollectionReference animalRef = db.collection("Animals");
+    //private DocumentReference animal = db.document("Animals");
     private AnimalAdapter adapter;
 
     //widgets
