@@ -15,8 +15,6 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     ImageButton imageButtonAnimals, imageButtonExpenditure, imageButtonVets, imageButtonEmployees;
     FirebaseAuth auth;
     FirebaseUser user;
-    FirebaseFirestore db;
+    //FirebaseFirestore db;
     FirebaseAuth.AuthStateListener mAuthStateListener;
 
 

@@ -34,13 +34,13 @@ public class AddAnimalActivity extends AppCompatActivity implements View.OnClick
     View mParentLayout;
 
     private static final String KEY_TAGNUMBER = "tagNumber";
-    private static final String KEY_ANIMALNAME = "name";
-    private static final String KEY_DOB= "dateOfBirth";
+    private static final String KEY_ANIMALNAME = "animalName";
+    private static final String KEY_DOB= "dob";
     private static final String KEY_SEX= "sex";
     private static final String KEY_DAM = "dam";
     private static final String KEY_SIRE = "sire";
-    private static final String KEY_AiOrStockbull = "AI or Stock bull";
-    private static final String KEY_CALVINGDIf = "calving difficulty";
+    private static final String KEY_AiOrStockbull = "aiORstockbull";
+    private static final String KEY_CALVINGDIf = "calvingDifficulty";
     private static final String KEY_BREED = "breed";
     private static final String KEY_USERID = "user_id";
 

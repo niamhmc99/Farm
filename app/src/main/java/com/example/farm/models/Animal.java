@@ -17,8 +17,20 @@ public class Animal {
     private String sire;
     private String user_id; //admin_id left out of () atm
 
-    public Animal(){
+    public Animal(){ //empty constructor
 
+    }
+
+    public Animal(String tagNumber, String animalName, String dob, String sex, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire) {
+        this.tagNumber = tagNumber;
+        this.animalName = animalName;
+        this.dob = dob;
+        this.sex = sex;
+        this.breed = breed;
+        this.dam = dam;
+        this.calvingDifficulty = calvingDifficulty;
+        this.aiORstockbull = aiORstockbull;
+        this.sire = sire;
     }
 
     public Animal(String tagNumber, String animalName, String dob, String sex, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire, String user_id) {
