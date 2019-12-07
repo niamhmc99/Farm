@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/menuLogout"
+        android:title="@string/logout"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menuHome"
+        android:title="@string/home"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menuAnimals"
+        android:title="@string/viewAnimals"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+</menu>

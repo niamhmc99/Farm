@@ -4,9 +4,13 @@ package com.example.farm;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,35 +20,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.farm.javaClasses.Adapter;
 import com.example.farm.javaClasses.AnimalAdapter;
 import com.example.farm.models.Animal;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class AnimalActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "AnimalActivity";
-
+    Animal animal;
+    Context mContext;
     private RecyclerView recyclerView;
-    //Firebase
     private FirebaseAuth.AuthStateListener mAuthListener;
     FirebaseFirestore db = FirebaseFirestore.getInstance(); //connects to DB
 
@@ -56,6 +51,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     //widgets
     private FloatingActionButton mFabAdd;
 
+
     //vars
     View mParentLayout;
 
@@ -63,15 +59,12 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal);
-        Intent intent = getIntent();
 
         mFabAdd = findViewById(R.id.fab);
         mParentLayout = findViewById(android.R.id.content);
         setupFirebaseAuth();
         mFabAdd.setOnClickListener(this);
 
-        //populate recyclerview
-       // populaterecyclerView(filter);
         setUpRecyclerView();
     }
 
@@ -92,9 +85,55 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         //Add the divider line
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
 
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                adapter.deleteItem(viewHolder.getAdapterPosition());
+            }
+        }).attachToRecyclerView(recyclerView);
 
+        adapter.setOnItemClickListener(new AnimalAdapter.OnItemClickListener() {
+            @Override //Calling interface from adapter
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                final Animal animal = documentSnapshot.toObject(Animal.class);
+                String id = documentSnapshot.getId();
+                Toast.makeText(AnimalActivity.this, "Position " + position + " ID " +  id, Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(AnimalActivity.this);
+
+                builder.setTitle("Choose option");
+                builder.setMessage("Update Animals' Information?");
+                builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        //go to update activity
+                        //goToViewAnimalDetails();
+                        startActivity(new Intent(AnimalActivity.this, UpdateAnimalActivity.class));
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
+            }
+        });
     }
+
+//    private void goToViewAnimalDetails(){
+//        Intent intent = new Intent(mContext, ViewAnimalDetailsActivity.class);
+//        //intent.putExtra("TagNumber", tagNumber);
+//        mContext.startActivity(intent);
+//    }
 
 //    public void listAnimals(String filter) {
 //        ListAnimalsPage page = FirebaseAuth.getInstance().listAnimals(null);
@@ -156,11 +195,6 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
 //    }
 
 
-    private void populaterecyclerView(String filter){
-        //adapter = new Adapter(listOfAnimals(), this, recyclerView);
-        recyclerView.setAdapter(adapter);
-    }
-
     //method to create snack bar message
     private void makeSnackBarMessage(String message){
         Snackbar.make(mParentLayout, message, Snackbar.LENGTH_SHORT).show();
@@ -198,7 +232,6 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         }
 
     }
-
 
     //Fire base Setup
     private void setupFirebaseAuth(){

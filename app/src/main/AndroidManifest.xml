@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UpdateAnimalActivity"></activity>
+        <activity android:name=".ViewAnimalDetailsActivity"></activity>
+        <activity android:name=".UpdateAnimalActivity" />
         <activity android:name=".AddAnimalActivity" />
         <activity android:name=".EmployeeActivity" />
         <activity android:name=".ExpenditureActivity" />
