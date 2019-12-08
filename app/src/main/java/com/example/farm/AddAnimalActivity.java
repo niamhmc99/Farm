@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.farm.javaClasses.AnimalAdapter;
 import com.example.farm.models.Animal;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,18 +26,23 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AddAnimalActivity extends AppCompatActivity {
     private final String  TAG= "AddAnimalActivity";
-    private EditText tagNumber, animalName, dob, sex, dam, calvingDifficulty, sire, aiORstockbull, breed;
+    private EditText editTextTagNumber, editTextAnimalName, editTextDob, editTextSex, editTextDam, editTextCalvingDifficulty, editTextsire, editTextAiORstockbull, editTextBreed;
     private Button buttonSaveDetails;
     View mParentLayout;
-
+private List<Animal>animalList;
+private AnimalAdapter adapter;
 
     private static final String KEY_TAGNUMBER = "tagNumber";
     private static final String KEY_ANIMALNAME = "animalName";
@@ -56,18 +62,47 @@ public class AddAnimalActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_animal);
-        tagNumber = findViewById(R.id.editTextTagNumber);
-        animalName = findViewById(R.id.editTextName);
-        dam = findViewById(R.id.editTextDAM);
-        dob = findViewById(R.id.editTextDob);
-        sex = findViewById(R.id.editTextSex);
-        calvingDifficulty = findViewById(R.id.editTextCalvingDifficulty);
-        sire =findViewById(R.id.ediTextSire);
-        breed =findViewById(R.id.editTextBreed);
-        aiORstockbull =findViewById(R.id.editTextAIBull);
+        editTextTagNumber = findViewById(R.id.editTextTagNumber);
+        editTextAnimalName = findViewById(R.id.editTextName);
+        editTextDam = findViewById(R.id.editTextDAM);
+        editTextDob = findViewById(R.id.editTextDob);
+        editTextSex = findViewById(R.id.editTextSex);
+        editTextCalvingDifficulty = findViewById(R.id.editTextCalvingDifficulty);
+        editTextsire =findViewById(R.id.ediTextSire);
+        editTextBreed =findViewById(R.id.editTextBreed);
+        editTextAiORstockbull =findViewById(R.id.editTextAIBull);
 
+animalList = new ArrayList<>();
 
         mParentLayout = findViewById(android.R.id.content);
+
+        db.collection("animals").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                        //progressBar.setVisibility(View.GONE);
+
+                        if (!queryDocumentSnapshots.isEmpty()) {
+
+                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+
+                            for (DocumentSnapshot d : list) {
+
+                                Animal a = d.toObject(Animal.class);
+                                //p.setId(d.getId());
+                                animalList.add(a);
+
+                            }
+
+                            //adapter.notifyDataSetChanged();
+
+                        }
+
+
+                    }
+                });
+
     }
 
 //    @Override
@@ -97,19 +132,19 @@ public class AddAnimalActivity extends AppCompatActivity {
         buttonSaveDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String strTag = tagNumber.getText().toString();
-                String strName = animalName.getText().toString();
-                String strDob = dob.getText().toString();
-                String strSex = sex.getText().toString();
-                String strDam = dam.getText().toString();
-                String strCalvingDif = calvingDifficulty.getText().toString();
-                String strSire = sire.getText().toString();
-                String strBreed = breed.getText().toString();
-                String strAiOrStockbull = aiORstockbull.getText().toString();
-                String strUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                String strTag = editTextTagNumber.getText().toString().trim();
+                String strName = editTextAnimalName.getText().toString().trim();
+                String strDob = editTextDob.getText().toString().trim();
+                String strSex = editTextSex.getText().toString().trim();
+                String strDam = editTextDam.getText().toString().trim();
+                String strCalvingDif = editTextCalvingDifficulty.getText().toString().trim();
+                String strSire = editTextsire.getText().toString().trim();
+                String strBreed = editTextBreed.getText().toString().trim();
+                String strAiOrStockbull = editTextAiORstockbull.getText().toString().trim();
+                String strUserID = FirebaseAuth.getInstance().getCurrentUser().getUid().trim();
 
 
-                Map<String, Object> animal = new HashMap<>();
+                final Map<String, Object> animal = new HashMap<>();
                 animal.put(KEY_TAGNUMBER, strTag);
                 animal.put(KEY_ANIMALNAME, strName);
                 animal.put(KEY_DOB, strDob);
@@ -121,7 +156,7 @@ public class AddAnimalActivity extends AppCompatActivity {
                 animal.put(KEY_AiOrStockbull, strAiOrStockbull);
                 animal.put(KEY_USERID, strUserID);
 
-                if(validations() == true) {
+                if(!hasValidationErrors(strTag, strName, strDob, strSex, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire) == true) {
                     db.collection("Animals")
                             .add(animal)
                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -147,45 +182,45 @@ public class AddAnimalActivity extends AppCompatActivity {
         });
     }
 
-    private boolean validations(){
-        String strTag = tagNumber.getText().toString();
-        String strName = animalName.getText().toString();
-        String strDob = dob.getText().toString();
-        String strSex = sex.getText().toString();
-        String strDam = dam.getText().toString();
-        String strCalvingDif = calvingDifficulty.getText().toString();
-        String strSire = sire.getText().toString();
-        String strBreed = breed.getText().toString();
-        String strAiOrStockbull = aiORstockbull.getText().toString();
-        if (strTag.trim().isEmpty()) {
+    private boolean hasValidationErrors(String tagNumber, String animalName, String dob, String sex, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire){
+        if (tagNumber.trim().isEmpty()) {
+            editTextTagNumber.setError("TagNumber is required");
             makeSnackBarMessage("Please insert Tag Number.");
-            return false;
-        } else if (strName.isEmpty()) {
-            makeSnackBarMessage("Please insert Animal Name.");
-            return false;
-        }else if(strDob.isEmpty()){
-            makeSnackBarMessage("Please insert Date of Birth.");
-            return false;
-        }else if(strSex.isEmpty()){
-            makeSnackBarMessage("Please insert the Animals Sex.");
-            return false;
-        }else if(strDam.isEmpty()){
-            makeSnackBarMessage("Please insert the Animals Dam.");
-            return false;
-        }else if(strCalvingDif.isEmpty()){
-            makeSnackBarMessage("Please insert the Calving Difficulty.");
-            return false;
-        }else if(strSire.isEmpty()){
-            makeSnackBarMessage("Please insert the Animals Sire.");
-            return false;
-        }else if(strAiOrStockbull.isEmpty()){
-            makeSnackBarMessage("Please insert if insemination was by AI or Stock bull.");
-            return false;
-        }else if(strBreed.isEmpty()){
-            makeSnackBarMessage("Please insert Animal Breed.");
-            return false;
-        }else{
             return true;
+        } else if (animalName.isEmpty()) {
+            editTextAnimalName.setError("Animal Name Required");
+            makeSnackBarMessage("Please insert Animal Name.");
+            return true;
+        }else if(dob.isEmpty()){
+            editTextDob.setError("Date of Birth is required.");
+            makeSnackBarMessage("Please insert Date of Birth.");
+            return true;
+        }else if(sex.isEmpty()){
+            editTextSex.setError("The sex of the Animal is required");
+            makeSnackBarMessage("Please insert the Animals Sex.");
+            return true;
+        }else if(dam.isEmpty()){
+            editTextDam.setError("The Dam of the Animal is required");
+            makeSnackBarMessage("Please insert the Animals Dam.");
+            return true;
+        }else if(calvingDifficulty.isEmpty()){
+            editTextCalvingDifficulty.setError("Calving Difficulty is required");
+            makeSnackBarMessage("Please insert the Calving Difficulty.");
+            return true;
+        }else if(sire.isEmpty()){
+            editTextsire.setError("The Sire of the Animal is required");
+            makeSnackBarMessage("Please insert the Animals Sire.");
+            return true;
+        }else if(aiORstockbull.isEmpty()){
+            editTextAiORstockbull.setError("AI / Stock Bull?");
+            makeSnackBarMessage("Please insert if insemination was by AI or Stock bull.");
+            return true;
+        }else if(breed.isEmpty()){
+            editTextBreed.setError("Breed of Animal is Required.s");
+            makeSnackBarMessage("Please insert Animal Breed.");
+            return true;
+        }else{
+            return false;
         }
 
     }

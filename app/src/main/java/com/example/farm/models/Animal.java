@@ -2,9 +2,10 @@ package com.example.farm.models;
 
 import com.google.firebase.firestore.IgnoreExtraProperties;
 
+import java.io.Serializable;
 import java.util.Date;
 @IgnoreExtraProperties
-public class Animal {
+public class Animal implements Serializable {
 
     private String tagNumber;
     private String animalName;

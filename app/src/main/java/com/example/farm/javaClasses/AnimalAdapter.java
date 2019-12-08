@@ -20,14 +20,18 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.util.List;
+
 public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapter.AnimalHolder> {
     private Context mContext;
+    private List<Animal> animalList;
     private OnItemClickListener listener;
 
 
     public AnimalAdapter(@NonNull FirestoreRecyclerOptions<Animal> options) {
         super(options);
     }
+
 
     class AnimalHolder extends RecyclerView.ViewHolder{
         TextView textViewTagNumber, textViewAnimalName, textViewDob, textViewBreed;
@@ -40,6 +44,7 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
             textViewAnimalName = itemView.findViewById(R.id.textViewAnimalName);
             textViewDob = itemView.findViewById(R.id.textViewDob);
             textViewBreed = itemView.findViewById(R.id.textViewBreed);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

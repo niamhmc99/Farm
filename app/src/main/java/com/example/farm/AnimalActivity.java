@@ -32,12 +32,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.util.List;
 
 
 public class AnimalActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "AnimalActivity";
     Animal animal;
+    private List<Animal> animalList;
     Context mContext;
     private RecyclerView recyclerView;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -85,6 +87,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         //Add the divider line
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
+        //delete animal
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -98,6 +101,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
             }
         }).attachToRecyclerView(recyclerView);
 
+        //update animal
         adapter.setOnItemClickListener(new AnimalAdapter.OnItemClickListener() {
             @Override //Calling interface from adapter
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
@@ -113,7 +117,6 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                     public void onClick(DialogInterface dialog, int which) {
 
                         //go to update activity
-                        //goToViewAnimalDetails();
                         startActivity(new Intent(AnimalActivity.this, UpdateAnimalActivity.class));
 
                     }
@@ -130,24 +133,11 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 //    private void goToViewAnimalDetails(){
-//        Intent intent = new Intent(mContext, ViewAnimalDetailsActivity.class);
+//        Intent intent = new Intent(mContext, UpdateAnimalActivity.class);
 //        //intent.putExtra("TagNumber", tagNumber);
 //        mContext.startActivity(intent);
 //    }
 
-//    public void listAnimals(String filter) {
-//        ListAnimalsPage page = FirebaseAuth.getInstance().listAnimals(null);
-//        while (page != null) {
-//            for (ExportedAnimalRecord animal : page.getValues()) {
-//                System.out.println("User: " + animal.getTagNum());
-//            }
-//            page = page.getNextPage();
-//        }
-//        page = FirebaseAuth.getInstance().listAnimals(null);
-//        for (ExportedAnimalRecord animal : page.iteratAll()) {
-//            System.out.println("User: " + animal.getTagNum());
-//        }
-//    }
 
 //    public void listOfAnimals(){
 //        db.collection("Animals").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
