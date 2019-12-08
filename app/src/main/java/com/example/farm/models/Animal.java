@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 @IgnoreExtraProperties
 public class Animal implements Serializable {
-
+private String id;
     private String tagNumber;
     private String animalName;
     private String dob;
@@ -34,7 +34,8 @@ public class Animal implements Serializable {
         this.sire = sire;
     }
 
-    public Animal(String tagNumber, String animalName, String dob, String sex, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire, String user_id) {
+    public Animal(String id, String tagNumber, String animalName, String dob, String sex, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire, String user_id) {
+        this.id = id;
         this.tagNumber = tagNumber;
         this.animalName = animalName;
         this.dob = dob;
@@ -45,6 +46,14 @@ public class Animal implements Serializable {
         this.aiORstockbull = aiORstockbull;
         this.sire = sire;
         this.user_id = user_id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTagNumber() {

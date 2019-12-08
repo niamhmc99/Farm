@@ -12,18 +12,28 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.farm.models.Animal;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UpdateAnimalActivity extends AppCompatActivity {
     private final String  TAG= "UpdateAnimalActivity";
     private EditText editTextTagNumberUpdate, editTextAnimalNameUpdate, editTextDobUpdate, editTextSexUpdate, editTextDamUpdate, editTextCalvingDifficultyUpdate, editTextSireUpdate, editTextAiORstockbullUpdate, editTextBreedUpdate;
     private Button buttonUpdate;
-
+private String docId;
     private Animal animal;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private View mParentLayout;
+    private String recievedTagNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +51,15 @@ public class UpdateAnimalActivity extends AppCompatActivity {
 
         buttonUpdate=findViewById(R.id.buttonUpdateAnimal);
 
+        try {
+            //get intent to get person id
+            recievedTagNumber = String.valueOf(getIntent().getIntExtra("TagNumber", 1));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 //populate animal data before update
-        Animal animal = new Animal();
+        Animal queriedAnimal = new Animal();
         editTextTagNumberUpdate.setText(animal.getTagNumber());
         editTextAnimalNameUpdate.setText(animal.getAnimalName());
         editTextDobUpdate.setText(animal.getDob());
@@ -108,6 +125,26 @@ public class UpdateAnimalActivity extends AppCompatActivity {
         final Animal animal = new Animal();
         return animal;
     }
+//
+//    private void animalIdToRefDocId(String tagNumber){
+//           db.collection("Animals").whereEqualTo("tagNumber", tagNumber).get()
+//           .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                @Override
+//                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                    if(task.isSuccessful()){
+//                        List<Animal> animalList = new ArrayList<>();
+//
+//                        for(DocumentSnapshot doc: task.getResult()){
+//                         Animal a = doc.toObject(Animal.class);
+//                         a.setId(doc.getId());
+//                         animalList.add(a);
+//                        }
+//                     }
+//                }
+//            });
+//
+//    }
+
     public void updateAnimalToCollection(Animal animal) {
 
         String strTag = editTextTagNumberUpdate.getText().toString().trim();
@@ -123,18 +160,27 @@ public class UpdateAnimalActivity extends AppCompatActivity {
         if(!hasValidationErrors(strTag, strName, strDob, strSex, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire)){
             Animal a = new Animal(strTag, strName, strDob, strSex, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire);
 
-            db.collection("animals").document(animal.getTagNumber())
-                    .update(
-                            "tagNumber", a.getTagNumber(),
-                            "animalName", a.getAnimalName(),
-                            "dob", a.getDob(),
-                            "sex", a.getSex(),
-                            "dam", a.getDam(),
-                            "sire", a.getSire(),
-                            "aiOrStockbull", a.getAiORstockbull(),
-                            "calvingDiff", a.getCalvingDifficulty(),
-                            "breed", a.getBreed()
-                    )
+                db.collection("Animals").whereEqualTo("tagNumber", strTag).get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()){
+                                List<Animal> animalList = new ArrayList<>();
+
+                                for(DocumentSnapshot doc: task.getResult()){
+                                    Animal a = doc.toObject(Animal.class);
+                                    a.setId(doc.getId());
+                                    animalList.add(a);
+                                    docId = a.getId();
+                                }
+                            }
+                        }
+                    });
+
+                db.collection("Animals")
+                      .document()
+                      .set(animal, SetOptions.merge())
+
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -150,4 +196,34 @@ public class UpdateAnimalActivity extends AppCompatActivity {
         }
     }
 
+
+
+//this gets the whole collection
+   public void geAlltAnimals(){
+       db.collection("Animals")
+               .get()
+               .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                   @Override
+                   public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                       if (task.isSuccessful()) {
+                           for (QueryDocumentSnapshot document : task.getResult()) {
+                               Log.d(TAG, document.getId() + " => " + document.getData());
+                           }
+                       } else {
+                           Log.w(TAG, "Error getting documents.", task.getException());
+                       }
+                   }
+               });
    }
+}
+//   .update(
+//           "tagNumber", a.getTagNumber(),
+//           "animalName", a.getAnimalName(),
+//           "dob", a.getDob(),
+//           "sex", a.getSex(),
+//           "dam", a.getDam(),
+//           "sire", a.getSire(),
+//           "aiOrStockbull", a.getAiORstockbull(),
+//           "calvingDiff", a.getCalvingDifficulty(),
+//           "breed", a.getBreed()
+//           )

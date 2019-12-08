@@ -117,7 +117,8 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                     public void onClick(DialogInterface dialog, int which) {
 
                         //go to update activity
-                        startActivity(new Intent(AnimalActivity.this, UpdateAnimalActivity.class));
+                       // startActivity(new Intent(AnimalActivity.this, UpdateAnimalActivity.class));
+                        goToViewAnimalDetails(animal.getTagNumber());
 
                     }
                 });
@@ -132,11 +133,11 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-//    private void goToViewAnimalDetails(){
-//        Intent intent = new Intent(mContext, UpdateAnimalActivity.class);
-//        //intent.putExtra("TagNumber", tagNumber);
-//        mContext.startActivity(intent);
-//    }
+    private void goToViewAnimalDetails(String tagNumber){
+        Intent intent = new Intent(mContext, UpdateAnimalActivity.class);
+        intent.putExtra("TagNumber", tagNumber);
+        mContext.startActivity(intent);
+    }
 
 
 //    public void listOfAnimals(){

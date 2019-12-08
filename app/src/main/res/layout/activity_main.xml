@@ -83,7 +83,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.672"
-        app:srcCompat="@drawable/vet2" />
+        app:srcCompat="@drawable/vet3" />
 
     <ImageButton
         android:id="@+id/imageButtonEmployees"

@@ -43,6 +43,7 @@ public class AddAnimalActivity extends AppCompatActivity {
     View mParentLayout;
 private List<Animal>animalList;
 private AnimalAdapter adapter;
+private Animal animal;
 
     private static final String KEY_TAGNUMBER = "tagNumber";
     private static final String KEY_ANIMALNAME = "animalName";
@@ -105,26 +106,6 @@ animalList = new ArrayList<>();
 
     }
 
-//    @Override
-//    public void onClick(View v) {
-//        switch (v.getId()) {
-//
-//            case R.id.buttonAddAnimal: {
-//                String strTag = tagNumber.getText().toString();
-//                String strName = animalName.getText().toString();
-//                String strDob = dob.getText().toString();
-//                String strSex = sex.getText().toString();
-//                String strDam = dam.getText().toString();
-//                String strCalvingDif = calvingDifficulty.getText().toString();
-//                String strSire = sire.getText().toString();
-//                String strBreed = breed.getText().toString();
-//                String strAiOrStockbull = aiORstockbull.getText().toString();
-//                addAnimal(strTag, strName, strDob, strSex, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire);
-//                makeSnackBarMessage("Animal Inserted");
-//                //addAnimal(strTag, animalName, dob, sex, breed, dam, calvingDifficulty, aiORstockbull, sire);
-//            }
-//        }
-//    }
 
     public void insertAnimal(View view){
         buttonSaveDetails = findViewById(R.id.buttonAddAnimal);
@@ -158,19 +139,20 @@ animalList = new ArrayList<>();
 
                 if(!hasValidationErrors(strTag, strName, strDob, strSex, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire) == true) {
                     db.collection("Animals")
-                            .add(animal)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Log.d(TAG, "Animal inserted into herd with ID: " + documentReference.getId());
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w(TAG, "Error adding animal into herd", e);
-                                }
-                            });
+                            .document("animalID")
+                            .set(animal);
+//                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                                @Override
+//                                public void onSuccess(DocumentReference documentReference) {
+//                                    Log.d(TAG, "Animal inserted into herd with ID: " + documentReference.getId());
+//                                }
+//                            })
+//                            .addOnFailureListener(new OnFailureListener() {
+//                                @Override
+//                                public void onFailure(@NonNull Exception e) {
+//                                    Log.w(TAG, "Error adding animal into herd", e);
+//                                }
+//                            });
 
                     //addAnimal(strTag, strName, strDob, strSex, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire);
                     Toast.makeText(AddAnimalActivity.this, "Animal inserted into Herd", Toast.LENGTH_SHORT).show();
@@ -181,7 +163,28 @@ animalList = new ArrayList<>();
             }
         });
     }
-
+//if(!hasValidationErrors(strTag, strName, strDob, strSex, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire) == true) {
+//        db.collection("Animals")
+//                .add(animal)
+//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                    @Override
+//                    public void onSuccess(DocumentReference documentReference) {
+//                        Log.d(TAG, "Animal inserted into herd with ID: " + documentReference.getId());
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w(TAG, "Error adding animal into herd", e);
+//                    }
+//                });
+//
+//        //addAnimal(strTag, strName, strDob, strSex, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire);
+//        Toast.makeText(AddAnimalActivity.this, "Animal inserted into Herd", Toast.LENGTH_SHORT).show();
+//        // startActivity(new Intent(MainActivity.this, AnimalActivity.class));
+//
+//
+//    }
     private boolean hasValidationErrors(String tagNumber, String animalName, String dob, String sex, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire){
         if (tagNumber.trim().isEmpty()) {
             editTextTagNumber.setError("TagNumber is required");
@@ -282,5 +285,12 @@ animalList = new ArrayList<>();
         }
         return super.onOptionsItemSelected(item);
     }
+    public void getAnimal(){
+        String id = db.collection("Animals").document().getId();
+        db.collection("Animals").document(id).set(animal);
 
+        Animal recievedAnimal = new Animal();
+
+        recievedAnimal.setTagNumber(KEY_TAGNUMBER);
+    }
 }
