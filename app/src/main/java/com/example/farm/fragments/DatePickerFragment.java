@@ -1,4 +1,4 @@
-package com.example.farm.javaClasses;
+package com.example.farm.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
