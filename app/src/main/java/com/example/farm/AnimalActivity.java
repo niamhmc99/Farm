@@ -1,6 +1,5 @@
 package com.example.farm;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -23,6 +22,7 @@ import android.widget.Toast;
 import com.example.farm.javaClasses.AnimalAdapter;
 import com.example.farm.models.Animal;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,7 +31,9 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -66,6 +68,24 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         mParentLayout = findViewById(android.R.id.content);
         setupFirebaseAuth();
         mFabAdd.setOnClickListener(this);
+
+        animalList = new ArrayList<>();
+        //getting list of animals
+        db.collection("animals").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                            for (DocumentSnapshot d : list) {
+                                //convert d to our animal object
+                                Animal a = d.toObject(Animal.class);
+                                animalList.add(a); //add all animals to list of animals
+                            }
+                            //adapter.notifyDataSetChanged();
+                        }
+                    }
+                });
 
         setUpRecyclerView();
     }
@@ -104,8 +124,23 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         //update animal
         adapter.setOnItemClickListener(new AnimalAdapter.OnItemClickListener() {
             @Override //Calling interface from adapter
-            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-                final Animal animal = documentSnapshot.toObject(Animal.class);
+            public void onItemClick(DocumentSnapshot documentSnapshot, final int position) {
+                // final Animal animal = documentSnapshot.toObject(Animal.class);
+                // animalList.add(animal);
+                db.collection("animals").get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                if (!queryDocumentSnapshots.isEmpty()) {
+                                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                                    for (DocumentSnapshot d : list) {
+                                        //convert d to our animal object
+                                        Animal a = d.toObject(Animal.class);
+                                        animalList.add(a); //add all animals to list of animals
+                                    }
+                                }
+                            }
+                        });
                 String id = documentSnapshot.getId();
                 Toast.makeText(AnimalActivity.this, "Position " + position + " ID " +  id, Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(AnimalActivity.this);
@@ -115,11 +150,10 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                 builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                        //go to update activity
-                       // startActivity(new Intent(AnimalActivity.this, UpdateAnimalActivity.class));
-                        goToViewAnimalDetails(animal);
-
+                        Animal animalPosition = animalList.get(position);
+                        Intent intent = new Intent(mContext, UpdateAnimalActivity.class);
+                        intent.putExtra("Animal", animalPosition); //get position of the animal in list
+                         startActivity(intent);
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -133,12 +167,12 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-    private void goToViewAnimalDetails(Animal animal){
-        Intent intent = new Intent(mContext, UpdateAnimalActivity.class);
-        // pass all the data from animal to  Update Activity.class all in one?
-        intent.putExtra("Animal", animal);
-        mContext.startActivity(intent);
-    }
+//    private void goToViewAnimalDetails(){
+//        Intent intent = new Intent(mContext, UpdateAnimalActivity.class);
+//        // pass all the data from animal to  Update Activity.class all in one?
+//        intent.putExtra("Animal", animal);
+//        mContext.startActivity(intent);
+//    }
 
 
 //    public void listOfAnimals(){
@@ -186,11 +220,11 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
 //        });
 //    }
 
-
-    //method to create snack bar message
-    private void makeSnackBarMessage(String message){
-        Snackbar.make(mParentLayout, message, Snackbar.LENGTH_SHORT).show();
-    }
+//
+//    //method to create snack bar message
+//    private void makeSnackBarMessage(String message){
+//        Snackbar.make(mParentLayout, message, Snackbar.LENGTH_SHORT).show();
+//    }
 
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();

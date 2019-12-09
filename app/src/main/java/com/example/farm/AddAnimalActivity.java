@@ -77,34 +77,23 @@ animalList = new ArrayList<>();
 
         mParentLayout = findViewById(android.R.id.content);
 
+        //getting list of animals
         db.collection("animals").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-
-                        //progressBar.setVisibility(View.GONE);
-
                         if (!queryDocumentSnapshots.isEmpty()) {
-
                             List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-
                             for (DocumentSnapshot d : list) {
-
+                                //convert d to our animal object
                                 Animal a = d.toObject(Animal.class);
-                                //p.setId(d.getId());
-                                animalList.add(a);
-
+                                animalList.add(a); //add all animals to list of animals
                             }
-
                             //adapter.notifyDataSetChanged();
-
                         }
-
-
                     }
                 });
-
-    }
+        }
 
 
     public void insertAnimal(View view){
@@ -125,21 +114,21 @@ animalList = new ArrayList<>();
                 String strUserID = FirebaseAuth.getInstance().getCurrentUser().getUid().trim();
 
 
-                final Map<String, Object> animal = new HashMap<>();
-                animal.put(KEY_TAGNUMBER, strTag);
-                animal.put(KEY_ANIMALNAME, strName);
-                animal.put(KEY_DOB, strDob);
-                animal.put(KEY_SEX, strSex);
-                animal.put(KEY_DAM, strDam);
-                animal.put(KEY_CALVINGDIf, strCalvingDif);
-                animal.put(KEY_SIRE, strSire);
-                animal.put(KEY_BREED, strBreed);
-                animal.put(KEY_AiOrStockbull, strAiOrStockbull);
-                animal.put(KEY_USERID, strUserID);
+                final Map<String, Object> animalMap = new HashMap<>();
+                animalMap.put(KEY_TAGNUMBER, strTag);
+                animalMap.put(KEY_ANIMALNAME, strName);
+                animalMap.put(KEY_DOB, strDob);
+                animalMap.put(KEY_SEX, strSex);
+                animalMap.put(KEY_DAM, strDam);
+                animalMap.put(KEY_CALVINGDIf, strCalvingDif);
+                animalMap.put(KEY_SIRE, strSire);
+                animalMap.put(KEY_BREED, strBreed);
+                animalMap.put(KEY_AiOrStockbull, strAiOrStockbull);
+                animalMap.put(KEY_USERID, strUserID);
 
                 if(!hasValidationErrors(strTag, strName, strDob, strSex, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire) == true) {
                     db.collection("Animals")
-                            .add(animal)
+                            .add(animalMap)
                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {

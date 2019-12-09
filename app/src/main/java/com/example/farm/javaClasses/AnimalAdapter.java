@@ -1,20 +1,14 @@
 package com.example.farm.javaClasses;
 
-import android.app.Activity;
-import android.app.AlertDialog;
+
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.farm.R;
-import com.example.farm.ViewAnimalDetailsActivity;
 import com.example.farm.models.Animal;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -52,6 +46,7 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
                     int position = getAdapterPosition();
                     if(position!=RecyclerView.NO_POSITION && listener !=null){
                         listener.onItemClick(getSnapshots().getSnapshot(position), position);
+
                     }
 
                 }
@@ -115,6 +110,7 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
         //gets all documents then gets doc at that postion
         getSnapshots().getSnapshot(position).getReference().delete();
     }
+
 
 
 

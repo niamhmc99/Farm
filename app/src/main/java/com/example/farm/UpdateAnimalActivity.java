@@ -30,16 +30,39 @@ public class UpdateAnimalActivity extends AppCompatActivity {
     private final String  TAG= "UpdateAnimalActivity";
     private EditText editTextTagNumberUpdate, editTextAnimalNameUpdate, editTextDobUpdate, editTextSexUpdate, editTextDamUpdate, editTextCalvingDifficultyUpdate, editTextSireUpdate, editTextAiORstockbullUpdate, editTextBreedUpdate;
     private Button buttonUpdate;
-private String docId;
+    private String docId;
     private Animal animal;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private View mParentLayout;
     private String recievedTagNumber;
+    private List<Animal> animalList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_animal);
+
+        //getting list of animals
+        db.collection("animals").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                            for (DocumentSnapshot d : list) {
+                                //convert d to our animal object
+                                Animal a = d.toObject(Animal.class);
+                                animalList.add(a); //add all animals to list of animals
+                            }
+                            //adapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+
+
+        animal=(Animal) getIntent().getSerializableExtra("animal");
+
+        // initialize
         editTextTagNumberUpdate = findViewById(R.id.editTextTagNumber);
         editTextAnimalNameUpdate= findViewById(R.id.editTextName);
         editTextDamUpdate = findViewById(R.id.editTextDAM);
@@ -53,22 +76,17 @@ private String docId;
         buttonUpdate=findViewById(R.id.buttonUpdateAnimal);
 
 
-            //get intent and get the animal object passed
-            Intent intent = getIntent();
-            Animal queriedAnimal = (Animal) intent.getExtras().getSerializable("Animal");
-
-
-//populate animal data before update
+        //populate animal data before update
         //was just animal before queriedAnimal*************
-        editTextTagNumberUpdate.setText(queriedAnimal.getTagNumber());
-        editTextAnimalNameUpdate.setText(queriedAnimal.getAnimalName());
-        editTextDobUpdate.setText(queriedAnimal.getDob());
-        editTextSexUpdate.setText(queriedAnimal.getSex());
-        editTextDamUpdate.setText(queriedAnimal.getDam());
-        editTextCalvingDifficultyUpdate.setText(queriedAnimal.getCalvingDifficulty());
-        editTextSireUpdate.setText(queriedAnimal.getSire());
-        editTextBreedUpdate.setText(queriedAnimal.getBreed());
-        editTextAiORstockbullUpdate.setText(queriedAnimal.getAiORstockbull());
+        editTextTagNumberUpdate.setText(animal.getTagNumber());
+        editTextAnimalNameUpdate.setText(animal.getAnimalName());
+        editTextDobUpdate.setText(animal.getDob());
+        editTextSexUpdate.setText(animal.getSex());
+        editTextDamUpdate.setText(animal.getDam());
+        editTextCalvingDifficultyUpdate.setText(animal.getCalvingDifficulty());
+        editTextSireUpdate.setText(animal.getSire());
+        editTextBreedUpdate.setText(animal.getBreed());
+        editTextAiORstockbullUpdate.setText(animal.getAiORstockbull());
 
 
     }
@@ -116,15 +134,15 @@ private String docId;
 
     }
 
-    public void updateAnimal(View view)    {
-        Animal animal = createAnimalObject();
-        updateAnimalToCollection(animal);
-    }
-
-    private Animal createAnimalObject(){
-        final Animal animal = new Animal();
-        return animal;
-    }
+//    public void updateAnimal(View view)    {
+//       // Animal animal = createAnimalObject();
+//        updateAnimalToCollection(animal);
+//    }
+//
+//    private Animal createAnimalObject(){
+//        final Animal animal = new Animal();
+//        return animal;
+//    }
 //
 //    private void animalIdToRefDocId(String tagNumber){
 //           db.collection("Animals").whereEqualTo("tagNumber", tagNumber).get()
@@ -145,8 +163,7 @@ private String docId;
 //
 //    }
 
-    public void updateAnimalToCollection(Animal animal) {
-
+    public void updateAnimal(View view) {
         String strTag = editTextTagNumberUpdate.getText().toString().trim();
         String strName = editTextAnimalNameUpdate.getText().toString().trim();
         String strDob = editTextDobUpdate.getText().toString().trim();
@@ -158,41 +175,34 @@ private String docId;
         String strAiOrStockbull = editTextAiORstockbullUpdate.getText().toString().trim();
 
         if(!hasValidationErrors(strTag, strName, strDob, strSex, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire)){
-            Animal a = new Animal(strTag, strName, strDob, strSex, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire);
+            Animal a = new Animal(strTag, strName, strDob,
+                                    strSex, strBreed, strDam,
+                                     strCalvingDif, strAiOrStockbull, strSire);
 
-                db.collection("Animals").whereEqualTo("tagNumber", strTag).get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if(task.isSuccessful()){
-                                List<Animal> animalList = new ArrayList<>();
-
-                                for(DocumentSnapshot doc: task.getResult()){
-                                    Animal a = doc.toObject(Animal.class);
-                                    a.setId(doc.getId());
-                                    animalList.add(a);
-                                    docId = a.getId();
-                                }
+                db.collection("Animals").document(animal.getId())
+                        .update(
+                                "tagNumber", a.getTagNumber(),
+                                "animalName", a.getAnimalName(),
+                                "dob", a.getDob(),
+                                "sex", a.getSex(),
+                                "dam", a.getDam(),
+                                "sire", a.getSire(),
+                                "aiOrStockbull", a.getAiORstockbull(),
+                                "calvingDiff", a.getCalvingDifficulty(),
+                                "breed", a.getBreed()
+                         )
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                             Toast.makeText(UpdateAnimalActivity.this, "Animal Updated", Toast.LENGTH_LONG).show();
+                             startActivity(new Intent(UpdateAnimalActivity.this, AnimalActivity.class));
                             }
-                        }
-                    });
-
-                db.collection("Animals")
-                      .document()
-                      .set(animal, SetOptions.merge())
-
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Toast.makeText(UpdateAnimalActivity.this, "Animal Updated", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(UpdateAnimalActivity.this, AnimalActivity.class));
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.d(TAG, "Failure to update animal due to: " +e.toString());
-                }
-            });
+                        }).addOnFailureListener(new OnFailureListener() {
+                             @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d(TAG, "Failure to update animal due to: " +e.toString());
+                            }
+                        });
         }
     }
 
@@ -227,3 +237,25 @@ private String docId;
 //           "calvingDiff", a.getCalvingDifficulty(),
 //           "breed", a.getBreed()
 //           )
+
+
+//                 .whereEqualTo("tagNumber", strTag).get()
+//                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//@Override
+//public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//        if(task.isSuccessful()){
+//        List<Animal> animalList = new ArrayList<>();
+//
+//        for(DocumentSnapshot doc: task.getResult()){
+//        Animal a = doc.toObject(Animal.class);
+//        a.setId(doc.getId());
+//        animalList.add(a);
+//        docId = a.getId();
+//        }
+//        }
+//        }
+//        });
+//
+//        db.collection("Animals")
+//        .document()
+//        .set(animal, SetOptions.merge())
