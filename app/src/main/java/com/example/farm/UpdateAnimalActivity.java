@@ -22,6 +22,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,24 +52,23 @@ private String docId;
 
         buttonUpdate=findViewById(R.id.buttonUpdateAnimal);
 
-        try {
-            //get intent to get person id
-            recievedTagNumber = String.valueOf(getIntent().getIntExtra("TagNumber", 1));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+            //get intent and get the animal object passed
+            Intent intent = getIntent();
+            Animal queriedAnimal = (Animal) intent.getExtras().getSerializable("Animal");
+
 
 //populate animal data before update
-        Animal queriedAnimal = new Animal();
-        editTextTagNumberUpdate.setText(animal.getTagNumber());
-        editTextAnimalNameUpdate.setText(animal.getAnimalName());
-        editTextDobUpdate.setText(animal.getDob());
-        editTextSexUpdate.setText(animal.getSex());
-        editTextDamUpdate.setText(animal.getDam());
-        editTextCalvingDifficultyUpdate.setText(animal.getCalvingDifficulty());
-        editTextSireUpdate.setText(animal.getSire());
-        editTextBreedUpdate.setText(animal.getBreed());
-        editTextAiORstockbullUpdate.setText(animal.getAiORstockbull());
+        //was just animal before queriedAnimal*************
+        editTextTagNumberUpdate.setText(queriedAnimal.getTagNumber());
+        editTextAnimalNameUpdate.setText(queriedAnimal.getAnimalName());
+        editTextDobUpdate.setText(queriedAnimal.getDob());
+        editTextSexUpdate.setText(queriedAnimal.getSex());
+        editTextDamUpdate.setText(queriedAnimal.getDam());
+        editTextCalvingDifficultyUpdate.setText(queriedAnimal.getCalvingDifficulty());
+        editTextSireUpdate.setText(queriedAnimal.getSire());
+        editTextBreedUpdate.setText(queriedAnimal.getBreed());
+        editTextAiORstockbullUpdate.setText(queriedAnimal.getAiORstockbull());
 
 
     }

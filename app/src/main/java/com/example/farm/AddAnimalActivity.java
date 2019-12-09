@@ -139,20 +139,19 @@ animalList = new ArrayList<>();
 
                 if(!hasValidationErrors(strTag, strName, strDob, strSex, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire) == true) {
                     db.collection("Animals")
-                            .document("animalID")
-                            .set(animal);
-//                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                                @Override
-//                                public void onSuccess(DocumentReference documentReference) {
-//                                    Log.d(TAG, "Animal inserted into herd with ID: " + documentReference.getId());
-//                                }
-//                            })
-//                            .addOnFailureListener(new OnFailureListener() {
-//                                @Override
-//                                public void onFailure(@NonNull Exception e) {
-//                                    Log.w(TAG, "Error adding animal into herd", e);
-//                                }
-//                            });
+                            .add(animal)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Log.d(TAG, "Animal inserted into herd with ID: " + documentReference.getId());
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error adding animal into herd", e);
+                                }
+                            });
 
                     //addAnimal(strTag, strName, strDob, strSex, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire);
                     Toast.makeText(AddAnimalActivity.this, "Animal inserted into Herd", Toast.LENGTH_SHORT).show();
@@ -163,28 +162,7 @@ animalList = new ArrayList<>();
             }
         });
     }
-//if(!hasValidationErrors(strTag, strName, strDob, strSex, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire) == true) {
-//        db.collection("Animals")
-//                .add(animal)
-//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                    @Override
-//                    public void onSuccess(DocumentReference documentReference) {
-//                        Log.d(TAG, "Animal inserted into herd with ID: " + documentReference.getId());
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w(TAG, "Error adding animal into herd", e);
-//                    }
-//                });
-//
-//        //addAnimal(strTag, strName, strDob, strSex, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire);
-//        Toast.makeText(AddAnimalActivity.this, "Animal inserted into Herd", Toast.LENGTH_SHORT).show();
-//        // startActivity(new Intent(MainActivity.this, AnimalActivity.class));
-//
-//
-//    }
+
     private boolean hasValidationErrors(String tagNumber, String animalName, String dob, String sex, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire){
         if (tagNumber.trim().isEmpty()) {
             editTextTagNumber.setError("TagNumber is required");
