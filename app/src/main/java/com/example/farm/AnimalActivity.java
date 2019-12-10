@@ -116,8 +116,29 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
             }
 
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                adapter.deleteItem(viewHolder.getAdapterPosition());
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
+
+                AlertDialog.Builder deleteBuilder = new AlertDialog.Builder(AnimalActivity.this);
+                deleteBuilder.setTitle("Are you sure about this?");
+                deleteBuilder.setMessage("Deletion is permanent...");
+
+                deleteBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        adapter.deleteItem(viewHolder.getAdapterPosition());
+                    }
+                });
+
+                deleteBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                    }
+                });
+
+                deleteBuilder.create().show();
+
+
             }
         }).attachToRecyclerView(recyclerView);
 
@@ -285,16 +306,16 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onStart() {
         super.onStart();
-        //FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
+        FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
         adapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-//        if (mAuthListener != null) {
-//            FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
-//        }
+        if (mAuthListener != null) {
+            FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
+        }
         if (adapter != null) {
             adapter.stopListening();
         }
