@@ -21,17 +21,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 public class ToDoListAdapter extends FirestoreRecyclerAdapter<Task, ToDoListAdapter.TaskViewHolder> {
     private static final String TAG = "ToDoListAdapter";
     TaskListener taskListener;
-    Task task;
-
-    public ToDoListAdapter(@NonNull FirestoreRecyclerOptions<Task> options, ToDoListActivity toDoListActivity) {
-        super(options);
-        this.taskListener = taskListener;
-    }
-
     public ToDoListAdapter(FirestoreRecyclerOptions<Task> options) {
         super(options);
     }
-
 
     @NonNull
     @Override
@@ -79,7 +71,6 @@ public class ToDoListAdapter extends FirestoreRecyclerAdapter<Task, ToDoListAdap
 
                 }
             });
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -89,19 +80,15 @@ public class ToDoListAdapter extends FirestoreRecyclerAdapter<Task, ToDoListAdap
 
                 }
             });
-
         }
         public void deleteItem() {
             taskListener.handleDeleteItem(getSnapshots().getSnapshot(getAdapterPosition()));
         }
-
     }
-
-
     //implemented in activity
     public interface TaskListener {
-        public void handleCheckChanged(boolean isChecked, DocumentSnapshot snapshot);
-        public void handleEditTask(DocumentSnapshot snapshot);
-        public void handleDeleteItem(DocumentSnapshot snapshot);
+         void handleCheckChanged(boolean isChecked, DocumentSnapshot snapshot);
+         void handleEditTask(DocumentSnapshot snapshot);
+         void handleDeleteItem(DocumentSnapshot snapshot);
     }
 }

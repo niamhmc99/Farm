@@ -85,15 +85,7 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
-    public void clickExpenses(View view){
-        imageButtonExpenditure = (ImageButton) findViewById(R.id.imageButtonExpenses);
-        imageButtonExpenditure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ExpenditureActivity.class));
-            }
-        });
-    }
+
 
     public void clickVets (View view){
         imageButtonVets = (ImageButton) findViewById(R.id.imageButtonVets);
@@ -106,15 +98,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void clickEmployees(View view) {
-        imageButtonEmployees = (ImageButton) findViewById(R.id.imageButtonEmployees);
-        imageButtonEmployees.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, EmployeeActivity.class));
-            }
-        });
-    }
 
     public void clickWeather(View view){
         Button buttonWeather =findViewById(R.id.buttonWeather);
@@ -128,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickToDoList(View view){
-        Button buttonToDo = findViewById(R.id.buttonToDoList);
+        ImageButton buttonToDo = findViewById(R.id.imageButtonToDoList);
         buttonToDo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

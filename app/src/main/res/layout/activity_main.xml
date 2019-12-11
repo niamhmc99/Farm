@@ -4,32 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".MainActivity">
+
 
     <TextView
         android:id="@+id/textViewAnimal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome You Have Logged In Successfully"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.435"
+        app:layout_constraintHorizontal_bias="0.633"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.078" />
+        app:layout_constraintVertical_bias="0.338" />
 
     <Button
         android:id="@+id/buttonLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="115dp"
+        android:layout_height="50dp"
         android:text="Log Out"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.567"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.919" />
+        app:layout_constraintVertical_bias="0.95" />
 
     <TextView
         android:id="@+id/loggedInUser"
@@ -40,139 +45,116 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
         android:id="@+id/imageButtonAnimals"
         android:layout_width="155dp"
         android:layout_height="147dp"
-        android:onClick="clickAnimals"
         android:contentDescription="@string/animals"
+        android:onClick="clickAnimals"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.117"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.236"
+        app:layout_constraintVertical_bias="0.45"
         app:srcCompat="@drawable/cowcalf" />
 
     <ImageButton
-        android:id="@+id/imageButtonExpenses"
+        android:id="@+id/imageButtonToDoList"
         android:layout_width="155dp"
         android:layout_height="147dp"
-        android:contentDescription="@string/expense"
-        android:onClick="clickExpenses"
+        android:onClick="clickToDoList"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.894"
+        app:layout_constraintHorizontal_bias="0.937"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.236"
-        app:srcCompat="@drawable/expense" />
-
+        app:layout_constraintVertical_bias="0.76"
+        app:srcCompat="@drawable/todoicon" />
 
     <ImageButton
         android:id="@+id/imageButtonVets"
         android:layout_width="155dp"
         android:layout_height="147dp"
-        android:onClick="clickVets"
         android:contentDescription="@string/vets"
+        android:onClick="clickVets"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.148"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.672"
+        app:layout_constraintVertical_bias="0.76"
         app:srcCompat="@drawable/vet3" />
-
-    <ImageButton
-        android:id="@+id/imageButtonEmployees"
-        android:layout_width="155dp"
-        android:layout_height="147dp"
-        android:onClick="clickEmployees"
-        android:contentDescription="@string/employees"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.894"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.672"
-        app:srcCompat="@drawable/employee" />
 
     <TextView
         android:id="@+id/textViewAnimals"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Animals"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.236"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.426" />
+        app:layout_constraintVertical_bias="0.579" />
 
     <TextView
         android:id="@+id/textViewExpenditure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Expenditure"
+        android:text="To Do List"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.806"
+        app:layout_constraintHorizontal_bias="0.829"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.426" />
+        app:layout_constraintVertical_bias="0.842" />
 
     <TextView
         android:id="@+id/textViewVet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Vet History"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/loggedInUser"
         app:layout_constraintHorizontal_bias="0.241"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.789" />
+        app:layout_constraintVertical_bias="0.842" />
 
-    <TextView
-        android:id="@+id/textViewEmployee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Employees"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.769"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.789" />
 
     <Button
         android:id="@+id/buttonWeather"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Weather"
+        android:layout_width="98dp"
+        android:layout_height="45dp"
         android:onClick="clickWeather"
+        android:text="Weather"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.092"
+        app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.947" />
+        app:layout_constraintVertical_bias="0.989" />
 
-
-    <Button
-        android:id="@+id/buttonToDoList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="clickToDoList"
-        android:text="To Do List"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="442dp"
+        android:layout_height="224dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.919" />
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/fileafarm" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
