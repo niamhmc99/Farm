@@ -40,10 +40,9 @@ import java.util.List;
 public class AnimalActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "AnimalActivity";
-    Animal animal;
+//    Animal animal;
     private List<Animal> animalList;
-    Context mContext;
-    private RecyclerView recyclerView;
+//    private RecyclerView recyclerView;
     private FirebaseAuth.AuthStateListener mAuthListener;
     FirebaseFirestore db = FirebaseFirestore.getInstance(); //connects to DB
 
@@ -107,61 +106,63 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         //Add the divider line
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
-        //delete animal
+        //delete animal if swiped left or right
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
             }
-
             @Override
-            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                adapter.deleteItem(viewHolder.getAdapterPosition());
+                Toast.makeText(AnimalActivity.this, "Animal Has Been Deleted from Herd.", Toast.LENGTH_SHORT).show();
 
-                AlertDialog.Builder deleteBuilder = new AlertDialog.Builder(AnimalActivity.this);
-                deleteBuilder.setTitle("Are you sure about this?");
-                deleteBuilder.setMessage("Deletion is permanent...");
-
-                deleteBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        adapter.deleteItem(viewHolder.getAdapterPosition());
-                    }
-                });
-
-                deleteBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                    }
-                });
-
-                deleteBuilder.create().show();
+//                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//                builder.setTitle("Are you sure about this?");
+//                builder.setMessage("Deletion is permanent...");
+//
+//                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        adapter.deleteItem(viewHolder.getAdapterPosition());
+//                    }
+//                });//
+//                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                    }
+//                });
+//
+//                AlertDialog ad = builder.create();
+//                ad.show();
 
 
             }
         }).attachToRecyclerView(recyclerView);
 
+        db.collection("animals").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                            for (DocumentSnapshot d : list) {
+                                //convert d to our animal object
+                                Animal a = d.toObject(Animal.class);
+                                animalList.add(a); //add all animals to list of animals
+                            }
+                        }
+                    }
+                });
         //update animal
         adapter.setOnItemClickListener(new AnimalAdapter.OnItemClickListener() {
             @Override //Calling interface from adapter
             public void onItemClick(DocumentSnapshot documentSnapshot, final int position) {
-                // final Animal animal = documentSnapshot.toObject(Animal.class);
-                // animalList.add(animal);
-                db.collection("animals").get()
-                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                            @Override
-                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                if (!queryDocumentSnapshots.isEmpty()) {
-                                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                                    for (DocumentSnapshot d : list) {
-                                        //convert d to our animal object
-                                        Animal a = d.toObject(Animal.class);
-                                        animalList.add(a); //add all animals to list of animals
-                                    }
-                                }
-                            }
-                        });
+                 final Animal animal = documentSnapshot.toObject(Animal.class);
+                 animalList.add(animal);
+
                 String id = documentSnapshot.getId();
                 Toast.makeText(AnimalActivity.this, "Position " + position + " ID " +  id, Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(AnimalActivity.this);
@@ -172,7 +173,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Animal animalPosition = animalList.get(position);
-                        Intent intent = new Intent(mContext, UpdateAnimalActivity.class);
+                        Intent intent = new Intent(AnimalActivity.this, UpdateAnimalActivity.class);
                         intent.putExtra("Animal", animalPosition); //get position of the animal in list
                          startActivity(intent);
                     }
@@ -306,16 +307,16 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
+        //FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
         adapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (mAuthListener != null) {
-            FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
-        }
+//        if (mAuthListener != null) {
+//            FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
+//        }
         if (adapter != null) {
             adapter.stopListening();
         }

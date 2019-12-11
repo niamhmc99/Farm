@@ -38,6 +38,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.github.androdocs:Simple-HTTP-Request:v1.0'
+    implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.2'
 }
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'

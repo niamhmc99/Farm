@@ -127,6 +127,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void clickToDoList(View view){
+        Button buttonToDo = findViewById(R.id.buttonToDoList);
+        buttonToDo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ToDoListActivity.class));
+            }
+        });
+    }
+
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menumainopts, menu);

@@ -109,6 +109,7 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
     public void deleteItem(int position){
         //gets all documents then gets doc at that postion
         getSnapshots().getSnapshot(position).getReference().delete();
+
     }
 
 
