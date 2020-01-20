@@ -156,5 +156,18 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/fileafarm" />
 
+    <Button
+        android:id="@+id/buttonGoogleMap"
+        android:layout_width="98dp"
+        android:layout_height="45dp"
+        android:onClick="clickGoogleMap"
+        android:text="Maps"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.904"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.963" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
