@@ -46,6 +46,7 @@ public class DownloadUrl {
             iStream.close();
             urlConnection.disconnect();
         }
+        Log.d("DownloadURL","Returning data= "+data);
         return data;
     }
 }
