@@ -85,6 +85,12 @@ public class ToDoListAdapter extends FirestoreRecyclerAdapter<Task, ToDoListAdap
             taskListener.handleDeleteItem(getSnapshots().getSnapshot(getAdapterPosition()));
         }
     }
+
+    @Override
+    public int getItemCount() {
+        return 0;
+    }
+
     //implemented in activity
     public interface TaskListener {
          void handleCheckChanged(boolean isChecked, DocumentSnapshot snapshot);

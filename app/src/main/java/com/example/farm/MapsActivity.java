@@ -1,6 +1,7 @@
 package com.example.farm;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -8,6 +9,9 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -196,18 +200,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             case R.id.B_schools:
                 mMap.clear();
-                String school = "school";
-                url = getUrl(latitude, longitude, school);
+                String feed = "animalfeeds";
+                url = getUrl(latitude, longitude, feed);
                 dataTransfer[0] = mMap;
                 dataTransfer[1] = url;
 
                 getNearbyPlacesData.execute(dataTransfer);
-                Toast.makeText(MapsActivity.this, "Showing Nearby Schools", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapsActivity.this, "Showing Nearby Animal feed centers", Toast.LENGTH_SHORT).show();
                 break;
+
             case R.id.B_restaurants:
                 mMap.clear();
-                String restaurant = "veterinary";
-                url = getUrl(latitude, longitude, restaurant);
+                String vets = "veterinaryclinic ";
+                url = getUrl(latitude, longitude, vets);
                 dataTransfer[0] = mMap;
                 dataTransfer[1] = url;
 
@@ -226,9 +231,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         googlePlaceUrl.append("location="+latitude+","+longitude);
         googlePlaceUrl.append("&radius="+PROXIMITY_RADIUS);
         googlePlaceUrl.append("&type="+nearbyPlace);
-        googlePlaceUrl.append("&keyword=true");
-        googlePlaceUrl.append("&key="+"" + "AIzaSyBLEPBRfw7sMb73Mr88L91Jqh3tuE4mKsE");
+        googlePlaceUrl.append("&sensor=true");
+        googlePlaceUrl.append("&key="+"" + "AIzaSyDzyCapVx5jEfA3haEGUCI0jSIYFu3xUxI");
+                //"AIzaSyBLEPBRfw7sMb73Mr88L91Jqh3tuE4mKsE"); tutorial one
                // "AIzaSyDzyCapVx5jEfA3haEGUCI0jSIYFu3xUxI");
+        //sensor replace by keyword
 
         Log.d("MapsActivity", "url = "+googlePlaceUrl.toString());
 
@@ -279,4 +286,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
     }
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menumainopts, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menuLogout:
+                Toast.makeText(this, "Logging out", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MapsActivity.this, LoginActivity.class));
+            case R.id.menuHome:
+                Toast.makeText(this, "Home Page", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MapsActivity.this, MainActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

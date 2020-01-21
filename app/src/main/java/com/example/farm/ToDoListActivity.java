@@ -50,13 +50,50 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
         setContentView(R.layout.activity_to_do_list);
 //        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        FloatingActionButton fab = findViewById(R.id.fabToDo);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mFabToDo = findViewById(R.id.fabToDo);
+        mFabToDo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showAlertDialog();
             }
         });
+
+        recyclerView = findViewById(R.id.recyclerViewToDo);
+        //Add the divider line
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+
+    }
+
+
+        private void setUpRecyclerView(FirebaseUser user) {
+            //initalise recycler view
+            Query query = FirebaseFirestore.getInstance()
+                    .collection("notes")
+                    .whereEqualTo("userId", user.getUid())
+                    .orderBy("completed", Query.Direction.ASCENDING)
+                    .orderBy("created", Query.Direction.DESCENDING);
+
+
+            FirestoreRecyclerOptions<Task> options = new FirestoreRecyclerOptions.Builder<Task>()
+                    .setQuery(query, Task.class)
+                    .build();
+
+
+            LinearLayoutManager manager = new LinearLayoutManager(this);
+            recyclerView.setLayoutManager(manager);
+            recyclerView.setHasFixedSize(true);
+            //Add the divider line
+            recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+            // recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            toDoListAdapter = new ToDoListAdapter(options);
+            recyclerView.setAdapter(toDoListAdapter);
+            toDoListAdapter.startListening();//listen real time updates
+
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+            itemTouchHelper.attachToRecyclerView(recyclerView);
+
+
+        toDoListAdapter.notifyDataSetChanged();
 
     }
 
@@ -81,34 +118,7 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
     }
 
 
-    private void setUpRecyclerView(FirebaseUser user) {
-//initalise recycler view
-        Query query = FirebaseFirestore.getInstance()
-                .collection("notes")
-                .whereEqualTo("userId", user.getUid())
-                .orderBy("completed", Query.Direction.ASCENDING)
-                .orderBy("created", Query.Direction.DESCENDING);
 
-
-        FirestoreRecyclerOptions<Task> options = new FirestoreRecyclerOptions.Builder<Task>()
-                .setQuery(query, Task.class)
-                .build();
-
-        recyclerView = findViewById(R.id.recyclerViewToDo);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setHasFixedSize(true);
-        //Add the divider line
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-       // recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        toDoListAdapter = new ToDoListAdapter(options);
-        recyclerView.setAdapter(toDoListAdapter);
-        toDoListAdapter.startListening();//listen real time updates
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
-
-    }
 
     //for the recycler view
 
