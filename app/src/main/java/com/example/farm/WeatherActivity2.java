@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class WeatherActivity extends AppCompatActivity {
+public class WeatherActivity2 extends AppCompatActivity {
 
     String CITY = "dhaka,bd"; //value of our search query
     String API = "3e73a57a2c75697757c6110ad50aa6da"; //key got from API
