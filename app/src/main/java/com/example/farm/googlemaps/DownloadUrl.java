@@ -11,6 +11,7 @@ package com.example.farm.googlemaps;
 
 public class DownloadUrl {
 
+
     public String readUrl(String strUrl) throws IOException {
         String data = "";
         InputStream iStream = null;

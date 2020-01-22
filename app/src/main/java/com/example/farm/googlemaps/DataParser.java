@@ -12,7 +12,7 @@ import java.util.List;
 
 
 public class DataParser {
-
+    //get json data
     public List<HashMap<String, String>> parse(String jsonData)
     {
         JSONArray jsonArray = null;

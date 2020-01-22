@@ -1,4 +1,4 @@
-package com.example.farm.javaClasses;
+package com.example.farm.adapters;
 
 
 import android.content.Context;

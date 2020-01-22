@@ -1,4 +1,4 @@
-package com.example.farm.javaClasses;
+package com.example.farm.adapters;
 
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.farm.R;
-import com.example.farm.ToDoListActivity;
 import com.example.farm.models.Task;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -85,11 +84,6 @@ public class ToDoListAdapter extends FirestoreRecyclerAdapter<Task, ToDoListAdap
         public void deleteItem() {
             taskListener.handleDeleteItem(getSnapshots().getSnapshot(getAdapterPosition()));
         }
-    }
-
-    @Override
-    public int getItemCount() {
-        return 0;
     }
 
     //implemented in activity

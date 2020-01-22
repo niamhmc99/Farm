@@ -20,7 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.example.farm.javaClasses.ToDoListAdapter;
+import com.example.farm.adapters.ToDoListAdapter;
 import com.example.farm.models.Task;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -50,6 +50,7 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
         recyclerView = findViewById(R.id.recyclerViewToDo);
         //Add the divider line
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+
 
         mFabToDo = findViewById(R.id.fabToDo);
         mFabToDo.setOnClickListener(new View.OnClickListener() {
@@ -106,13 +107,14 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
             FirestoreRecyclerOptions<Task> options = new FirestoreRecyclerOptions.Builder<Task>()
                     .setQuery(query, Task.class)
                     .build();
-
             LinearLayoutManager manager = new LinearLayoutManager(this);
+            manager.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(manager);
             recyclerView.setHasFixedSize(true);
-            ToDoListAdapter toDoListAdapter = new ToDoListAdapter(options, this);
+            toDoListAdapter = new ToDoListAdapter(options, this);
             recyclerView.setAdapter(toDoListAdapter);
             toDoListAdapter.startListening();//listen real time updates
+
             ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
             itemTouchHelper.attachToRecyclerView(recyclerView);
 //        toDoListAdapter.notifyDataSetChanged();
@@ -138,8 +140,6 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
 
 
     }
-
-
 
 
     //for the recycler view
