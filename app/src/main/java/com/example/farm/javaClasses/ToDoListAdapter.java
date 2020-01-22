@@ -21,8 +21,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 public class ToDoListAdapter extends FirestoreRecyclerAdapter<Task, ToDoListAdapter.TaskViewHolder> {
     private static final String TAG = "ToDoListAdapter";
     TaskListener taskListener;
-    public ToDoListAdapter(FirestoreRecyclerOptions<Task> options) {
+
+    public ToDoListAdapter(FirestoreRecyclerOptions<Task> options, TaskListener taskListener)
+    {
         super(options);
+        this.taskListener = taskListener;
     }
 
     @NonNull
@@ -56,8 +59,8 @@ public class ToDoListAdapter extends FirestoreRecyclerAdapter<Task, ToDoListAdap
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                     DocumentSnapshot snapshot = getSnapshots().getSnapshot(getAdapterPosition());
-                    Task note = getItem(getAdapterPosition());
-                    if (note.getCompleted() != isChecked) {
+                    Task task = getItem(getAdapterPosition());
+                    if (task.getCompleted() != isChecked) {
                         taskListener.handleCheckChanged(isChecked, snapshot);
                     }
                 }
@@ -68,7 +71,6 @@ public class ToDoListAdapter extends FirestoreRecyclerAdapter<Task, ToDoListAdap
 
                     DocumentSnapshot snapshot = getSnapshots().getSnapshot(getAdapterPosition());
                     taskListener.handleEditTask(snapshot);
-
                 }
             });
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +79,6 @@ public class ToDoListAdapter extends FirestoreRecyclerAdapter<Task, ToDoListAdap
 
                     DocumentSnapshot snapshot = getSnapshots().getSnapshot(getAdapterPosition());
                     taskListener.handleEditTask(snapshot);
-
                 }
             });
         }

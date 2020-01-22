@@ -38,7 +38,6 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.util.Date;
 
 public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener, ToDoListAdapter.TaskListener  {
-
     private static final String TAG = "ToDoListActivity";
     private ToDoListAdapter toDoListAdapter;
     RecyclerView recyclerView;
@@ -48,7 +47,9 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_do_list);
-//        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        recyclerView = findViewById(R.id.recyclerViewToDo);
+        //Add the divider line
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         mFabToDo = findViewById(R.id.fabToDo);
         mFabToDo.setOnClickListener(new View.OnClickListener() {
@@ -57,107 +58,17 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
                 showAlertDialog();
             }
         });
-
-        recyclerView = findViewById(R.id.recyclerViewToDo);
-        //Add the divider line
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-
     }
-
-
-        private void setUpRecyclerView(FirebaseUser user) {
-            //initalise recycler view
-            Query query = FirebaseFirestore.getInstance()
-                    .collection("notes")
-                    .whereEqualTo("userId", user.getUid())
-                    .orderBy("completed", Query.Direction.ASCENDING)
-                    .orderBy("created", Query.Direction.DESCENDING);
-
-
-            FirestoreRecyclerOptions<Task> options = new FirestoreRecyclerOptions.Builder<Task>()
-                    .setQuery(query, Task.class)
-                    .build();
-
-
-            LinearLayoutManager manager = new LinearLayoutManager(this);
-            recyclerView.setLayoutManager(manager);
-            recyclerView.setHasFixedSize(true);
-            //Add the divider line
-            recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-            // recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            toDoListAdapter = new ToDoListAdapter(options);
-            recyclerView.setAdapter(toDoListAdapter);
-            toDoListAdapter.startListening();//listen real time updates
-
-            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-            itemTouchHelper.attachToRecyclerView(recyclerView);
-
-
-        toDoListAdapter.notifyDataSetChanged();
-
-    }
-
-    @Override
-    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-        //called from on start method
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null) {
-
-            Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-
-        } else {
-            Log.d(TAG, "onAuthStateChanged:signed_out");
-            Intent intent = new Intent(ToDoListActivity.this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
-            return;
-        }
-
-        setUpRecyclerView(firebaseAuth.getCurrentUser());
-    }
-
-
-
-
-    //for the recycler view
-
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-        @Override
-        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-            return false;
-        }
-
-        @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            if (direction == ItemTouchHelper.LEFT) {
-                Toast.makeText(ToDoListActivity.this, "Deleting Task", Toast.LENGTH_SHORT).show();
-                //delete item if swiped left
-                ToDoListAdapter.TaskViewHolder taskViewHolder = (ToDoListAdapter.TaskViewHolder) viewHolder;
-                taskViewHolder.deleteItem();
-            }
-        }
-        @Override
-        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-            new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                    .addBackgroundColor(ContextCompat.getColor(ToDoListActivity.this, R.color.colorAccent))
-                    .addActionIcon(R.drawable.ic_delete_black_24dp)
-                    .create()
-                    .decorate();
-            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-        }
-    };
-
     private void showAlertDialog() {
-        final EditText noteEditText = new EditText(this);
+        final EditText taskEditText = new EditText(this);
         new AlertDialog.Builder(this)
                 .setTitle("Add To Do Task")
-                .setView(noteEditText)
+                .setView(taskEditText)
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.d(TAG, "onClick: " + noteEditText.getText());
-                        addToDoTask(noteEditText.getText().toString());
+                        Log.d(TAG, "onClick: " + taskEditText.getText());
+                        addToDoTask(taskEditText.getText().toString());
                     }
                 })
                 .setNegativeButton("Cancel", null)
@@ -185,6 +96,82 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
                     }
                 });
     }
+
+        private void setUpRecyclerView(FirebaseUser user) { //initalise recycler view
+            Query query = FirebaseFirestore.getInstance()
+                    .collection("tasks")
+                    .whereEqualTo("userId", user.getUid())
+                    .orderBy("completed", Query.Direction.ASCENDING)
+                    .orderBy("created", Query.Direction.DESCENDING);
+            FirestoreRecyclerOptions<Task> options = new FirestoreRecyclerOptions.Builder<Task>()
+                    .setQuery(query, Task.class)
+                    .build();
+
+            LinearLayoutManager manager = new LinearLayoutManager(this);
+            recyclerView.setLayoutManager(manager);
+            recyclerView.setHasFixedSize(true);
+            ToDoListAdapter toDoListAdapter = new ToDoListAdapter(options, this);
+            recyclerView.setAdapter(toDoListAdapter);
+            toDoListAdapter.startListening();//listen real time updates
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+            itemTouchHelper.attachToRecyclerView(recyclerView);
+//        toDoListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        //called from on start method
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+
+            Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+            setUpRecyclerView(firebaseAuth.getCurrentUser());
+
+        } else {
+            Log.d(TAG, "onAuthStateChanged:signed_out");
+            Intent intent = new Intent(ToDoListActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
+
+    }
+
+
+
+
+    //for the recycler view
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            if (direction == ItemTouchHelper.LEFT) {
+                Toast.makeText(ToDoListActivity.this, "Deleting Task", Toast.LENGTH_SHORT).show();
+                //delete item if swiped left
+                ToDoListAdapter.TaskViewHolder taskViewHolder = (ToDoListAdapter.TaskViewHolder) viewHolder;
+                taskViewHolder.deleteItem();
+            }
+        }
+        @Override
+        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    .addBackgroundColor(ContextCompat.getColor(ToDoListActivity.this, R.color.colorAccent))
+                    .addActionIcon(R.drawable.ic_delete_black_24dp)
+                    .create()
+                    .decorate();
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        }
+    };
+
+
+
+
 
     //interface method
     @Override
