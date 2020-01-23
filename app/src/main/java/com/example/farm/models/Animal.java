@@ -3,14 +3,15 @@ package com.example.farm.models;
 import com.google.firebase.firestore.IgnoreExtraProperties;
 
 import java.io.Serializable;
-import java.util.Date;
 @IgnoreExtraProperties
 public class Animal implements Serializable {
 private String id;
     private String tagNumber;
     private String animalName;
     private String dob;
-    private String sex;
+private String sex;
+
+    private String gender;
     private String breed;
     private String dam;
     private String calvingDifficulty;
@@ -22,11 +23,11 @@ private String id;
 
     }
 
-    public Animal(String tagNumber, String animalName, String dob, String sex, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire) {
+    public Animal(String tagNumber, String animalName, String dob, String gender, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire) {
         this.tagNumber = tagNumber;
         this.animalName = animalName;
         this.dob = dob;
-        this.sex = sex;
+        this.gender = gender;
         this.breed = breed;
         this.dam = dam;
         this.calvingDifficulty = calvingDifficulty;
@@ -135,4 +136,13 @@ private String id;
     public void setBreed(String breed) {
         this.breed = breed;
     }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
 }

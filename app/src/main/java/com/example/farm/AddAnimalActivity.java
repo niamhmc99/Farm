@@ -1,18 +1,22 @@
 package com.example.farm;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.farm.adapters.AnimalAdapter;
 import com.example.farm.models.Animal;
@@ -34,21 +38,23 @@ public class AddAnimalActivity extends AppCompatActivity {
     private final String  TAG= "AddAnimalActivity";
     private EditText editTextTagNumber, editTextAnimalName, editTextDob, editTextSex, editTextDam, editTextCalvingDifficulty, editTextsire, editTextAiORstockbull, editTextBreed;
     private Button buttonSaveDetails;
+    private Spinner spinnerGender, spinnerAiStockBull, spinnerCalvingDiff;
     View mParentLayout;
-private List<Animal>animalList;
-private AnimalAdapter adapter;
-private Animal animal;
+    private List<Animal>animalList;
+    private AnimalAdapter adapter;
+    private Animal animal;
 
     private static final String KEY_TAGNUMBER = "tagNumber";
     private static final String KEY_ANIMALNAME = "animalName";
     private static final String KEY_DOB= "dob";
-    private static final String KEY_SEX= "sex";
+    private static final String KEY_GENDER= "gender";
     private static final String KEY_DAM = "dam";
     private static final String KEY_SIRE = "sire";
     private static final String KEY_AiOrStockbull = "aiORstockbull";
     private static final String KEY_CALVINGDIf = "calvingDifficulty";
     private static final String KEY_BREED = "breed";
     private static final String KEY_USERID = "user_id";
+
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -67,7 +73,11 @@ private Animal animal;
         editTextBreed =findViewById(R.id.editTextBreed);
         editTextAiORstockbull =findViewById(R.id.editTextAIBull);
 
-animalList = new ArrayList<>();
+        addItemsOnSpinnerGender();
+        addItemsOnSpinnerAiStockbull();
+        addItemsOnSpinnerCalvingDiff();
+
+        animalList = new ArrayList<>();
 
         mParentLayout = findViewById(android.R.id.content);
 
@@ -89,6 +99,44 @@ animalList = new ArrayList<>();
                 });
         }
 
+    private void addItemsOnSpinnerCalvingDiff() {
+        spinnerCalvingDiff= findViewById(R.id.spinnerCalvingDiff);
+        List<String> listDifficulty = new ArrayList<String>();
+        listDifficulty.add("0");
+        listDifficulty.add("1");
+        listDifficulty.add("2");
+        listDifficulty.add("3");
+        listDifficulty.add("4");
+        listDifficulty.add("5");
+        ArrayAdapter<String> calvingDiffAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, listDifficulty);
+        calvingDiffAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCalvingDiff.setAdapter(calvingDiffAdapter);
+    }
+
+    public void addItemsOnSpinnerGender(){
+        spinnerGender = (Spinner) findViewById(R.id.spinnerGender);
+        List<String> list = new ArrayList<String>();
+        list.add("Male");
+        list.add("Female");
+        ArrayAdapter<String> genderAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, list);
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerGender.setAdapter(genderAdapter);
+    }
+
+    private void addItemsOnSpinnerAiStockbull() {
+        spinnerAiStockBull = findViewById(R.id.spinnerAiStockBull);
+        List<String> listAiBull = new ArrayList<String>();
+        listAiBull.add("AI");
+        listAiBull.add("StockBull");
+        ArrayAdapter<String> aiStockAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, listAiBull);
+        aiStockAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAiStockBull.setAdapter(aiStockAdapter);
+
+    }
+
 
     public void insertAnimal(View view){
         buttonSaveDetails = findViewById(R.id.buttonAddAnimal);
@@ -99,12 +147,14 @@ animalList = new ArrayList<>();
                 String strTag = editTextTagNumber.getText().toString().trim();
                 String strName = editTextAnimalName.getText().toString().trim();
                 String strDob = editTextDob.getText().toString().trim();
-                String strSex = editTextSex.getText().toString().trim();
+                //String strSex = editTextSex.getText().toString().trim();
+                String strSelectedGender = String.valueOf(spinnerGender.getSelectedItem());
                 String strDam = editTextDam.getText().toString().trim();
-                String strCalvingDif = editTextCalvingDifficulty.getText().toString().trim();
+                String strSelectedCalvingDif = String.valueOf(spinnerCalvingDiff.getSelectedItem());
                 String strSire = editTextsire.getText().toString().trim();
                 String strBreed = editTextBreed.getText().toString().trim();
-                String strAiOrStockbull = editTextAiORstockbull.getText().toString().trim();
+                //String strAiOrStockbull = editTextAiORstockbull.getText().toString().trim();
+                String strSelectedAIStockBull = String.valueOf(spinnerAiStockBull.getSelectedItem());
                 String strUserID = FirebaseAuth.getInstance().getCurrentUser().getUid().trim();
 
 
@@ -112,15 +162,15 @@ animalList = new ArrayList<>();
                 animalMap.put(KEY_TAGNUMBER, strTag);
                 animalMap.put(KEY_ANIMALNAME, strName);
                 animalMap.put(KEY_DOB, strDob);
-                animalMap.put(KEY_SEX, strSex);
+                animalMap.put(KEY_GENDER, strSelectedGender);
                 animalMap.put(KEY_DAM, strDam);
-                animalMap.put(KEY_CALVINGDIf, strCalvingDif);
+                animalMap.put(KEY_CALVINGDIf, strSelectedCalvingDif);
                 animalMap.put(KEY_SIRE, strSire);
                 animalMap.put(KEY_BREED, strBreed);
-                animalMap.put(KEY_AiOrStockbull, strAiOrStockbull);
+                animalMap.put(KEY_AiOrStockbull, strSelectedAIStockBull);
                 animalMap.put(KEY_USERID, strUserID);
 
-                if(!hasValidationErrors(strTag, strName, strDob, strSex, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire) == true) {
+                if(!hasValidationErrors(strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire) == true) {
                     db.collection("Animals")
                             .add(animalMap)
                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -146,7 +196,9 @@ animalList = new ArrayList<>();
         });
     }
 
-    private boolean hasValidationErrors(String tagNumber, String animalName, String dob, String sex, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire){
+
+
+    private boolean hasValidationErrors(String tagNumber, String animalName, String dob, String selectedGender, String breed, String dam, String selectedCalvingDifficulty, String selectedAIStockBull, String sire){
         if (tagNumber.trim().isEmpty()) {
             editTextTagNumber.setError("TagNumber is required");
             makeSnackBarMessage("Please insert Tag Number.");
@@ -159,28 +211,38 @@ animalList = new ArrayList<>();
             editTextDob.setError("Date of Birth is required.");
             makeSnackBarMessage("Please insert Date of Birth.");
             return true;
-        }else if(sex.isEmpty()){
-            editTextSex.setError("The sex of the Animal is required");
+        }
+        else if(selectedGender.isEmpty()){
+            TextView errorText = (TextView)spinnerGender.getSelectedView();
+            errorText.setError("");
+            errorText.setTextColor(Color.RED);//just to highlight that this is an error
+            errorText.setText("Please select the Aniamls Gender");//changes the selected item text to this
             makeSnackBarMessage("Please insert the Animals Sex.");
             return true;
         }else if(dam.isEmpty()){
             editTextDam.setError("The Dam of the Animal is required");
             makeSnackBarMessage("Please insert the Animals Dam.");
             return true;
-        }else if(calvingDifficulty.isEmpty()){
-            editTextCalvingDifficulty.setError("Calving Difficulty is required");
+        }else if(selectedCalvingDifficulty.isEmpty()){
+            TextView errorText = (TextView)spinnerCalvingDiff.getSelectedView();
+            errorText.setError("");
+            errorText.setTextColor(Color.RED);//just to highlight that this is an error
+            errorText.setText("Select the Calving Difficulty number");//changes the selected item text to this
             makeSnackBarMessage("Please insert the Calving Difficulty.");
             return true;
         }else if(sire.isEmpty()){
             editTextsire.setError("The Sire of the Animal is required");
             makeSnackBarMessage("Please insert the Animals Sire.");
             return true;
-        }else if(aiORstockbull.isEmpty()){
-            editTextAiORstockbull.setError("AI / Stock Bull?");
-            makeSnackBarMessage("Please insert if insemination was by AI or Stock bull.");
+        }else if(selectedAIStockBull.isEmpty()){
+            TextView errorText = (TextView)spinnerAiStockBull.getSelectedView();
+            errorText.setError("");
+            errorText.setTextColor(Color.RED);//just to highlight that this is an error
+            errorText.setText("Please select the Sire Type for the animal");//changes the selected item text to this
+            makeSnackBarMessage("Please insert the Sire Type.");
             return true;
         }else if(breed.isEmpty()){
-            editTextBreed.setError("Breed of Animal is Required.s");
+            editTextBreed.setError("Breed of Animal is required");
             makeSnackBarMessage("Please insert Animal Breed.");
             return true;
         }else{

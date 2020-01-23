@@ -49,18 +49,17 @@
         app:layout_constraintVertical_bias="0.316" />
 
 
-    <EditText
-        android:id="@+id/editTextSex"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Sex"
-        android:inputType="textPersonName"
+    <Spinner
+        android:id="@+id/spinnerGender"
+        android:layout_width="213dp"
+        android:layout_height="45dp"
+        android:hint="@string/gender_prompt"
+        android:prompt="@string/gender_prompt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.392" />
+        app:layout_constraintVertical_bias="0.393" />
 
     <EditText
         android:id="@+id/editTextBreed"
@@ -88,37 +87,38 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.555" />
 
-    <EditText
-        android:id="@+id/editTextCalvingDifficulty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Calving Difficulty"
-        android:inputType="textPersonName"
+    <Spinner
+        android:id="@+id/spinnerCalvingDiff"
+        android:layout_width="218dp"
+        android:layout_height="53dp"
+        android:hint="@string/calvingDifficulty_prompt"
+        android:prompt="@string/calvingDifficulty_prompt"
+        android:text="Calving Difficulty"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.641" />
+        app:layout_constraintVertical_bias="0.809" />
 
-    <EditText
-        android:id="@+id/editTextAIBull"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="AI/Stock Bull"
-        android:inputType="textPersonName"
+    <Spinner
+        android:id="@+id/spinnerAiStockBull"
+        android:layout_width="218dp"
+        android:layout_height="50dp"
+        android:hint="@string/aiStockBull_prompt"
+        android:prompt="@string/aiStockBull_prompt"
+        android:text="AI/ Stock Bull"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.718" />
-
+        app:layout_constraintVertical_bias="0.635" />
 
     <EditText
         android:id="@+id/ediTextSire"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="217dp"
+        android:layout_height="44dp"
         android:ems="10"
         android:hint="Sire"
         android:inputType="textPersonName"
@@ -126,7 +126,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.801" />
+        app:layout_constraintVertical_bias="0.72" />
 
     <TextView
         android:id="@+id/textViewAnimalsPage"
@@ -143,14 +143,21 @@
 
     <Button
         android:id="@+id/buttonAddAnimal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="162dp"
+        android:layout_height="45dp"
         android:layout_marginBottom="72dp"
+        android:background="@drawable/buttonshape"
         android:onClick="insertAnimal"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="6"
         android:text="Insert Animal"
+        android:textColor="@color/white"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
