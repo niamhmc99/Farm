@@ -148,7 +148,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void onClick(View v)
     {
-        Object dataTransfer[] = new Object[2];
+        Object[] dataTransfer = new Object[2];
         GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
 
         switch(v.getId())

@@ -197,7 +197,7 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
     public void handleEditTask(final DocumentSnapshot snapshot) {
         final Task task = snapshot.toObject(Task.class);
         final EditText editText = new EditText(this);
-        editText.setText(task.getText().toString());
+        editText.setText(task.getText());
         editText.setSelection(task.getText().length());
 
         new AlertDialog.Builder(this)

@@ -1,8 +1,5 @@
 package com.example.farm;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,6 +10,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.farm.weather.ui.WeatherActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickAnimals(View view) {
-        imageButtonAnimals = (ImageButton) findViewById(R.id.imageButtonAnimals);
+        imageButtonAnimals = findViewById(R.id.imageButtonAnimals);
         imageButtonAnimals.setOnClickListener(new View.OnClickListener() {
                                                   @Override
                                                   public void onClick(View v) {
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void clickVets (View view){
-        imageButtonVets = (ImageButton) findViewById(R.id.imageButtonVets);
+        imageButtonVets = findViewById(R.id.imageButtonVets);
         imageButtonVets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         buttonWeather.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, WeatherActivity2.class));
+                startActivity(new Intent(MainActivity.this, WeatherActivity.class));
             }
         });
 
