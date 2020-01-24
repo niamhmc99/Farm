@@ -3,6 +3,7 @@ package com.example.farm;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,9 +20,8 @@ import java.util.Locale;
 
 public class WeatherActivity2 extends AppCompatActivity {
 
-    String CITY = "dhaka,bd"; //value of our search query
+    String CITY = "Dublin"; //value of our search query
     String API = "3e73a57a2c75697757c6110ad50aa6da"; //key got from API
-
     TextView addressTxt, updated_atTxt, statusTxt, tempTxt, temp_minTxt, temp_maxTxt, sunriseTxt,
             sunsetTxt, windTxt, pressureTxt, humidityTxt;
 
@@ -62,6 +62,8 @@ public class WeatherActivity2 extends AppCompatActivity {
             //Async Task allows to perform background operations and ease use of UI thread
             //need to get weather info from API --make http request --use Async Task to do this
             String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?q=" + CITY + "&units=metric&appid=" + API);
+
+            Log.d("Response url", String.valueOf(response));
             return response;
         }
 
@@ -90,7 +92,15 @@ public class WeatherActivity2 extends AppCompatActivity {
                 String windSpeed = wind.getString("speed");
                 String weatherDescription = weather.getString("description");
 
+
                 String address = jsonObj.getString("name") + ", " + sys.getString("country");
+
+                Log.d("Address", address);
+                Log.d("Temp", temp);
+                Log.d("Temp MIN", tempMin);
+                Log.d("Sunrise", String.valueOf(sunrise));
+                Log.d("wind speed", windSpeed);
+                Log.d("Address", address);
 
 
                 // Populating extracted data into our views in the activity

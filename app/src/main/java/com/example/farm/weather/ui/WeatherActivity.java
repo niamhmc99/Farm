@@ -28,7 +28,8 @@ import retrofit2.Response;
 
 public class WeatherActivity extends AppCompatActivity {
 
-    String apiKey = "AIzaSyDzyCapVx5jEfA3haEGUCI0jSIYFu3xUxI";
+    //api key from open weather website
+    String apiKey = "3e73a57a2c75697757c6110ad50aa6da";
 
     private TextView tempText;
     private TextView descrText;
@@ -82,13 +83,14 @@ public class WeatherActivity extends AppCompatActivity {
         Log.d("weather", "get weather data");
         //Create network service and cast it ot our Weather Service Interface
         WeatherService service = RetrofitClient.getInstance().retrofit.create(WeatherService.class);
-
-        //Create a network call object
+        Log.d("weatherService", String.valueOf(service));
+                //Create a network call object
         Call<WeatherResponse> weatherData = service.getCurrentWeatherData(lat, lon, apiKey);
-
+        Log.d("weatherData", String.valueOf(weatherData));
         weatherData.enqueue(new Callback<WeatherResponse>() {
             @Override
             public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
+                Log.d("weatherResponse", String.valueOf(response));
 
                 //call weather response class
                 WeatherResponse data = response.body();
@@ -98,6 +100,8 @@ public class WeatherActivity extends AppCompatActivity {
                 tempText.setText(temp + "°C");
                 textCity.setText(data.getName());
                 descrText.setText(data.getWeather().get(0).getDescription());
+
+                Log.d("done", String.valueOf(data));
             }
 
             @Override
