@@ -28,7 +28,7 @@ public class WeatherActivity2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_weather2);
 
         Intent intent = getIntent();
 

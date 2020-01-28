@@ -100,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void clickWeatherDetail(View view){
-        Button buttonWeather =findViewById(R.id.buttonWeather);
+    public void clickWeather(View view){
+        ImageButton buttonWeather =findViewById(R.id.imageButtonWeather);
         buttonWeather.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void clickWeather(View view){
+    public void clickWeatherDetz(View view){
         Button buttonWeather =findViewById(R.id.buttonWeather);
         buttonWeather.setOnClickListener(new View.OnClickListener() {
             @Override
