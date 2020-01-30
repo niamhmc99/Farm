@@ -2,7 +2,8 @@
 
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:http="http://schemas.android.com/apk/res-auto">
 
     <EditText
         android:id="@+id/TF_location"
@@ -26,14 +27,14 @@
         android:layout_toRightOf="@+id/TF_location" />
 
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context="com.example.priyanka.mapsdemo.MapsActivity"
+        tools:context="com.example.farm.MapsActivity"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/B_hopistals"
@@ -50,24 +51,24 @@
         android:layout_alignParentLeft="true" />
 
     <Button
-        android:id="@+id/B_schools"
+        android:id="@+id/B_animalfeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/TF_location"
         android:layout_toEndOf="@+id/B_hopistals"
         android:onClick="onClick"
-        android:text="Schools"
+        android:text="Animal Feed Centers"
         android:layout_toRightOf="@+id/B_hopistals" />
 
     <Button
-        android:id="@+id/B_restaurants"
+        android:id="@+id/B_vets"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/TF_location"
-        android:layout_toEndOf="@+id/B_schools"
+        android:layout_toEndOf="@+id/B_animalfeed"
         android:onClick="onClick"
-        android:text="Restautants"
-        android:layout_toRightOf="@+id/B_schools" />
+        android:text="Vets"
+        android:layout_toRightOf="@+id/B_animalfeed" />
 
 
 </RelativeLayout>

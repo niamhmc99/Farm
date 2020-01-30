@@ -198,9 +198,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
 
 
-            case R.id.B_schools:
+            case R.id.B_animalfeed:
                 mMap.clear();
-                String feed = "animalfeeds";
+                String feed = "animalfeed";
                 url = getUrl(latitude, longitude, feed);
                 dataTransfer[0] = mMap;
                 dataTransfer[1] = url;
@@ -209,9 +209,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Toast.makeText(MapsActivity.this, "Showing Nearby Animal feed centers", Toast.LENGTH_SHORT).show();
                 break;
 
-            case R.id.B_restaurants:
+            case R.id.B_vets:
                 mMap.clear();
-                String vets = "veterinaryclinic ";
+                String vets = "vets";
                 url = getUrl(latitude, longitude, vets);
                 dataTransfer[0] = mMap;
                 dataTransfer[1] = url;

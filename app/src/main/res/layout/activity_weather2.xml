@@ -24,7 +24,8 @@
                 android:layout_height="wrap_content"
                 android:text="Dublin"
                 android:textStyle="bold"
-                android:textSize="33dp" />
+                android:textColorHighlight="@color/colorBlack"
+                android:textSize="36dp" />
 
             <TextView
                 android:id="@+id/updated_at"
