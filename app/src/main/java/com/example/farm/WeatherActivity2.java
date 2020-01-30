@@ -1,8 +1,10 @@
 package com.example.farm;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -10,6 +12,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.androdocs.httprequest.HttpRequest;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,17 +27,21 @@ import java.util.Locale;
 
 public class WeatherActivity2 extends AppCompatActivity {
 
-    String CITY = "Dublin"; //value of our search query
+    String CITY = "Dublin, Ireland"; //value of our search query {city, country code} is the parm used
     String API = "3e73a57a2c75697757c6110ad50aa6da"; //key got from API
     TextView addressTxt, updated_atTxt, statusTxt, tempTxt, temp_minTxt, temp_maxTxt, sunriseTxt,
             sunsetTxt, windTxt, pressureTxt, humidityTxt;
+    private FusedLocationProviderClient mFusedLocationClient;
+    LocationRequest mLocationRequest;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather2);
 
-        Intent intent = getIntent();
 
         addressTxt = findViewById(R.id.address);
         updated_atTxt = findViewById(R.id.updated_at);
@@ -45,11 +56,20 @@ public class WeatherActivity2 extends AppCompatActivity {
         humidityTxt = findViewById(R.id.humidity);
 
         new weatherTask().execute();
+
+        // use to get lat and lon
+//        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+//        mLocationRequest = new LocationRequest();
+//        mLocationRequest.setInterval(1000000);
+//        mLocationRequest.setFastestInterval(100000);
+//        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
+
     class weatherTask extends AsyncTask<String, Void, String> {
+
         @Override
-        protected void onPreExecute() { //show something before doInBackground
+        protected void onPreExecute() { //shows something before doInBackground
             super.onPreExecute();
 
             /* Showing the ProgressBar, Making the main design GONE */
@@ -80,7 +100,7 @@ public class WeatherActivity2 extends AppCompatActivity {
                 JSONObject weather = jsonObj.getJSONArray("weather").getJSONObject(0); //array as weather elements inside [
 
                 Long updatedAt = jsonObj.getLong("dt");
-                String updatedAtText = "Updated at: " + new SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH).format(new Date(updatedAt * 1000));
+                String updatedAtText = "Updated at: " + new SimpleDateFormat("dd/MM/yyyy hh:mm ", Locale.ENGLISH).format(new Date(updatedAt * 1000));
                 String temp = main.getString("temp") + "°C";
                 String tempMin = "Min Temp: " + main.getString("temp_min") + "°C";
                 String tempMax = "Max Temp: " + main.getString("temp_max") + "°C";
@@ -110,8 +130,8 @@ public class WeatherActivity2 extends AppCompatActivity {
                 tempTxt.setText(temp);
                 temp_minTxt.setText(tempMin);
                 temp_maxTxt.setText(tempMax);
-                sunriseTxt.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(new Date(sunrise * 1000)));//format the timestamp into our desired format.
-                sunsetTxt.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(new Date(sunset * 1000)));
+                sunriseTxt.setText(new SimpleDateFormat("hh:mm ", Locale.ENGLISH).format(new Date(sunrise * 1000)));//format the timestamp into our desired format.
+                sunsetTxt.setText(new SimpleDateFormat("hh:mm ", Locale.ENGLISH).format(new Date(sunset * 1000)));
                 windTxt.setText(windSpeed);
                 pressureTxt.setText(pressure);
                 humidityTxt.setText(humidity);

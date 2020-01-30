@@ -36,6 +36,7 @@ public class WeatherActivity extends AppCompatActivity {
     private TextView textCity;
     private ImageView imageWeather;
 
+
     private FusedLocationProviderClient mFusedLocationClient;
     LocationRequest mLocationRequest;
 
