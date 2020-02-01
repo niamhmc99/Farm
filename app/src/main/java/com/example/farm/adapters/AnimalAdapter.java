@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,12 +24,15 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
 
 
     public AnimalAdapter(@NonNull FirestoreRecyclerOptions<Animal> options) {
+
         super(options);
     }
 
 
     class AnimalHolder extends RecyclerView.ViewHolder{
         TextView textViewTagNumber, textViewAnimalName, textViewDob, textViewBreed;
+        ImageView animalProfilePic;
+
         public View layout;
 
         public AnimalHolder(@NonNull View itemView) {
@@ -38,6 +42,7 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
             textViewAnimalName = itemView.findViewById(R.id.textViewAnimalName);
             textViewDob = itemView.findViewById(R.id.textViewDob);
             textViewBreed = itemView.findViewById(R.id.textViewBreed);
+            animalProfilePic = itemView.findViewById(R.id.imageAnimalProfile);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -60,12 +65,25 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
     public void setOnItemClickListener(OnItemClickListener listener){
         this.listener=listener;
     }
+
     @Override
     protected void onBindViewHolder(@NonNull AnimalHolder animalHolder, int i, @NonNull final Animal animal) {
         animalHolder.textViewTagNumber.setText(animal.getTagNumber());
         animalHolder.textViewAnimalName.setText(animal.getAnimalName());
         animalHolder.textViewDob.setText(animal.getDob());
         animalHolder.textViewBreed.setText(animal.getBreed());
+        animalHolder.animalProfilePic.setImageResource(animal.getAnimalProfilePic());
+
+//        animalHolder.animalProfilePic.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (clickListener != null) {
+//
+//                    clickListener.itemClick(v, position);
+//                }
+//             });
+//            animalHolder.animalProfilePic.setTag(animalHolder);
+//        }
 
 //        //listen to single view layout click
 //        animalHolder.layout.setOnClickListener(new View.OnClickListener() {

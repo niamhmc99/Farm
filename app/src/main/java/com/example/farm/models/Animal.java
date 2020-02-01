@@ -5,12 +5,12 @@ import com.google.firebase.firestore.IgnoreExtraProperties;
 import java.io.Serializable;
 @IgnoreExtraProperties
 public class Animal implements Serializable {
-private String id;
+
+    private String id;
     private String tagNumber;
     private String animalName;
     private String dob;
-private String sex;
-
+    private String sex;
     private String gender;
     private String breed;
     private String dam;
@@ -19,8 +19,30 @@ private String sex;
     private String sire;
     private String user_id; //admin_id left out of () atm
 
+
+
+    private int animalProfilePic;
+
+
     public Animal(){ //empty constructor
 
+    }
+
+    //this constructor includes animal profile pic and userID for RecycleView
+    public Animal(String id, String tagNumber, String animalName, String dob, String sex, String gender, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire, String user_id, int animalProfilePic) {
+        this.id = id;
+        this.tagNumber = tagNumber;
+        this.animalName = animalName;
+        this.dob = dob;
+        this.sex = sex;
+        this.gender = gender;
+        this.breed = breed;
+        this.dam = dam;
+        this.calvingDifficulty = calvingDifficulty;
+        this.aiORstockbull = aiORstockbull;
+        this.sire = sire;
+        this.user_id = user_id;
+        this.animalProfilePic = animalProfilePic;
     }
 
     public Animal(String tagNumber, String animalName, String dob, String gender, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire) {
@@ -143,6 +165,14 @@ private String sex;
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public int getAnimalProfilePic() {
+        return animalProfilePic;
+    }
+
+    public void setAnimalProfilePic(int animalProfilePic) {
+        this.animalProfilePic = animalProfilePic;
     }
 
 }

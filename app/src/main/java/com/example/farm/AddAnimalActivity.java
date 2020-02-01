@@ -2,6 +2,7 @@ package com.example.farm;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,11 +30,16 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddAnimalActivity extends AppCompatActivity {
     private final String  TAG= "AddAnimalActivity";
@@ -40,6 +47,9 @@ public class AddAnimalActivity extends AppCompatActivity {
     private Button buttonSaveDetails;
     private Spinner spinnerGender, spinnerAiStockBull, spinnerCalvingDiff;
     View mParentLayout;
+    private CircleImageView imgAnimalProfilePic;
+    private Uri mainAnimalImageURI = null;
+    private ProgressBar setupProgress;
     private List<Animal>animalList;
     private AnimalAdapter adapter;
     private Animal animal;
@@ -54,8 +64,10 @@ public class AddAnimalActivity extends AppCompatActivity {
     private static final String KEY_CALVINGDIf = "calvingDifficulty";
     private static final String KEY_BREED = "breed";
     private static final String KEY_USERID = "user_id";
+    private static final String KEY_AnimalProfilePic = "animalProfilePic";
 
 
+    //private StorageReference storageReference;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     //vars
@@ -72,6 +84,10 @@ public class AddAnimalActivity extends AppCompatActivity {
         editTextsire =findViewById(R.id.ediTextSire);
         editTextBreed =findViewById(R.id.editTextBreed);
         editTextAiORstockbull =findViewById(R.id.editTextAIBull);
+        imgAnimalProfilePic = findViewById(R.id.imgAnimalProfilePic);
+
+        setupProgress = findViewById(R.id.addAnimal_progressBar);
+        setupProgress.setVisibility(View.VISIBLE);
 
         addItemsOnSpinnerGender();
         addItemsOnSpinnerAiStockbull();
@@ -115,7 +131,7 @@ public class AddAnimalActivity extends AppCompatActivity {
     }
 
     public void addItemsOnSpinnerGender(){
-        spinnerGender = (Spinner) findViewById(R.id.spinnerGender);
+        spinnerGender = findViewById(R.id.spinnerGender);
         List<String> list = new ArrayList<String>();
         list.add("Male");
         list.add("Female");
@@ -139,7 +155,10 @@ public class AddAnimalActivity extends AppCompatActivity {
 
 
     public void insertAnimal(View view){
+
+
         buttonSaveDetails = findViewById(R.id.buttonAddAnimal);
+
 
         buttonSaveDetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,15 +166,14 @@ public class AddAnimalActivity extends AppCompatActivity {
                 String strTag = editTextTagNumber.getText().toString().trim();
                 String strName = editTextAnimalName.getText().toString().trim();
                 String strDob = editTextDob.getText().toString().trim();
-                //String strSex = editTextSex.getText().toString().trim();
                 String strSelectedGender = String.valueOf(spinnerGender.getSelectedItem());
                 String strDam = editTextDam.getText().toString().trim();
                 String strSelectedCalvingDif = String.valueOf(spinnerCalvingDiff.getSelectedItem());
                 String strSire = editTextsire.getText().toString().trim();
                 String strBreed = editTextBreed.getText().toString().trim();
-                //String strAiOrStockbull = editTextAiORstockbull.getText().toString().trim();
                 String strSelectedAIStockBull = String.valueOf(spinnerAiStockBull.getSelectedItem());
                 String strUserID = FirebaseAuth.getInstance().getCurrentUser().getUid().trim();
+               // String strAnimalProfilePic =
 
 
                 final Map<String, Object> animalMap = new HashMap<>();
@@ -169,6 +187,7 @@ public class AddAnimalActivity extends AppCompatActivity {
                 animalMap.put(KEY_BREED, strBreed);
                 animalMap.put(KEY_AiOrStockbull, strSelectedAIStockBull);
                 animalMap.put(KEY_USERID, strUserID);
+                //animalMap.put(KEY_AnimalProfilePic, );
 
                 if(!hasValidationErrors(strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire) == true) {
                     db.collection("Animals")
@@ -196,11 +215,21 @@ public class AddAnimalActivity extends AppCompatActivity {
         });
     }
 
+    private void BringImagePicker() {
+
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setAspectRatio(1, 1)
+                .start(AddAnimalActivity.this);
+
+    }
+
+
 
 
     private boolean hasValidationErrors(String tagNumber, String animalName, String dob, String selectedGender, String breed, String dam, String selectedCalvingDifficulty, String selectedAIStockBull, String sire){
         if (tagNumber.trim().isEmpty()) {
-            editTextTagNumber.setError("TagNumber is required");
+            editTextTagNumber.setError("Tag Number is required");
             makeSnackBarMessage("Please insert Tag Number.");
             return true;
         } else if (animalName.isEmpty()) {
@@ -250,6 +279,8 @@ public class AddAnimalActivity extends AppCompatActivity {
         }
 
     }
+
+
     private void makeSnackBarMessage(String message){
         Snackbar.make(mParentLayout, message, Snackbar.LENGTH_SHORT).show();
     }

@@ -27,7 +27,7 @@ import java.util.Locale;
 
 public class WeatherActivity2 extends AppCompatActivity {
 
-    String CITY = "Dublin, Ireland"; //value of our search query {city, country code} is the parm used
+    String CITY = "Dublin,IE"; //value of our search query {city, country code} is the parm used
     String API = "3e73a57a2c75697757c6110ad50aa6da"; //key got from API
     TextView addressTxt, updated_atTxt, statusTxt, tempTxt, temp_minTxt, temp_maxTxt, sunriseTxt,
             sunsetTxt, windTxt, pressureTxt, humidityTxt;
@@ -100,10 +100,10 @@ public class WeatherActivity2 extends AppCompatActivity {
                 JSONObject weather = jsonObj.getJSONArray("weather").getJSONObject(0); //array as weather elements inside [
 
                 Long updatedAt = jsonObj.getLong("dt");
-                String updatedAtText = "Updated at: " + new SimpleDateFormat("dd/MM/yyyy hh:mm ", Locale.ENGLISH).format(new Date(updatedAt * 1000));
-                String temp = main.getString("temp") + "°C";
-                String tempMin = "Min Temp: " + main.getString("temp_min") + "°C";
-                String tempMax = "Max Temp: " + main.getString("temp_max") + "°C";
+                String updatedAtText = "Updated at: " + new SimpleDateFormat("dd-MM-yyyy HH:mm ", Locale.ENGLISH).format(new Date(updatedAt * 1000));
+                String temp = main.getString("temp");
+                String tempMin =  main.getString("temp_min");
+                String tempMax =  main.getString("temp_max");
                 String pressure = main.getString("pressure");
                 String humidity = main.getString("humidity");
 
@@ -122,6 +122,9 @@ public class WeatherActivity2 extends AppCompatActivity {
                 Log.d("wind speed", windSpeed);
                 Log.d("Address", address);
 
+                temp= Math.round(Float.parseFloat(temp))+ "°C";
+                tempMin = "Min Temp: " + Math.round(Float.parseFloat(tempMin)) + "°C";
+                tempMax = "Max Temp: " + Math.round(Float.parseFloat(tempMax)) + "°C";
 
                 // Populating the extracted data into our text views in the activity
                 addressTxt.setText(address);
@@ -130,8 +133,8 @@ public class WeatherActivity2 extends AppCompatActivity {
                 tempTxt.setText(temp);
                 temp_minTxt.setText(tempMin);
                 temp_maxTxt.setText(tempMax);
-                sunriseTxt.setText(new SimpleDateFormat("hh:mm ", Locale.ENGLISH).format(new Date(sunrise * 1000)));//format the timestamp into our desired format.
-                sunsetTxt.setText(new SimpleDateFormat("hh:mm ", Locale.ENGLISH).format(new Date(sunset * 1000)));
+                sunriseTxt.setText(new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(new Date(sunrise * 1000)));//format the timestamp into our desired format.
+                sunsetTxt.setText(new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(new Date(sunset * 1000)));
                 windTxt.setText(windSpeed);
                 pressureTxt.setText(pressure);
                 humidityTxt.setText(humidity);
