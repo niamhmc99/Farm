@@ -123,7 +123,7 @@ public class WeatherActivity2 extends AppCompatActivity {
                 Log.d("Address", address);
 
 
-                // Populating extracted data into our views in the activity
+                // Populating the extracted data into our text views in the activity
                 addressTxt.setText(address);
                 updated_atTxt.setText(updatedAtText);
                 statusTxt.setText(weatherDescription.toUpperCase());
