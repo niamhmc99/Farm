@@ -196,6 +196,11 @@ public class AddAnimalActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
                                     Log.d(TAG, "Animal inserted into herd with ID: " + documentReference.getId());
+
+                                    Toast.makeText(AddAnimalActivity.this, "The animal profile has been created.", Toast.LENGTH_LONG).show();
+                                    Intent mainIntent = new Intent(AddAnimalActivity.this, AnimalActivity.class);
+                                    startActivity(mainIntent);
+                                    finish();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
