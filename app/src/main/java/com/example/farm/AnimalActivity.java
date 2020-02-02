@@ -46,7 +46,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     FirebaseFirestore db = FirebaseFirestore.getInstance(); //connects to DB
 
     //want to add animals to db
-    private CollectionReference animalRef = db.collection("Animals");
+    private CollectionReference animalRef = db.collection("animals");
     //private DocumentReference animal = db.document("Animals");
     private AnimalAdapter adapter;
 

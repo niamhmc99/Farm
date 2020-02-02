@@ -21,7 +21,7 @@ public class Animal implements Serializable {
 
 
 
-    private int animalProfilePic;
+    private String animalProfilePic;
 
 
     public Animal(){ //empty constructor
@@ -29,7 +29,7 @@ public class Animal implements Serializable {
     }
 
     //this constructor includes animal profile pic and userID for RecycleView
-    public Animal(String id, String tagNumber, String animalName, String dob, String sex, String gender, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire, String user_id, int animalProfilePic) {
+    public Animal(String id, String tagNumber, String animalName, String dob, String sex, String gender, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire, String user_id, String animalProfilePic) {
         this.id = id;
         this.tagNumber = tagNumber;
         this.animalName = animalName;
@@ -167,11 +167,11 @@ public class Animal implements Serializable {
         this.gender = gender;
     }
 
-    public int getAnimalProfilePic() {
+    public String getAnimalProfilePic() {
         return animalProfilePic;
     }
 
-    public void setAnimalProfilePic(int animalProfilePic) {
+    public void setAnimalProfilePic(String animalProfilePic) {
         this.animalProfilePic = animalProfilePic;
     }
 

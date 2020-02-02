@@ -47,8 +47,6 @@ public class AddAnimalActivity extends AppCompatActivity {
     private Button buttonSaveDetails;
     private Spinner spinnerGender, spinnerAiStockBull, spinnerCalvingDiff;
     View mParentLayout;
-    private CircleImageView imgAnimalProfilePic;
-    private Uri mainAnimalImageURI = null;
     private ProgressBar setupProgress;
     private List<Animal>animalList;
     private AnimalAdapter adapter;
@@ -84,7 +82,7 @@ public class AddAnimalActivity extends AppCompatActivity {
         editTextsire =findViewById(R.id.ediTextSire);
         editTextBreed =findViewById(R.id.editTextBreed);
         editTextAiORstockbull =findViewById(R.id.editTextAIBull);
-        imgAnimalProfilePic = findViewById(R.id.imgAnimalProfilePic);
+        //imgAnimalProfilePic = findViewById(R.id.imgAnimalProfilePic);
 
         setupProgress = findViewById(R.id.addAnimal_progressBar);
         setupProgress.setVisibility(View.VISIBLE);
@@ -135,6 +133,7 @@ public class AddAnimalActivity extends AppCompatActivity {
         List<String> list = new ArrayList<String>();
         list.add("Male");
         list.add("Female");
+
         ArrayAdapter<String> genderAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

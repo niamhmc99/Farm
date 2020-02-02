@@ -2,6 +2,7 @@ package com.example.farm.adapters;
 
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.farm.R;
 import com.example.farm.models.Animal;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -16,6 +20,8 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapter.AnimalHolder> {
     private Context mContext;
@@ -31,7 +37,7 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
 
     class AnimalHolder extends RecyclerView.ViewHolder{
         TextView textViewTagNumber, textViewAnimalName, textViewDob, textViewBreed;
-        ImageView animalProfilePic;
+        CircleImageView animalProfilePic;
 
         public View layout;
 
@@ -58,6 +64,16 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
             });
         }
 
+        public void setAnimalImage(String animalImage)
+        {
+            animalProfilePic= itemView.findViewById(R.id.imageAnimalProfile);
+
+            RequestOptions placeholderOption= new RequestOptions();
+            placeholderOption.placeholder(R.drawable.animalsmall);
+
+            Glide.with(mContext).applyDefaultRequestOptions(placeholderOption).load(animalImage).into(animalProfilePic);
+        }
+
     }
     public interface OnItemClickListener{
         void onItemClick(DocumentSnapshot documentSnapshot, int position);
@@ -72,7 +88,8 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
         animalHolder.textViewAnimalName.setText(animal.getAnimalName());
         animalHolder.textViewDob.setText(animal.getDob());
         animalHolder.textViewBreed.setText(animal.getBreed());
-        animalHolder.animalProfilePic.setImageResource(animal.getAnimalProfilePic());
+
+        //animalHolder.setAnimalImage(animal.getAnimalProfilePic());
 
 //        animalHolder.animalProfilePic.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -112,6 +129,7 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
 //            }
 //        });
     }
+
 
 
 
