@@ -30,6 +30,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -106,6 +107,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        GoogleMapOptions options= new GoogleMapOptions();
+        options.zoomControlsEnabled(true);
+        options.zoomGesturesEnabled(true);
+
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             bulidGoogleApiClient();
             mMap.setMyLocationEnabled(true);
@@ -161,7 +167,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //                longitude = myAddress.getLongitude();
 //                Address myAddress = addressList.get(i);
 
-                if(!location.equals(""))
+                if(location!=null && !location.equals(""))
                 {
                     Geocoder geocoder = new Geocoder(this);
 
@@ -198,20 +204,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
 
 
-            case R.id.B_animalfeed:
+            case R.id.B_mechanic:
                 mMap.clear();
-                String feed = "animalfeed";
+                String feed = "car_repair";
                 url = getUrl(latitude, longitude, feed);
                 dataTransfer[0] = mMap;
                 dataTransfer[1] = url;
 
                 getNearbyPlacesData.execute(dataTransfer);
-                Toast.makeText(MapsActivity.this, "Showing Nearby Animal feed centers", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapsActivity.this, "Showing Nearby Mechanics centers", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.B_vets:
                 mMap.clear();
-                String vets = "vets";
+                String vets = "veterinary_care";
                 url = getUrl(latitude, longitude, vets);
                 dataTransfer[0] = mMap;
                 dataTransfer[1] = url;
