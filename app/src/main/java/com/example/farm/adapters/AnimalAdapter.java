@@ -64,14 +64,29 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
             });
         }
 
-        public void setAnimalImage(String animalImage)
+        public void setAnimalImage(String animalImageUrl)
         {
             animalProfilePic= itemView.findViewById(R.id.imageAnimalProfile);
 
-            RequestOptions placeholderOption= new RequestOptions();
-            placeholderOption.placeholder(R.drawable.animalsmall);
+//            RequestOptions placeholderOption= new RequestOptions();
+//            placeholderOption.placeholder(R.drawable.animalsmall);
 
-            Glide.with(mContext).applyDefaultRequestOptions(placeholderOption).load(animalImage).into(animalProfilePic);
+//            Glide.with(mContext).applyDefaultRequestOptions(placeholderOption).load(animalImage).into(animalProfilePic);
+            Glide.with(mContext)
+                    .load(animalImageUrl)
+                    .into(animalProfilePic);
+//
+//            /**
+//             * gets the image url from adapter and passes to Glide API to load the image
+//             *
+//             * @param viewHolder
+//             * @param i
+//             */
+//            @Override
+//            public void onBindViewHolder(ViewHolder viewHolder, int i) {
+//            Glide.with(context).load(imageUrls.get(i).getImageUrl()).into(viewHolder.img);
+//            }
+
         }
 
     }
@@ -89,7 +104,13 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
         animalHolder.textViewDob.setText(animal.getDob());
         animalHolder.textViewBreed.setText(animal.getBreed());
 
-        //animalHolder.setAnimalImage(animal.getAnimalProfilePic());
+        String animalImageUrl = animal.getAnimalProfilePic();
+        animalHolder.setAnimalImage(animalImageUrl);
+
+        //Glide.with(mContext).load(animal.getAnimalProfilePic()).into(animalHolder.animalProfilePic);
+
+
+       // animalHolder.setAnimalImage(animal.getAnimalProfilePic());
 
 //        animalHolder.animalProfilePic.setOnClickListener(new View.OnClickListener() {
 //            @Override
