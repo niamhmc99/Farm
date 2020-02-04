@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SplashScreenActivity"
+    android:background="@color/splashDarkGrey"
+    android:id="@+id/layout">
+
+
+    <ImageView
+        android:id="@+id/imageViewSplashScreen"
+        android:layout_width="443dp"
+        android:layout_height="368dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="32dp"
+        android:contentDescription="@string/filefarmlogo"
+        android:src="@drawable/splash_image"
+        app:layout_constraintBottom_toTopOf="@+id/textViewFileFarm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <TextView
+        android:id="@+id/textViewFileFarm"
+        android:layout_width="404dp"
+        android:layout_height="238dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/file_a_farm"
+        android:fontFamily="@font/fredericka_the_great"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textColorHighlight="@color/colorBlack"
+        android:textSize="89sp"
+        android:transitionName="logo_text"
+        app:layout_constraintBottom_toTopOf="@+id/textViewSlogan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewSplashScreen"
+        tools:targetApi="lollipop" />
+
+    <TextView
+        android:id="@+id/textViewSlogan"
+        android:layout_width="267dp"
+        android:layout_height="27dp"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="@font/antic"
+        android:text="@string/farm_mananagement_filing_app"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFileFarm" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

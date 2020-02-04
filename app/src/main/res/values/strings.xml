@@ -12,4 +12,8 @@
 
     <string name="viewAnimals">View Herd </string>
     <string name="title_activity_maps">Map</string>
+    <string name="file_a_farm">File A Farm</string>
+    <string name="farm_mananagement_filing_app">Farm Mananagement Filing App</string>
+    <string name="filefarmlogo">FileFarmLogo</string>
+
 </resources>

@@ -7,5 +7,6 @@
     <color name="white">#FFFFFF</color>
     <color name="colorBlack">#FF090101</color>
     <color name="colorSky">#95E2DE</color>
+    <color name="splashDarkGrey">#171819</color>
 
 </resources>
