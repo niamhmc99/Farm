@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.core.util.Preconditions;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +24,8 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static java.security.AccessController.getContext;
+
 public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapter.AnimalHolder> {
     private Context mContext;
     private List<Animal> animalList;
@@ -34,22 +37,29 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
         super(options);
     }
 
+    @NonNull
+    @Override
+    public AnimalHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View v = inflater.inflate(R.layout.row_layout_cardview, parent, false);
+        AnimalHolder vh = new AnimalHolder(v);
+        return vh;
+    }
 
     class AnimalHolder extends RecyclerView.ViewHolder{
         TextView textViewTagNumber, textViewAnimalName, textViewDob, textViewBreed;
         CircleImageView animalProfilePic;
 
-        public View layout;
+//        public View layout;
 
         public AnimalHolder(@NonNull View itemView) {
             super(itemView);
-            layout= itemView;
+            //layout= itemView;
             textViewTagNumber = itemView.findViewById(R.id.textViewTagNumber);
             textViewAnimalName = itemView.findViewById(R.id.textViewAnimalName);
             textViewDob = itemView.findViewById(R.id.textViewDob);
             textViewBreed = itemView.findViewById(R.id.textViewBreed);
-            animalProfilePic = itemView.findViewById(R.id.imageAnimalProfile);
-
+//            animalProfilePic = itemView.findViewById(R.id.imageAnimalProfile);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -57,44 +67,23 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
                     int position = getAdapterPosition();
                     if(position!=RecyclerView.NO_POSITION && listener !=null){
                         listener.onItemClick(getSnapshots().getSnapshot(position), position);
-
                     }
-
                 }
             });
         }
 
         public void setAnimalImage(String animalImageUrl)
         {
-            animalProfilePic= itemView.findViewById(R.id.imageAnimalProfile);
+            animalProfilePic = itemView.findViewById(R.id.imageAnimalProfile);
 
-//            RequestOptions placeholderOption= new RequestOptions();
-//            placeholderOption.placeholder(R.drawable.animalsmall);
+            RequestOptions placeholderOption= new RequestOptions();
+            placeholderOption.placeholder(R.drawable.animalsmall);
 
-//            Glide.with(mContext).applyDefaultRequestOptions(placeholderOption).load(animalImage).into(animalProfilePic);
-            Glide.with(mContext)
-                    .load(animalImageUrl)
-                    .into(animalProfilePic);
-//
-//            /**
-//             * gets the image url from adapter and passes to Glide API to load the image
-//             *
-//             * @param viewHolder
-//             * @param i
-//             */
-//            @Override
-//            public void onBindViewHolder(ViewHolder viewHolder, int i) {
-//            Glide.with(context).load(imageUrls.get(i).getImageUrl()).into(viewHolder.img);
-//            }
-
+            //Preconditions.checkNotNull(mContext); -- this is throwing null pointer exception
+            if (getContext() != null) {
+                Glide.with(itemView.getContext()).applyDefaultRequestOptions(placeholderOption).load(animalImageUrl).into(animalProfilePic);
+            }
         }
-
-    }
-    public interface OnItemClickListener{
-        void onItemClick(DocumentSnapshot documentSnapshot, int position);
-    }
-    public void setOnItemClickListener(OnItemClickListener listener){
-        this.listener=listener;
     }
 
     @Override
@@ -151,17 +140,15 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
 //        });
     }
 
-
-
-
-    @NonNull
-    @Override
-    public AnimalHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View v = inflater.inflate(R.layout.row_layout_cardview, parent, false);
-        AnimalHolder vh = new AnimalHolder(v);
-        return vh;
+    public interface OnItemClickListener{
+        void onItemClick(DocumentSnapshot documentSnapshot, int position);
     }
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener=listener;
+    }
+
+
+
 
     public void deleteItem(int position){
         //gets all documents then gets doc at that postion
