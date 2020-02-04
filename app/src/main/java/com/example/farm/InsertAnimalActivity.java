@@ -193,6 +193,9 @@ public class InsertAnimalActivity extends AppCompatActivity {
                         //user_id = firebaseAuth.getCurrentUser().getUid();
 
                         File newImageFile = new File(mainImageURI.getPath());
+//                        Uri newImageFile1;
+//                        newImageFile1.fromFile(new File((mainImageURI)))
+
                         try {
 
                             compressedImageFile = new Compressor(InsertAnimalActivity.this)
@@ -277,7 +280,8 @@ public class InsertAnimalActivity extends AppCompatActivity {
 
         if(task != null) {
 
-            download_uri = task.getResult().getUploadSessionUri();
+            //is it .getDownloadUrl() instead but is that depercated??
+           download_uri = task.getResult().getUploadSessionUri();
 
         } else {
 
