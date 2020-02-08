@@ -53,6 +53,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
@@ -61,8 +62,9 @@ import id.zelory.compressor.Compressor;
 
 public class InsertAnimalActivity extends AppCompatActivity {
     private final String  TAG= "InsertAnimalActivity";
-    private EditText editTextTagNumber, editTextAnimalName, editTextDob, editTextSex, editTextDam, editTextCalvingDifficulty, editTextsire, editTextAiORstockbull, editTextBreed;
-    private Button buttonSaveDetails;
+    private EditText  editTextTagNumber, editTextAnimalName, editTextDob, editTextSex, editTextDam, editTextCalvingDifficulty, editTextsire, editTextAiORstockbull, editTextBreed;
+    private Button btnInsertAnimal;
+    private ProgressBar addanimalProgress;
     private Spinner spinnerGender, spinnerAiStockBull, spinnerCalvingDiff;
     View mParentLayout;
 
@@ -72,10 +74,6 @@ public class InsertAnimalActivity extends AppCompatActivity {
     private String user_id;
 
     private boolean isChanged = false;
-
-    private EditText txtTagNumber;
-    private Button btnInsertAnimal;
-    private ProgressBar addanimalProgress;
 
     private StorageReference storageReference;
     private FirebaseAuth firebaseAuth;
@@ -125,12 +123,13 @@ public class InsertAnimalActivity extends AppCompatActivity {
         editTextAiORstockbull =findViewById(R.id.editTextAIBull);
 
         animalProfilePic = findViewById(R.id.animal_image);
-        txtTagNumber = findViewById(R.id.tagNumber);
+        editTextTagNumber = findViewById(R.id.tagNumber);
         btnInsertAnimal = findViewById(R.id.btnInsertAnimal);
         addanimalProgress = findViewById(R.id.animaml_progress);
 
         addanimalProgress.setVisibility(View.VISIBLE);
         btnInsertAnimal.setEnabled(false);
+
 
         firestoreDB.collection("animals").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -145,7 +144,7 @@ public class InsertAnimalActivity extends AppCompatActivity {
 
                         mainImageURI = Uri.parse(image);
 
-                        txtTagNumber.setText(tagNumber);
+                        editTextTagNumber.setText(tagNumber);
 
                         RequestOptions placeholderRequest = new RequestOptions();
                         placeholderRequest.placeholder(R.drawable.animalsmall);
@@ -173,7 +172,7 @@ public class InsertAnimalActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                final String strTag = txtTagNumber.getText().toString();
+                final String strTag = editTextTagNumber.getText().toString();
                 final String strName = editTextAnimalName.getText().toString().trim();
                 final String strDob = editTextDob.getText().toString().trim();
                 final String strSelectedGender = String.valueOf(spinnerGender.getSelectedItem());
@@ -190,7 +189,7 @@ public class InsertAnimalActivity extends AppCompatActivity {
 
                     if (isChanged) {
 
-                        //user_id = firebaseAuth.getCurrentUser().getUid();
+                        user_id = firebaseAuth.getCurrentUser().getUid();
 
                         File newImageFile = new File(mainImageURI.getPath());
 //                        Uri newImageFile1;
@@ -212,7 +211,10 @@ public class InsertAnimalActivity extends AppCompatActivity {
                         compressedImageFile.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                         byte[] thumbData = baos.toByteArray();
 
-                        UploadTask image_path = storageReference.child("profile_images").child(txtTagNumber + ".jpg").putBytes(thumbData);
+//                          StorageReference ref =storageReference.child("images/"+ UUID.randomUUID().toString());
+//                        UploadTask image_path = storageReference.child("profile_images"+ UUID.randomUUID().toString() +".jpg").putBytes(thumbData);
+
+                        UploadTask image_path = storageReference.child("profile_images").child(user_id + ".jpg").putBytes(thumbData);
 
                         image_path.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                             @Override
