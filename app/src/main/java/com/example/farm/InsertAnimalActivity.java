@@ -192,8 +192,6 @@ public class InsertAnimalActivity extends AppCompatActivity {
                         user_id = firebaseAuth.getCurrentUser().getUid();
 
                         File newImageFile = new File(mainImageURI.getPath());
-//                        Uri newImageFile1;
-//                        newImageFile1.fromFile(new File((mainImageURI)))
 
                         try {
 
@@ -211,30 +209,37 @@ public class InsertAnimalActivity extends AppCompatActivity {
                         compressedImageFile.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                         byte[] thumbData = baos.toByteArray();
 
-//                          StorageReference ref =storageReference.child("images/"+ UUID.randomUUID().toString());
-//                        UploadTask image_path = storageReference.child("profile_images"+ UUID.randomUUID().toString() +".jpg").putBytes(thumbData);
+                   final StorageReference filePath = storageReference.child("images/"+ UUID.randomUUID().toString());
 
-                        UploadTask image_path = storageReference.child("profile_images").child(user_id + ".jpg").putBytes(thumbData);
 
-                        image_path.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        filePath.putFile(mainImageURI).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>(){
+
                             @Override
-                            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task){
+                                if(task.isSuccessful())
 
-                                if (task.isSuccessful()) {
-                                    storeFirestore(task, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID);
+                                {
+                                    filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
+                                    {
+                                        @Override
+                                       public void onSuccess(Uri uri)
+                                        {
+                                           String downloadUrl = uri.toString();
+                                            storeFirestore(downloadUrl, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID);
 
-                                } else {
-
-                                    String error = task.getException().getMessage();
-                                    Toast.makeText(InsertAnimalActivity.this, "(IMAGE Error) : " + error, Toast.LENGTH_LONG).show();
-
-                                    addanimalProgress.setVisibility(View.INVISIBLE);
-
+                                        }
+                                    });
+                                }
+                                else {
+                                    Toast.makeText(InsertAnimalActivity.this, "Permission Denied", Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
 
-                    } else {
+                    }
+                    }
+                else
+                    {
 
                         storeFirestore(null, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID);
 
@@ -242,9 +247,9 @@ public class InsertAnimalActivity extends AppCompatActivity {
 
                 }
 
-            }
+            });
 
-        });
+
 
         animalProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -274,26 +279,9 @@ public class InsertAnimalActivity extends AppCompatActivity {
         });
 
 
-    }
+}
 
-    private void storeFirestore(@NonNull Task<UploadTask.TaskSnapshot> task, String strTag, String strName, String strDob, String strSelectedGender, String strBreed, String strDam, String strSelectedCalvingDif, String strSelectedAIStockBull, String strSire, String strUserID) {
-
-        Uri download_uri;
-
-        if(task != null) {
-
-            //is it .getDownloadUrl() instead but is that depercated??
-           download_uri = task.getResult().getUploadSessionUri();
-
-        } else {
-
-            download_uri = mainImageURI;
-
-        }
-
-//        Map<String, String> animalMap = new HashMap<>();
-//        animalMap.put("tagNumber", tag_number);
-//        animalMap.put("image", download_uri.toString());
+    private void storeFirestore(String downloadUrl, String strTag, String strName, String strDob, String strSelectedGender, String strBreed, String strDam, String strSelectedCalvingDif, String strSelectedAIStockBull, String strSire, String strUserID) {
 
 
         Map<String, Object> animalMap = new HashMap<>();
@@ -307,11 +295,11 @@ public class InsertAnimalActivity extends AppCompatActivity {
         animalMap.put(KEY_BREED, strBreed);
         animalMap.put(KEY_AiOrStockbull, strSelectedAIStockBull);
         animalMap.put(KEY_USERID, strUserID);
-        animalMap.put(KEY_AnimalProfilePic, download_uri.toString());
+        animalMap.put(KEY_AnimalProfilePic, downloadUrl);
 
 
 
-        if(!hasValidationErrors(strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire) == true) {
+        if(!hasValidationErrors(strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire)) {
 
             firestoreDB.collection("animals")
                     .add(animalMap)

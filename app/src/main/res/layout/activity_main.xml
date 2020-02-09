@@ -41,10 +41,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/imageButtonAnimals"
@@ -149,6 +149,7 @@
         android:id="@+id/buttonWeather"
         android:layout_width="98dp"
         android:layout_height="45dp"
+        android:layout_marginBottom="16dp"
         android:onClick="clickWeatherDetz"
         android:text="Weather"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -174,6 +175,7 @@
         android:id="@+id/buttonGoogleMap"
         android:layout_width="98dp"
         android:layout_height="45dp"
+        android:layout_marginBottom="16dp"
         android:onClick="clickGoogleMap"
         android:text="Maps"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -185,18 +187,18 @@
 
     <ImageButton
         android:id="@+id/imageButtonWeather"
-        android:layout_width="139dp"
-        android:layout_height="108dp"
+        android:layout_width="150dp"
+        android:layout_height="120dp"
         android:layout_marginStart="240dp"
         android:layout_marginLeft="240dp"
-        android:layout_marginTop="276dp"
+        android:layout_marginTop="72dp"
         android:onClick="clickWeather"
         app:layout_constraintBottom_toBottomOf="@+id/buttonGoogleMap"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toTopOf="@+id/loggedInUser"
+        app:layout_constraintVertical_bias="0.374"
         app:srcCompat="@drawable/weather" />
 
 
