@@ -18,5 +18,16 @@
     <string name="weather">Weather</string>
     <string name="todolist">To Do List</string>
     <string name="nearbyPlaces">Nearby Places</string>
+    <string name="breed">Breed:</string>
+    <string name="d_o_b">D.O.B.:</string>
+    <string name="name">Name:</string>
+    <string name="tag_number">Tag Number:</string>
+    <string name="some_date">some date</string>
+    <string name="service_the_massey_ferguson_tractor">Service the Massey Ferguson Tractor</string>
+    <string name="pressure">Pressure</string>
+    <string name="_06_40_am">06:40 AM</string>
+    <string name="humidity">Humidity</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="wind">Wind</string>
 
 </resources>

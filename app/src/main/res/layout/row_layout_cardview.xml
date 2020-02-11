@@ -12,7 +12,7 @@
 
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="393dp"
         android:layout_height="match_parent"
         android:padding="8dp">
 
@@ -28,20 +28,23 @@
             android:src="@drawable/animalsmall"
             app:civ_border_color="#E2E1E1"
             app:civ_border_width="3dp"
-            />
+            android:layout_marginStart="15dp"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:id="@+id/textViewTagNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:layout_toRightOf="@id/imageAnimalProfile"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:text="Tag Number: "
+            android:layout_toRightOf="@id/imageAnimalProfile"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/tag_number"
             android:textColor="@color/colorBlack"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_toEndOf="@id/imageAnimalProfile"
+            android:layout_marginStart="15dp" />
 
         <TextView
             android:id="@+id/textViewAnimalName"
@@ -50,35 +53,41 @@
             android:layout_below="@+id/textViewTagNumber"
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@id/imageAnimalProfile"
-            android:text="Name: "
+            android:text="@string/name"
             android:textColor="@color/colorBlack"
             android:textStyle="bold"
-            tools:ignore="UnknownId" />
+            tools:ignore="UnknownId"
+            android:layout_toEndOf="@id/imageAnimalProfile"
+            android:layout_marginStart="15dp" />
 
         <TextView
             android:id="@+id/textViewDob"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewAnimalName"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="0dp"
             android:layout_toRightOf="@id/imageAnimalProfile"
-            android:layout_marginLeft="15dp"
-            android:text="D.O.B.: "
+            android:text="@string/d_o_b"
             android:textColor="@color/colorBlack"
             android:textStyle="bold"
-            tools:ignore="UnknownId" />
+            tools:ignore="UnknownId"
+            android:layout_toEndOf="@id/imageAnimalProfile"
+            android:layout_marginStart="15dp" />
 
         <TextView
             android:id="@+id/textViewBreed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorBlack"
-            android:layout_toRightOf="@id/imageAnimalProfile"
-            android:layout_marginLeft="15dp"
-            android:textStyle="bold"
-            android:text="Breed: "
             android:layout_below="@+id/textViewDob"
-            tools:ignore="UnknownId" />
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/imageAnimalProfile"
+            android:text="@string/breed"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            tools:ignore="UnknownId"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@id/imageAnimalProfile" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>
