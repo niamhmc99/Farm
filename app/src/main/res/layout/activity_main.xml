@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_dash"
+    android:background="@drawable/freshgrass"
     tools:context=".MainActivity">
 
 
@@ -20,16 +20,6 @@
             android:layout_marginTop="32dp"
             android:layout_marginRight="20dp">
 
-            <ImageButton
-                android:id="@+id/imageButtonLogout"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_logout"
-                android:layout_below="@+id/txtView1"
-                android:background="@color/white"
-
-                />
-
 
             <TextView
                 android:id="@+id/txtViewFileFarm"
@@ -37,7 +27,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/file_a_farm"
                 android:textColor="@color/white"
-                android:textSize="27sp" />
+                android:fontFamily="@font/fredericka_the_great"
+                android:textStyle="bold"
+                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/txtView1"
@@ -48,6 +40,15 @@
                 android:textColor="@color/white" />
 
         </RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/imageButtonLogout"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="-6dp"
+            android:background="@color/white"
+
+            android:src="@drawable/ic_logout" />
 
         <GridLayout
             android:layout_width="match_parent"
@@ -63,7 +64,7 @@
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
                 app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
+                app:cardCornerRadius="26dp"
                 android:layout_margin="12dp">
 
 
@@ -101,7 +102,7 @@
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
                 app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
+                app:cardCornerRadius="26dp"
                 android:layout_margin="12dp">
 
 
@@ -140,7 +141,7 @@
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
                 app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
+                app:cardCornerRadius="26dp"
                 android:layout_margin="12dp">
 
 
@@ -180,7 +181,7 @@
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
                 app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
+                app:cardCornerRadius="26dp"
                 android:layout_margin="12dp">
 
 
@@ -219,7 +220,7 @@
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
                 app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
+                app:cardCornerRadius="26dp"
                 android:layout_margin="12dp">
 
 
@@ -259,7 +260,7 @@
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
                 app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
+                app:cardCornerRadius="26dp"
                 android:layout_margin="12dp">
 
 

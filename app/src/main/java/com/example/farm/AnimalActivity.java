@@ -50,7 +50,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     private AnimalAdapter adapter;
 
     //widgets
-    private FloatingActionButton mFabAdd, mFabAddAnimal;
+    private FloatingActionButton mFabAddAnimal;
 
 
 
@@ -63,11 +63,11 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal);
 
-        mFabAdd = findViewById(R.id.fab);
+//        mFabAdd = findViewById(R.id.fab);
         mFabAddAnimal = findViewById(R.id.fabInsertAnimal);
         mParentLayout = findViewById(android.R.id.content);
         setupFirebaseAuth();
-        mFabAdd.setOnClickListener(this);
+       // mFabAdd.setOnClickListener(this);
         mFabAddAnimal.setOnClickListener(this);
 
 
@@ -280,10 +280,6 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()){
 
-            case R.id.fab:
-                //add new animal
-                startActivity(new Intent(AnimalActivity.this, AddAnimalActivity.class));
-                break;
             case R.id.fabInsertAnimal:
                 startActivity(new Intent(AnimalActivity.this, InsertAnimalActivity.class));
                 break;
