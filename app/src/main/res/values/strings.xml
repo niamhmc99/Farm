@@ -15,5 +15,8 @@
     <string name="file_a_farm">File A Farm</string>
     <string name="farm_mananagement_filing_app">Farm Mananagement Filing App</string>
     <string name="filefarmlogo">FileFarmLogo</string>
+    <string name="weather">Weather</string>
+    <string name="todolist">To Do List</string>
+    <string name="nearbyPlaces">Nearby Places</string>
 
 </resources>

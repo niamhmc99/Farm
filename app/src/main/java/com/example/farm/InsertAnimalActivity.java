@@ -59,7 +59,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
 
-
 public class InsertAnimalActivity extends AppCompatActivity {
     private final String  TAG= "InsertAnimalActivity";
     private EditText  editTextTagNumber, editTextAnimalName, editTextDob, editTextSex, editTextDam, editTextCalvingDifficulty, editTextsire, editTextAiORstockbull, editTextBreed;

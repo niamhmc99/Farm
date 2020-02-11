@@ -20,6 +20,16 @@
             android:layout_marginTop="32dp"
             android:layout_marginRight="20dp">
 
+            <ImageButton
+                android:id="@+id/imageButtonLogout"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_logout"
+                android:layout_below="@+id/txtView1"
+                android:background="@color/white"
+
+                />
+
             <TextView
                 android:id="@+id/txtViewFileFarm"
                 android:layout_width="wrap_content"
@@ -63,10 +73,14 @@
                     android:padding="16dp"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:src="@drawable/animalsmall"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"/>
+                    <ImageButton
+                        android:id="@+id/imageButtonAnimals"
+                        android:src="@drawable/cowcalf"
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:onClick="clickAnimals"/>
+
+                    <!--                        -->
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -74,7 +88,7 @@
                         android:text="Animals"
                         android:textSize="10sp"
                         android:layout_marginTop="12dp"
-                        android:textColor="@color/splashDarkGrey"/>
+                        android:textColor="@color/colorBlack"/>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -96,18 +110,20 @@
                     android:padding="16dp"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:src="@drawable/animalsmall"
-                        android:layout_width="80dp"
+                    <ImageButton
+                        android:id="@+id/imageButtonWeather"
+                        android:src="@drawable/weather"
+                        android:onClick="clickWeather"
+                        android:layout_width="100dp"
                         android:layout_height="80dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Animals"
+                        android:text="Weather"
                         android:textSize="10sp"
                         android:layout_marginTop="12dp"
-                        android:textColor="@color/splashDarkGrey"/>
+                        android:textColor="@color/colorBlack"/>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -129,18 +145,20 @@
                     android:padding="16dp"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:src="@drawable/animalsmall"
-                        android:layout_width="80dp"
+                    <ImageButton
+                        android:id="@+id/imageButtonVets"
+                        android:src="@drawable/vet3"
+                        android:layout_width="100dp"
                         android:layout_height="80dp"/>
 
                     <TextView
+                        android:id="@+id/textViewVet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Animals"
+                        android:text="Vets"
                         android:textSize="10sp"
                         android:layout_marginTop="12dp"
-                        android:textColor="@color/splashDarkGrey"/>
+                        android:textColor="@color/colorBlack"/>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -162,18 +180,19 @@
                     android:padding="16dp"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:src="@drawable/animalsmall"
-                        android:layout_width="80dp"
+                    <ImageButton
+                        android:id="@+id/imageButtonToDoList"
+                        android:src="@drawable/todoicon"
+                        android:layout_width="100dp"
                         android:layout_height="80dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Animals"
+                        android:text="To Do List"
                         android:textSize="10sp"
                         android:layout_marginTop="12dp"
-                        android:textColor="@color/splashDarkGrey"/>
+                        android:textColor="@color/colorBlack"/>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -195,18 +214,20 @@
                     android:padding="16dp"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:src="@drawable/animalsmall"
-                        android:layout_width="80dp"
+                    <ImageButton
+                       android:id="@+id/imageButtonMaps"
+                        android:src="@drawable/google_maps"
+                        android:layout_width="100dp"
                         android:layout_height="80dp"/>
 
                     <TextView
+                        android:id="@+id/textViewGoogleMaps"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Animals"
+                        android:text="Nearby Resources"
                         android:textSize="10sp"
                         android:layout_marginTop="12dp"
-                        android:textColor="@color/splashDarkGrey"/>
+                        android:textColor="@color/colorBlack"/>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -228,84 +249,19 @@
                     android:padding="16dp"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:src="@drawable/animalsmall"
-                        android:layout_width="80dp"
+                    <ImageButton
+                        android:id="@+id/imageButtonExpenses"
+                        android:src="@drawable/expense"
+                        android:layout_width="100dp"
                         android:layout_height="80dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Animals"
+                        android:text="Expenses"
                         android:textSize="10sp"
                         android:layout_marginTop="12dp"
-                        android:textColor="@color/splashDarkGrey"/>
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
-                android:layout_margin="12dp">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:padding="16dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:src="@drawable/animalsmall"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Animals"
-                        android:textSize="10sp"
-                        android:layout_marginTop="12dp"
-                        android:textColor="@color/splashDarkGrey"/>
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
-                android:layout_margin="12dp">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:padding="16dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:src="@drawable/animalsmall"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Animals"
-                        android:textSize="10sp"
-                        android:layout_marginTop="12dp"
-                        android:textColor="@color/splashDarkGrey"/>
+                        android:textColor="@color/colorBlack"/>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>

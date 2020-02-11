@@ -6,25 +6,22 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.farm.weather.ui.WeatherActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
 public class MainActivity extends AppCompatActivity {
-    final String TAG= "MainActivity";
-    Button buttonLogut;
-    ImageButton imageButtonAnimals, imageButtonExpenditure, imageButtonVets, imageButtonEmployees;
+
+
+    ImageButton imageButtonAnimals, imageButtonVets, buttonLogout, imageButtonWeather, imageButtonMap, imageButtonToDo;
     FirebaseAuth auth;
     FirebaseUser user;
-    //FirebaseFirestore db;
     FirebaseAuth.AuthStateListener mAuthStateListener;
 
 
@@ -35,8 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-        buttonLogut = findViewById(R.id.buttonLogout);
-        buttonLogut.setOnClickListener(new View.OnClickListener() {
+
+        buttonLogout = findViewById(R.id.imageButtonLogout);
+        buttonLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 auth.signOut();
@@ -52,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+
+
     }
 
     @Override
@@ -101,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void clickWeather(View view){
-        ImageButton buttonWeather =findViewById(R.id.imageButtonWeather);
-        buttonWeather.setOnClickListener(new View.OnClickListener() {
+        imageButtonWeather =findViewById(R.id.imageButtonWeather);
+        imageButtonWeather.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, WeatherActivity2.class));
@@ -111,20 +111,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void clickWeatherDetz(View view){
-        Button buttonWeather =findViewById(R.id.buttonWeather);
-        buttonWeather.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, WeatherActivity.class));
-            }
-        });
-
-    }
+//    public void clickWeatherDetz(View view){
+//        Button buttonWeather =findViewById(R.id.buttonWeather);
+//        buttonWeather.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(MainActivity.this, WeatherActivity.class));
+//            }
+//        });
+//
+//    }
 
     public void clickToDoList(View view){
-        ImageButton buttonToDo = findViewById(R.id.imageButtonToDoList);
-        buttonToDo.setOnClickListener(new View.OnClickListener() {
+        imageButtonToDo = findViewById(R.id.imageButtonToDoList);
+        imageButtonToDo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, ToDoListActivity.class));
@@ -133,8 +133,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickGoogleMap(View view){
-        Button buttonMap = findViewById(R.id.buttonGoogleMap);
-        buttonMap.setOnClickListener(new View.OnClickListener() {
+        imageButtonMap = findViewById(R.id.imageButtonGoogleMap);
+        imageButtonMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, MapsActivity.class));
