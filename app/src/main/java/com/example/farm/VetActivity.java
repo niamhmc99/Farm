@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.farm.fragments.DatePickerFragment;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -24,6 +25,8 @@ import java.util.Calendar;
 public class VetActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     ImageView imageViewCalendarDateButton;
     TextView textViewDate;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,5 +76,7 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
 
         textViewDate= findViewById(R.id.textViewDate);
         textViewDate.setText(currentDatestring);
+
+
     }
 }
