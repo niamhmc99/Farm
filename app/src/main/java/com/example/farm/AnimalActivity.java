@@ -171,9 +171,12 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                  final Animal animal = documentSnapshot.toObject(Animal.class);
                  //animalList.add(animal);
 
-                String id = documentSnapshot.getId();
-                Toast.makeText(AnimalActivity.this, "Position " + position + " ID " +  id, Toast.LENGTH_SHORT).show();
+                final String docId = documentSnapshot.getId();
+                Toast.makeText(AnimalActivity.this, "Position " + position + " ID " +  docId, Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(AnimalActivity.this);
+
+
+
 
                 builder.setTitle("Choose option");
                 builder.setMessage("Update Animals' Information?");
@@ -184,6 +187,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
 
                         Intent intent = new Intent(AnimalActivity.this, UpdateAnimalActivity.class);
                         intent.putExtra("animal", animal); //get position of the animal in list
+                        intent.putExtra("documentId", docId);
                          startActivity(intent);
                     }
                 });

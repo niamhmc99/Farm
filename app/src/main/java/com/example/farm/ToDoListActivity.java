@@ -192,21 +192,20 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
                 });
     }
 
-    //interface method
     @Override
     public void handleEditTask(final DocumentSnapshot snapshot) {
         final Task task = snapshot.toObject(Task.class);
-        final EditText editText = new EditText(this);
-        editText.setText(task.getText());
-        editText.setSelection(task.getText().length());
+        final EditText taskEditText = new EditText(this);
+        taskEditText.setText(task.getText());
+        taskEditText.setSelection(task.getText().length());
 
         new AlertDialog.Builder(this)
                 .setTitle("Edit Task")
-                .setView(editText)
+                .setView(taskEditText)
                 .setPositiveButton("Done", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String newText = editText.getText().toString();
+                        String newText = taskEditText.getText().toString();
                         task.setText(newText);
                         snapshot.getReference().set(task)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -221,7 +220,6 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
                 .show();
     }
 
-    //interface method
     @Override
     public void handleDeleteItem(DocumentSnapshot snapshot) {
         final DocumentReference documentReference = snapshot.getReference();

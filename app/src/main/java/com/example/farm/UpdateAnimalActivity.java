@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -61,7 +62,7 @@ public class UpdateAnimalActivity extends AppCompatActivity {
 //
 
         animal=(Animal) getIntent().getSerializableExtra("animal");
-
+        docId= (String) getIntent().getSerializableExtra("documentId");
         // initialize
         editTextTagNumberUpdate = findViewById(R.id.editTextTagNumber);
         editTextAnimalNameUpdate= findViewById(R.id.editTextName);
@@ -164,6 +165,7 @@ public class UpdateAnimalActivity extends AppCompatActivity {
 //    }
 
     public void updateAnimal(View view) {
+
         String strTag = editTextTagNumberUpdate.getText().toString().trim();
         String strName = editTextAnimalNameUpdate.getText().toString().trim();
         String strDob = editTextDobUpdate.getText().toString().trim();
@@ -179,17 +181,17 @@ public class UpdateAnimalActivity extends AppCompatActivity {
                                     strSex, strBreed, strDam,
                                      strCalvingDif, strAiOrStockbull, strSire);
 
-                db.collection("animals").document(animal.getId())
+                db.collection("animals").document(docId)
                         .update(
-                                "tagNumber", a.getTagNumber(),
-                                "animalName", a.getAnimalName(),
-                                "dob", a.getDob(),
-                                "sex", a.getSex(),
-                                "dam", a.getDam(),
-                                "sire", a.getSire(),
-                                "aiOrStockbull", a.getAiORstockbull(),
-                                "calvingDiff", a.getCalvingDifficulty(),
-                                "breed", a.getBreed()
+                                "tagNumber", strTag,
+                                "animalName", strName,
+                                "dob", strDob,
+                                "gender", strSex,
+                                "dam", strDam,
+                                "sire", strSire,
+                                "aiORstockbull", strAiOrStockbull,
+                                "calvingDifficulty", strCalvingDif,
+                                "breed", strBreed
                          )
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -210,7 +212,7 @@ public class UpdateAnimalActivity extends AppCompatActivity {
 
 //this gets the whole collection
    public void geAlltAnimals(){
-       db.collection("Animals")
+       db.collection("animals")
                .get()
                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                    @Override
