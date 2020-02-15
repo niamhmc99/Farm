@@ -169,7 +169,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
             @Override //Calling interface from adapter
             public void onItemClick(DocumentSnapshot documentSnapshot, final int position) {
                  final Animal animal = documentSnapshot.toObject(Animal.class);
-                 animalList.add(animal);
+                 //animalList.add(animal);
 
                 String id = documentSnapshot.getId();
                 Toast.makeText(AnimalActivity.this, "Position " + position + " ID " +  id, Toast.LENGTH_SHORT).show();
@@ -181,8 +181,9 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Animal animalPosition = animalList.get(position);
+
                         Intent intent = new Intent(AnimalActivity.this, UpdateAnimalActivity.class);
-                        intent.putExtra("Animal", animalPosition); //get position of the animal in list
+                        intent.putExtra("animal", animal); //get position of the animal in list
                          startActivity(intent);
                     }
                 });

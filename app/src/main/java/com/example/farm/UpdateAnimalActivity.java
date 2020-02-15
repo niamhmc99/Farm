@@ -42,23 +42,23 @@ public class UpdateAnimalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_animal);
 
-        //getting list of animals
-        db.collection("animals").get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if (!queryDocumentSnapshots.isEmpty()) {
-                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                            for (DocumentSnapshot d : list) {
-                                //convert d to our animal object
-                                Animal a = d.toObject(Animal.class);
-                                animalList.add(a); //add all animals to list of animals
-                            }
-                            //adapter.notifyDataSetChanged();
-                        }
-                    }
-                });
-
+//        //getting list of animals
+//        db.collection("animals").get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                        if (!queryDocumentSnapshots.isEmpty()) {
+//                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+//                            for (DocumentSnapshot d : list) {
+//                                //convert d to our animal object
+//                                Animal a = d.toObject(Animal.class);
+//                                animalList.add(a); //add all animals to list of animals
+//                            }
+//                            //adapter.notifyDataSetChanged();
+//                        }
+//                    }
+//                });
+//
 
         animal=(Animal) getIntent().getSerializableExtra("animal");
 
@@ -179,7 +179,7 @@ public class UpdateAnimalActivity extends AppCompatActivity {
                                     strSex, strBreed, strDam,
                                      strCalvingDif, strAiOrStockbull, strSire);
 
-                db.collection("Animals").document(animal.getId())
+                db.collection("animals").document(animal.getId())
                         .update(
                                 "tagNumber", a.getTagNumber(),
                                 "animalName", a.getAnimalName(),
