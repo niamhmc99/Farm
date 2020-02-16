@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".InsertAnimalActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/setupToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.Toolbar>
 
 
     <ProgressBar
@@ -25,7 +17,7 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setupToolbar" />
+        tools:ignore="MissingConstraints" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/animal_image"
@@ -77,7 +69,7 @@
 
             <EditText
                 android:id="@+id/editTextName"
-                android:layout_width="406dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Name"
@@ -192,8 +184,6 @@
                 app:layout_constraintVertical_bias="0.756" />
 
 
-
-
             <Button
                 android:id="@+id/btnInsertAnimal"
                 android:layout_width="match_parent"
@@ -212,4 +202,11 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/textViewRegisteredTimeStamp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="175dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

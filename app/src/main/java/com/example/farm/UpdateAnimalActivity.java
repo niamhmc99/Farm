@@ -4,132 +4,145 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.farm.models.Animal;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class UpdateAnimalActivity extends AppCompatActivity {
-    private final String  TAG= "UpdateAnimalActivity";
-    private EditText editTextTagNumberUpdate, editTextAnimalNameUpdate, editTextDobUpdate, editTextSexUpdate, editTextDamUpdate, editTextCalvingDifficultyUpdate, editTextSireUpdate, editTextAiORstockbullUpdate, editTextBreedUpdate;
+    private final String TAG = "UpdateAnimalActivity";
+    private EditText editTextTagNumberUpdate, editTextAnimalNameUpdate, editTextDobUpdate, editTextDamUpdate, editTextCalvingDifficultyUpdate, editTextSireUpdate, editTextAiORstockbullUpdate, editTextBreedUpdate;
     private Button buttonUpdate;
+    private Spinner spinnerGenderUpdate, spinnerCalvingDiffUpdate, spinnerAiStockBullUpdate;
     private String docId;
+    private CircleImageView animalProfilePic;
     private Animal animal;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private View mParentLayout;
-    private String recievedTagNumber;
-    private List<Animal> animalList;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseStorage fireBaseStorage;
+    StorageReference storageReference;
+
+    View mParentLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_animal);
 
-//        //getting list of animals
-//        db.collection("animals").get()
-//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                        if (!queryDocumentSnapshots.isEmpty()) {
-//                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-//                            for (DocumentSnapshot d : list) {
-//                                //convert d to our animal object
-//                                Animal a = d.toObject(Animal.class);
-//                                animalList.add(a); //add all animals to list of animals
-//                            }
-//                            //adapter.notifyDataSetChanged();
-//                        }
-//                    }
-//                });
-//
+        addItemsOnSpinnerGender();
+        addItemsOnSpinnerAiStockbull();
+        addItemsOnSpinnerCalvingDiff();
 
-        animal=(Animal) getIntent().getSerializableExtra("animal");
-        docId= (String) getIntent().getSerializableExtra("documentId");
+        fireBaseStorage= FirebaseStorage.getInstance();
+
+
+        animal = (Animal) getIntent().getSerializableExtra("animal");
+        docId = (String) getIntent().getSerializableExtra("documentId");
         // initialize
         editTextTagNumberUpdate = findViewById(R.id.editTextTagNumber);
-        editTextAnimalNameUpdate= findViewById(R.id.editTextName);
+        editTextAnimalNameUpdate = findViewById(R.id.editTextName);
         editTextDamUpdate = findViewById(R.id.editTextDAM);
         editTextDobUpdate = findViewById(R.id.editTextDob);
-        editTextSexUpdate = findViewById(R.id.editTextSex);
-        editTextCalvingDifficultyUpdate = findViewById(R.id.editTextCalvingDifficulty);
-        editTextSireUpdate =findViewById(R.id.ediTextSire);
-        editTextBreedUpdate =findViewById(R.id.editTextBreed);
-        editTextAiORstockbullUpdate =findViewById(R.id.editTextAIBull);
-
-        buttonUpdate=findViewById(R.id.buttonUpdateAnimal);
+        spinnerGenderUpdate = findViewById(R.id.spinnerGender);
+        spinnerCalvingDiffUpdate = findViewById(R.id.spinnerCalvingDiff);
+        editTextSireUpdate = findViewById(R.id.ediTextSire);
+        editTextBreedUpdate = findViewById(R.id.editTextBreed);
+        spinnerAiStockBullUpdate = findViewById(R.id.spinnerAiStockBull);
+        animalProfilePic= findViewById(R.id.imageAnimalProfile);
+        buttonUpdate = findViewById(R.id.buttonUpdateAnimal);
 
 
         //populate animal data before update
-        //was just animal before queriedAnimal*************
+        storageReference = fireBaseStorage.getReferenceFromUrl(animal.getAnimalProfilePic());
+
+        Glide.with(this)
+                .load(storageReference)
+                .into(animalProfilePic);
+
         editTextTagNumberUpdate.setText(animal.getTagNumber());
         editTextAnimalNameUpdate.setText(animal.getAnimalName());
         editTextDobUpdate.setText(animal.getDob());
-        editTextSexUpdate.setText(animal.getSex());
+        spinnerGenderUpdate.setSelection(getIndex(spinnerGenderUpdate,animal.getGender()));
         editTextDamUpdate.setText(animal.getDam());
-        editTextCalvingDifficultyUpdate.setText(animal.getCalvingDifficulty());
+        spinnerCalvingDiffUpdate.setSelection(getIndex(spinnerCalvingDiffUpdate,animal.getCalvingDifficulty()));
         editTextSireUpdate.setText(animal.getSire());
         editTextBreedUpdate.setText(animal.getBreed());
-        editTextAiORstockbullUpdate.setText(animal.getAiORstockbull());
+        spinnerAiStockBullUpdate.setSelection(getIndex(spinnerAiStockBullUpdate,animal.getAiORstockbull()));
 
 
     }
 
-    private boolean hasValidationErrors(String tagNumber, String animalName, String dob, String sex, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire){
+    private boolean hasValidationErrors(String tagNumber, String animalName, String dob, String gender, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire) {
         if (tagNumber.trim().isEmpty()) {
             editTextTagNumberUpdate.setError("TagNumber is required");
-            //makeSnackBarMessage("Please insert Tag Number.");
+            makeSnackBarMessage("Please insert Tag Number.");
             return true;
         } else if (animalName.isEmpty()) {
             editTextAnimalNameUpdate.setError("Animal Name Required");
-            //makeSnackBarMessage("Please insert Animal Name.");
+            makeSnackBarMessage("Please insert Animal Name.");
             return true;
-        }else if(dob.isEmpty()){
+        } else if (dob.isEmpty()) {
             editTextDobUpdate.setError("Date of Birth is required.");
-//            makeSnackBarMessage("Please insert Date of Birth.");
+            makeSnackBarMessage("Please insert Date of Birth.");
             return true;
-        }else if(sex.isEmpty()){
-            editTextSexUpdate.setError("The sex of the Animal is required");
-            //makeSnackBarMessage("Please insert the Animals Sex.");
+        }  else if(gender.isEmpty()){
+            TextView errorText = (TextView)spinnerGenderUpdate.getSelectedView();
+            errorText.setError("");
+            errorText.setTextColor(Color.RED);//just to highlight that this is an error
+            errorText.setText("Please select the Aniamls Gender");//changes the selected item text to this
+            makeSnackBarMessage("Please insert the Animal's Gender.");
             return true;
-        }else if(dam.isEmpty()){
+        } else if (dam.isEmpty()) {
             editTextDamUpdate.setError("The Dam of the Animal is required");
-           // makeSnackBarMessage("Please insert the Animals Dam.");
+            makeSnackBarMessage("Please insert the Animal's Dam.");
             return true;
-        }else if(calvingDifficulty.isEmpty()){
-            editTextCalvingDifficultyUpdate.setError("Calving Difficulty is required");
-            //makeSnackBarMessage("Please insert the Calving Difficulty.");
+        } else if(calvingDifficulty.isEmpty()){
+            TextView errorText = (TextView)spinnerCalvingDiffUpdate.getSelectedView();
+            errorText.setError("");
+            errorText.setTextColor(Color.RED);//just to highlight that this is an error
+            errorText.setText("Select the Calving Difficulty number");//changes the selected item text to this
+            makeSnackBarMessage("Please insert the Calving Difficulty.");
             return true;
-        }else if(sire.isEmpty()){
+        } else if (sire.isEmpty()) {
             editTextSireUpdate.setError("The Sire of the Animal is required");
-           // makeSnackBarMessage("Please insert the Animals Sire.");
+            makeSnackBarMessage("Please insert the Animals Sire.");
             return true;
-        }else if(aiORstockbull.isEmpty()){
-            editTextAiORstockbullUpdate.setError("AI / Stock Bull?");
-            //makeSnackBarMessage("Please insert if insemination was by AI or Stock bull.");
+        } else if(aiORstockbull.isEmpty()){
+            TextView errorText = (TextView)spinnerAiStockBullUpdate.getSelectedView();
+            errorText.setError("");
+            errorText.setTextColor(Color.RED);//just to highlight that this is an error
+            errorText.setText("Please select the Sire Type for the animal");//changes the selected item text to this
+            makeSnackBarMessage("Please insert the Sire Type.");
             return true;
-        }else if(breed.isEmpty()){
-            editTextBreedUpdate.setError("Breed of Animal is Required.s");
-            //makeSnackBarMessage("Please insert Animal Breed.");
+        } else if (breed.isEmpty()) {
+            editTextBreedUpdate.setError("Breed of Animal is Required");
+            makeSnackBarMessage("Please insert Animal Breed.");
             return true;
-        }else{
+        } else {
             return false;
         }
 
@@ -169,65 +182,119 @@ public class UpdateAnimalActivity extends AppCompatActivity {
         String strTag = editTextTagNumberUpdate.getText().toString().trim();
         String strName = editTextAnimalNameUpdate.getText().toString().trim();
         String strDob = editTextDobUpdate.getText().toString().trim();
-        String strSex = editTextSexUpdate.getText().toString().trim();
+        String strGender = String.valueOf(spinnerGenderUpdate.getSelectedItem());
         String strDam = editTextDamUpdate.getText().toString().trim();
         String strCalvingDif = editTextCalvingDifficultyUpdate.getText().toString().trim();
         String strSire = editTextSireUpdate.getText().toString().trim();
         String strBreed = editTextBreedUpdate.getText().toString().trim();
         String strAiOrStockbull = editTextAiORstockbullUpdate.getText().toString().trim();
 
-        if(!hasValidationErrors(strTag, strName, strDob, strSex, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire)){
-            Animal a = new Animal(strTag, strName, strDob,
-                                    strSex, strBreed, strDam,
-                                     strCalvingDif, strAiOrStockbull, strSire);
+        if (!hasValidationErrors(strTag, strName, strDob, strGender, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire)) {
 
-                db.collection("animals").document(docId)
-                        .update(
-                                "tagNumber", strTag,
-                                "animalName", strName,
-                                "dob", strDob,
-                                "gender", strSex,
-                                "dam", strDam,
-                                "sire", strSire,
-                                "aiORstockbull", strAiOrStockbull,
-                                "calvingDifficulty", strCalvingDif,
-                                "breed", strBreed
-                         )
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                             Toast.makeText(UpdateAnimalActivity.this, "Animal Updated", Toast.LENGTH_LONG).show();
-                             startActivity(new Intent(UpdateAnimalActivity.this, AnimalActivity.class));
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                             @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.d(TAG, "Failure to update animal due to: " +e.toString());
-                            }
-                        });
+            db.collection("animals").document(docId)
+                    .update(
+                            "tagNumber", strTag,
+                            "animalName", strName,
+                            "dob", strDob,
+                            "gender", strGender,
+                            "dam", strDam,
+                            "sire", strSire,
+                            "aiORstockbull", strAiOrStockbull,
+                            "calvingDifficulty", strCalvingDif,
+                            "breed", strBreed
+                    )
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(UpdateAnimalActivity.this, "Animal Updated", Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(UpdateAnimalActivity.this, AnimalActivity.class));
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d(TAG, "Failure to update animal due to: " + e.toString());
+                }
+            });
         }
     }
 
 
+    //this gets the whole collection
+    public void geAlltAnimals() {
+        db.collection("animals")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
 
-//this gets the whole collection
-   public void geAlltAnimals(){
-       db.collection("animals")
-               .get()
-               .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                   @Override
-                   public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                       if (task.isSuccessful()) {
-                           for (QueryDocumentSnapshot document : task.getResult()) {
-                               Log.d(TAG, document.getId() + " => " + document.getData());
-                           }
-                       } else {
-                           Log.w(TAG, "Error getting documents.", task.getException());
-                       }
-                   }
-               });
-   }
+
+    private void addItemsOnSpinnerCalvingDiff() {
+    spinnerCalvingDiffUpdate= findViewById(R.id.spinnerCalvingDiff);
+    List<String> listDifficulty = new ArrayList<String>();
+    listDifficulty.add("0");
+    listDifficulty.add("1");
+    listDifficulty.add("2");
+    listDifficulty.add("3");
+    listDifficulty.add("4");
+    listDifficulty.add("5");
+    ArrayAdapter<String> calvingDiffAdapter = new ArrayAdapter<String>(this,
+            android.R.layout.simple_spinner_item, listDifficulty);
+    calvingDiffAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spinnerCalvingDiffUpdate.setAdapter(calvingDiffAdapter);
+    }
+
+    private void addItemsOnSpinnerGender() {
+        spinnerGenderUpdate = findViewById(R.id.spinnerGender);
+        List<String> list = new ArrayList<String>();
+        list.add("Male");
+        list.add("Female");
+
+        ArrayAdapter<String> genderAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, list);
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerGenderUpdate.setAdapter(genderAdapter);
+    }
+
+    private void addItemsOnSpinnerAiStockbull() {
+        spinnerAiStockBullUpdate = findViewById(R.id.spinnerAiStockBull);
+        List<String> listAiBull = new ArrayList<String>();
+        listAiBull.add("AI");
+        listAiBull.add("StockBull");
+
+        ArrayAdapter<String> aiStockAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, listAiBull);
+        aiStockAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAiStockBullUpdate.setAdapter(aiStockAdapter);
+    }
+
+    private void makeSnackBarMessage(String message){
+        Snackbar.make(mParentLayout, message, Snackbar.LENGTH_SHORT).show();
+    }
+
+    private int getIndex(Spinner spinner, String myString){
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+                return i;
+            }
+        }
+
+        return -1;
+    }
 }
+
+
+//
+
 //   .update(
 //           "tagNumber", a.getTagNumber(),
 //           "animalName", a.getAnimalName(),

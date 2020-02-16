@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.farm.adapters.AnimalAdapter;
@@ -38,42 +39,26 @@ import java.util.List;
 public class AnimalActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "AnimalActivity";
-//    Animal animal;
     private List<Animal> animalList;
-//    private RecyclerView recyclerView;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    FirebaseFirestore db = FirebaseFirestore.getInstance(); //connects to DB
-
-    //want to add animals to db
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference animalRef = db.collection("animals");
-    //private DocumentReference animal = db.document("Animals");
     private AnimalAdapter adapter;
-
-    //widgets
     private FloatingActionButton mFabAddAnimal;
-
-
-
-
-    //vars
     View mParentLayout;
+    ImageButton updateButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal);
-
-//        mFabAdd = findViewById(R.id.fab);
+        updateButton = findViewById(R.id.update_button);
         mFabAddAnimal = findViewById(R.id.fabInsertAnimal);
         mParentLayout = findViewById(android.R.id.content);
         setupFirebaseAuth();
-       // mFabAdd.setOnClickListener(this);
         mFabAddAnimal.setOnClickListener(this);
 
-
-
         animalList = new ArrayList<>();
-        //getting list of animals
         db.collection("animals").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -83,13 +68,11 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                             for (DocumentSnapshot d : list) {
                                 //convert d to our animal object
                                 Animal a = d.toObject(Animal.class);
-                                animalList.add(a); //add all animals to list of animals
+                                animalList.add(a);
                             }
-                            //adapter.notifyDataSetChanged();
                         }
                     }
                 });
-
         setUpRecyclerView();
 
 
@@ -107,11 +90,8 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        // use a linear layout manager
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         recyclerView.setAdapter(adapter);
-        //Add the divider line
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         //delete animal if swiped left or right
@@ -122,29 +102,30 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                 return false;
             }
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                adapter.deleteItem(viewHolder.getAdapterPosition());
-                Toast.makeText(AnimalActivity.this, "Animal Has Been Deleted from Herd.", Toast.LENGTH_SHORT).show();
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
 
-//                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//                builder.setTitle("Are you sure about this?");
-//                builder.setMessage("Deletion is permanent...");
-//
-//                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        adapter.deleteItem(viewHolder.getAdapterPosition());
-//                    }
-//                });//
-//                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                    }
-//                });
-//
-//                AlertDialog ad = builder.create();
-//                ad.show();
+                //adapter.deleteItem(viewHolder.getAdapterPosition());
+               // Toast.makeText(AnimalActivity.this, "Animal Has Been Deleted from Herd.", Toast.LENGTH_SHORT).show();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(AnimalActivity.this);
+                builder.setTitle("Are you sure about this?");
+                builder.setMessage("Deletion is permanent...");
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        adapter.deleteItem(viewHolder.getAdapterPosition());
+                    }
+                });//
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                AlertDialog ad = builder.create();
+                ad.show();
 
 
             }
@@ -157,36 +138,28 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                         if (!queryDocumentSnapshots.isEmpty()) {
                             List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                             for (DocumentSnapshot d : list) {
-                                //convert d to our animal object
                                 Animal a = d.toObject(Animal.class);
-                                animalList.add(a); //add all animals to list of animals
+                                animalList.add(a);
                             }
                         }
                     }
                 });
-        //update animal
+
         adapter.setOnItemClickListener(new AnimalAdapter.OnItemClickListener() {
-            @Override //Calling interface from adapter
+            @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, final int position) {
                  final Animal animal = documentSnapshot.toObject(Animal.class);
-                 //animalList.add(animal);
 
                 final String docId = documentSnapshot.getId();
-                Toast.makeText(AnimalActivity.this, "Position " + position + " ID " +  docId, Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(AnimalActivity.this);
-
-
-
 
                 builder.setTitle("Choose option");
                 builder.setMessage("Update Animals' Information?");
                 builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Animal animalPosition = animalList.get(position);
-
                         Intent intent = new Intent(AnimalActivity.this, UpdateAnimalActivity.class);
-                        intent.putExtra("animal", animal); //get position of the animal in list
+                        intent.putExtra("animal", animal);
                         intent.putExtra("documentId", docId);
                          startActivity(intent);
                     }
@@ -255,11 +228,6 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
 //        });
 //    }
 
-//
-//    //method to create snack bar message
-//    private void makeSnackBarMessage(String message){
-//        Snackbar.make(mParentLayout, message, Snackbar.LENGTH_SHORT).show();
-//    }
 
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
@@ -284,18 +252,18 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-
             case R.id.fabInsertAnimal:
                 startActivity(new Intent(AnimalActivity.this, InsertAnimalActivity.class));
                 break;
 
+            case R.id.update_button:
+                startActivity(new Intent(AnimalActivity.this, UpdateAnimalActivity.class));
+                break;
         }
 
     }
 
 
-
-    //Fire base Setup
     private void setupFirebaseAuth(){
         Log.d(TAG, "setupFirebaseAuth: started.");
 

@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".UpdateAnimalActivity">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/animal_image"
+        android:layout_width="212dp"
+        android:layout_height="111dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="6dp"
+        android:src="@drawable/animalsmall"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.048" />
+
     <EditText
         android:id="@+id/editTextTagNumber"
         android:layout_width="wrap_content"
@@ -15,9 +31,10 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.154" />
+        app:layout_constraintVertical_bias="0.205" />
 
     <EditText
         android:id="@+id/editTextName"
@@ -28,9 +45,10 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.236" />
+        app:layout_constraintVertical_bias="0.282" />
 
     <EditText
         android:id="@+id/editTextDob"
@@ -41,23 +59,24 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.316" />
+        app:layout_constraintVertical_bias="0.358" />
 
-
-    <EditText
-        android:id="@+id/editTextSex"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Sex"
-        android:inputType="textPersonName"
+    <Spinner
+        android:id="@+id/spinnerGender"
+        android:layout_width="218dp"
+        android:layout_height="47dp"
+        android:hint="@string/gender_prompt"
+        android:prompt="@string/gender_prompt"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.392" />
+        app:layout_constraintVertical_bias="0.44" />
 
     <EditText
         android:id="@+id/editTextBreed"
@@ -68,9 +87,10 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.472" />
+        app:layout_constraintVertical_bias="0.521" />
 
     <EditText
         android:id="@+id/editTextDAM"
@@ -83,34 +103,37 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.555" />
+        app:layout_constraintVertical_bias="0.603" />
 
-    <EditText
-        android:id="@+id/editTextCalvingDifficulty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Calving Difficulty"
-        android:inputType="textPersonName"
+    <Spinner
+        android:id="@+id/spinnerCalvingDiff"
+        android:layout_width="203dp"
+        android:layout_height="39dp"
+        android:hint="@string/calvingDifficulty_prompt"
+        android:prompt="@string/calvingDifficulty_prompt"
+        android:text="Calving Difficulty"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.475"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.641" />
+        app:layout_constraintVertical_bias="0.754" />
 
-    <EditText
-        android:id="@+id/editTextAIBull"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="AI/Stock Bull"
-        android:inputType="textPersonName"
+    <Spinner
+        android:id="@+id/spinnerAiStockBull"
+        android:layout_width="214dp"
+        android:layout_height="45dp"
+        android:hint="@string/aiStockBull_prompt"
+        android:prompt="@string/aiStockBull_prompt"
+        android:text="AI/ Stock Bull"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.718" />
-
+        app:layout_constraintVertical_bias="0.682" />
 
     <EditText
         android:id="@+id/ediTextSire"
@@ -123,7 +146,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.801" />
+        app:layout_constraintVertical_bias="0.829" />
 
     <TextView
         android:id="@+id/textViewAnimalsPage"
@@ -136,21 +159,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.085" />
+        app:layout_constraintVertical_bias="0.008" />
 
     <Button
         android:id="@+id/buttonUpdateAnimal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="72dp"
+        android:onClick="updateAnimal"
         android:text="Update Animals' Info"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        android:onClick="updateAnimal"/>
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

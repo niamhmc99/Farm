@@ -30,11 +30,13 @@ import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.farm.models.Animal;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -50,6 +52,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,8 +64,9 @@ import id.zelory.compressor.Compressor;
 
 public class InsertAnimalActivity extends AppCompatActivity {
     private final String  TAG= "InsertAnimalActivity";
-    private EditText  editTextTagNumber, editTextAnimalName, editTextDob, editTextSex, editTextDam, editTextCalvingDifficulty, editTextsire, editTextAiORstockbull, editTextBreed;
+    private EditText  editTextTagNumber, editTextAnimalName, editTextDob, editTextDam, editTextsire, editTextBreed;
     private Button btnInsertAnimal;
+    private TextView textViewRegisteredTimeStamp;
     private ProgressBar addanimalProgress;
     private Spinner spinnerGender, spinnerAiStockBull, spinnerCalvingDiff;
     View mParentLayout;
@@ -91,16 +95,12 @@ public class InsertAnimalActivity extends AppCompatActivity {
     private static final String KEY_BREED = "breed";
     private static final String KEY_USERID = "user_id";
     private static final String KEY_AnimalProfilePic = "animalProfilePic";
+    private static final String KEY_AnimalRegisteredTimestamp = "animalTimeAddedHerd";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert_animal);
-
-
-        Toolbar setupToolbar = findViewById(R.id.setupToolbar);
-        setSupportActionBar(setupToolbar);
-        getSupportActionBar().setTitle("Adding Animal to Herd");
 
         firebaseAuth = FirebaseAuth.getInstance();
         user_id = firebaseAuth.getCurrentUser().getUid();
@@ -115,16 +115,16 @@ public class InsertAnimalActivity extends AppCompatActivity {
         editTextAnimalName = findViewById(R.id.editTextName);
         editTextDam = findViewById(R.id.editTextDAM);
         editTextDob = findViewById(R.id.editTextDob);
-        editTextSex = findViewById(R.id.editTextSex);
-        editTextCalvingDifficulty = findViewById(R.id.editTextCalvingDifficulty);
+        spinnerGender = findViewById(R.id.spinnerGender);
+        spinnerCalvingDiff = findViewById(R.id.spinnerCalvingDiff);
         editTextsire =findViewById(R.id.ediTextSire);
         editTextBreed =findViewById(R.id.editTextBreed);
-        editTextAiORstockbull =findViewById(R.id.editTextAIBull);
-
+        spinnerAiStockBull =findViewById(R.id.spinnerAiStockBull);
         animalProfilePic = findViewById(R.id.animal_image);
         editTextTagNumber = findViewById(R.id.tagNumber);
         btnInsertAnimal = findViewById(R.id.btnInsertAnimal);
         addanimalProgress = findViewById(R.id.animaml_progress);
+        textViewRegisteredTimeStamp =findViewById(R.id.animalRegisterTimestamp);
 
         addanimalProgress.setVisibility(View.VISIBLE);
         btnInsertAnimal.setEnabled(false);
@@ -170,7 +170,7 @@ public class InsertAnimalActivity extends AppCompatActivity {
         btnInsertAnimal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Animal animal = new Animal();
                 final String strTag = editTextTagNumber.getText().toString();
                 final String strName = editTextAnimalName.getText().toString().trim();
                 final String strDob = editTextDob.getText().toString().trim();
@@ -181,6 +181,11 @@ public class InsertAnimalActivity extends AppCompatActivity {
                 final String strBreed = editTextBreed.getText().toString().trim();
                 final String strSelectedAIStockBull = String.valueOf(spinnerAiStockBull.getSelectedItem());
                 final String strUserID = FirebaseAuth.getInstance().getCurrentUser().getUid().trim();
+                animal.setTimeAdded(new Timestamp(new Date()));
+                final String strRegisteredTimestamp = String.valueOf(animal.getTimeAdded());
+
+
+
 
                 if (!TextUtils.isEmpty(strTag) && mainImageURI != null) {
 
@@ -193,13 +198,11 @@ public class InsertAnimalActivity extends AppCompatActivity {
                         File newImageFile = new File(mainImageURI.getPath());
 
                         try {
-
                             compressedImageFile = new Compressor(InsertAnimalActivity.this)
                                     .setMaxHeight(125)
                                     .setMaxWidth(125)
                                     .setQuality(50)
                                     .compressToBitmap(newImageFile);
-
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -209,7 +212,6 @@ public class InsertAnimalActivity extends AppCompatActivity {
                         byte[] thumbData = baos.toByteArray();
 
                    final StorageReference filePath = storageReference.child("images/"+ UUID.randomUUID().toString());
-
 
                         filePath.putFile(mainImageURI).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>(){
 
@@ -224,7 +226,7 @@ public class InsertAnimalActivity extends AppCompatActivity {
                                        public void onSuccess(Uri uri)
                                         {
                                            String downloadUrl = uri.toString();
-                                            storeFirestore(downloadUrl, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID);
+                                            storeFirestore(downloadUrl, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID, strRegisteredTimestamp);
 
                                         }
                                     });
@@ -240,7 +242,7 @@ public class InsertAnimalActivity extends AppCompatActivity {
                 else
                     {
 
-                        storeFirestore(null, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID);
+                        storeFirestore(null, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID, strRegisteredTimestamp);
 
                     }
 
@@ -280,7 +282,7 @@ public class InsertAnimalActivity extends AppCompatActivity {
 
 }
 
-    private void storeFirestore(String downloadUrl, String strTag, String strName, String strDob, String strSelectedGender, String strBreed, String strDam, String strSelectedCalvingDif, String strSelectedAIStockBull, String strSire, String strUserID) {
+    private void storeFirestore(String downloadUrl, String strTag, String strName, String strDob, String strSelectedGender, String strBreed, String strDam, String strSelectedCalvingDif, String strSelectedAIStockBull, String strSire, String strUserID, String strRegisteredTimestamp) {
 
 
         Map<String, Object> animalMap = new HashMap<>();
@@ -295,6 +297,10 @@ public class InsertAnimalActivity extends AppCompatActivity {
         animalMap.put(KEY_AiOrStockbull, strSelectedAIStockBull);
         animalMap.put(KEY_USERID, strUserID);
         animalMap.put(KEY_AnimalProfilePic, downloadUrl);
+
+//        strRegisteredTimestamp = setTimeAdded(new Timestamp(new Date()));
+
+        animalMap.put(KEY_AnimalRegisteredTimestamp, strRegisteredTimestamp);
 
 
 

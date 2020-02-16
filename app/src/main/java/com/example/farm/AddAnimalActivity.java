@@ -77,11 +77,11 @@ public class AddAnimalActivity extends AppCompatActivity {
         editTextAnimalName = findViewById(R.id.editTextName);
         editTextDam = findViewById(R.id.editTextDAM);
         editTextDob = findViewById(R.id.editTextDob);
-        editTextSex = findViewById(R.id.editTextSex);
-        editTextCalvingDifficulty = findViewById(R.id.editTextCalvingDifficulty);
-        editTextsire =findViewById(R.id.ediTextSire);
-        editTextBreed =findViewById(R.id.editTextBreed);
-        editTextAiORstockbull =findViewById(R.id.editTextAIBull);
+//        editTextSex = findViewById(R.id.editTextSex);
+//        editTextCalvingDifficulty = findViewById(R.id.editTextCalvingDifficulty);
+//        editTextsire =findViewById(R.id.ediTextSire);
+//        editTextBreed =findViewById(R.id.editTextBreed);
+//        editTextAiORstockbull =findViewById(R.id.editTextAIBull);
         //imgAnimalProfilePic = findViewById(R.id.imgAnimalProfilePic);
 
         setupProgress = findViewById(R.id.addAnimal_progressBar);
@@ -154,11 +154,7 @@ public class AddAnimalActivity extends AppCompatActivity {
 
 
     public void insertAnimal(View view){
-
-
         buttonSaveDetails = findViewById(R.id.buttonAddAnimal);
-
-
         buttonSaveDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -244,8 +240,7 @@ public class AddAnimalActivity extends AppCompatActivity {
             editTextDob.setError("Date of Birth is required.");
             makeSnackBarMessage("Please insert Date of Birth.");
             return true;
-        }
-        else if(selectedGender.isEmpty()){
+        } else if(selectedGender.isEmpty()){
             TextView errorText = (TextView)spinnerGender.getSelectedView();
             errorText.setError("");
             errorText.setTextColor(Color.RED);//just to highlight that this is an error
@@ -342,13 +337,5 @@ public class AddAnimalActivity extends AppCompatActivity {
                 startActivity(new Intent(AddAnimalActivity.this, AnimalActivity.class));
         }
         return super.onOptionsItemSelected(item);
-    }
-    public void getAnimal(){
-        String id = db.collection("Animals").document().getId();
-        db.collection("Animals").document(id).set(animal);
-
-        Animal recievedAnimal = new Animal();
-
-        recievedAnimal.setTagNumber(KEY_TAGNUMBER);
     }
 }

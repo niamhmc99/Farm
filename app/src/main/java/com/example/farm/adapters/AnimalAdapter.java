@@ -2,14 +2,13 @@ package com.example.farm.adapters;
 
 
 import android.content.Context;
-import android.net.Uri;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.core.util.Preconditions;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -19,12 +18,6 @@ import com.example.farm.models.Animal;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
-
-import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
-
-import static java.security.AccessController.getContext;
 
 public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapter.AnimalHolder> {
     private OnItemClickListener listener;
@@ -40,7 +33,7 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
     @Override
     public AnimalHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View v = inflater.inflate(R.layout.row_layout_cardview, parent, false);
+        View v = inflater.inflate(R.layout.animal_rows, parent, false);
         context=parent.getContext();
         return new AnimalHolder(v);
     }
@@ -51,6 +44,11 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
         animalHolder.textViewAnimalName.setText(animal.getAnimalName());
         animalHolder.textViewDob.setText(animal.getDob());
         animalHolder.textViewBreed.setText(animal.getBreed());
+
+        String timeAdded = (String) DateUtils.getRelativeTimeSpanString(animal
+                .getTimeAdded()
+                .getSeconds() * 1000);
+        animalHolder.animalRegisterTimestamp.setText(timeAdded);
 
 
 
@@ -90,8 +88,9 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
 
 
     class AnimalHolder extends RecyclerView.ViewHolder{
-        TextView textViewTagNumber, textViewAnimalName, textViewDob, textViewBreed;
-        CircleImageView animalProfilePic;
+        TextView textViewTagNumber, textViewAnimalName, textViewDob, textViewBreed, animalRegisterTimestamp;
+        ImageView animalProfilePic;
+
 
 
         AnimalHolder(@NonNull View itemView) {
@@ -102,6 +101,7 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
             textViewDob = itemView.findViewById(R.id.textViewDob);
             textViewBreed = itemView.findViewById(R.id.textViewBreed);
             animalProfilePic = itemView.findViewById(R.id.imageAnimalProfile);
+            animalRegisterTimestamp = itemView.findViewById(R.id.animalRegisterTimestamp);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

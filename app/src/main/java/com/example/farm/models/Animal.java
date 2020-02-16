@@ -1,5 +1,6 @@
 package com.example.farm.models;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.IgnoreExtraProperties;
 
 import java.io.Serializable;
@@ -18,6 +19,7 @@ public class Animal implements Serializable {
     private String aiORstockbull;
     private String sire;
     private String user_id; //admin_id left out of () atm
+    private Timestamp timeAdded;
 
 
 
@@ -29,7 +31,7 @@ public class Animal implements Serializable {
     }
 
     //this constructor includes animal profile pic and userID for RecycleView
-    public Animal(String id, String tagNumber, String animalName, String dob, String sex, String gender, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire, String user_id, String animalProfilePic) {
+    public Animal(String id, String tagNumber, String animalName, String dob, String sex, String gender, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire, String user_id, String animalProfilePic, Timestamp timeAdded) {
         this.id = id;
         this.tagNumber = tagNumber;
         this.animalName = animalName;
@@ -43,6 +45,7 @@ public class Animal implements Serializable {
         this.sire = sire;
         this.user_id = user_id;
         this.animalProfilePic = animalProfilePic;
+        this.timeAdded = timeAdded;
     }
 
     public Animal(String tagNumber, String animalName, String dob, String gender, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire) {
@@ -173,6 +176,13 @@ public class Animal implements Serializable {
 
     public void setAnimalProfilePic(String animalProfilePic) {
         this.animalProfilePic = animalProfilePic;
+    }
+    public Timestamp getTimeAdded() {
+        return timeAdded;
+    }
+
+    public void setTimeAdded(Timestamp timeAdded) {
+        this.timeAdded = timeAdded;
     }
 
 }
