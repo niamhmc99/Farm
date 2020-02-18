@@ -45,17 +45,15 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
         animalHolder.textViewDob.setText(animal.getDob());
         animalHolder.textViewBreed.setText(animal.getBreed());
 
-        String timeAdded = (String) DateUtils.getRelativeTimeSpanString(animal
-                .getTimeAdded()
-                .getSeconds() * 1000);
-        animalHolder.animalRegisterTimestamp.setText(timeAdded);
+//        String timeAdded = (String) DateUtils.getRelativeTimeSpanString(animal
+//                .getTimeAdded()
+//                .getSeconds() * 1000);
+//        animalHolder.animalRegisterTimestamp.setText(timeAdded);
 
 
 
         String animalImageUrl = animal.getAnimalProfilePic();
         animalHolder.setAnimalImage(animalImageUrl);
-        System.out.println(animalImageUrl+"((((((((((((((((((((((((");
-
         //Glide.with(mContext).load(animal.getAnimalProfilePic()).into(animalHolder.animalProfilePic);
 
 
@@ -67,10 +65,6 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
 //                .load(imageUrl)
 //                .into(animalHolder.animalProfilePic);
 
-
-//        Glide.with(animalHolder.textViewBreed.getContext())
-//                .load("https://firebasestorage.googleapis.com/v0/b/farm-3b20e.appspot.com/o/profile_images%2F2df2984e-9c44-4c42-acc2-61c5175a1cf9.jpg?alt=media&token=3f69f62f-2f55-4461-904a-87e5c6b2e4f9")
-//                .into(animalHolder.animalProfilePic);
     }
 
 //    public void setAnimalImage(String downloadUri, String thumbUri){
@@ -127,8 +121,6 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
             }
         }
     }
-
-
 
 
     public interface OnItemClickListener{
