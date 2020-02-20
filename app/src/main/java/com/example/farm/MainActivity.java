@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-
         buttonLogout = findViewById(R.id.imageButtonLogout);
         buttonLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
-
     }
 
     @Override

@@ -445,16 +445,12 @@ public class InsertAnimalActivity extends AppCompatActivity {
 
                 mainImageURI = result.getUri();
                 animalProfilePic.setImageURI(mainImageURI);
-
                 isChanged = true;
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-
                 Exception error = result.getError();
-
             }
         }
-
     }
 
 

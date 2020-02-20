@@ -29,7 +29,7 @@
                 android:textColor="@color/white"
                 android:fontFamily="@font/fredericka_the_great"
                 android:textStyle="bold"
-                android:textSize="30sp" />
+                android:textSize="60sp" />
 
             <TextView
                 android:id="@+id/txtView1"

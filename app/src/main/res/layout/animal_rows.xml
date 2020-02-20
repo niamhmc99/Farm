@@ -23,7 +23,7 @@
         <ImageButton
             android:id="@+id/update_button"
             android:src="@android:drawable/ic_menu_edit"
-            android:background="@android:color/transparent"
+            android:background="@drawable/rounded_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -34,14 +34,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
+
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageAnimalProfile"
-            android:layout_width="match_parent"
-            android:layout_height="190dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="227dp"
+            android:layout_height="155dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="32dp"
             android:adjustViewBounds="true"
             android:cropToPadding="true"
             android:scaleType="fitXY"
+            android:shape="ring"
             android:src="@drawable/animalsmall" />
 
 

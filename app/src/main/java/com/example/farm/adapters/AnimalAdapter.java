@@ -19,6 +19,8 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapter.AnimalHolder> {
     private OnItemClickListener listener;
 
@@ -83,9 +85,7 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
 
     class AnimalHolder extends RecyclerView.ViewHolder{
         TextView textViewTagNumber, textViewAnimalName, textViewDob, textViewBreed, animalRegisterTimestamp;
-        ImageView animalProfilePic;
-
-
+        CircleImageView animalProfilePic;
 
         AnimalHolder(@NonNull View itemView) {
             super(itemView);
