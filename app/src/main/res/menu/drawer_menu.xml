@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_home"
+                android:icon="@drawable/ic_home_black_24dp"
+                android:title="@string/menu_home" />
+            <item
+                android:id="@+id/nav_animal"
+                android:icon="@drawable/ic_cow"
+                android:title="@string/animals" />
+            <item
+                android:id="@+id/nav_weather"
+                android:icon="@drawable/ic_weather"
+                android:title="@string/weather" />
+            <item
+                android:id="@+id/nav_tools"
+                android:icon="@drawable/ic_nearby_places"
+                android:title="@string/nearbyPlaces" />
+
+            <item
+                android:id="@+id/nav_vets"
+                android:icon="@drawable/ic_vet"
+                android:title="@string/vets" />
+
+            <item
+                android:id="@+id/nav_expenses"
+                android:icon="@drawable/ic_expenses"
+                android:title="@string/expense" />
+        </menu>
+    </item>
+
+</menu>

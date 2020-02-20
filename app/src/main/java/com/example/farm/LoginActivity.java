@@ -43,7 +43,8 @@ public class LoginActivity extends AppCompatActivity {
                 FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
                 //checking to see if the email exists in db
                 if (mFirebaseUser != null) {
-                    Toast.makeText(LoginActivity.this, "You are logged in", Toast.LENGTH_SHORT).show();
+                   String user = mFirebaseUser.getDisplayName();
+                    Toast.makeText(LoginActivity.this, user + ": is logged in", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
                 else{
