@@ -1,4 +1,4 @@
-package com.example.farm;
+package com.example.farm.googlemaps;
 
 import android.Manifest;
 import android.content.Intent;
@@ -22,7 +22,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
-import com.example.farm.googlemaps.GetNearbyPlacesData;
+import com.example.farm.LoginActivity;
+import com.example.farm.MainActivity;
+import com.example.farm.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;

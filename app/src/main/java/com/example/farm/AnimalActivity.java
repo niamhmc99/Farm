@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.farm.adapters.AnimalAdapter;
+import com.example.farm.barcodeScannerTagNumber.BarcodeScannerActivity;
 import com.example.farm.models.Animal;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -258,6 +259,8 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.update_button:
                 startActivity(new Intent(AnimalActivity.this, UpdateAnimalActivity.class));
                 break;
+            case R.id.searchTagBarcode:
+                startActivity(new Intent(AnimalActivity.this, BarcodeScannerActivity.class));
         }
 
     }
