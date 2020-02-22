@@ -17,16 +17,24 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapter.AnimalHolder> {
     private OnItemClickListener listener;
 
     Context context;
+    private SimpleDateFormat dateFormat;
+
 
 
     public AnimalAdapter(@NonNull FirestoreRecyclerOptions<Animal> options) {
         super(options);
+        dateFormat = new SimpleDateFormat("dd/MM HH:mm", Locale.getDefault());
+
     }
 
     @NonNull
@@ -44,6 +52,8 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
         animalHolder.textViewAnimalName.setText(animal.getAnimalName());
         animalHolder.textViewDob.setText(animal.getDob());
         animalHolder.textViewBreed.setText(animal.getBreed());
+//        animalHolder.animalRegisterTimestamp.setText(dateFormat.format(animal.getTimeAdded().toDate()));
+    //    animalHolder.animalRegisterTimestamp.setText(dateFormat.format(new Date(String.valueOf(animal.getTimeAdded()))));
 
 //        String timeAdded = (String) DateUtils.getRelativeTimeSpanString(animal
 //                .getTimeAdded()
@@ -54,16 +64,6 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
 
         String animalImageUrl = animal.getAnimalProfilePic();
         animalHolder.setAnimalImage(animalImageUrl);
-        //Glide.with(mContext).load(animal.getAnimalProfilePic()).into(animalHolder.animalProfilePic);
-
-
-        // animalHolder.setAnimalImage(animal.getAnimalProfilePic());
-
-//        String imageUrl= animal.getAnimalProfilePic();
-//
-//        Glide.with(animalHolder.animalProfilePic.getContext())
-//                .load(imageUrl)
-//                .into(animalHolder.animalProfilePic);
 
     }
 
