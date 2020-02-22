@@ -2,11 +2,9 @@ package com.example.farm.adapters;
 
 
 import android.content.Context;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -69,20 +67,6 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
 
     }
 
-//    public void setAnimalImage(String downloadUri, String thumbUri){
-//
-//        RequestOptions requestOptions = new RequestOptions();
-//        requestOptions.placeholder(R.drawable.animalsmall);
-//
-//        Glide.with(context).applyDefaultRequestOptions(requestOptions)
-//                .load(downloadUri)
-//                .thumbnail(Glide.with(context).load(thumbUri))
-//                .into(animalProfilePic);
-//
-//}
-
-
-
     class AnimalHolder extends RecyclerView.ViewHolder{
         TextView textViewTagNumber, textViewAnimalName, textViewDob, textViewBreed, animalRegisterTimestamp;
         CircleImageView animalProfilePic;
@@ -94,7 +78,7 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
             textViewAnimalName = itemView.findViewById(R.id.textViewAnimalName);
             textViewDob = itemView.findViewById(R.id.textViewDob);
             textViewBreed = itemView.findViewById(R.id.textViewBreed);
-            animalProfilePic = itemView.findViewById(R.id.imageAnimalProfile);
+            animalProfilePic = itemView.findViewById(R.id.imageAnimalProfilePic);
             animalRegisterTimestamp = itemView.findViewById(R.id.animalRegisterTimestamp);
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +94,7 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
 
         public void setAnimalImage(String animalImageUrl)
         {
-              animalProfilePic = itemView.findViewById(R.id.imageAnimalProfile);
+              animalProfilePic = itemView.findViewById(R.id.imageAnimalProfilePic);
 
             RequestOptions placeholderOption= new RequestOptions();
             placeholderOption.placeholder(R.drawable.animalsmall);

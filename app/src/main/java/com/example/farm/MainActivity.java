@@ -16,11 +16,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     ImageButton imageButtonAnimals, imageButtonVets, buttonLogout, imageButtonWeather, imageButtonMap, imageButtonToDo;
@@ -53,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(MainActivity.this);
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -98,8 +102,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    public void clickVets (View view){
+    public void clickVets(View view) {
         imageButtonVets = findViewById(R.id.imageButtonVets);
         imageButtonVets.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,8 +114,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void clickWeather(View view){
-        imageButtonWeather =findViewById(R.id.imageButtonWeather);
+    public void clickWeather(View view) {
+        imageButtonWeather = findViewById(R.id.imageButtonWeather);
         imageButtonWeather.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //    }
 
-    public void clickToDoList(View view){
+    public void clickToDoList(View view) {
         imageButtonToDo = findViewById(R.id.imageButtonToDoList);
         imageButtonToDo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void clickGoogleMap(View view){
+    public void clickGoogleMap(View view) {
         imageButtonMap = findViewById(R.id.imageButtonGoogleMap);
         imageButtonMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menumainopts, menu);
         return true;
@@ -161,13 +164,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menuLogout:
                 Toast.makeText(this, "Logging out", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -189,5 +193,39 @@ public class MainActivity extends AppCompatActivity {
 //        } else {
 //            System.out.println("No such document!");
 //        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        closeDrawer();
+        switch (menuItem.getItemId()) {
+            case R.id.nav_home:
+                closeDrawer();
+                break;
+            case R.id.nav_animal:
+                startActivity(new Intent(MainActivity.this, AnimalActivity.class));
+                break;
+            case R.id.nav_weather:
+                startActivity(new Intent(MainActivity.this, WeatherActivity2.class));
+                break;
+            case R.id.nav_nearbyPlaces:
+                startActivity(new Intent(MainActivity.this, MapsActivity.class));
+                break;
+            case R.id.nav_vets:
+                startActivity(new Intent(MainActivity.this, VetActivity.class));
+                break;
+            case R.id.nav_expenses:
+                startActivity(new Intent(MainActivity.this, ExpenditureActivity.class));
+                break;
+        }
+        return true;
+    }
+
+    private void closeDrawer() {
+        drawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    private void openDrawer() {
+        drawerLayout.openDrawer(GravityCompat.START);
     }
 }

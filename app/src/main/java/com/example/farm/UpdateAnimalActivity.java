@@ -72,7 +72,7 @@ public class UpdateAnimalActivity extends AppCompatActivity {
         editTextSireUpdate = findViewById(R.id.ediTextSire);
         editTextBreedUpdate = findViewById(R.id.editTextBreed);
         spinnerAiStockBullUpdate = findViewById(R.id.spinnerAiStockBull);
-        animalProfilePic= findViewById(R.id.imageAnimalProfile);
+        animalProfilePic= findViewById(R.id.imageAnimalProfilePic);
         buttonUpdate = findViewById(R.id.buttonUpdateAnimal);
 
 

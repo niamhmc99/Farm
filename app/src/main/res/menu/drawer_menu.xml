@@ -18,7 +18,7 @@
                 android:icon="@drawable/ic_weather"
                 android:title="@string/weather" />
             <item
-                android:id="@+id/nav_tools"
+                android:id="@+id/nav_nearbyPlaces"
                 android:icon="@drawable/ic_nearby_places"
                 android:title="@string/nearbyPlaces" />
 
