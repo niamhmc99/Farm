@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -48,15 +49,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        drawer(toolbar);
 
-        drawerLayout = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(MainActivity.this);
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -69,6 +63,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         };
     }
 
+    private void drawer(Toolbar toolbar) {
+        drawerLayout = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(MainActivity.this);
+        getUserName(navigationView);
+    }
+
+
+    private void getUserName(NavigationView navigationView) {
+
+        View headerLayout = navigationView.getHeaderView(0);
+        TextView username = headerLayout.findViewById(R.id.farmersEmail);
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        System.out.println(currentUser.getEmail() + "***************");
+        username.setText(currentUser.getEmail());
+    }
     @Override
     protected void onResume() {
         if (auth.getCurrentUser() == null) {
