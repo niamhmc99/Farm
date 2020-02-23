@@ -45,7 +45,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference animalRef = db.collection("animals");
     private AnimalAdapter adapter;
-    private FloatingActionButton mFabAddAnimal;
+    private FloatingActionButton mFabAddAnimal, fabSearchTagBarcode;
     View mParentLayout;
     ImageButton updateButton;
 
@@ -54,6 +54,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal);
         updateButton = findViewById(R.id.update_button);
+        fabSearchTagBarcode = findViewById(R.id.fabSearchTagBarcode);
         mFabAddAnimal = findViewById(R.id.fabInsertAnimal);
         mParentLayout = findViewById(android.R.id.content);
         setupFirebaseAuth();
@@ -75,8 +76,6 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                     }
                 });
         setUpRecyclerView();
-
-
     }
 
 
@@ -259,11 +258,14 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.update_button:
                 startActivity(new Intent(AnimalActivity.this, UpdateAnimalActivity.class));
                 break;
-            case R.id.searchTagBarcode:
+            case R.id.fabSearchTagBarcode:
                 startActivity(new Intent(AnimalActivity.this, BarcodeScannerActivity.class));
+                break;
         }
 
     }
+
+
 
 
     private void setupFirebaseAuth(){
