@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,8 +7,84 @@
     android:background="@color/white"
     tools:context=".VetActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:background="@color/green"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-    <TextView
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layoutAppointmentInfo"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@color/green">
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/appointmentTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:text="@string/appointmentTitle"
+                android:inputType="text"
+                android:textColorHint="@color/white"
+                app:met_baseColor="@color/white"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="@color/white"
+                app:met_singleLineEllipsis="true"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/appointmentDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                android:text="@string/appointmentDescription"
+                android:inputType="textImeMultiLine"
+                android:textColorHint="@color/white"
+                app:met_baseColor="@color/white"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="@color/white"
+                app:met_singleLineEllipsis="true"/>
+
+
+
+
+
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_plus_white"
+        android:layout_marginRight="10dp"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        app:fabSize="normal"
+        app:backgroundTint="@color/blue"
+        app:layout_anchor="@id/appBarLayout"
+        app:layout_anchorGravity="bottom|right"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewVetAppointment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:scrollbars="vertical"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
+
+
+        <TextView
         android:id="@+id/textViewDate"
         android:layout_width="386dp"
         android:layout_height="116dp"
@@ -21,21 +97,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.692" />
-
-    <TextView
-        android:id="@+id/textViewUpdateDate"
-        android:layout_width="234dp"
-        android:layout_height="45dp"
-        android:text="Reschedule Date: "
-        android:textColor="@color/colorBlack"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.141"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.842" />
 
     <ImageView
         android:id="@+id/imageViewButtonCalendarDatePicker"
@@ -50,60 +111,5 @@
         app:layout_constraintVertical_bias="0.957"
         app:srcCompat="@android:drawable/ic_menu_my_calendar" />
 
-    <TextView
-        android:id="@+id/textViewVetVisitDate"
-        android:layout_width="290dp"
-        android:layout_height="64dp"
-        android:text="Vets Next Visit for a"
-        android:textColor="@color/colorBlack"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.41" />
 
-    <TextView
-        android:id="@+id/textViewVetVisitForHerd"
-        android:layout_width="290dp"
-        android:layout_height="64dp"
-        android:text="     Herd Test is on: "
-        android:textColor="@color/colorBlack"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.464" />
-
-    <ImageView
-        android:id="@+id/imageViewSplashScreen"
-        android:layout_width="437dp"
-        android:layout_height="221dp"
-        android:contentDescription="VetClinicImage"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/vetgrasssnip" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="101dp"
-        android:layout_height="101dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textViewVetVisitForHerd"
-        app:layout_constraintHorizontal_bias="0.038"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.452"
-        app:srcCompat="@drawable/vet3"
-        android:contentDescription="VetImage" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
