@@ -81,7 +81,7 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
         Task task = new Task(text, false, new Timestamp(new Date()), userId);
 
         FirebaseFirestore.getInstance()
-                .collection("tasks")
+                .collection("Tasks")
                 .add(task)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -100,7 +100,7 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
 
         private void setUpRecyclerView(FirebaseUser user) { //initalise recycler view
             Query query = FirebaseFirestore.getInstance()
-                    .collection("tasks")
+                    .collection("Tasks")
                     .whereEqualTo("userId", user.getUid())
                     .orderBy("completed", Query.Direction.ASCENDING)
                     .orderBy("created", Query.Direction.DESCENDING);

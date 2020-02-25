@@ -64,6 +64,7 @@ public class ToDoListAdapter extends FirestoreRecyclerAdapter<Task, ToDoListAdap
                     }
                 }
             });
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -72,14 +73,7 @@ public class ToDoListAdapter extends FirestoreRecyclerAdapter<Task, ToDoListAdap
                     taskListener.handleEditTask(snapshot);
                 }
             });
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
 
-                    DocumentSnapshot snapshot = getSnapshots().getSnapshot(getAdapterPosition());
-                    taskListener.handleEditTask(snapshot);
-                }
-            });
         }
         public void deleteItem() {
             taskListener.handleDeleteItem(getSnapshots().getSnapshot(getAdapterPosition()));

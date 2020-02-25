@@ -224,9 +224,6 @@ public class AddAnimalActivity extends AppCompatActivity {
 
     }
 
-
-
-
     private boolean hasValidationErrors(String tagNumber, String animalName, String dob, String selectedGender, String breed, String dam, String selectedCalvingDifficulty, String selectedAIStockBull, String sire){
         if (tagNumber.trim().isEmpty()) {
             editTextTagNumber.setError("Tag Number is required");
@@ -284,37 +281,6 @@ public class AddAnimalActivity extends AppCompatActivity {
         Snackbar.make(mParentLayout, message, Snackbar.LENGTH_SHORT).show();
     }
 
-//    public void addAnimal(String tagNumber, String animalName, String dob, String sex, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire){
-//
-//        DocumentReference addAnimalRef = db.collection("Animals").document();
-//
-//        String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        Animal animal = new Animal(); //create new object
-//        animal.setTagNumber(tagNumber);
-//        animal.setAnimalName(animalName);
-//        animal.setDob(dob);
-//        animal.setSex(sex);
-//        animal.setDam(dam);
-//        animal.setBreed(breed);
-//        animal.setSire(sire);
-//        animal.setCalvingDifficulty(calvingDifficulty);
-//        animal.setAiORstockbull(aiORstockbull);
-//        animal.setUser_id(user_id);
-//
-//        //inserts the data
-//        addAnimalRef.set(animal).addOnCompleteListener(new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//                if(task.isSuccessful()){
-//                    makeSnackBarMessage("Animal Added to Herd Successfully");
-//                }
-//                else{
-//                    makeSnackBarMessage("Failed to add Animal to herd.");
-//                }
-//            }
-//        });
-//
-//    }
 
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();

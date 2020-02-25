@@ -56,9 +56,9 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         updateButton = findViewById(R.id.update_button);
         fabSearchTagBarcode = findViewById(R.id.fabSearchTagBarcode);
         mFabAddAnimal = findViewById(R.id.fabInsertAnimal);
+        mFabAddAnimal.setOnClickListener(this);
         mParentLayout = findViewById(android.R.id.content);
         setupFirebaseAuth();
-        mFabAddAnimal.setOnClickListener(this);
 
         animalList = new ArrayList<>();
         db.collection("animals").get()
@@ -77,8 +77,6 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                 });
         setUpRecyclerView();
     }
-
-
 
     private void setUpRecyclerView(){
         Query query = animalRef.orderBy("tagNumber", Query.Direction.DESCENDING);
@@ -174,60 +172,6 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-//    private void goToViewAnimalDetails(){
-//        Intent intent = new Intent(mContext, UpdateAnimalActivity.class);
-//        // pass all the data from animal to  Update Activity.class all in one?
-//        intent.putExtra("Animal", animal);
-//        mContext.startActivity(intent);
-//    }
-
-
-//    public void listOfAnimals(){
-//        db.collection("Animals").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    List<String> list = new ArrayList<>();
-//                    for (QueryDocumentSnapshot document : task.getResult()) {
-//                        list.add(document.getId());
-//                    }
-//                    Log.d(TAG, list.toString());
-//                } else {
-//                    Log.d(TAG, "Error getting documents: ", task.getException());
-//                }
-//            }
-//        });
-//    }
-
-//    public void loadAnimal(View view){
-//        animalRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//            @Override
-//            public void onSuccess(QuerySnapshot  queryDocumentSnapshots) {
-//                List<DocumentReference> animals = new ArrayList<>();
-//                for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots) {
-//                    Animal animal = documentSnapshot.toObject(Animal.class);
-//
-//                    String tagNumber = animal.getTagNumber();
-//                    String name = animal.getAnimalName();
-//                    String breed = animal.getBreed();
-//                    String dob = animal.getDob();
-//                    String sex = animal.getSex();
-//                    String calvingDif = animal.getCalvingDifficulty();
-//                    String aiOrBull = animal.getAiORstockbull();
-//                    String dam = animal.getDam();
-//                    String sire = animal.getSire();
-//                }
-//                animals.add(animal);
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//
-//            }
-//        });
-//    }
-
-
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menumainopts, menu);
@@ -293,20 +237,74 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onStart() {
         super.onStart();
-        //FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
+        FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
         adapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-//        if (mAuthListener != null) {
-//            FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
-//        }
+        if (mAuthListener != null) {
+            FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
+        }
         if (adapter != null) {
             adapter.stopListening();
         }
     }
+
+    //    private void goToViewAnimalDetails(){
+//        Intent intent = new Intent(mContext, UpdateAnimalActivity.class);
+//        // pass all the data from animal to  Update Activity.class all in one?
+//        intent.putExtra("Animal", animal);
+//        mContext.startActivity(intent);
+//    }
+
+
+//    public void listOfAnimals(){
+//        db.collection("Animals").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    List<String> list = new ArrayList<>();
+//                    for (QueryDocumentSnapshot document : task.getResult()) {
+//                        list.add(document.getId());
+//                    }
+//                    Log.d(TAG, list.toString());
+//                } else {
+//                    Log.d(TAG, "Error getting documents: ", task.getException());
+//                }
+//            }
+//        });
+//    }
+
+//    public void loadAnimal(View view){
+//        animalRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//            @Override
+//            public void onSuccess(QuerySnapshot  queryDocumentSnapshots) {
+//                List<DocumentReference> animals = new ArrayList<>();
+//                for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots) {
+//                    Animal animal = documentSnapshot.toObject(Animal.class);
+//
+//                    String tagNumber = animal.getTagNumber();
+//                    String name = animal.getAnimalName();
+//                    String breed = animal.getBreed();
+//                    String dob = animal.getDob();
+//                    String sex = animal.getSex();
+//                    String calvingDif = animal.getCalvingDifficulty();
+//                    String aiOrBull = animal.getAiORstockbull();
+//                    String dam = animal.getDam();
+//                    String sire = animal.getSire();
+//                }
+//                animals.add(animal);
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//
+//            }
+//        });
+//    }
+
 
 
 }

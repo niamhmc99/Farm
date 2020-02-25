@@ -1,18 +1,28 @@
 package com.example.farm.adapters;
 
-class Appointment {
+import com.rengwuxian.materialedittext.MaterialEditText;
 
-    String id, appTitle, appDescription, appDate;
+import java.util.Date;
 
-    public Appointment(){
+public class Appointment {
 
+    private String id, appTitle, appDescription, userId;
+    Date appDate;
+
+    public Appointment(MaterialEditText textTitle, MaterialEditText textDesc, String userId, Date date){
+        this.appTitle = appTitle;
+        this.appDescription = appDescription;
+        this.userId = userId;
+        this.appDate = appDate;
     }
 
-    public Appointment(String id, String appTitle, String appDescription, String appDate) {
+    public Appointment(String id, String appTitle, String appDescription, Date appDate) {
         this.id = id;
         this.appTitle = appTitle;
         this.appDescription = appDescription;
         this.appDate = appDate;
+        this.userId = userId;
+
     }
 
     public String getAppTitle() {
@@ -31,11 +41,11 @@ class Appointment {
         this.appDescription = appDescription;
     }
 
-    public String getAppDate() {
+    public Date getAppDate() {
         return appDate;
     }
 
-    public void setAppDate(String appDate) {
+    public void setAppDate(Date appDate) {
         this.appDate = appDate;
     }
 
