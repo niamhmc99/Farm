@@ -41,6 +41,12 @@
     <string name="menu_send">menu_send</string>
     <string name="appointmentTitle">Appointment Title</string>
     <string name="appointmentDescription">Description</string>
+    <string name="emissions">Farm Emissions</string>
+    <string name="beef">Beef Cattle</string>
+    <string name="dairy">Dairy Cattle</string>
+    <string name="emissionsOptions">Calculate Emissions Based on either of The Following: </string>
+    <string name="beefDesc">Beef</string>
+    <string name="dairyDesc">Dairy</string>
 
 
 </resources>

@@ -29,7 +29,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".barcodeScannerTagNumber.BarcodeScannerActivity"></activity>
+        <activity android:name=".DairyCalculationActivity"></activity>
+        <activity android:name=".BeefCalculationActivity" />
+        <activity android:name=".EmissionsActivity" />
+        <activity android:name=".barcodeScannerTagNumber.BarcodeScannerActivity" />
         <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

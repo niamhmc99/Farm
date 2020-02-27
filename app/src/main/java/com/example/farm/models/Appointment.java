@@ -1,4 +1,4 @@
-package com.example.farm.adapters;
+package com.example.farm.models;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -9,6 +9,7 @@ public class Appointment {
     private String id, appTitle, appDescription, userId;
     Date appDate;
 
+    public Appointment(){ }
     public Appointment(MaterialEditText textTitle, MaterialEditText textDesc, String userId, Date date){
         this.appTitle = appTitle;
         this.appDescription = appDescription;
@@ -24,6 +25,18 @@ public class Appointment {
         this.userId = userId;
 
     }
+
+    public Appointment(String appTitle, String appDescription, Date appDate) {
+        this.id = id;
+        this.appTitle = appTitle;
+        this.appDescription = appDescription;
+        this.appDate = appDate;
+        this.userId = userId;
+
+    }
+
+
+
 
     public String getAppTitle() {
         return appTitle;

@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="30sp"
-                android:text="@string/appointmentTitle"
+                android:hint="@string/appointmentTitle"
                 android:inputType="text"
                 android:textColorHint="@color/white"
                 app:met_baseColor="@color/white"
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:textStyle="italic"
-                android:text="@string/appointmentDescription"
+                android:hint="@string/appointmentDescription"
                 android:inputType="textImeMultiLine"
                 android:textColorHint="@color/white"
                 app:met_baseColor="@color/white"
@@ -82,6 +82,7 @@
         android:layout_marginTop="20dp"
         android:scrollbars="vertical"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
+
 
 
         <TextView

@@ -26,7 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    ImageButton imageButtonAnimals, imageButtonVets, buttonLogout, imageButtonWeather, imageButtonMap, imageButtonToDo;
+    ImageButton imageButtonAnimals, imageButtonVets, buttonLogout, imageButtonWeather, imageButtonMap, imageButtonToDo, imageButtonEmissions;
     FirebaseAuth auth;
     FirebaseUser user;
     FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -172,6 +172,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+    public void clickEmissions(View view) {
+        imageButtonEmissions = findViewById(R.id.imageButtonEmissions);
+        imageButtonEmissions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, EmissionsActivity.class));
+            }
+        });
+    }
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menumainopts, menu);

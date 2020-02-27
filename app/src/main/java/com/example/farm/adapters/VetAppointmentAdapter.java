@@ -4,36 +4,38 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.farm.R;
-import com.example.farm.VetActivity;
+import com.example.farm.models.Appointment;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class VetAppointmentAdapter extends FirestoreRecyclerAdapter<Appointment, VetAppointmentAdapter.AppointmentHolder> {
 Context context;
-    List<Appointment> appointmentList;
     TaskListener taskListener;
 
     public VetAppointmentAdapter(@NonNull FirestoreRecyclerOptions<Appointment> options) {
         super(options);
-        this.appointmentList=appointmentList;
     }
 
 
 
     @Override
-    protected void onBindViewHolder(@NonNull VetAppointmentAdapter.AppointmentHolder holder, int position, @NonNull Appointment model) {
-
-
+    protected void onBindViewHolder(@NonNull VetAppointmentAdapter.AppointmentHolder holder, int position, @NonNull Appointment appointment) {
+        holder.appTitle.setText(appointment.getAppTitle());
+        holder.appDescription.setText(appointment.getAppDescription());
+        String date_n = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
+        holder.appDate.setText(date_n);
     }
 
 
@@ -44,13 +46,6 @@ Context context;
         context=parent.getContext();
         return new AppointmentHolder(v);
     }
-
-    @Override
-    public int getItemCount(){
-        return appointmentList.size();
-    }
-
-
 
     public class AppointmentHolder extends RecyclerView.ViewHolder {
 

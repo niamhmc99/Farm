@@ -48,9 +48,7 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_do_list);
         recyclerView = findViewById(R.id.recyclerViewToDo);
-        //Add the divider line
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-
 
         mFabToDo = findViewById(R.id.fabToDo);
         mFabToDo.setOnClickListener(new View.OnClickListener() {

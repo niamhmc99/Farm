@@ -3,7 +3,9 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/amaranth</item>
         <item>@font/antic</item>
+        <item>@font/belgrano</item>
         <item>@font/bungee</item>
+        <item>@font/della_respira</item>
         <item>@font/fredericka_the_great</item>
         <item>@font/rye</item>
     </array>

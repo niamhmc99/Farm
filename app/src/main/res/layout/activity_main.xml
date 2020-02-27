@@ -306,6 +306,46 @@
                     android:orientation="vertical">
 
                     <ImageButton
+                        android:id="@+id/imageButtonEmissions"
+                        android:src="@drawable/co2_icon"
+                        android:scaleType="fitXY"
+                        android:layout_width="120dp"
+                        android:layout_height="100dp"
+                        android:background="@color/white"
+                        android:contentDescription="@string/emissions"
+                        android:onClick="clickEmissions"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Emissions"
+                        android:textSize="13sp"
+                        android:layout_marginTop="12dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorBlack"/>
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="26dp"
+                android:layout_margin="12dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <ImageButton
                         android:id="@+id/imageButtonExpenses"
                         android:src="@drawable/expense"
                         android:scaleType="fitXY"
@@ -326,6 +366,8 @@
 
 
             </androidx.cardview.widget.CardView>
+
+
 
 
         </GridLayout>
