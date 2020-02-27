@@ -21,23 +21,21 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.farm.adapters.Appointment;
+import com.example.farm.models.Appointment;
 import com.example.farm.adapters.VetAppointmentAdapter;
 import com.example.farm.fragments.DatePickerFragment;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -54,7 +52,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import dmax.dialog.SpotsDialog;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class VetActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, FirebaseAuth.AuthStateListener, VetAppointmentAdapter.TaskListener{
@@ -67,8 +64,7 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
     private List<Appointment> appointmentList = new ArrayList<Appointment>();
     FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
     private CollectionReference animalRef = firestoreDB.collection("VetAppointments");
-    public boolean isUpdate;
-    public String updateId = "";
+
     public MaterialEditText editTextAppTitle;
     public MaterialEditText editTextAppDesc;
     public Date editTextAppDate;
@@ -106,21 +102,21 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
             }
         });
 
-        appointmentList = new ArrayList<>();
-        firestoreDB.collection("VetAppointments").get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if (!queryDocumentSnapshots.isEmpty()) {
-                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                            for (DocumentSnapshot d : list) {
-                                //convert d to our animal object
-                                Appointment app = d.toObject(Appointment.class);
-                                appointmentList.add(app);
-                            }
-                        }
-                    }
-                });
+//        appointmentList = new ArrayList<>();
+//        firestoreDB.collection("VetAppointments").get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                        if (!queryDocumentSnapshots.isEmpty()) {
+//                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+//                            for (DocumentSnapshot d : list) {
+//                                //convert d to our animal object
+//                                Appointment app = d.toObject(Appointment.class);
+//                                appointmentList.add(app);
+//                            }
+//                        }
+//                    }
+//                });
     }
 
     private void setUpRecyclerView(FirebaseUser user) {
@@ -134,10 +130,10 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
 
         recyclerView = findViewById(R.id.recyclerViewVetAppointment);
         recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(appointmentAdapter);
         appointmentAdapter.startListening();
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
@@ -166,8 +162,6 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
     }
 
 
-
-    //for the recycler view
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -229,15 +223,16 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
 //        appointmentEditTextDate.setSelection(appointment.getAppDate());
 
         new AlertDialog.Builder(this)
-                .setTitle("Edit Task")
+                .setTitle("Edit Appointment")
                 .setView(appointmentEditTextDescription)
                 .setPositiveButton("Done", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String updateAppTitle = appointmentEditTextTitle.getText().toString();
                         String updateAppDesc = appointmentEditTextDescription.getText().toString();
-//                        Date updateDate = app
-//                        appointment.setText(newText);
+//                        Date updateDate = app;
+                        appointment.setAppTitle(updateAppTitle);
+                        appointment.setAppDescription(updateAppDesc);
                         snapshot.getReference().set(appointment)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
@@ -360,6 +355,29 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
             startActivity(intent);
             finish();
             return;
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseAuth.getInstance().addAuthStateListener(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FirebaseAuth.getInstance().removeAuthStateListener(this);
+        if (appointmentAdapter != null) {
+            appointmentAdapter.stopListening();
+        }
+    }
+
+    private void hideKeyboard() { //call within button onClick to hide android keyboard
+        View view = getCurrentFocus();
+        if (view != null) {
+            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
+                    hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 }
