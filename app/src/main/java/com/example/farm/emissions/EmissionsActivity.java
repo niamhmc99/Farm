@@ -1,4 +1,4 @@
-package com.example.farm;
+package com.example.farm.emissions;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+
+import com.example.farm.R;
 
 public class EmissionsActivity extends AppCompatActivity {
 

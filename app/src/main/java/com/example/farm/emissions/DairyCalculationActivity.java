@@ -1,8 +1,10 @@
-package com.example.farm;
+package com.example.farm.emissions;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.farm.R;
 
 public class DairyCalculationActivity extends AppCompatActivity {
 

@@ -47,6 +47,10 @@
     <string name="emissionsOptions">Calculate Emissions Based on either of The Following: </string>
     <string name="beefDesc">Beef</string>
     <string name="dairyDesc">Dairy</string>
+    <string name="beefEmission">Beef Emissions</string>
+    <string name="averageWeightCow">Average Weight of Beef Cow </string>
+    <string name="averageWeightBull">Average Weight Of Beef Bull:</string>
+    <string name="calulateEmission">Calculate Average Farm Emissions</string>
 
 
 </resources>

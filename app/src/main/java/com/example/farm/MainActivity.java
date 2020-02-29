@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.farm.emissions.EmissionsActivity;
 import com.example.farm.googlemaps.MapsActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -82,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View headerLayout = navigationView.getHeaderView(0);
         TextView username = headerLayout.findViewById(R.id.farmersEmail);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        System.out.println(currentUser.getEmail() + "***************");
         username.setText(currentUser.getEmail());
     }
     @Override
