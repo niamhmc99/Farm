@@ -136,6 +136,9 @@ public class InsertAnimalActivity extends AppCompatActivity {
         editTextTagNumber = findViewById(R.id.tagNumber);
         btnInsertAnimal = findViewById(R.id.btnInsertAnimal);
         addanimalProgress = findViewById(R.id.animaml_progress);
+        checkBoxInCalve = findViewById(R.id.checkBoxInCalve);
+        textViewDateOfInsemination = findViewById(R.id.textViewDateOfInsemination);
+        textViewDateCalculatedCalveAndDelivery = findViewById(R.id.textViewDateCalculatedCalveAndDelivery);
         textViewRegisteredTimeStamp =findViewById(R.id.animalRegisterTimestamp);
         //Check point for in calve check or uncheck
         checkBoxInCalve.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
