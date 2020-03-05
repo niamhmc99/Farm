@@ -103,7 +103,6 @@ public class AddAnimalActivity extends AppCompatActivity {
                         if (!queryDocumentSnapshots.isEmpty()) {
                             List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                             for (DocumentSnapshot d : list) {
-                                //convert d to our animal object
                                 Animal a = d.toObject(Animal.class);
                                 animalList.add(a); //add all animals to list of animals
                             }

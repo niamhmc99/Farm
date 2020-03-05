@@ -293,19 +293,7 @@ public class UpdateAnimalActivity extends AppCompatActivity {
 }
 
 
-//
 
-//   .update(
-//           "tagNumber", a.getTagNumber(),
-//           "animalName", a.getAnimalName(),
-//           "dob", a.getDob(),
-//           "sex", a.getSex(),
-//           "dam", a.getDam(),
-//           "sire", a.getSire(),
-//           "aiOrStockbull", a.getAiORstockbull(),
-//           "calvingDiff", a.getCalvingDifficulty(),
-//           "breed", a.getBreed()
-//           )
 
 
 //                 .whereEqualTo("tagNumber", strTag).get()
