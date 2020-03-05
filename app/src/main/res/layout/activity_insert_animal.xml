@@ -33,7 +33,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/animaml_progress" />
 
-    <!-- vertical ScrollView to make all the items or views scrollable -->
     <ScrollView
         android:layout_width="418dp"
         android:layout_height="488dp"
@@ -43,8 +42,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/animal_image">
 
-
-        <!-- LinearLayout Inside ScrollView -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -184,10 +181,17 @@
                 app:layout_constraintVertical_bias="0.756" />
 
 
+            <CheckBox
+                android:id="@+id/checkBoxInCalve"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="In Calve"
+                android:textSize="16dp" />
+
             <Button
                 android:id="@+id/btnInsertAnimal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="387dp"
+                android:layout_height="35dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -200,13 +204,39 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
+            <TextView
+                android:id="@+id/textViewDateOfInsemination"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center|left"
+                android:textSize="18dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="@string/date_of_insemination"
+                android:visibility="gone"
+                />
+
+            <TextView
+                android:id="@+id/textViewDateCalculatedCalveAndDelivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:textSize="14dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="gone"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text=""
+
+                />
+
         </LinearLayout>
     </ScrollView>
 
-    <TextView
-        android:id="@+id/textViewRegisteredTimeStamp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="4dp"
-        tools:layout_editor_absoluteY="175dp" />
+<!--    <TextView-->
+<!--        android:id="@+id/textViewRegisteredTimeStamp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        tools:layout_editor_absoluteX="4dp"-->
+<!--        tools:layout_editor_absoluteY="175dp" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

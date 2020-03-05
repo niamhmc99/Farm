@@ -64,11 +64,8 @@ public class AddAnimalActivity extends AppCompatActivity {
     private static final String KEY_USERID = "user_id";
     private static final String KEY_AnimalProfilePic = "animalProfilePic";
 
-
-    //private StorageReference storageReference;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    //vars
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

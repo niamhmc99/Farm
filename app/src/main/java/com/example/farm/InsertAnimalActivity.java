@@ -1,6 +1,9 @@
 package com.example.farm;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,6 +18,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -30,6 +36,7 @@ import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.farm.dueDateAlarm.OnReceive;
 import com.example.farm.models.Animal;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -51,11 +58,15 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -66,9 +77,10 @@ public class InsertAnimalActivity extends AppCompatActivity {
     private final String  TAG= "InsertAnimalActivity";
     private EditText  editTextTagNumber, editTextAnimalName, editTextDob, editTextDam, editTextsire, editTextBreed;
     private Button btnInsertAnimal;
-    private TextView textViewRegisteredTimeStamp;
+    private TextView textViewRegisteredTimeStamp, textViewDateOfInsemination,textViewDateCalculatedCalveAndDelivery;;
     private ProgressBar addanimalProgress;
     private Spinner spinnerGender, spinnerAiStockBull, spinnerCalvingDiff;
+    private CheckBox checkBoxInCalve;
     View mParentLayout;
 
     private CircleImageView animalProfilePic;
@@ -125,6 +137,41 @@ public class InsertAnimalActivity extends AppCompatActivity {
         btnInsertAnimal = findViewById(R.id.btnInsertAnimal);
         addanimalProgress = findViewById(R.id.animaml_progress);
         textViewRegisteredTimeStamp =findViewById(R.id.animalRegisterTimestamp);
+        //Check point for in calve check or uncheck
+        checkBoxInCalve.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b) {
+                    textViewDateOfInsemination.setVisibility(View.VISIBLE);
+                    textViewDateOfInsemination.setText("Date of insemination");
+                    textViewDateCalculatedCalveAndDelivery.setVisibility(View.GONE);
+                }
+                else {
+                    textViewDateOfInsemination.setVisibility(View.GONE);
+                    textViewDateCalculatedCalveAndDelivery.setVisibility(View.GONE);
+                }
+            }
+        });
+        //Selecting start date of insemination)
+        textViewDateOfInsemination.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar now = Calendar.getInstance();
+                new DatePickerDialog(InsertAnimalActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                        String date = year+"-"+(monthOfYear+1)+"-"+dayOfMonth;
+                        textViewDateOfInsemination.setText(date);
+                        //Calculating Expected, delivery and notification date
+                        textViewDateCalculatedCalveAndDelivery.setText("Expected calve date is "+getCalveDate(date)+", delivery date is "+getDeliveryDate(date)+" and you will be notified on "+getNotifyDateStr(date));
+                        textViewDateCalculatedCalveAndDelivery.setVisibility(View.VISIBLE);
+                    }
+                }, now
+                        .get(Calendar.YEAR), now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
 
         addanimalProgress.setVisibility(View.VISIBLE);
         btnInsertAnimal.setEnabled(false);
@@ -149,8 +196,6 @@ public class InsertAnimalActivity extends AppCompatActivity {
                         placeholderRequest.placeholder(R.drawable.animalsmall);
 
                         Glide.with(InsertAnimalActivity.this).setDefaultRequestOptions(placeholderRequest).load(image).into(animalProfilePic);
-
-
                     }
 
                 } else {
@@ -183,9 +228,6 @@ public class InsertAnimalActivity extends AppCompatActivity {
                 final String strUserID = FirebaseAuth.getInstance().getCurrentUser().getUid().trim();
                 animal.setTimeAdded(new Timestamp(new Date()));
                 final String strRegisteredTimestamp = String.valueOf(animal.getTimeAdded());
-
-
-
 
                 if (!TextUtils.isEmpty(strTag) && mainImageURI != null) {
 
@@ -278,113 +320,112 @@ public class InsertAnimalActivity extends AppCompatActivity {
             }
 
         });
-
-
 }
 
-    private void storeFirestore(String downloadUrl, String strTag, String strName, String strDob, String strSelectedGender, String strBreed, String strDam, String strSelectedCalvingDif, String strSelectedAIStockBull, String strSire, String strUserID, String strRegisteredTimestamp) {
+    private void storeFirestore(String downloadUrl, final String strTag, final String strName, String strDob, String strSelectedGender, String strBreed, String strDam, String strSelectedCalvingDif, String strSelectedAIStockBull, String strSire, String strUserID, String strRegisteredTimestamp) {
 
-
-        Map<String, Object> animalMap = new HashMap<>();
-        animalMap.put(KEY_TAGNUMBER, strTag);
-        animalMap.put(KEY_ANIMALNAME, strName);
-        animalMap.put(KEY_DOB, strDob);
-        animalMap.put(KEY_GENDER, strSelectedGender);
-        animalMap.put(KEY_DAM, strDam);
-        animalMap.put(KEY_CALVINGDIf, strSelectedCalvingDif);
-        animalMap.put(KEY_SIRE, strSire);
-        animalMap.put(KEY_BREED, strBreed);
-        animalMap.put(KEY_AiOrStockbull, strSelectedAIStockBull);
-        animalMap.put(KEY_USERID, strUserID);
-        animalMap.put(KEY_AnimalProfilePic, downloadUrl);
+            Map<String, Object> animalMap = new HashMap<>();
+            animalMap.put(KEY_TAGNUMBER, strTag);
+            animalMap.put(KEY_ANIMALNAME, strName);
+            animalMap.put(KEY_DOB, strDob);
+            animalMap.put(KEY_GENDER, strSelectedGender);
+            animalMap.put(KEY_DAM, strDam);
+            animalMap.put(KEY_CALVINGDIf, strSelectedCalvingDif);
+            animalMap.put(KEY_SIRE, strSire);
+            animalMap.put(KEY_BREED, strBreed);
+            animalMap.put(KEY_AiOrStockbull, strSelectedAIStockBull);
+            animalMap.put(KEY_USERID, strUserID);
+            animalMap.put(KEY_AnimalProfilePic, downloadUrl);
 
 //        strRegisteredTimestamp = setTimeAdded(new Timestamp(new Date()));
 
-        animalMap.put(KEY_AnimalRegisteredTimestamp, strRegisteredTimestamp);
+            animalMap.put(KEY_AnimalRegisteredTimestamp, strRegisteredTimestamp);
 
 
+            if (!hasValidationErrors(strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire)) {
 
-        if(!hasValidationErrors(strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire)) {
+                firestoreDB.collection("animals")
+                        .add(animalMap)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d(TAG, "Animal inserted into herd with ID: " + documentReference.getId());
+                                //Help-Comment (Alarm will set here after successful animal insertion)
+                                setAlarm(strName, strTag);
 
-            firestoreDB.collection("animals")
-                    .add(animalMap)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Log.d(TAG, "Animal inserted into herd with ID: " + documentReference.getId());
-
-                            Toast.makeText(InsertAnimalActivity.this, "The animal profile has been created.", Toast.LENGTH_LONG).show();
-                            Intent mainIntent = new Intent(InsertAnimalActivity.this, AnimalActivity.class);
-                            startActivity(mainIntent);
-                            finish();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w(TAG, "Error adding animal into herd", e);
-                            Toast.makeText(InsertAnimalActivity.this, "(FIRESTORE Error) : " + e, Toast.LENGTH_LONG).show();
-                        }
-                    });
+                                Toast.makeText(InsertAnimalActivity.this, "The animal profile has been created.", Toast.LENGTH_LONG).show();
+                                Intent mainIntent = new Intent(InsertAnimalActivity.this, AnimalActivity.class);
+                                startActivity(mainIntent);
+                                finish();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding animal into herd", e);
+                                Toast.makeText(InsertAnimalActivity.this, "(FIRESTORE Error) : " + e, Toast.LENGTH_LONG).show();
+                            }
+                        });
 
 
-        }
-                addanimalProgress.setVisibility(View.INVISIBLE);
-
-    }
-
-    private boolean hasValidationErrors(String tagNumber, String animalName, String dob, String selectedGender, String breed, String dam, String selectedCalvingDifficulty, String selectedAIStockBull, String sire){
-        if (tagNumber.trim().isEmpty()) {
-            editTextTagNumber.setError("Tag Number is required");
-            makeSnackBarMessage("Please insert Tag Number.");
-            return true;
-        } else if (animalName.isEmpty()) {
-            editTextAnimalName.setError("Animal Name Required");
-            makeSnackBarMessage("Please insert Animal Name.");
-            return true;
-        }else if(dob.isEmpty()){
-            editTextDob.setError("Date of Birth is required.");
-            makeSnackBarMessage("Please insert Date of Birth.");
-            return true;
-        }
-        else if(selectedGender.isEmpty()){
-            TextView errorText = (TextView)spinnerGender.getSelectedView();
-            errorText.setError("");
-            errorText.setTextColor(Color.RED);//just to highlight that this is an error
-            errorText.setText("Please select the Aniamls Gender");//changes the selected item text to this
-            makeSnackBarMessage("Please insert the Animals Sex.");
-            return true;
-        }else if(dam.isEmpty()){
-            editTextDam.setError("The Dam of the Animal is required");
-            makeSnackBarMessage("Please insert the Animals Dam.");
-            return true;
-        }else if(selectedCalvingDifficulty.isEmpty()){
-            TextView errorText = (TextView)spinnerCalvingDiff.getSelectedView();
-            errorText.setError("");
-            errorText.setTextColor(Color.RED);//just to highlight that this is an error
-            errorText.setText("Select the Calving Difficulty number");//changes the selected item text to this
-            makeSnackBarMessage("Please insert the Calving Difficulty.");
-            return true;
-        }else if(sire.isEmpty()){
-            editTextsire.setError("The Sire of the Animal is required");
-            makeSnackBarMessage("Please insert the Animals Sire.");
-            return true;
-        }else if(selectedAIStockBull.isEmpty()){
-            TextView errorText = (TextView)spinnerAiStockBull.getSelectedView();
-            errorText.setError("");
-            errorText.setTextColor(Color.RED);//just to highlight that this is an error
-            errorText.setText("Please select the Sire Type for the animal");//changes the selected item text to this
-            makeSnackBarMessage("Please insert the Sire Type.");
-            return true;
-        }else if(breed.isEmpty()){
-            editTextBreed.setError("Breed of Animal is required");
-            makeSnackBarMessage("Please insert Animal Breed.");
-            return true;
-        }else{
-            return false;
+            }
+            addanimalProgress.setVisibility(View.INVISIBLE);
         }
 
-    }
+
+
+        private boolean hasValidationErrors(String tagNumber, String animalName, String dob, String selectedGender, String breed, String dam, String selectedCalvingDifficulty, String selectedAIStockBull, String sire){
+            if (tagNumber.trim().isEmpty()) {
+                editTextTagNumber.setError("Tag Number is required");
+                makeSnackBarMessage("Please insert Tag Number.");
+                return true;
+            } else if (animalName.isEmpty()) {
+                editTextAnimalName.setError("Animal Name Required");
+                makeSnackBarMessage("Please insert Animal Name.");
+                return true;
+            }else if(dob.isEmpty()){
+                editTextDob.setError("Date of Birth is required.");
+                makeSnackBarMessage("Please insert Date of Birth.");
+                return true;
+            }
+            else if(selectedGender.isEmpty()){
+                TextView errorText = (TextView)spinnerGender.getSelectedView();
+                errorText.setError("");
+                errorText.setTextColor(Color.RED);//just to highlight that this is an error
+                errorText.setText("Please select the Aniamls Gender");//changes the selected item text to this
+                makeSnackBarMessage("Please insert the Animals Sex.");
+                return true;
+            }else if(dam.isEmpty()){
+                editTextDam.setError("The Dam of the Animal is required");
+                makeSnackBarMessage("Please insert the Animals Dam.");
+                return true;
+            }else if(selectedCalvingDifficulty.isEmpty()){
+                TextView errorText = (TextView)spinnerCalvingDiff.getSelectedView();
+                errorText.setError("");
+                errorText.setTextColor(Color.RED);//just to highlight that this is an error
+                errorText.setText("Select the Calving Difficulty number");//changes the selected item text to this
+                makeSnackBarMessage("Please insert the Calving Difficulty.");
+                return true;
+            }else if(sire.isEmpty()){
+                editTextsire.setError("The Sire of the Animal is required");
+                makeSnackBarMessage("Please insert the Animals Sire.");
+                return true;
+            }else if(selectedAIStockBull.isEmpty()){
+                TextView errorText = (TextView)spinnerAiStockBull.getSelectedView();
+                errorText.setError("");
+                errorText.setTextColor(Color.RED);//just to highlight that this is an error
+                errorText.setText("Please select the Sire Type for the animal");//changes the selected item text to this
+                makeSnackBarMessage("Please insert the Sire Type.");
+                return true;
+            }else if(breed.isEmpty()){
+                editTextBreed.setError("Breed of Animal is required");
+                makeSnackBarMessage("Please insert Animal Breed.");
+                return true;
+            }else{
+                return false;
+            }
+
+        }
 
     private void addItemsOnSpinnerCalvingDiff() {
         spinnerCalvingDiff= findViewById(R.id.spinnerCalvingDiff);
@@ -453,8 +494,98 @@ public class InsertAnimalActivity extends AppCompatActivity {
         }
     }
 
-
     private void makeSnackBarMessage(String message){
         Snackbar.make(mParentLayout, message, Snackbar.LENGTH_SHORT).show();
     }
+
+    //Calculating expected calve date
+    private String getCalveDate(String dateInput) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setTimeZone(TimeZone.getDefault());
+        Date date = null;
+        try {
+            date = sdf.parse(dateInput);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.DAY_OF_MONTH,183);
+            dateInput = sdf.format(calendar.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return dateInput;
+    }
+
+    //Calculating insemination end of delivery date
+    private String getDeliveryDate(String dateInput) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setTimeZone(TimeZone.getDefault());
+        Date date = null;
+        try {
+            date = sdf.parse(dateInput);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.DAY_OF_MONTH,283);
+            dateInput = sdf.format(calendar.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return dateInput;
+    }
+
+    //(Calculating notification date as string
+    private String getNotifyDateStr(String dateInput) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setTimeZone(TimeZone.getDefault());
+        Date date = null;
+        try {
+            date = sdf.parse(dateInput);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.DAY_OF_MONTH,178);
+            dateInput = sdf.format(calendar.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return dateInput;
+    }
+
+    //Calculating notification date
+    private Date getNotifyDate(String dateInput) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setTimeZone(TimeZone.getDefault());
+        Date date = null;
+        try {
+            date = sdf.parse(dateInput);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+//            calendar.add(Calendar.SECOND,10);
+            calendar.add(Calendar.DAY_OF_MONTH,178);
+            date = calendar.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return date;
+    }
+
+    //Alarm for notification will using this
+    private void setAlarm(String strName, String strTag)
+    {
+        if(checkBoxInCalve.isChecked() && !textViewDateOfInsemination.getText().toString().equals(getString(R.string.date_of_insemination))) {
+            Intent intent = new Intent(InsertAnimalActivity.this, OnReceive.class);
+            intent.putExtra("title", "Alarm notification");
+            intent.putExtra("message", strName + " " + strTag + " is due to calve in/on  " + getCalveDate(textViewDateOfInsemination.getText().toString()));
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(InsertAnimalActivity.this, 2020, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            assert alarmManager != null;
+            alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
+                    + (getNotifyDate(textViewDateOfInsemination.getText().toString()).getTime()-new Date().getTime()), pendingIntent);
+        }
+    }
+
 }
