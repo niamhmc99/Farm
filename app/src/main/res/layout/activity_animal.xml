@@ -5,6 +5,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/blue_recycleview">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="0dp"
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvScanBarcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:drawableLeft="@drawable/ic_barcode"
+        android:drawablePadding="5dp"
+        android:fontFamily="@font/fredericka_the_great"
+        android:text="Scan Barcode"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -35,22 +58,23 @@
         android:src="@drawable/ic_plus_white"
         app:backgroundTint="#64A407" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabSearchTagBarcode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="end|bottom"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="101dp"
-        android:layout_marginRight="101dp"
-        android:layout_marginBottom="1dp"
-        android:src="@drawable/ic_barcode"
-        app:backgroundTint="#64A407" />
+</LinearLayout>
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fabSearchTagBarcode"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_alignParentRight="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_gravity="end|bottom"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginLeft="16dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginEnd="101dp"-->
+<!--        android:layout_marginRight="101dp"-->
+<!--        android:layout_marginBottom="1dp"-->
+<!--        android:src="@drawable/ic_barcode"-->
+<!--        app:backgroundTint="#64A407" />-->
 
 
 </RelativeLayout>

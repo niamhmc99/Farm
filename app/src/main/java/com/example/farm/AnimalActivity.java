@@ -2,14 +2,22 @@ package com.example.farm;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,12 +25,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.farm.adapters.AnimalAdapter;
-import com.example.farm.barcodeScannerTagNumber.BarcodeScannerActivity;
+import com.example.farm.fragments.AnimalDialogFragment;
 import com.example.farm.models.Animal;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +42,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.zxing.client.android.CaptureActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,16 +59,21 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     private FloatingActionButton mFabAddAnimal, fabSearchTagBarcode;
     View mParentLayout;
     ImageButton updateButton;
+    TextView tvScanBarcode;
+    private static final int CAMERA_PERMISSION_CODE = 100;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal);
         updateButton = findViewById(R.id.update_button);
-        fabSearchTagBarcode = findViewById(R.id.fabSearchTagBarcode);
+        //fabSearchTagBarcode = findViewById(R.id.fabSearchTagBarcode);
         mFabAddAnimal = findViewById(R.id.fabInsertAnimal);
         mFabAddAnimal.setOnClickListener(this);
         mParentLayout = findViewById(android.R.id.content);
+        tvScanBarcode = findViewById(R.id.tvScanBarcode);
+        tvScanBarcode.setOnClickListener(this);
         setupFirebaseAuth();
 
         animalList = new ArrayList<>();
@@ -195,6 +211,14 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.tvScanBarcode:
+                checkPermission(Manifest.permission.CAMERA,
+                        CAMERA_PERMISSION_CODE);
+                Intent intent = new Intent(getApplicationContext(), CaptureActivity.class);
+                intent.setAction("com.google.zxing.client.android.SCAN");
+                intent.putExtra("SAVE_HISTORY", false);
+                startActivityForResult(intent, 0);
+                break;
             case R.id.fabInsertAnimal:
                 startActivity(new Intent(AnimalActivity.this, InsertAnimalActivity.class));
                 break;
@@ -202,15 +226,9 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.update_button:
                 startActivity(new Intent(AnimalActivity.this, UpdateAnimalActivity.class));
                 break;
-            case R.id.fabSearchTagBarcode:
-                startActivity(new Intent(AnimalActivity.this, BarcodeScannerActivity.class));
-                break;
         }
 
     }
-
-
-
 
     private void setupFirebaseAuth(){
         Log.d(TAG, "setupFirebaseAuth: started.");
@@ -234,7 +252,55 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         };
     }
 
+    // Function to check and request permission.
+    public void checkPermission(String permission, int requestCode)
+    {
+        if (ContextCompat.checkSelfPermission(AnimalActivity.this, permission)
+                == PackageManager.PERMISSION_DENIED) {
+
+            // Requesting the permission
+            ActivityCompat.requestPermissions(AnimalActivity.this,
+                    new String[] { permission },
+                    requestCode);
+        }
+        else {
+            Toast.makeText(AnimalActivity.this,
+                    "Permission already granted",
+                    Toast.LENGTH_SHORT)
+                    .show();
+        }
+    }
+
+    // This function is called when the user accepts or decline the permission.
+    // Request Code is used to check which permission called this function.
+    // This request code is provided when the user is prompt for permission.
+
     @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super
+                .onRequestPermissionsResult(requestCode,
+                        permissions,
+                        grantResults);
+
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(AnimalActivity.this,
+                        "Camera Permission Granted",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            } else {
+                Toast.makeText(AnimalActivity.this,
+                        "Camera Permission Denied",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
+    }
+
+        @Override
     public void onStart() {
         super.onStart();
         FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
@@ -251,6 +317,77 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
             adapter.stopListening();
         }
     }
+
+    //Response for Barcode scanner is received here
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                final String contents = intent.getStringExtra("SCAN_RESULT");
+                //Fetching data of related animal by data scanned from barcode)
+                db.collection("animals").whereEqualTo("tagNumber",contents).get().addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        showMessage(AnimalActivity.this,"Animal with barcode " + contents + " not found within the herd");
+                    }
+                })
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                if (!queryDocumentSnapshots.isEmpty()) {
+                                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                                    for (DocumentSnapshot d : list) {
+                                        //convert d to our animal object
+                                        Animal a = d.toObject(Animal.class);
+                                        //=(Dialog to show animal data)
+                                        AnimalDialogFragment animalDialogFragment=new AnimalDialogFragment();
+                                        animalDialogFragment.setAnimal(a);
+                                        animalDialogFragment.show(getSupportFragmentManager(),AnimalDialogFragment.class.getSimpleName());
+                                        break;
+                                    }
+                                    if(list.size() == 0)
+                                    {
+                                        //Show failure message if no data found)
+                                        showMessage(AnimalActivity.this,"Animal with barcode " + contents + " not found within the herd");
+                                    }
+                                }
+                                else
+                                {
+                                    //Show failure message if no data found
+                                    showMessage(AnimalActivity.this,"Animal with barcode " + contents + " not found");
+                                }
+                            }
+                        });
+            } else if (resultCode == RESULT_CANCELED) {
+                //In case scanner is canceled)
+                Log.d(TAG, "RESULT_CANCELED");
+            }
+        }
+
+
+    }
+    private void showMessage(Context context, String message ) {
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(context, R.style.Base_Theme_AppCompat_Light_Dialog_Alert);
+        if (message.equals("")) {
+            message = "No error message has received from server.";
+        }
+        alertDialogBuilder.setMessage(message);
+        alertDialogBuilder.setCancelable(false);
+        alertDialogBuilder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.M)
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+
+        final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+
+        alertDialog.show();
+    }
+
 
     //    private void goToViewAnimalDetails(){
 //        Intent intent = new Intent(mContext, UpdateAnimalActivity.class);
@@ -304,7 +441,5 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
 //            }
 //        });
 //    }
-
-
 
 }

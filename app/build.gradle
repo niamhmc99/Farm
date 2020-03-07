@@ -58,8 +58,9 @@ dependencies {
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.6.+'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'com.tarun0.zxing-standalone:zxing-standalone:1.0.0'
     implementation 'id.zelory:compressor:2.1.0'
-    implementation 'me.dm7.barcodescanner:zxing:1.9'
+    implementation 'com.google.firebase:firebase-messaging:20.0.1'
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
 

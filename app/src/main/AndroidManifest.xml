@@ -16,10 +16,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
 
     <application
         android:allowBackup="true"
@@ -32,7 +31,7 @@
         <activity android:name=".emissions.DairyCalculationActivity" />
         <activity android:name=".emissions.BeefCalculationActivity" />
         <activity android:name=".emissions.EmissionsActivity" />
-        <activity android:name=".barcodeScannerTagNumber.BarcodeScannerActivity" />
+
         <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

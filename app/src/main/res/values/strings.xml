@@ -52,6 +52,7 @@
     <string name="averageWeightBull">Average Weight Of Beef Bull:</string>
     <string name="calulateEmission">Calculate Average Farm Emissions</string>
     <string name="date_of_insemination">Date Of Insemenation</string>
+    <string name="cancel">Cancel</string>
 
 
 </resources>
