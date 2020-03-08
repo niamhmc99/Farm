@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.example.farm.R;
 
 public class BeefRecommendationActivity extends AppCompatActivity {
-TextView totalEmissions;
+    TextView totalBullEmissions,noOfBulls,totalCowEmissions,noOfCows;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +18,23 @@ TextView totalEmissions;
 
         Intent intent = getIntent();
         Double totalBeefEmissions = intent.getDoubleExtra("totalCowWeight",0);
-        totalEmissions = findViewById(R.id.textViewTotalEmissions);
-        totalEmissions.setText(totalBeefEmissions.toString());
+        int numberOfBullsAmount = intent.getIntExtra("numberOfBulls",0);
+        int numberOfCowsAmount= intent.getIntExtra("numberOfCows",0);
+        Double totalCowWeightAmount = intent.getDoubleExtra("totalCowWeight",0);
+        Double totalBullWeightAmount = intent.getDoubleExtra("totalBullWeight",0);
+        Double totalCowEmissionsAmount = intent.getDoubleExtra("totalCowEmissions",0);
+        Double totalBullEmissionAmount = intent.getDoubleExtra("totalBullEmissions",0);
+
+
+        totalBullEmissions = findViewById(R.id.totalBullEmissions);
+        totalBullEmissions.setText(totalBullEmissionAmount.toString());
+
+        noOfBulls = findViewById(R.id.noBulls);
+        noOfBulls.setText(numberOfBullsAmount);
+
+        noOfCows= findViewById(R.id.noCows);
+        noOfCows.setText(numberOfCowsAmount);
+
+
     }
 }

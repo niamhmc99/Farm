@@ -53,6 +53,7 @@
     <string name="calulateEmission">Calculate Average Farm Emissions</string>
     <string name="date_of_insemination">Date Of Insemenation</string>
     <string name="cancel">Cancel</string>
+    <string name="total_beef_emissions">Total Beef Emissions:</string>
 
 
 </resources>
