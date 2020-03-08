@@ -38,12 +38,9 @@ public class BeefCalculationActivity extends AppCompatActivity {
 //      textInputAverageCowWeight = findViewById(R.id.textInputAverageCowWeight);
         editTextAverageCowWeight = findViewById(R.id.editTextAverageCowWeight);
         editTextAverageBullWeight = findViewById(R.id.editTextAverageBullWeight);
-
-
     }
 
     public void calculateBeefEmissions(View view) {
-
         Button calculateBtn = findViewById(R.id.calculateBtn);
         String bullWeight = editTextAverageBullWeight.getText().toString();
         String cowWeight = editTextAverageCowWeight.getText().toString();
@@ -59,14 +56,11 @@ public class BeefCalculationActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-
                             int numberFemaleAnimals = task.getResult().size();
                             double totalCowWeight = getTotalCowWeight(numberFemaleAnimals);
 
-
-                            Intent intent = new Intent(BeefCalculationActivity.this, EmissionsActivity.class);
+                            Intent intent = new Intent(BeefCalculationActivity.this, BeefRecommendationActivity.class);
                             intent.putExtra("totalCowWeight", totalCowWeight);
-
                             startActivity(intent);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -74,7 +68,6 @@ public class BeefCalculationActivity extends AppCompatActivity {
                     }
 
                 });
-
     }
 
     public void calculateCowNumber(){
@@ -90,23 +83,17 @@ public class BeefCalculationActivity extends AppCompatActivity {
             }
 
         });
-
-
     }
 
     public double getTotalCowWeight(int numberOfCows)
     {
-
         String cowWeight = editTextAverageCowWeight.getText().toString();
         Double beefAnimalEmissions = Double.parseDouble(cowWeight)* numberOfCows * 25.43;
-        System.out.println(beefAnimalEmissions + " ******* cowWeight X numberOFCows" );
-
-        Intent intent = new Intent(BeefCalculationActivity.this, EmissionsActivity.class);
-        intent.putExtra("totalCowWeight", beefAnimalEmissions);
-        startActivity(intent);
-
+        System.out.println(beefAnimalEmissions + " ******* cowWeight X numberOFCows * 25.43 = total emissions" );
+//        Intent intent = new Intent(BeefCalculationActivity.this, BeefRecommendationActivity.class);
+//        intent.putExtra("totalEmissions", beefAnimalEmissions);
+//        startActivity(intent);
         return  beefAnimalEmissions;
-
     }
 
     //*** if add cow average + bull average
@@ -136,11 +123,6 @@ public class BeefCalculationActivity extends AppCompatActivity {
 //                });
 //
 //    }
-
-
-
-
-
 }
 
 

@@ -362,19 +362,11 @@
                         android:layout_marginTop="12dp"
                         android:textStyle="bold"
                         android:textColor="@color/colorBlack"/>
+
                 </LinearLayout>
-
-
             </androidx.cardview.widget.CardView>
-
-
-
-
-        </GridLayout>
-
-
+         </GridLayout>
     </LinearLayout>
-
 </ScrollView>
 
     <com.google.android.material.navigation.NavigationView

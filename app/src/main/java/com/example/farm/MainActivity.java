@@ -19,6 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.farm.emissions.EmissionsActivity;
 import com.example.farm.googlemaps.MapsActivity;
+import com.example.farm.invoiceExpenses.ExpenditureActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

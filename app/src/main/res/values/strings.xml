@@ -3,7 +3,7 @@
     <string name="logout">Logout</string>
     <string name="home">Home Page</string>
     <string name="animals">Animals </string>
-    <string name="expense">Expenses </string>
+    <string name="expense">Invoice/Expenses </string>
     <string name="employees">Employees </string>
     <string name="vets">Vets </string>
     <string name="calvingDifficulty_prompt">Calving Difficulty</string>

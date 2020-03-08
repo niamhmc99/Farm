@@ -56,7 +56,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference animalRef = db.collection("animals");
     private AnimalAdapter adapter;
-    private FloatingActionButton mFabAddAnimal, fabSearchTagBarcode;
+    private FloatingActionButton mFabAddAnimal;
     View mParentLayout;
     ImageButton updateButton;
     TextView tvScanBarcode;
@@ -68,7 +68,6 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal);
         updateButton = findViewById(R.id.update_button);
-        //fabSearchTagBarcode = findViewById(R.id.fabSearchTagBarcode);
         mFabAddAnimal = findViewById(R.id.fabInsertAnimal);
         mFabAddAnimal.setOnClickListener(this);
         mParentLayout = findViewById(android.R.id.content);
@@ -227,7 +226,6 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                 startActivity(new Intent(AnimalActivity.this, UpdateAnimalActivity.class));
                 break;
         }
-
     }
 
     private void setupFirebaseAuth(){
@@ -252,18 +250,14 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         };
     }
 
-    // Function to check and request permission.
-    public void checkPermission(String permission, int requestCode)
-    {
+    public void checkPermission(String permission, int requestCode) {
         if (ContextCompat.checkSelfPermission(AnimalActivity.this, permission)
                 == PackageManager.PERMISSION_DENIED) {
 
-            // Requesting the permission
             ActivityCompat.requestPermissions(AnimalActivity.this,
                     new String[] { permission },
                     requestCode);
-        }
-        else {
+        } else {
             Toast.makeText(AnimalActivity.this,
                     "Permission already granted",
                     Toast.LENGTH_SHORT)
@@ -271,31 +265,17 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    // This function is called when the user accepts or decline the permission.
-    // Request Code is used to check which permission called this function.
-    // This request code is provided when the user is prompt for permission.
-
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        super
-                .onRequestPermissionsResult(requestCode,
-                        permissions,
-                        grantResults);
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == CAMERA_PERMISSION_CODE) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(AnimalActivity.this,
-                        "Camera Permission Granted",
-                        Toast.LENGTH_SHORT)
-                        .show();
+                        "Camera Permission Granted", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(AnimalActivity.this,
-                        "Camera Permission Denied",
-                        Toast.LENGTH_SHORT)
-                        .show();
+                        "Camera Permission Denied", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -332,8 +312,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                     public void onFailure(@NonNull Exception e) {
                         showMessage(AnimalActivity.this,"Animal with barcode " + contents + " not found within the herd");
                     }
-                })
-                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                })  .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override
                             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                 if (!queryDocumentSnapshots.isEmpty()) {
@@ -347,27 +326,21 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                                         animalDialogFragment.show(getSupportFragmentManager(),AnimalDialogFragment.class.getSimpleName());
                                         break;
                                     }
-                                    if(list.size() == 0)
-                                    {
-                                        //Show failure message if no data found)
+                                    if(list.size() == 0) {
                                         showMessage(AnimalActivity.this,"Animal with barcode " + contents + " not found within the herd");
                                     }
                                 }
-                                else
-                                {
-                                    //Show failure message if no data found
+                                else {
                                     showMessage(AnimalActivity.this,"Animal with barcode " + contents + " not found");
                                 }
                             }
                         });
             } else if (resultCode == RESULT_CANCELED) {
-                //In case scanner is canceled)
                 Log.d(TAG, "RESULT_CANCELED");
             }
         }
-
-
     }
+
     private void showMessage(Context context, String message ) {
         androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(context, R.style.Base_Theme_AppCompat_Light_Dialog_Alert);
         if (message.equals("")) {
@@ -382,9 +355,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                 dialogInterface.cancel();
             }
         });
-
         final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
-
         alertDialog.show();
     }
 

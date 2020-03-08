@@ -1,4 +1,4 @@
-package com.example.farm;
+package com.example.farm.invoiceExpenses;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.example.farm.LoginActivity;
+import com.example.farm.MainActivity;
+import com.example.farm.R;
 
 public class ExpenditureActivity extends AppCompatActivity {
 

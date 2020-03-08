@@ -21,11 +21,10 @@
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints">
 
-
         <ImageView
             android:id="@+id/imageEmissions"
-            android:layout_width="228dp"
-            android:layout_height="215dp"
+            android:layout_width="198dp"
+            android:layout_height="198dp"
             android:contentDescription="@string/emissions"
             android:src="@drawable/farm_carbon_edit" />
 
@@ -37,10 +36,8 @@
             android:text="@string/calulateEmission"
             android:textAllCaps="true"
             android:textColor="@color/green"
-            android:textSize="29sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
-
-
     </LinearLayout>
 
     <TextView
@@ -61,8 +58,8 @@
 
     <GridLayout
         android:id="@+id/gridLayout"
-        android:layout_width="414dp"
-        android:layout_height="217dp"
+        android:layout_width="409dp"
+        android:layout_height="225dp"
         android:alignmentMode="alignMargins"
         android:columnCount="2"
         android:columnOrderPreserved="false"
@@ -73,7 +70,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtViewChooseEmissionOption"
         app:layout_constraintVertical_bias="0.105"
-        tools:ignore="@string/emissions,MissingConstraints">
+        tools:ignore="@string/emissions">
 
 
         <androidx.cardview.widget.CardView
@@ -84,7 +81,6 @@
             android:layout_margin="12dp"
             app:cardCornerRadius="26dp"
             app:cardElevation="6dp">
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -112,7 +108,6 @@
                     android:textSize="13sp"
                     android:textStyle="bold" />
             </LinearLayout>
-
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -124,9 +119,8 @@
             app:cardCornerRadius="26dp"
             app:cardElevation="6dp">
 
-
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="165dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical"
@@ -151,8 +145,6 @@
                     android:textSize="13sp"
                     android:textStyle="bold" />
             </LinearLayout>
-
         </androidx.cardview.widget.CardView>
-
     </GridLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
