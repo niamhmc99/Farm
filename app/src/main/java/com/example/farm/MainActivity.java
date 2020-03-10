@@ -20,6 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.farm.emissions.EmissionsActivity;
 import com.example.farm.googlemaps.MapsActivity;
 import com.example.farm.invoiceExpenses.ExpenditureActivity;
+import com.example.farm.invoiceExpenses.InvoiceExpensesActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,7 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    ImageButton imageButtonAnimals, imageButtonVets, buttonLogout, imageButtonWeather, imageButtonMap, imageButtonToDo, imageButtonEmissions;
+    ImageButton imageButtonAnimals, imageButtonVets, buttonLogout, imageButtonWeather, imageButtonMap, imageButtonToDo, imageButtonEmissions, imageButtonInvoiceExpense;
     FirebaseAuth auth;
     FirebaseUser user;
     FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -179,6 +180,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, EmissionsActivity.class));
+            }
+        });
+    }
+
+    public void clickInvoiceExpense(View view) {
+        imageButtonInvoiceExpense = findViewById(R.id.imageButtonInvoiceExpense);
+        imageButtonInvoiceExpense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, InvoiceExpensesActivity.class));
             }
         });
     }

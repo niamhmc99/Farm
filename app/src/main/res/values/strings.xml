@@ -56,6 +56,8 @@
     <string name="total_beef_emissions">Total Beef Emissions:</string>
     <string name="invoiceOrExpense">Invoice or Expense</string>
     <string name="category">Category</string>
+    <string name="select_invoice_type">Select Invoice Type</string>
+    <string name="select_category">Select Category</string>
 
 
 </resources>

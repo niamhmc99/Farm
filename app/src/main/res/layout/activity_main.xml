@@ -346,18 +346,19 @@
                     android:orientation="vertical">
 
                     <ImageButton
-                        android:id="@+id/imageButtonExpenses"
+                        android:id="@+id/imageButtonInvoiceExpense"
                         android:src="@drawable/expense"
                         android:scaleType="fitXY"
                         android:layout_width="120dp"
                         android:layout_height="100dp"
                         android:background="@color/white"
+                        android:onClick="clickInvoiceExpense"
                         android:contentDescription="@string/expense" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Expenses"
+                        android:text="Invoice/ Expenses"
                         android:textSize="13sp"
                         android:layout_marginTop="12dp"
                         android:textStyle="bold"

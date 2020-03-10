@@ -29,7 +29,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".emissions.BeefRecommendationActivity"></activity>
+        <activity android:name=".invoiceExpenses.InsertInvoiceExpenseActivity"></activity>
+        <activity android:name=".emissions.BeefRecommendationActivity" />
         <activity android:name=".invoiceExpenses.InvoiceExpensesActivity" />
         <activity android:name=".emissions.DairyCalculationActivity" />
         <activity android:name=".emissions.BeefCalculationActivity" />
