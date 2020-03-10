@@ -54,6 +54,8 @@
     <string name="date_of_insemination">Date Of Insemenation</string>
     <string name="cancel">Cancel</string>
     <string name="total_beef_emissions">Total Beef Emissions:</string>
+    <string name="invoiceOrExpense">Invoice or Expense</string>
+    <string name="category">Category</string>
 
 
 </resources>

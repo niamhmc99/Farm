@@ -30,7 +30,7 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity android:name=".emissions.BeefRecommendationActivity"></activity>
-        <activity android:name=".invoiceExpenses.InvoiceActivity" />
+        <activity android:name=".invoiceExpenses.InvoiceExpensesActivity" />
         <activity android:name=".emissions.DairyCalculationActivity" />
         <activity android:name=".emissions.BeefCalculationActivity" />
         <activity android:name=".emissions.EmissionsActivity" />

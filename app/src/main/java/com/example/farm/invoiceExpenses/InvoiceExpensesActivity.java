@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.example.farm.R;
 
-public class InvoiceActivity extends AppCompatActivity {
+public class InvoiceExpensesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

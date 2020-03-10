@@ -25,7 +25,6 @@ public class BeefRecommendationActivity extends AppCompatActivity {
         Double totalCowEmissionsAmount = intent.getDoubleExtra("totalCowEmissions",0);
         Double totalBullEmissionAmount = intent.getDoubleExtra("totalBullEmissions",0);
 
-
         totalBullEmissions = findViewById(R.id.totalBullEmissions);
         totalBullEmissions.setText(totalBullEmissionAmount.toString());
 
@@ -34,7 +33,5 @@ public class BeefRecommendationActivity extends AppCompatActivity {
 
         noOfCows= findViewById(R.id.noCows);
         noOfCows.setText(numberOfCowsAmount);
-
-
     }
 }
