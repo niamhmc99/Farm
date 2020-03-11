@@ -53,7 +53,7 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
 
     private final String  TAG= "InsertAnimalActivity";
     private Button btnInsertInvoice;
-    private ProgressBar addanimalProgress;
+    private ProgressBar progressBar;
     private Spinner spinnerInvoiceType, spinnerCategory;
     View mParentLayout;
 
@@ -61,13 +61,11 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
     private Uri mainImageURI = null;
 
     private String user_id;
-
     private boolean isChanged = false;
 
     private StorageReference storageReference;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestoreDB;
-
     private Bitmap compressedImageFile;
 
     private static final String KEY_INVOICETYPE = "invoiceType";
@@ -91,9 +89,9 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
         addItemsOnSpinnerInvoiceType();
         addItemsOnSpinnerCategory();
 
-        invoice_image = findViewById(R.id.invoice_image);
+        invoice_image = findViewById(R.id.invoiceOrExpenseImage);
         btnInsertInvoice = findViewById(R.id.btnInsertInvoice);
-        addanimalProgress = findViewById(R.id.animaml_progress);
+        progressBar = findViewById(R.id.progressBar);
 
 
         //Help-Comment (Invoice will be inserted by clicking insert invoice button will call his)
@@ -107,7 +105,7 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
                 if (mainImageURI != null) {
 
                     btnInsertInvoice.setEnabled(false);
-                    addanimalProgress.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
 
                     if (isChanged) {
 
@@ -127,7 +125,7 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
 
                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
                         compressedImageFile.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                        byte[] thumbData = baos.toByteArray();
+//                        byte[] thumbData = baos.toByteArray();
 
                         final StorageReference filePath = storageReference.child("images/" + UUID.randomUUID().toString());
 
@@ -175,9 +173,7 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
                         ActivityCompat.requestPermissions(InsertInvoiceExpenseActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
                     } else {
-
                         BringImagePicker();
-
                     }
                 } else {
                     BringImagePicker();
@@ -202,29 +198,27 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
-                            addanimalProgress.setVisibility(View.INVISIBLE);
+                            progressBar.setVisibility(View.INVISIBLE);
                             btnInsertInvoice.setEnabled(true);
                             Log.d(TAG, "Invoice inserted into herd with ID: " + documentReference.getId());
-                            Toast.makeText(InsertInvoiceExpenseActivity.this, "The invoice has been added.", Toast.LENGTH_LONG).show();
-                            Intent mainIntent = new Intent(InsertInvoiceExpenseActivity.this, InvoiceExpensesActivity.class);
-                            startActivity(mainIntent);
+                            Toast.makeText(InsertInvoiceExpenseActivity.this, "Successfully added. ", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(InsertInvoiceExpenseActivity.this, InvoiceExpensesActivity.class);
+                            startActivity(intent);
                             finish();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            addanimalProgress.setVisibility(View.INVISIBLE);
+                            progressBar.setVisibility(View.INVISIBLE);
                             btnInsertInvoice.setEnabled(true);
-                            Log.w(TAG, "Error adding invoice", e);
-                            Toast.makeText(InsertInvoiceExpenseActivity.this, "(FIRESTORE Error) : " + e, Toast.LENGTH_LONG).show();
+                            Log.w(TAG, "Error occured: ", e);
+                            Toast.makeText(InsertInvoiceExpenseActivity.this, "Error : " + e, Toast.LENGTH_LONG).show();
                         }
                     });
-
-
         }
         else {
-            addanimalProgress.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -242,13 +236,13 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
             TextView errorText = (TextView)spinnerInvoiceType.getSelectedView();
             errorText.setError("");
             errorText.setTextColor(Color.RED);//just to highlight that this is an error
-            errorText.setText("Please select the invoice type ctaegory");//changes the selected item text to this
-            makeSnackBarMessage("Please insert invoice type category");
+            errorText.setText("Please select a category");//changes the selected item text to this
+            makeSnackBarMessage("Please insert the type of category");
             return true;
         }
         else if(!isInvoice)
         {
-            makeSnackBarMessage("Please select invoice image");
+            makeSnackBarMessage("Please select image file ");
             return true;
         }
         else{

@@ -30,7 +30,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -135,7 +134,7 @@ public class InsertAnimalActivity extends AppCompatActivity {
         animalProfilePic = findViewById(R.id.animal_image);
         editTextTagNumber = findViewById(R.id.tagNumber);
         btnInsertAnimal = findViewById(R.id.btnInsertAnimal);
-        addanimalProgress = findViewById(R.id.animaml_progress);
+        addanimalProgress = findViewById(R.id.progressBar);
         checkBoxInCalve = findViewById(R.id.checkBoxInCalve);
         textViewDateOfInsemination = findViewById(R.id.textViewDateOfInsemination);
         textViewDateCalculatedCalveAndDelivery = findViewById(R.id.textViewDateCalculatedCalveAndDelivery);
