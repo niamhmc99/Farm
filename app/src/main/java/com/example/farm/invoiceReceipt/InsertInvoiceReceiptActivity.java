@@ -1,4 +1,4 @@
-package com.example.farm.invoiceExpenses;
+package com.example.farm.invoiceReceipt;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,15 +49,15 @@ import java.util.UUID;
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
-public class InsertInvoiceExpenseActivity extends AppCompatActivity {
+public class InsertInvoiceReceiptActivity extends AppCompatActivity {
 
     private final String  TAG= "InsertAnimalActivity";
-    private Button btnInsertInvoice;
+    private Button btnInsert;
     private ProgressBar progressBar;
-    private Spinner spinnerInvoiceType, spinnerCategory;
+    private Spinner spinnerType, spinnerCategory;
     View mParentLayout;
 
-    private CircleImageView invoice_image;
+    private CircleImageView invoiceReceiptImage;
     private Uri mainImageURI = null;
 
     private String user_id;
@@ -68,7 +68,7 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
     private FirebaseFirestore firestoreDB;
     private Bitmap compressedImageFile;
 
-    private static final String KEY_INVOICETYPE = "invoiceType";
+    private static final String KEY_INVOICERECEIPTTYPE = "invoiceType";
     private static final String KEY_CATEGORY = "category";
     private static final String KEY_IMAGE= "image";
     private static final String KEY_USERID = "user_id";
@@ -76,7 +76,7 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_insert_invoice_expense);
+        setContentView(R.layout.activity_insert_invoice_receipt);
 
         mParentLayout = findViewById(android.R.id.content);
 
@@ -89,22 +89,22 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
         addItemsOnSpinnerInvoiceType();
         addItemsOnSpinnerCategory();
 
-        invoice_image = findViewById(R.id.invoiceOrExpenseImage);
-        btnInsertInvoice = findViewById(R.id.btnInsertInvoice);
+        invoiceReceiptImage = findViewById(R.id.invoiceOrReceiptImage);
+        btnInsert = findViewById(R.id.btnInsert);
         progressBar = findViewById(R.id.progressBar);
 
 
         //Help-Comment (Invoice will be inserted by clicking insert invoice button will call his)
-        btnInsertInvoice.setOnClickListener(new View.OnClickListener() {
+        btnInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String strSelectedInvoiceType = String.valueOf(spinnerInvoiceType.getSelectedItem());
+                final String strSelectedType = String.valueOf(spinnerType.getSelectedItem());
                 final String strSelectedCategory = String.valueOf(spinnerCategory.getSelectedItem());
                 final String strUserID = FirebaseAuth.getInstance().getCurrentUser().getUid().trim();
 
                 if (mainImageURI != null) {
 
-                    btnInsertInvoice.setEnabled(false);
+                    btnInsert.setEnabled(false);
                     progressBar.setVisibility(View.VISIBLE);
 
                     if (isChanged) {
@@ -114,7 +114,7 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
                         File newImageFile = new File(mainImageURI.getPath());
 
                         try {
-                            compressedImageFile = new Compressor(InsertInvoiceExpenseActivity.this)
+                            compressedImageFile = new Compressor(InsertInvoiceReceiptActivity.this)
                                     .setMaxHeight(125)
                                     .setMaxWidth(125)
                                     .setQuality(50)
@@ -138,22 +138,22 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Uri uri) {
                                             String downloadUrl = uri.toString();
-                                            storeFirestore(isChanged, strUserID, strSelectedInvoiceType, strSelectedCategory, downloadUrl);
+                                            storeFirestore(isChanged, strUserID, strSelectedType, strSelectedCategory, downloadUrl);
 
                                         }
                                     });
                                 } else {
-                                    btnInsertInvoice.setEnabled(true);
-                                    Toast.makeText(InsertInvoiceExpenseActivity.this, "Permission Denied", Toast.LENGTH_LONG).show();
+                                    btnInsert.setEnabled(true);
+                                    Toast.makeText(InsertInvoiceReceiptActivity.this, "Permission Denied", Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
 
                     } else {
-                        makeSnackBarMessage("Please select invoice image");
+                        makeSnackBarMessage("Please select invoice/ receipt image");
                     }
                 } else {
-                    makeSnackBarMessage("Please select invoice image");
+                    makeSnackBarMessage("Please select invoice/ receipt image");
                 }
 
             }
@@ -161,16 +161,16 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
         });
 
 
-        invoice_image.setOnClickListener(new View.OnClickListener() {
+        invoiceReceiptImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-                    if (ContextCompat.checkSelfPermission(InsertInvoiceExpenseActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(InsertInvoiceReceiptActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-                        Toast.makeText(InsertInvoiceExpenseActivity.this, "Permission Denied", Toast.LENGTH_LONG).show();
-                        ActivityCompat.requestPermissions(InsertInvoiceExpenseActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                        Toast.makeText(InsertInvoiceReceiptActivity.this, "Permission Denied", Toast.LENGTH_LONG).show();
+                        ActivityCompat.requestPermissions(InsertInvoiceReceiptActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
                     } else {
                         BringImagePicker();
@@ -182,27 +182,27 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
         });
     }
 
-    private void storeFirestore(boolean isInvoice,String strUserID,String strInvoiceType,String strCategory,String downloadUrl) {
+    private void storeFirestore(boolean isInvoice,String strUserID,String strInvoiceReceiptType,String strCategory,String downloadUrl) {
 
 
         Map<String, Object> invoiceMap = new HashMap<>();
-        invoiceMap.put(KEY_INVOICETYPE, strInvoiceType);
+        invoiceMap.put(KEY_INVOICERECEIPTTYPE, strInvoiceReceiptType);
         invoiceMap.put(KEY_CATEGORY, strCategory);
         invoiceMap.put(KEY_USERID, strUserID);
         invoiceMap.put(KEY_IMAGE, downloadUrl);
 
-        if (!hasValidationErrors(strInvoiceType, strCategory, isInvoice)) {
+        if (!hasValidationErrors(strInvoiceReceiptType, strCategory, isInvoice)) {
 
-            firestoreDB.collection("Invoice")
+            firestoreDB.collection("InvoiceReceipts")
                     .add(invoiceMap)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             progressBar.setVisibility(View.INVISIBLE);
-                            btnInsertInvoice.setEnabled(true);
+                            btnInsert.setEnabled(true);
                             Log.d(TAG, "Invoice inserted into herd with ID: " + documentReference.getId());
-                            Toast.makeText(InsertInvoiceExpenseActivity.this, "Successfully added. ", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(InsertInvoiceExpenseActivity.this, InvoiceExpensesActivity.class);
+                            Toast.makeText(InsertInvoiceReceiptActivity.this, "Successfully added. ", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(InsertInvoiceReceiptActivity.this, InvoiceReceiptActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -211,9 +211,9 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressBar.setVisibility(View.INVISIBLE);
-                            btnInsertInvoice.setEnabled(true);
+                            btnInsert.setEnabled(true);
                             Log.w(TAG, "Error occured: ", e);
-                            Toast.makeText(InsertInvoiceExpenseActivity.this, "Error : " + e, Toast.LENGTH_LONG).show();
+                            Toast.makeText(InsertInvoiceReceiptActivity.this, "Error : " + e, Toast.LENGTH_LONG).show();
                         }
                     });
         }
@@ -223,9 +223,9 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
 
     }
 
-    private boolean hasValidationErrors(String selectedInvoiceType, String selectedCategory, boolean isInvoice){
-        if(selectedInvoiceType.isEmpty()){
-            TextView errorText = (TextView)spinnerInvoiceType.getSelectedView();
+    private boolean hasValidationErrors(String selectedType, String selectedCategory, boolean isInvoice){
+        if(selectedType.isEmpty()){
+            TextView errorText = (TextView)spinnerType.getSelectedView();
             errorText.setError("");
             errorText.setTextColor(Color.RED);//just to highlight that this is an error
             errorText.setText("Please select the invoice type");//changes the selected item text to this
@@ -233,7 +233,7 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
             return true;
         }
         if(selectedCategory.isEmpty()){
-            TextView errorText = (TextView)spinnerInvoiceType.getSelectedView();
+            TextView errorText = (TextView)spinnerCategory.getSelectedView();
             errorText.setError("");
             errorText.setTextColor(Color.RED);//just to highlight that this is an error
             errorText.setText("Please select a category");//changes the selected item text to this
@@ -252,15 +252,15 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
     }
 
     public void addItemsOnSpinnerInvoiceType(){
-        spinnerInvoiceType = findViewById(R.id.spinnerInvoiceType);
+        spinnerType = findViewById(R.id.spinnerType);
         List<String> list = new ArrayList<String>();
         list.add("Income");
-        list.add("Expense");
+        list.add("Receipt");
 
         ArrayAdapter<String> invoiceTypeAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
         invoiceTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerInvoiceType.setAdapter(invoiceTypeAdapter);
+        spinnerType.setAdapter(invoiceTypeAdapter);
     }
 
     public void addItemsOnSpinnerCategory(){
@@ -283,7 +283,7 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
 
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.OFF)
-                .start(InsertInvoiceExpenseActivity.this);
+                .start(InsertInvoiceReceiptActivity.this);
     }
 
     @Override
@@ -295,7 +295,7 @@ public class InsertInvoiceExpenseActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
 
                 mainImageURI = result.getUri();
-                invoice_image.setImageURI(mainImageURI);
+                invoiceReceiptImage.setImageURI(mainImageURI);
 
                 isChanged = true;
 

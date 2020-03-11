@@ -3,7 +3,7 @@
     <string name="logout">Logout</string>
     <string name="home">Home Page</string>
     <string name="animals">Animals </string>
-    <string name="expense">Invoice/Expenses </string>
+    <string name="invoiceReceipt">Invoice/ Receipt </string>
     <string name="employees">Employees </string>
     <string name="vets">Vets </string>
     <string name="calvingDifficulty_prompt">Calving Difficulty</string>
@@ -54,10 +54,11 @@
     <string name="date_of_insemination">Date Of Insemenation</string>
     <string name="cancel">Cancel</string>
     <string name="total_beef_emissions">Total Beef Emissions:</string>
-    <string name="invoiceOrExpense">Invoice or Expense</string>
+    <string name="invoiceOrReceipt">Invoice or Receipt</string>
     <string name="category">Category</string>
-    <string name="select_invoice_type">Select Invoice Type</string>
+    <string name="select_invoice_type">Select Invoice/ Receipt </string>
     <string name="select_category">Select Category</string>
+    <string name="insert_bill">Insert</string>
 
 
 </resources>

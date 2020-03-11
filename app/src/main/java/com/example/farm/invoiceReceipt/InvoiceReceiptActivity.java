@@ -1,4 +1,4 @@
-package com.example.farm.invoiceExpenses;
+package com.example.farm.invoiceReceipt;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,11 +15,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
 import com.example.farm.LoginActivity;
 import com.example.farm.R;
-import com.example.farm.adapters.InvoiceExpenseAdapter;
-import com.example.farm.models.InvoiceExpense;
+import com.example.farm.adapters.InvoiceReceiptAdapter;
+import com.example.farm.models.InvoiceReceipt;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,33 +29,32 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class InvoiceExpensesActivity extends AppCompatActivity implements View.OnClickListener {
+public class InvoiceReceiptActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "InvoiceActivity";
-    private List<InvoiceExpense> invoiceList;
+    private List<InvoiceReceipt> billsList;
     private FirebaseAuth.AuthStateListener mAuthListener;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference animalRef = db.collection("Invoice");
-    private InvoiceExpenseAdapter adapter;
-    private FloatingActionButton mFabAddInvoice;
+    private CollectionReference collectionReference = db.collection("InvoiceReceipts");
+    private InvoiceReceiptAdapter adapter;
+    private FloatingActionButton mFabAdd;
     View mParentLayout;
     private Spinner spinnerInvoiceType, spinnerCategory;
-    private FirestoreRecyclerOptions<InvoiceExpense> options;
+    private FirestoreRecyclerOptions<InvoiceReceipt> options;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_invoice_expenses);
-        mFabAddInvoice = findViewById(R.id.fabInsertInvoice);
+        setContentView(R.layout.activity_invoice_receipt);
+        mFabAdd = findViewById(R.id.fabInsertInvoiceReceipt);
         mParentLayout = findViewById(android.R.id.content);
         setupFirebaseAuth();
-        mFabAddInvoice.setOnClickListener(this);
+        mFabAdd.setOnClickListener(this);
 
-        addItemsOnSpinnerInvoiceType();
+        addItemsOnSpinnerType();
         addItemsOnSpinnerCategory();
         setUpRecyclerView();
     }
@@ -67,14 +64,14 @@ public class InvoiceExpensesActivity extends AppCompatActivity implements View.O
         {
             adapter.stopListening();
         }
-        Query query = animalRef.orderBy("invoiceType", Query.Direction.DESCENDING)
+        Query query = collectionReference.orderBy("invoiceType", Query.Direction.DESCENDING)
                 .whereEqualTo("invoiceType",spinnerInvoiceType.getSelectedItem())
                 .whereEqualTo("category",spinnerCategory.getSelectedItem());
 
-        FirestoreRecyclerOptions options= new FirestoreRecyclerOptions.Builder<InvoiceExpense>()
-                .setQuery(query, InvoiceExpense.class)
+        FirestoreRecyclerOptions options= new FirestoreRecyclerOptions.Builder<InvoiceReceipt>()
+                .setQuery(query, InvoiceReceipt.class)
                 .build();
-        adapter = new InvoiceExpenseAdapter(options);
+        adapter = new InvoiceReceiptAdapter(options);
 
         adapter.startListening();
 
@@ -96,7 +93,7 @@ public class InvoiceExpensesActivity extends AppCompatActivity implements View.O
                 //adapter.deleteItem(viewHolder.getAdapterPosition());
                 // Toast.makeText(AnimalActivity.this, "Animal Has Been Deleted from Herd.", Toast.LENGTH_SHORT).show();
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(InvoiceExpensesActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(InvoiceReceiptActivity.this);
                 builder.setTitle("Are you sure about this?");
                 builder.setMessage("Deletion is permanent...");
 
@@ -126,14 +123,11 @@ public class InvoiceExpensesActivity extends AppCompatActivity implements View.O
     public void onClick(View v) {
         switch (v.getId()){
 
-            case R.id.fabInsertInvoice:
-                startActivity(new Intent(InvoiceExpensesActivity.this, InsertInvoiceExpenseActivity.class));
+            case R.id.fabInsertInvoiceReceipt:
+                startActivity(new Intent(InvoiceReceiptActivity.this, InsertInvoiceReceiptActivity.class));
                 break;
-
         }
-
     }
-
 
     private void setupFirebaseAuth(){
         Log.d(TAG, "setupFirebaseAuth: started.");
@@ -148,7 +142,7 @@ public class InvoiceExpensesActivity extends AppCompatActivity implements View.O
 
                 } else {
                     Log.d(TAG, "onAuthStateChanged:signed_out");
-                    Intent intent = new Intent(InvoiceExpensesActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(InvoiceReceiptActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
@@ -173,8 +167,8 @@ public class InvoiceExpensesActivity extends AppCompatActivity implements View.O
         }
     }
 
-    public void addItemsOnSpinnerInvoiceType(){
-        spinnerInvoiceType = findViewById(R.id.spinnerInvoiceType);
+    public void addItemsOnSpinnerType(){
+        spinnerInvoiceType = findViewById(R.id.spinnerType);
         List<String> list = new ArrayList<String>();
         list.add("Income");
         list.add("Expense");
@@ -191,7 +185,6 @@ public class InvoiceExpensesActivity extends AppCompatActivity implements View.O
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
     }
@@ -223,11 +216,10 @@ public class InvoiceExpensesActivity extends AppCompatActivity implements View.O
         });
     }
 
-    //This will update the invoices list for user fetched from database)
     private void loadData()
     {
-        invoiceList = new ArrayList<>();
-        db.collection("Invoice")
+        billsList = new ArrayList<>();
+        db.collection("InvoiceReceipts")
                 .whereEqualTo("invoiceType",spinnerInvoiceType.getSelectedItem())
                 .whereEqualTo("category",spinnerCategory.getSelectedItem()).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -236,8 +228,8 @@ public class InvoiceExpensesActivity extends AppCompatActivity implements View.O
                         if (!queryDocumentSnapshots.isEmpty()) {
                             List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                             for (DocumentSnapshot d : list) {
-                                InvoiceExpense a = d.toObject(InvoiceExpense.class);
-                                invoiceList.add(a);
+                                InvoiceReceipt a = d.toObject(InvoiceReceipt.class);
+                                billsList.add(a);
                             }
                         }
                     }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context="com.example.farm.invoiceExpenses.InsertInvoiceExpenseActivity">
+    tools:context="com.example.farm.invoiceReceipt.InsertInvoiceReceiptActivity">
 
 
     <ProgressBar
@@ -19,7 +19,7 @@
         tools:ignore="MissingConstraints" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/invoiceOrExpenseImage"
+        android:id="@+id/invoiceOrReceiptImage"
         android:layout_width="264dp"
         android:layout_height="149dp"
         android:layout_marginStart="6dp"
@@ -44,7 +44,7 @@
             android:orientation="vertical">
 
             <Spinner
-                android:id="@+id/spinnerInvoiceType"
+                android:id="@+id/spinnerType"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:textSize="18sp"
@@ -61,15 +61,15 @@
                 android:prompt="@string/select_category" />
 
             <Button
-                android:id="@+id/btnInsertInvoice"
+                android:id="@+id/btnInsert"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:backgroundTint="@color/colorAccent"
                 android:padding="15dp"
-                android:text="Insert Invoice"
+                android:background="@color/green"
+                android:text="@string/insert_bill"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"

@@ -81,7 +81,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="-6dp"
             android:background="@color/white"
-
+    android:contentDescription="@string/logout"
             android:src="@drawable/ic_logout" />
 
         <GridLayout
@@ -121,7 +121,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Animals"
+                        android:text="@string/animals"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:layout_marginTop="12dp"
@@ -160,7 +160,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Weather"
+                        android:text="@string/weather"
                         android:textStyle="bold"
                         android:textSize="13sp"
                         android:layout_marginTop="12dp"
@@ -200,7 +200,7 @@
                         android:id="@+id/textViewVet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Vets"
+                        android:text="@string/vets"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:layout_marginTop="12dp"
@@ -279,7 +279,7 @@
                         android:id="@+id/textViewGoogleMaps"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nearby Resources"
+                        android:text="@string/nearbyPlaces"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:layout_marginTop="12dp"
@@ -318,7 +318,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Emissions"
+                        android:text="@string/emissions"
                         android:textSize="13sp"
                         android:layout_marginTop="12dp"
                         android:textStyle="bold"
@@ -353,12 +353,12 @@
                         android:layout_height="100dp"
                         android:background="@color/white"
                         android:onClick="clickInvoiceExpense"
-                        android:contentDescription="@string/expense" />
+                        android:contentDescription="@string/invoiceReceipt" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Invoice/ Expenses"
+                        android:text="@string/invoiceOrReceipt"
                         android:textSize="13sp"
                         android:layout_marginTop="12dp"
                         android:textStyle="bold"

@@ -19,8 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.farm.emissions.EmissionsActivity;
 import com.example.farm.googlemaps.MapsActivity;
-import com.example.farm.invoiceExpenses.ExpenditureActivity;
-import com.example.farm.invoiceExpenses.InvoiceExpensesActivity;
+import com.example.farm.invoiceReceipt.InvoiceReceiptActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -189,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         imageButtonInvoiceExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, InvoiceExpensesActivity.class));
+                startActivity(new Intent(MainActivity.this, InvoiceReceiptActivity.class));
             }
         });
     }

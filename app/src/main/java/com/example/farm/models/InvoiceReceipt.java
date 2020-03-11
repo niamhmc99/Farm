@@ -1,20 +1,19 @@
 package com.example.farm.models;
 
-public class InvoiceExpense {
+public class InvoiceReceipt {
     private String id;
-    private String invoiceType;
+    private String type;
     private String category;
     private String image;
     private String userId;
 
-    public InvoiceExpense() { //empty constructor
+    public InvoiceReceipt() {
 
     }
 
-    //this constructor includes animal profile pic and userID for RecycleView
-    public InvoiceExpense(String id, String invoiceType, String category, String image, String userId) {
+    public InvoiceReceipt(String id, String type, String category, String image, String userId) {
         this.id = id;
-        this.invoiceType = invoiceType;
+        this.type = type;
         this.category = category;
         this.image = image;
         this.userId = userId;
@@ -28,12 +27,12 @@ public class InvoiceExpense {
         this.id = id;
     }
 
-    public String getInvoiceType() {
-        return invoiceType;
+    public String getType() {
+        return type;
     }
 
-    public void setInvoiceType(String invoiceType) {
-        this.invoiceType = invoiceType;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getCategory() {
