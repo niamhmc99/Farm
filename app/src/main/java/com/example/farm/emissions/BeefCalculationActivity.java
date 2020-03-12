@@ -82,9 +82,13 @@ public class BeefCalculationActivity extends AppCompatActivity {
         System.out.println("Array sizeeee ********* " + maleFemaleAmounts.size());
 
 
-        if(maleFemaleAmounts.size()>0){
-            int numberOfBulls= maleFemaleAmounts.get(0);
+       // System.out.println("Array Male" + numberOfBulls + "Femaleeee " + numberOfCows);
+
+
+        if(maleFemaleAmounts.size()<=0){
             int numberOfCows= maleFemaleAmounts.get(1);
+
+            int numberOfBulls= maleFemaleAmounts.get(0);
             double totalCowWeight= getTotalCowWeight(numberOfCows);
             double totalBullWeight= getTotalBullWeight(numberOfBulls);
 

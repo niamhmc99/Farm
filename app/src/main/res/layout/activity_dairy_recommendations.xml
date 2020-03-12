@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".emissions.DairyRecommendationsActivity">
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"
+        android:id="@+id/beefEmissions"
+        android:textSize="20sp"
+        android:layout_marginHorizontal="16dp"
+        android:text="@string/dairy_emissions_caps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_marginLeft="25dp"
+        android:layout_below="@+id/beefEmissions"
+        android:id="@+id/cv1"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/numCows"
+                android:layout_marginRight="16dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true" />
+
+            <TextView
+                android:textAllCaps="true"
+                android:gravity="center_vertical"
+                android:text="@string/number_of_milk_producing_cows"
+                android:textColor="@color/colorPrimaryDark"
+                android:id="@+id/labelNoBulls"
+                android:layout_toLeftOf="@id/numCows"
+                android:textSize="14sp"
+                android:layout_marginHorizontal="8dp"
+                android:background="@android:color/transparent"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+
+                />
+
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_marginLeft="25dp"
+        android:layout_below="@+id/cv1"
+        android:id="@+id/cv2"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textAllCaps="true"
+                android:gravity="center_vertical"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="@string/average_milk_yield_per_cow"
+                android:id="@+id/labelAverageWeightBulls"
+                android:layout_toLeftOf="@id/averageMilkYieldPA"
+                android:textSize="14sp"
+                android:layout_marginHorizontal="8dp"
+                android:background="@android:color/transparent"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"/>
+
+            <TextView
+                android:id="@+id/averageMilkYieldPA"
+                android:layout_marginRight="16dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true" />
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_marginLeft="25dp"
+        android:layout_below="@+id/cv2"
+        android:id="@+id/cv3"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:gravity="center_vertical"
+                android:text="Total Dairy Emissions Per Annumn"
+                android:id="@+id/labelTotalBullEmissions"
+                android:layout_toLeftOf="@id/totalDairyEmissionsPA"
+                android:layout_marginHorizontal="8dp"
+                android:background="@android:color/transparent"
+                android:layout_width="match_parent"
+                android:textSize="14sp"
+                android:layout_height="60dp"/>
+
+            <TextView
+                android:id="@+id/totalDairyEmissionsPA"
+                android:layout_marginRight="16dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true" />
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:layout_marginLeft="25dp"-->
+<!--        android:layout_below="@+id/cv3"-->
+<!--        android:id="@+id/cv4"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:layout_marginRight="16dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--            <TextView-->
+<!--                android:textAllCaps="true"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:textColor="@color/colorPrimaryDark"-->
+<!--                android:text="Number of Cows"-->
+<!--                android:id="@+id/labelNoCows"-->
+<!--                android:layout_toLeftOf="@id/noCows"-->
+<!--                android:layout_marginHorizontal="8dp"-->
+<!--                android:background="@android:color/transparent"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:textSize="14sp"-->
+<!--                android:layout_height="60dp"/>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/noCows"-->
+<!--                android:layout_marginRight="16dp"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignParentRight="true" />-->
+
+<!--        </RelativeLayout>-->
+<!--    </androidx.cardview.widget.CardView>-->
+
+</RelativeLayout>
