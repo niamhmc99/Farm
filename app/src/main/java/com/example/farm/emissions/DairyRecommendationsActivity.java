@@ -22,17 +22,17 @@ TextView numCows, averageMilkYieldPA, totalDairyEmissionsPA;
 
         int numberOfCows = intent.getIntExtra("NumberDairyCows",0);
         int averageMilkYield= intent.getIntExtra("AverageMilkYield",0);
-        int oneCowEmissionsPA = intent.getIntExtra("OneCowEmissionsPA",0);
-        int totalEmissionsPA= intent.getIntExtra("TotalEmissionsPA",0);
+        double oneCowEmissionsPA = intent.getDoubleExtra("OneCowEmissionsPA",0);
+        double totalEmissionsPA= intent.getDoubleExtra("TotalEmissionsPA",0);
 
         totalDairyEmissionsPA = findViewById(R.id.totalDairyEmissionsPA);
-        totalDairyEmissionsPA.setText(totalEmissionsPA);
+        totalDairyEmissionsPA.setText(String.valueOf(totalEmissionsPA));
 
         numCows = findViewById(R.id.numCows);
-        numCows.setText(numberOfCows);
+        numCows.setText(String.valueOf(numberOfCows));
 
         averageMilkYieldPA= findViewById(R.id.averageMilkYieldPA);
-        averageMilkYieldPA.setText(averageMilkYield);
+        averageMilkYieldPA.setText(String.valueOf(averageMilkYield));
 
 
 

@@ -39,7 +39,7 @@ public class DairyCalculationActivity extends AppCompatActivity {
 
         Intent intent = new Intent(DairyCalculationActivity.this, DairyRecommendationsActivity.class);
         intent.putExtra("NumberDairyCows", numberDairyCows);
-        intent.putExtra("AverageMilkYield", avgMilkYield);
+        intent.putExtra("AverageMilkYield", averageMilkYield);
         intent.putExtra("OneCowEmissionsPA", oneDairyCowEmissionsPA);
         intent.putExtra("TotalEmissionsPA", totalDairyEmissionsPA);
         startActivity(intent);
