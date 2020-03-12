@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(MainActivity.this, VetActivity.class));
                 break;
             case R.id.nav_expenses:
-                startActivity(new Intent(MainActivity.this, ExpenditureActivity.class));
+                startActivity(new Intent(MainActivity.this, InvoiceReceiptActivity.class));
                 break;
         }
         return true;

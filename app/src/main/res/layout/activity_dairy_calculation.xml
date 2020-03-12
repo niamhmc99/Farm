@@ -1,10 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".emissions.DairyCalculationActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/txtViewDairy"
+        android:layout_width="378dp"
+        android:layout_height="131dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:fontFamily="@font/fredericka_the_great"
+        android:text="@string/dairy_emissions"
+        android:textSize="50sp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.082" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/editTextNumDairyCows"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:hint="@string/number_of_milk_producing_cows"
+        android:inputType="text"
+        android:textColorHint="@color/white"
+        android:textSize="28sp"
+        app:met_baseColor="@color/green"
+        app:met_floatingLabel="highlight"
+        app:met_primaryColor="@color/darkGreen"
+        app:met_singleLineEllipsis="true" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/editTextAverageMilkYield"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:hint="@string/average_milk_yield_per_cow"
+        android:inputType="text"
+        android:textColorHint="@color/white"
+        android:textSize="28sp"
+        app:met_baseColor="@color/green"
+        app:met_floatingLabel="highlight"
+        app:met_primaryColor="@color/darkGreen"
+        app:met_singleLineEllipsis="true" />
+
+    <Button
+        android:id="@+id/calculateBtn"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="calculateDairyEmissions"
+        android:text="@string/calculate"
+        android:textSize="18sp"
+        app:backgroundTint="@color/green"
+        app:icon="@drawable/co2_icon"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.595" />
+
+
+
+
+</LinearLayout>

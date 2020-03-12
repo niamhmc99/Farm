@@ -59,6 +59,10 @@
     <string name="select_invoice_type">Select Invoice/ Receipt </string>
     <string name="select_category">Select Category</string>
     <string name="insert_bill">Insert</string>
+    <string name="calculate">Calculate</string>
+    <string name="dairy_emissions">Dairy Emissions</string>
+    <string name="average_milk_yield_per_cow">Average Milk Yield Per Cow</string>
+    <string name="number_of_milk_producing_cows">Number of Milk Producing Cows</string>
 
 
 </resources>

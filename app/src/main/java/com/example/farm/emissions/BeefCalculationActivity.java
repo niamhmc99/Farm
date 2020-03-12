@@ -18,6 +18,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.rengwuxian.materialedittext.MaterialEditText;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class BeefCalculationActivity extends AppCompatActivity {
     private final String TAG = "BeefCalculationActivity";
     private int overallCowEmissions;
     private TextInputLayout textInputAverageCowWeight;
-    private EditText editTextAverageCowWeight, editTextAverageBullWeight;
+    private MaterialEditText editTextAverageCowWeight, editTextAverageBullWeight;
     private Button btnCalculate;
 
     @Override
@@ -44,17 +46,45 @@ public class BeefCalculationActivity extends AppCompatActivity {
         calculateAnimalEmissions();
     }
 
+    public ArrayList<Integer> retrieveGenderQuantities(){
+
+        Query maleQuery = db.collection("animals").whereEqualTo("gender","male");
+        Query femaleQuery = db.collection("animals").whereEqualTo("gender","female");
+        Task maleTask = maleQuery.get();
+        Task femaleTask = femaleQuery.get();
+        final ArrayList<Integer>maleFemaleQuantity= new ArrayList<>();
+
+
+        Task<List<QuerySnapshot>> combinedTask = Tasks.whenAllSuccess(maleTask, femaleTask);
+
+        combinedTask.addOnSuccessListener(new OnSuccessListener<List<QuerySnapshot>>() {
+            @Override
+            public void onSuccess(List<QuerySnapshot> list) {
+                maleFemaleQuantity.add(list.get(0).size());
+                maleFemaleQuantity.add(list.get(1).size());
+            }
+        });
+
+        combinedTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println(e.toString());
+                Toast.makeText(BeefCalculationActivity.this, "Error Occurred - Please try again", Toast.LENGTH_SHORT).show();
+            }
+        });
+        System.out.println("Array size male and female quantity: " + maleFemaleQuantity.size());
+        return maleFemaleQuantity;
+    }
 
     public void calculateAnimalEmissions() {
 
         ArrayList<Integer> maleFemaleAmounts= retrieveGenderQuantities();
+        System.out.println("Array sizeeee ********* " + maleFemaleAmounts.size());
+
 
         if(maleFemaleAmounts.size()>0){
-
             int numberOfBulls= maleFemaleAmounts.get(0);
             int numberOfCows= maleFemaleAmounts.get(1);
-
-
             double totalCowWeight= getTotalCowWeight(numberOfCows);
             double totalBullWeight= getTotalBullWeight(numberOfBulls);
 
@@ -72,44 +102,12 @@ public class BeefCalculationActivity extends AppCompatActivity {
             startActivity(intent);
 
         }
-
         else{
             Log.d("Quantity","Male Female number retrieval failed");
         }
-
-
     }
 
-    public ArrayList<Integer> retrieveGenderQuantities(){
 
-    Query maleQuery = db.collection("animals").whereEqualTo("gender","male");
-    Query femaleQuery = db.collection("animals").whereEqualTo("gender","female");
-    Task maleTask = maleQuery.get();
-    Task femaleTask = femaleQuery.get();
-    final ArrayList<Integer>maleFemaleQuantity= new ArrayList<>();
-
-
-        Task<List<QuerySnapshot>> combinedTask = Tasks.whenAllSuccess(maleTask, femaleTask);
-
-        combinedTask.addOnSuccessListener(new OnSuccessListener<List<QuerySnapshot>>() {
-         @Override
-         public void onSuccess(List<QuerySnapshot> list) {
-
-             maleFemaleQuantity.add(list.get(0).size());
-             maleFemaleQuantity.add(list.get(1).size());
-          }
-
-     });
-
-        combinedTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                System.out.println(e.toString());
-                Toast.makeText(BeefCalculationActivity.this, "Error Occurred - Please try again", Toast.LENGTH_SHORT).show();
-            }
-        });
-        return maleFemaleQuantity;
-    }
 
 
     public double getTotalCowWeight(int numberOfCows)

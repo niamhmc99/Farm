@@ -50,13 +50,7 @@
                 app:met_floatingLabel="highlight"
                 app:met_primaryColor="@color/white"
                 app:met_singleLineEllipsis="true"/>
-
-
-
-
-
         </LinearLayout>
-
     </com.google.android.material.appbar.AppBarLayout>
 
 

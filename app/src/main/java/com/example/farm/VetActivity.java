@@ -65,8 +65,7 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
     FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
     private CollectionReference animalRef = firestoreDB.collection("VetAppointments");
 
-    public MaterialEditText editTextAppTitle;
-    public MaterialEditText editTextAppDesc;
+    private MaterialEditText editTextAppTitle, editTextAppDesc;
     public Date editTextAppDate;
 
     VetAppointmentAdapter appointmentAdapter;
