@@ -28,12 +28,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.farm.emissions.EmissionsActivity;
+import com.example.farm.googlemaps.MapsActivity;
 import com.example.farm.models.Appointment;
 import com.example.farm.adapters.VetAppointmentAdapter;
 import com.example.farm.fragments.DatePickerFragment;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,7 +57,7 @@ import java.util.List;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
-public class VetActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, FirebaseAuth.AuthStateListener, VetAppointmentAdapter.TaskListener{
+public class VetActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, FirebaseAuth.AuthStateListener, VetAppointmentAdapter.TaskListener, BottomNavigationView.OnNavigationItemSelectedListener{
     private static final String TAG = "AnimalActivity";
     ImageView imageViewCalendarDateButton;
     TextView textViewDate;
@@ -64,7 +67,7 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
     private List<Appointment> appointmentList = new ArrayList<Appointment>();
     FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
     private CollectionReference animalRef = firestoreDB.collection("VetAppointments");
-
+BottomNavigationView bottomNavigationView;
     private MaterialEditText editTextAppTitle, editTextAppDesc;
     public Date editTextAppDate;
 
@@ -116,6 +119,39 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
 //                        }
 //                    }
 //                });
+        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(VetActivity.this);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.ic_home:
+                Intent intent0 = new Intent(VetActivity.this, MainActivity.class);
+                startActivity(intent0);
+                break;
+
+            case R.id.ic_animals:
+                Intent intent1 = new Intent(VetActivity.this, AnimalActivity.class);
+                startActivity(intent1);
+                break;
+
+            case R.id.ic_nearbyPlaces:
+                Intent intent2 = new Intent(VetActivity.this, MapsActivity.class);
+                startActivity(intent2);
+                break;
+
+            case R.id.ic_vetApp:
+                Intent intent3 = new Intent(VetActivity.this, VetActivity.class);
+                startActivity(intent3);
+                break;
+
+            case R.id.ic_emissions:
+                Intent intent4 = new Intent(VetActivity.this, EmissionsActivity.class);
+                startActivity(intent4);
+                break;
+        }
+        return true;
     }
 
     private void setUpRecyclerView(FirebaseUser user) {

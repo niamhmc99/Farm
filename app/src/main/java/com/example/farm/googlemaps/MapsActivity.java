@@ -22,9 +22,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.farm.AnimalActivity;
 import com.example.farm.LoginActivity;
 import com.example.farm.MainActivity;
 import com.example.farm.R;
+import com.example.farm.VetActivity;
+import com.example.farm.emissions.BeefCalculationActivity;
+import com.example.farm.emissions.EmissionsActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -39,6 +43,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.common.collect.Maps;
 
 import java.io.IOException;
 import java.util.List;
@@ -46,7 +52,7 @@ import java.util.List;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener{
+        LocationListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
 
     private GoogleMap mMap;
@@ -57,6 +63,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static final int REQUEST_LOCATION_CODE = 99;
     int PROXIMITY_RADIUS = 10000;
     double latitude,longitude;
+    BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +78,40 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(MapsActivity.this);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.ic_home:
+                Intent intent0 = new Intent(MapsActivity.this, MainActivity.class);
+                startActivity(intent0);
+                break;
+
+            case R.id.ic_animals:
+                Intent intent1 = new Intent(MapsActivity.this, AnimalActivity.class);
+                startActivity(intent1);
+                break;
+
+            case R.id.ic_nearbyPlaces:
+                Intent intent2 = new Intent(MapsActivity.this, MapsActivity.class);
+                startActivity(intent2);
+                break;
+
+            case R.id.ic_vetApp:
+                Intent intent3 = new Intent(MapsActivity.this, VetActivity.class);
+                startActivity(intent3);
+                break;
+
+            case R.id.ic_emissions:
+                Intent intent4 = new Intent(MapsActivity.this, EmissionsActivity.class);
+                startActivity(intent4);
+                break;
+        }
+        return true;
     }
 
     @Override

@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,11 +23,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.farm.AnimalActivity;
+import com.example.farm.InsertAnimalActivity;
+import com.example.farm.MainActivity;
 import com.example.farm.R;
+import com.example.farm.ToDoListActivity;
+import com.example.farm.VetActivity;
+import com.example.farm.emissions.EmissionsActivity;
+import com.example.farm.googlemaps.MapsActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -49,7 +58,7 @@ import java.util.UUID;
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
-public class InsertInvoiceReceiptActivity extends AppCompatActivity {
+public class InsertInvoiceReceiptActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private final String  TAG= "InsertAnimalActivity";
     private Button btnInsert;
@@ -59,6 +68,7 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity {
 
     private CircleImageView invoiceReceiptImage;
     private Uri mainImageURI = null;
+    BottomNavigationView bottomNavigationView;
 
     private String user_id;
     private boolean isChanged = false;
@@ -94,7 +104,7 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
 
 
-        //Help-Comment (Invoice will be inserted by clicking insert invoice button will call his)
+        //Invoice will be inserted by clicking insert invoice button will call his)
         btnInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,6 +190,39 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity {
                 }
             }
         });
+        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(InsertInvoiceReceiptActivity.this);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.ic_home:
+                Intent intent0 = new Intent(InsertInvoiceReceiptActivity.this, MainActivity.class);
+                startActivity(intent0);
+                break;
+
+            case R.id.ic_animals:
+                Intent intent1 = new Intent(InsertInvoiceReceiptActivity.this, AnimalActivity.class);
+                startActivity(intent1);
+                break;
+
+            case R.id.ic_nearbyPlaces:
+                Intent intent2 = new Intent(InsertInvoiceReceiptActivity.this, MapsActivity.class);
+                startActivity(intent2);
+                break;
+
+            case R.id.ic_vetApp:
+                Intent intent3 = new Intent(InsertInvoiceReceiptActivity.this, VetActivity.class);
+                startActivity(intent3);
+                break;
+
+            case R.id.ic_emissions:
+                Intent intent4 = new Intent(InsertInvoiceReceiptActivity.this, EmissionsActivity.class);
+                startActivity(intent4);
+                break;
+        }
+        return true;
     }
 
     private void storeFirestore(boolean isInvoice,String strUserID,String strInvoiceReceiptType,String strCategory,String downloadUrl) {

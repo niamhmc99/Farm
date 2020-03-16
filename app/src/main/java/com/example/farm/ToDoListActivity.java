@@ -21,10 +21,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.example.farm.adapters.ToDoListAdapter;
+import com.example.farm.emissions.EmissionsActivity;
+import com.example.farm.googlemaps.MapsActivity;
 import com.example.farm.models.Task;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.Timestamp;
@@ -37,11 +40,12 @@ import com.google.firebase.firestore.Query;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 import java.util.Date;
 
-public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener, ToDoListAdapter.TaskListener  {
+public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener, ToDoListAdapter.TaskListener, BottomNavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "ToDoListActivity";
     private ToDoListAdapter toDoListAdapter;
     RecyclerView recyclerView;
     private FloatingActionButton mFabToDo;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +98,41 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
                         Toast.makeText(ToDoListActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+
+
+        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(ToDoListActivity.this);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.ic_home:
+                Intent intent0 = new Intent(ToDoListActivity.this, MainActivity.class);
+                startActivity(intent0);
+                break;
+
+            case R.id.ic_animals:
+                Intent intent1 = new Intent(ToDoListActivity.this, AnimalActivity.class);
+                startActivity(intent1);
+                break;
+
+            case R.id.ic_nearbyPlaces:
+                Intent intent2 = new Intent(ToDoListActivity.this, MapsActivity.class);
+                startActivity(intent2);
+                break;
+
+            case R.id.ic_vetApp:
+                Intent intent3 = new Intent(ToDoListActivity.this, VetActivity.class);
+                startActivity(intent3);
+                break;
+
+            case R.id.ic_emissions:
+                Intent intent4 = new Intent(ToDoListActivity.this, EmissionsActivity.class);
+                startActivity(intent4);
+                break;
+        }
+        return true;
     }
 
         private void setUpRecyclerView(FirebaseUser user) { //initalise recycler view

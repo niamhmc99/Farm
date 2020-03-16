@@ -6,17 +6,22 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.androdocs.httprequest.HttpRequest;
+import com.example.farm.emissions.EmissionsActivity;
+import com.example.farm.googlemaps.MapsActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class WeatherActivity2 extends AppCompatActivity {
+public class WeatherActivity2 extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     String CITY = "Dublin,IE"; //value of our search query {city, country code} is the parm used
     String API = "3e73a57a2c75697757c6110ad50aa6da"; //key got from API
@@ -33,6 +38,7 @@ public class WeatherActivity2 extends AppCompatActivity {
             sunsetTxt, windTxt, pressureTxt, humidityTxt;
     private FusedLocationProviderClient mFusedLocationClient;
     LocationRequest mLocationRequest;
+    BottomNavigationView bottomNavigationView;
 
 
 
@@ -63,6 +69,39 @@ public class WeatherActivity2 extends AppCompatActivity {
 //        mLocationRequest.setInterval(1000000);
 //        mLocationRequest.setFastestInterval(100000);
 //        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(WeatherActivity2.this);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.ic_home:
+                Intent intent0 = new Intent(WeatherActivity2.this, MainActivity.class);
+                startActivity(intent0);
+                break;
+
+            case R.id.ic_animals:
+                Intent intent1 = new Intent(WeatherActivity2.this, AnimalActivity.class);
+                startActivity(intent1);
+                break;
+
+            case R.id.ic_nearbyPlaces:
+                Intent intent2 = new Intent(WeatherActivity2.this, MapsActivity.class);
+                startActivity(intent2);
+                break;
+
+            case R.id.ic_vetApp:
+                Intent intent3 = new Intent(WeatherActivity2.this, VetActivity.class);
+                startActivity(intent3);
+                break;
+
+            case R.id.ic_emissions:
+                Intent intent4 = new Intent(WeatherActivity2.this, EmissionsActivity.class);
+                startActivity(intent4);
+                break;
+        }
+        return true;
     }
 
 

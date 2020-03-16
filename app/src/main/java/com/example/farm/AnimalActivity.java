@@ -29,11 +29,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.farm.adapters.AnimalAdapter;
+import com.example.farm.emissions.EmissionsActivity;
 import com.example.farm.fragments.AnimalDialogFragment;
+import com.example.farm.googlemaps.MapsActivity;
 import com.example.farm.models.Animal;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -48,7 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AnimalActivity extends AppCompatActivity implements View.OnClickListener {
+public class AnimalActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener{
 
     private static final String TAG = "AnimalActivity";
     private List<Animal> animalList;
@@ -60,6 +63,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     View mParentLayout;
     ImageButton updateButton;
     TextView tvScanBarcode;
+    BottomNavigationView bottomNavigationView;
     private static final int CAMERA_PERMISSION_CODE = 100;
 
 
@@ -91,7 +95,43 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                     }
                 });
         setUpRecyclerView();
+
+        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setSelectedItemId(R.id.ic_animals);
+        bottomNavigationView.setOnNavigationItemSelectedListener(AnimalActivity.this);
     }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.ic_home:
+                Intent intent0 = new Intent(AnimalActivity.this, MainActivity.class);
+                startActivity(intent0);
+                break;
+
+            case R.id.ic_animals:
+                Intent intent1 = new Intent(AnimalActivity.this, AnimalActivity.class);
+                startActivity(intent1);
+                break;
+
+            case R.id.ic_nearbyPlaces:
+                Intent intent2 = new Intent(AnimalActivity.this, MapsActivity.class);
+                startActivity(intent2);
+                break;
+
+            case R.id.ic_vetApp:
+                Intent intent3 = new Intent(AnimalActivity.this, VetActivity.class);
+                startActivity(intent3);
+                break;
+
+            case R.id.ic_emissions:
+                Intent intent4 = new Intent(AnimalActivity.this, EmissionsActivity.class);
+                startActivity(intent4);
+                break;
+        }
+        return true;
+    }
+
 
     private void setUpRecyclerView(){
         Query query = animalRef.orderBy("tagNumber", Query.Direction.DESCENDING);

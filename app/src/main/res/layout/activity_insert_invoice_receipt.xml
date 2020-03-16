@@ -12,7 +12,7 @@
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="true"
         android:visibility="invisible"
@@ -20,15 +20,14 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/invoiceOrReceiptImage"
-        android:layout_width="264dp"
-        android:layout_height="149dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="6dp"
         android:layout_marginRight="6dp"
-        android:src="@drawable/animalsmall"
-        />
+        android:src="@drawable/animalsmall" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -76,7 +75,24 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigation_view"
+                android:layout_width="394dp"
+                android:layout_height="653dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginBottom="675dp"
+                app:itemBackground="@color/green"
+                app:itemIconTint="@drawable/item_selected"
+                app:itemTextColor="@drawable/item_selected"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:menu="@menu/bottom_nav_menu"
+                tools:ignore="NotSibling" />
+
         </LinearLayout>
+
     </ScrollView>
+
 
 </LinearLayout>

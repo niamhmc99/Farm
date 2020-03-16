@@ -11,16 +11,25 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import com.example.farm.AnimalActivity;
 import com.example.farm.LoginActivity;
+import com.example.farm.MainActivity;
 import com.example.farm.R;
+import com.example.farm.ToDoListActivity;
+import com.example.farm.VetActivity;
 import com.example.farm.adapters.InvoiceReceiptAdapter;
+import com.example.farm.emissions.EmissionsActivity;
+import com.example.farm.googlemaps.MapsActivity;
 import com.example.farm.models.InvoiceReceipt;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,7 +41,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InvoiceReceiptActivity extends AppCompatActivity implements View.OnClickListener {
+public class InvoiceReceiptActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener{
 
     private static final String TAG = "InvoiceActivity";
     private List<InvoiceReceipt> billsList;
@@ -43,6 +52,7 @@ public class InvoiceReceiptActivity extends AppCompatActivity implements View.On
     private FloatingActionButton mFabAdd;
     View mParentLayout;
     private Spinner spinnerInvoiceType, spinnerCategory;
+    BottomNavigationView bottomNavigationView;
     private FirestoreRecyclerOptions<InvoiceReceipt> options;
 
     @Override
@@ -57,6 +67,39 @@ public class InvoiceReceiptActivity extends AppCompatActivity implements View.On
         addItemsOnSpinnerType();
         addItemsOnSpinnerCategory();
         setUpRecyclerView();
+        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(InvoiceReceiptActivity.this);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.ic_home:
+                Intent intent0 = new Intent(InvoiceReceiptActivity.this, MainActivity.class);
+                startActivity(intent0);
+                break;
+
+            case R.id.ic_animals:
+                Intent intent1 = new Intent(InvoiceReceiptActivity.this, AnimalActivity.class);
+                startActivity(intent1);
+                break;
+
+            case R.id.ic_nearbyPlaces:
+                Intent intent2 = new Intent(InvoiceReceiptActivity.this, MapsActivity.class);
+                startActivity(intent2);
+                break;
+
+            case R.id.ic_vetApp:
+                Intent intent3 = new Intent(InvoiceReceiptActivity.this, VetActivity.class);
+                startActivity(intent3);
+                break;
+
+            case R.id.ic_emissions:
+                Intent intent4 = new Intent(InvoiceReceiptActivity.this, EmissionsActivity.class);
+                startActivity(intent4);
+                break;
+        }
+        return true;
     }
 
     private void setUpRecyclerView() {

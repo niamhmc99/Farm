@@ -73,7 +73,6 @@
         <activity android:name=".ToDoListActivity" />
         <activity android:name=".WeatherActivity2" />
         <activity android:name=".UpdateAnimalActivity" />
-        <activity android:name=".AddAnimalActivity" />
         <activity android:name=".VetActivity" />
         <activity android:name=".AnimalActivity" />
         <activity android:name=".LoginActivity" />
