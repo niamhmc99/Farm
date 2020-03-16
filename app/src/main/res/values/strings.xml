@@ -67,6 +67,7 @@
     <string name="dairy_emissions_caps">DAIRY EMISSIONS :</string>
     <string name="numBeefCows">Number of Cows</string>
     <string name="total_beef_bull_emissions">total bull emissions</string>
+    <string name="scan_barcode">Scan Barcode</string>
 
 
 </resources>

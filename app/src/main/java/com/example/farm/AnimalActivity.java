@@ -71,6 +71,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal);
+
         updateButton = findViewById(R.id.update_button);
         mFabAddAnimal = findViewById(R.id.fabInsertAnimal);
         mFabAddAnimal.setOnClickListener(this);
@@ -97,7 +98,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         setUpRecyclerView();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
-        bottomNavigationView.setSelectedItemId(R.id.ic_animals);
+        //bottomNavigationView.setSelectedItemId(R.id.ic_animals);
         bottomNavigationView.setOnNavigationItemSelectedListener(AnimalActivity.this);
     }
 

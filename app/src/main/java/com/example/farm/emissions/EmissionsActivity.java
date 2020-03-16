@@ -25,8 +25,8 @@ public class EmissionsActivity extends AppCompatActivity implements BottomNaviga
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emissions);
+
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
-       // bottomNavigationView.setSelectedItemId(R.id.ic_emissions);
         bottomNavigationView.setOnNavigationItemSelectedListener(EmissionsActivity.this);
     }
 

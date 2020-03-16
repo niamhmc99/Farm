@@ -1,21 +1,29 @@
 package com.example.farm.emissions;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.farm.AnimalActivity;
+import com.example.farm.MainActivity;
 import com.example.farm.R;
+import com.example.farm.VetActivity;
+import com.example.farm.googlemaps.MapsActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
-public class DairyCalculationActivity extends AppCompatActivity {
+public class DairyCalculationActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
     private MaterialEditText editTextNumDairyCows;
     private MaterialEditText editTextAverageMilkYield;
 //    Button btnCalculate;
+    BottomNavigationView bottomNavigationView;
 
 
     @Override
@@ -25,6 +33,39 @@ public class DairyCalculationActivity extends AppCompatActivity {
     editTextNumDairyCows = findViewById(R.id.editTextNumDairyCows);
     editTextAverageMilkYield = findViewById(R.id.editTextAverageMilkYield);
 
+        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(DairyCalculationActivity.this);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.ic_home:
+                Intent intent0 = new Intent(DairyCalculationActivity.this, MainActivity.class);
+                startActivity(intent0);
+                break;
+
+            case R.id.ic_animals:
+                Intent intent1 = new Intent(DairyCalculationActivity.this, AnimalActivity.class);
+                startActivity(intent1);
+                break;
+
+            case R.id.ic_nearbyPlaces:
+                Intent intent2 = new Intent(DairyCalculationActivity.this, MapsActivity.class);
+                startActivity(intent2);
+                break;
+
+            case R.id.ic_vetApp:
+                Intent intent3 = new Intent(DairyCalculationActivity.this, VetActivity.class);
+                startActivity(intent3);
+                break;
+
+            case R.id.ic_emissions:
+                Intent intent4 = new Intent(DairyCalculationActivity.this, EmissionsActivity.class);
+                startActivity(intent4);
+                break;
+        }
+        return true;
     }
 
     public void calculateDairyEmissions(View view){

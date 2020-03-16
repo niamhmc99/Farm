@@ -29,9 +29,9 @@ public class BeefRecommendationActivity extends AppCompatActivity {
         totalBullEmissions.setText(totalBullEmissionAmount.toString());
 
         noOfBulls = findViewById(R.id.noBulls);
-        noOfBulls.setText(numberOfBullsAmount);
+        noOfBulls.setText(String.valueOf(numberOfBullsAmount));
 
         noOfCows= findViewById(R.id.noCows);
-        noOfCows.setText(numberOfCowsAmount);
+        noOfCows.setText(String.valueOf(numberOfCowsAmount));
     }
 }

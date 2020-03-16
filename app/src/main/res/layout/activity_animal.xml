@@ -25,7 +25,7 @@
             android:drawableLeft="@drawable/ic_barcode"
             android:drawablePadding="5dp"
             android:fontFamily="@font/fredericka_the_great"
-            android:text="Scan Barcode"
+            android:text="@string/scan_barcode"
             android:textColor="@color/white"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -34,7 +34,6 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="616dp"
-            android:layout_alignParentTop="true"
             android:layout_marginTop="-5dp"
             android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -63,14 +62,11 @@
             android:layout_gravity="end|bottom"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="@id/bottom_navigation_view"
             android:layout_marginEnd="339dp"
             android:layout_marginRight="339dp"
             android:layout_marginBottom="16dp"
             android:src="@drawable/ic_plus_white"
             app:backgroundTint="#64A407" />
 
-
     </LinearLayout>
-
 </RelativeLayout>
