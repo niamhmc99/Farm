@@ -17,14 +17,12 @@ import com.example.farm.R;
 import com.example.farm.UpdateAnimalActivity;
 import com.example.farm.VetActivity;
 import com.example.farm.googlemaps.MapsActivity;
-import com.example.farm.models.Animal;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -41,8 +39,8 @@ public class BeefCalculationActivity extends AppCompatActivity implements Bottom
     private TextInputLayout textInputAverageCowWeight;
     private MaterialEditText editTextAverageCowWeight, editTextAverageBullWeight;
     private Button btnCalculate;
+    private ArrayList<Integer> maleFemaleQuantity = new ArrayList<>();
     BottomNavigationView bottomNavigationView;
-    ArrayList animalMaleList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +52,42 @@ public class BeefCalculationActivity extends AppCompatActivity implements Bottom
         btnCalculate = findViewById(R.id.calculateBtn);
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(BeefCalculationActivity.this);
+
+
+        final Task<QuerySnapshot> maleQuery = db.collection("animals").whereEqualTo("gender", "Male").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        maleFemaleQuantity.add(queryDocumentSnapshots.size());
+                    }
+                });
+
+        maleQuery.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println(e.toString());
+                Toast.makeText(BeefCalculationActivity.this, "Error Occurred - Please try again", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        final Task<QuerySnapshot> femaleQuery = db.collection("animals").whereEqualTo("gender", "Female").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        maleFemaleQuantity.add(queryDocumentSnapshots.size());
+                    }
+                });
+
+
+
+        femaleQuery.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println(e.toString());
+                Toast.makeText(BeefCalculationActivity.this, "Error Occurred - Please try again", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -89,88 +123,24 @@ public class BeefCalculationActivity extends AppCompatActivity implements Bottom
 
 
     public void calculateBeefEmissions(View view) {
-        ArrayList<Integer> maleFemaleAmounts = retrieveGenderQuantities();
-
-        if (maleFemaleAmounts.size() >= 0) {
-            int numberOfCows = maleFemaleAmounts.indexOf(1);
-            int numberOfBulls = maleFemaleAmounts.indexOf(0);
+        if (maleFemaleQuantity.size() > 0) {
+            int numberOfCows = maleFemaleQuantity.get(1);
+            int numberOfBulls = maleFemaleQuantity.get(0);
             double totalCowWeight = getTotalCowWeight(numberOfCows);
             double totalBullWeight = getTotalBullWeight(numberOfBulls);
             double totalCowEmissions = totalCowWeight * 25.43;
             double totalBullEmissions = totalBullWeight * 25.43;
+            double totalBeefEmissions = totalBullEmissions + totalCowEmissions;
             Intent intent = new Intent(BeefCalculationActivity.this, BeefRecommendationActivity.class);
             intent.putExtra("numberOfBulls", numberOfBulls);
             intent.putExtra("numberOfCows", numberOfCows);
-            intent.putExtra("totalCowWeight", totalCowWeight);
-            intent.putExtra("totalBullWeight", totalBullWeight);
             intent.putExtra("totalCowEmissions", totalCowEmissions);
             intent.putExtra("totalBullEmissions", totalBullEmissions);
+            intent.putExtra("totalBeefEmissions",totalBeefEmissions);
             startActivity(intent);
         } else {
             Log.d("Quantity", "Male Female number retrieval failed");
-        }    }
-
-    public ArrayList<Integer> retrieveGenderQuantities() {
-
-
-        animalMaleList = new ArrayList<>();
-        db.collection("animals").get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if (!queryDocumentSnapshots.isEmpty()) {
-                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                            for (DocumentSnapshot d : list) {
-                                //convert d to our animal object
-                                Animal a = d.toObject(Animal.class);
-                                animalMaleList.add(a);
-                            }
-                        }
-                    }
-                });
-
-        System.out.println("********************" + animalMaleList.size());
-
-
-        final ArrayList<Integer> maleFemaleQuantity = new ArrayList<>();
-
-         Task<QuerySnapshot> maleQuery = db.collection("animals").get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        maleFemaleQuantity.add(queryDocumentSnapshots.size());
-                    }
-                });
-
-        maleQuery.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                System.out.println(e.toString());
-                Toast.makeText(BeefCalculationActivity.this, "Error Occurred - Please try again", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-         Task<QuerySnapshot> femaleQuery = db.collection("animals").get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        maleFemaleQuantity.add(queryDocumentSnapshots.size());
-                    }
-                });
-
-
-
-        femaleQuery.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                System.out.println(e.toString());
-                Toast.makeText(BeefCalculationActivity.this, "Error Occurred - Please try again", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        System.out.println("Array size male and female quantity: " + maleFemaleQuantity.size());
-        return maleFemaleQuantity;
+        }
     }
 
 

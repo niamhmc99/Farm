@@ -17,40 +17,80 @@
 
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/layoutAppointmentInfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/green"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:background="@color/green">
+            android:padding="16dp">
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/appointmentTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
                 android:hint="@string/appointmentTitle"
                 android:inputType="text"
                 android:textColorHint="@color/white"
+                android:textSize="30sp"
                 app:met_baseColor="@color/white"
                 app:met_floatingLabel="highlight"
                 app:met_primaryColor="@color/white"
-                app:met_singleLineEllipsis="true"/>
+                app:met_singleLineEllipsis="true" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/appointmentDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textStyle="italic"
                 android:hint="@string/appointmentDescription"
                 android:inputType="textImeMultiLine"
                 android:textColorHint="@color/white"
+                android:textSize="20sp"
+                android:textStyle="italic"
                 app:met_baseColor="@color/white"
                 app:met_floatingLabel="highlight"
                 app:met_primaryColor="@color/white"
-                app:met_singleLineEllipsis="true"/>
+                app:met_singleLineEllipsis="true" />
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="102dp">
+
+            <ImageView
+                android:id="@+id/imageViewButtonCalendarDatePicker"
+                android:layout_width="160dp"
+                android:layout_height="112dp"
+                android:contentDescription="Click Calendar to Change Date."
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.957"
+                app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+
+            <TextView
+                android:id="@+id/textViewDate"
+                android:layout_width="242dp"
+                android:layout_height="65dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="7dp"
+                android:layout_marginBottom="21dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.48"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.692" />
+
+        </RelativeLayout>
+
+
     </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -78,37 +118,10 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
 
 
-        <TextView
-        android:id="@+id/textViewDate"
-        android:layout_width="386dp"
-        android:layout_height="116dp"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:textColor="@color/colorBlack"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.692" />
-
-    <ImageView
-        android:id="@+id/imageViewButtonCalendarDatePicker"
-        android:layout_width="232dp"
-        android:layout_height="139dp"
-        android:contentDescription="Click Calendar to Change Date."
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.957"
-        app:srcCompat="@android:drawable/ic_menu_my_calendar" />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="56dp"
         android:layout_gravity="bottom"
         android:layout_marginTop="700dp"
         app:itemBackground="@color/green"

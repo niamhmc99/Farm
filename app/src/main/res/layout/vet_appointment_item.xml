@@ -31,6 +31,14 @@
             android:textStyle="italic"
             android:textColor="@color/splashDarkGrey"/>
 
+        <TextView
+            android:id="@+id/itemDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            android:textColor="@color/splashDarkGrey"/>
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

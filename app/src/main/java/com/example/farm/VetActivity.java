@@ -46,7 +46,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.text.DateFormat;
@@ -57,8 +56,8 @@ import java.util.List;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
-public class VetActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, FirebaseAuth.AuthStateListener, VetAppointmentAdapter.TaskListener, BottomNavigationView.OnNavigationItemSelectedListener{
-    private static final String TAG = "AnimalActivity";
+public class VetActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, FirebaseAuth.AuthStateListener, VetAppointmentAdapter.AppointmentListener, BottomNavigationView.OnNavigationItemSelectedListener{
+    private static final String TAG = "VetActivity";
     ImageView imageViewCalendarDateButton;
     TextView textViewDate;
     FloatingActionButton fabAdd;
@@ -66,10 +65,10 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
     RecyclerView recyclerView;
     private List<Appointment> appointmentList = new ArrayList<Appointment>();
     FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
-    private CollectionReference animalRef = firestoreDB.collection("VetAppointments");
-BottomNavigationView bottomNavigationView;
+    private CollectionReference vetRef = firestoreDB.collection("VetAppointments");
+    BottomNavigationView bottomNavigationView;
     private MaterialEditText editTextAppTitle, editTextAppDesc;
-    public Date editTextAppDate;
+    private Date appDate;
 
     VetAppointmentAdapter appointmentAdapter;
 
@@ -92,15 +91,16 @@ BottomNavigationView bottomNavigationView;
         editTextAppTitle = findViewById(R.id.appointmentTitle);
         editTextAppDesc = findViewById(R.id.appointmentDescription);
 
-        editTextAppTitle.getText().toString();
-        editTextAppDesc.getText().toString();
         //editTextAppDate.getDate();
 
         fabAdd = findViewById(R.id.fabAddApp);
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addVetApp(editTextAppTitle, editTextAppDesc, editTextAppDate);
+                addVetApp(editTextAppTitle.getText().toString(), editTextAppDesc.getText().toString(), textViewDate.getText().toString());
+                editTextAppTitle.setText("");
+                editTextAppDesc.setText("");
+                textViewDate.setText("");
             }
         });
 
@@ -119,6 +119,7 @@ BottomNavigationView bottomNavigationView;
 //                        }
 //                    }
 //                });
+
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(VetActivity.this);
     }
@@ -156,7 +157,7 @@ BottomNavigationView bottomNavigationView;
 
     private void setUpRecyclerView(FirebaseUser user) {
 
-        Query query = animalRef.orderBy("tagNumber", Query.Direction.DESCENDING);
+        Query query = vetRef.orderBy("appDate", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Appointment> options= new FirestoreRecyclerOptions.Builder<Appointment>()
                 .setQuery(query, Appointment.class)
@@ -174,7 +175,7 @@ BottomNavigationView bottomNavigationView;
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
-    private void addVetApp(MaterialEditText textTitle, MaterialEditText textDesc, Date date) {
+    private void addVetApp(final String textTitle, String textDesc, String date) {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Appointment appointment = new Appointment(textTitle, textDesc, userId, date);
 
@@ -185,6 +186,8 @@ BottomNavigationView bottomNavigationView;
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "onSuccess: Succesfully added the scheduled vet appointment...");
+
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -224,27 +227,8 @@ BottomNavigationView bottomNavigationView;
     };
 
 
-    //interface method
     @Override
-    public void handleCheckChanged(boolean isChecked, DocumentSnapshot snapshot) {
-        Log.d(TAG, "handleCheckChanged: " + isChecked);
-        snapshot.getReference().update("completed", isChecked)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "onSuccess: ");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "onFailure: " + e.getLocalizedMessage());
-                    }
-                });
-    }
-
-    @Override
-    public void handleEditTask(final DocumentSnapshot snapshot) {
+    public void handleEditAppointment(final DocumentSnapshot snapshot) {
         final Appointment appointment = snapshot.toObject(Appointment.class);
         final EditText appointmentEditTextTitle = new EditText(this);
         final EditText appointmentEditTextDescription= new EditText(this);
@@ -265,9 +249,11 @@ BottomNavigationView bottomNavigationView;
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String updateAppTitle = appointmentEditTextTitle.getText().toString();
                         String updateAppDesc = appointmentEditTextDescription.getText().toString();
+                        String updateAppDate = appointmentEditTextDate.getText().toString();
 //                        Date updateDate = app;
                         appointment.setAppTitle(updateAppTitle);
                         appointment.setAppDescription(updateAppDesc);
+                        appointment.setAppDate(updateAppDate);
                         snapshot.getReference().set(appointment)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
@@ -303,8 +289,6 @@ BottomNavigationView bottomNavigationView;
                 })
                 .show();
     }
-
-
 
 //
 //    private void getAppointments() {
@@ -370,7 +354,7 @@ BottomNavigationView bottomNavigationView;
 
         String currentDatestring = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
 
-        textViewDate = findViewById(R.id.textViewDate);
+         textViewDate = findViewById(R.id.textViewDate);
         textViewDate.setText(currentDatestring);
     }
 

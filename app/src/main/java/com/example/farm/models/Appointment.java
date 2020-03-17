@@ -6,37 +6,17 @@ import java.util.Date;
 
 public class Appointment {
 
-    private String id, appTitle, appDescription, userId;
-    Date appDate;
+    private String id, userId;
+    private String appTitle, appDescription, appDate;
 
     public Appointment(){ }
-    public Appointment(MaterialEditText textTitle, MaterialEditText textDesc, String userId, Date date){
-        this.appTitle = appTitle;
-        this.appDescription = appDescription;
+
+    public Appointment(String textTitle, String textDesc, String userId, String date){
+        this.appTitle = textTitle;
+        this.appDescription = textDesc;
         this.userId = userId;
-        this.appDate = appDate;
+        this.appDate = date;
     }
-
-    public Appointment(String id, String appTitle, String appDescription, Date appDate) {
-        this.id = id;
-        this.appTitle = appTitle;
-        this.appDescription = appDescription;
-        this.appDate = appDate;
-        this.userId = userId;
-
-    }
-
-    public Appointment(String appTitle, String appDescription, Date appDate) {
-        this.id = id;
-        this.appTitle = appTitle;
-        this.appDescription = appDescription;
-        this.appDate = appDate;
-        this.userId = userId;
-
-    }
-
-
-
 
     public String getAppTitle() {
         return appTitle;
@@ -54,11 +34,11 @@ public class Appointment {
         this.appDescription = appDescription;
     }
 
-    public Date getAppDate() {
+    public String getAppDate() {
         return appDate;
     }
 
-    public void setAppDate(Date appDate) {
+    public void setAppDate(String appDate) {
         this.appDate = appDate;
     }
 

@@ -95,6 +95,8 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                         }
                     }
                 });
+        System.out.println("********************" + animalList.size());
+
         setUpRecyclerView();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);

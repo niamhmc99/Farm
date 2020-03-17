@@ -52,9 +52,9 @@
     <string name="averageWeightCow">Average Weight of Beef Cow (KGs): </string>
     <string name="averageWeightBull">Average Weight Of Beef Bull (KGs):</string>
     <string name="calulateEmission">Calculate Average Farm Emissions</string>
-    <string name="date_of_insemination">Date Of Insemenation</string>
+    <string name="date_of_insemination">Date Of Insemination</string>
     <string name="cancel">Cancel</string>
-    <string name="total_beef_emissions">Total Beef Emissions:</string>
+    <string name="total_beef_emissions">Total Beef Emissions (KGs)</string>
     <string name="invoiceOrReceipt">Invoice or Receipt</string>
     <string name="category">Category</string>
     <string name="select_invoice_type">Select Invoice/ Receipt </string>
@@ -62,11 +62,12 @@
     <string name="insert_bill">Insert</string>
     <string name="calculate">Calculate</string>
     <string name="dairy_emissions">Dairy Emissions</string>
-    <string name="average_milk_yield_per_cow">Average Milk Yield Per Cow (Litres): </string>
+    <string name="average_milk_yield_per_cow">Average Milk Yield Per Cow (L): </string>
     <string name="number_of_milk_producing_cows">Number of Milk Producing Cows: </string>
     <string name="dairy_emissions_caps">DAIRY EMISSIONS :</string>
     <string name="numBeefCows">Number of Cows</string>
-    <string name="total_beef_bull_emissions">total bull emissions</string>
+    <string name="total_beef_bull_emissions">Approx total bull emissions (KGs)</string>
+    <string name="total_beef_cows_emissions">Approx total cow emissions (KGs)</string>
     <string name="scan_barcode">Scan Barcode</string>
 
 

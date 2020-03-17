@@ -15,27 +15,20 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-
 public class VetAppointmentAdapter extends FirestoreRecyclerAdapter<Appointment, VetAppointmentAdapter.AppointmentHolder> {
-Context context;
-    TaskListener taskListener;
+    Context context;
+    AppointmentListener appointmentListener;
 
     public VetAppointmentAdapter(@NonNull FirestoreRecyclerOptions<Appointment> options) {
         super(options);
     }
 
 
-
     @Override
     protected void onBindViewHolder(@NonNull VetAppointmentAdapter.AppointmentHolder holder, int position, @NonNull Appointment appointment) {
         holder.appTitle.setText(appointment.getAppTitle());
         holder.appDescription.setText(appointment.getAppDescription());
-        String date_n = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
-        holder.appDate.setText(date_n);
+        holder.appDate.setText(appointment.getAppDate());
     }
 
 
@@ -55,26 +48,25 @@ Context context;
             super(itemView);
             appTitle = itemView.findViewById(R.id.itemTitle);
             appDescription =itemView.findViewById(R.id.itemDescription);
+            appDate = itemView.findViewById(R.id.itemDate);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                     DocumentSnapshot snapshot = getSnapshots().getSnapshot(getAdapterPosition());
-                    taskListener.handleEditTask(snapshot);
+                    appointmentListener.handleEditAppointment(snapshot);
                 }
             });
         }
 
         public void deleteItem() {
-            taskListener.handleDeleteItem(getSnapshots().getSnapshot(getAdapterPosition()));
+            appointmentListener.handleDeleteItem(getSnapshots().getSnapshot(getAdapterPosition()));
         }
     }
 
-    //implemented in activity
-    public interface TaskListener {
-        void handleCheckChanged(boolean isChecked, DocumentSnapshot snapshot);
-        void handleEditTask(DocumentSnapshot snapshot);
+    public interface AppointmentListener {
+        void handleEditAppointment(DocumentSnapshot snapshot);
         void handleDeleteItem(DocumentSnapshot snapshot);
     }
 }

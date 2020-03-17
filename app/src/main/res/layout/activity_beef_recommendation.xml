@@ -58,50 +58,11 @@
 
 
         </androidx.cardview.widget.CardView>
+
         <androidx.cardview.widget.CardView
             android:layout_marginLeft="25dp"
             android:layout_below="@+id/cv1"
             android:id="@+id/cv2"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:textAllCaps="true"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:text="Average Weight of Bulls (kgs)"
-                    android:id="@+id/labelAverageWeightBulls"
-                    android:layout_toLeftOf="@id/averageWeightBulls"
-                    android:textSize="14sp"
-                    android:layout_marginHorizontal="8dp"
-                    android:background="@android:color/transparent"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"/>
-
-                <TextView
-                    android:id="@+id/averageWeightBulls"
-                    android:layout_marginRight="16dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true" />
-
-            </RelativeLayout>
-
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_marginLeft="25dp"
-            android:layout_below="@+id/cv2"
-            android:id="@+id/cv3"
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
             android:layout_width="match_parent"
@@ -140,8 +101,8 @@
 
         <androidx.cardview.widget.CardView
             android:layout_marginLeft="25dp"
-            android:layout_below="@+id/cv3"
-            android:id="@+id/cv4"
+            android:layout_below="@+id/cv2"
+            android:id="@+id/cv3"
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
             android:layout_width="match_parent"
@@ -182,6 +143,84 @@
 
     </androidx.cardview.widget.CardView>
 
+    <androidx.cardview.widget.CardView
+        android:layout_marginLeft="25dp"
+        android:layout_below="@+id/cv3"
+        android:id="@+id/cv4"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:gravity="center_vertical"
+                android:text="@string/total_beef_cows_emissions"
+                android:id="@+id/labelTotalCowEmissions"
+                android:layout_toLeftOf="@id/totalCowEmissions"
+                android:layout_marginHorizontal="8dp"
+                android:background="@android:color/transparent"
+                android:layout_width="match_parent"
+                android:textSize="14sp"
+                android:layout_height="60dp"/>
+
+            <TextView
+                android:id="@+id/totalCowEmissions"
+                android:layout_marginRight="16dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true" />
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_marginLeft="25dp"
+        android:layout_below="@+id/cv4"
+        android:id="@+id/cv5"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:gravity="center_vertical"
+                android:text="@string/total_beef_emissions"
+                android:id="@+id/labelTotalBeefEmissions"
+                android:layout_toLeftOf="@id/totalBeefEmissions"
+                android:layout_marginHorizontal="8dp"
+                android:background="@android:color/transparent"
+                android:layout_width="match_parent"
+                android:textSize="14sp"
+                android:layout_height="60dp"/>
+
+            <TextView
+                android:id="@+id/totalBeefEmissions"
+                android:layout_marginRight="16dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true" />
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
