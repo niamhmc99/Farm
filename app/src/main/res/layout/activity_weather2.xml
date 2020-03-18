@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="25dp"
-    android:background="@drawable/green"
+    android:background="@drawable/weather_stages"
     tools:context=".WeatherActivity2">
 
     <RelativeLayout
         android:id="@+id/mainContainer"
         android:layout_width="wrap_content"
-        android:layout_height="592dp"
+        android:layout_height="605dp"
         android:visibility="visible">
 
         <LinearLayout
@@ -43,7 +43,7 @@
         <LinearLayout
             android:id="@+id/overviewContainer"
             android:layout_width="353dp"
-            android:layout_height="213dp"
+            android:layout_height="202dp"
             android:layout_centerInParent="true"
             android:orientation="vertical">
 
@@ -221,7 +221,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="82dp"
                 android:orientation="horizontal"
                 android:weightSum="3">
 
@@ -320,20 +320,12 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
-        android:layout_width="386dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
         android:layout_below="@+id/mainContainer"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="-5dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="0dp"
+        android:layout_marginTop="29dp"
+        android:layout_marginBottom="1dp"
         app:itemBackground="@color/green"
         app:itemIconTint="@drawable/item_selected"
         app:itemTextColor="@drawable/item_selected"

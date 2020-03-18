@@ -27,35 +27,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Tag Number"
+        android:hint="@string/tag_number"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.205" />
+        app:layout_constraintVertical_bias="0.205"
+        android:autofillHints=""
+        tools:ignore="TextFields" />
 
     <EditText
         android:id="@+id/editTextName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Name"
+        android:hint="@string/name"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.282" />
+        app:layout_constraintVertical_bias="0.282"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/editTextDob"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Date of Birth"
+        android:hint="@string/date_of_birth"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +86,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Breed"
+        android:hint="@string/breed"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -97,7 +100,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Dam"
+        android:hint="@string/dam"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -111,7 +114,7 @@
         android:layout_height="39dp"
         android:hint="@string/calvingDifficulty_prompt"
         android:prompt="@string/calvingDifficulty_prompt"
-        android:text="Calving Difficulty"
+        android:text="@string/calving_difficulty"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -126,7 +129,7 @@
         android:layout_height="45dp"
         android:hint="@string/aiStockBull_prompt"
         android:prompt="@string/aiStockBull_prompt"
-        android:text="AI/ Stock Bull"
+        android:text="@string/ai_stock_bull"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -140,20 +143,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Sire"
+        android:hint="@string/sire"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.829" />
+        app:layout_constraintVertical_bias="0.829"
+        android:autofillHints="" />
 
     <TextView
         android:id="@+id/textViewAnimalsPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Update the Animals' info in your Herd:"
-        android:textSize="20dp"
+        android:text="@string/update_the_animals_info_in_your_herd"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -167,7 +171,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="72dp"
         android:onClick="updateAnimal"
-        android:text="Update Animals' Info"
+        android:text="@string/update_animals_info"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -187,6 +191,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu"
         tools:ignore="NotSibling" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

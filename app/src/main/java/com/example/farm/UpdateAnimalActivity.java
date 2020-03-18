@@ -99,6 +99,7 @@ BottomNavigationView bottomNavigationView;
 
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setSelectedItemId(R.id.ic_animals);
         bottomNavigationView.setOnNavigationItemSelectedListener(UpdateAnimalActivity.this);
     }
 

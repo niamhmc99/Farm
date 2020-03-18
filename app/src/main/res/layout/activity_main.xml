@@ -54,25 +54,15 @@
             android:layout_marginTop="32dp"
             android:layout_marginRight="20dp">
 
-
             <TextView
                 android:id="@+id/txtViewFileFarm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/file_a_farm"
+                android:textStyle="bold"
                 android:textColor="@color/white"
                 android:fontFamily="@font/fredericka_the_great"
-                android:textStyle="bold"
-                android:textSize="60sp" />
-
-            <TextView
-                android:id="@+id/txtView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txtViewFileFarm"
-                android:text="@string/file_a_farm"
-                android:textColor="@color/white" />
-
+                android:textSize="62sp" />
         </RelativeLayout>
 
         <ImageButton
@@ -81,7 +71,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="-6dp"
             android:background="@color/white"
-    android:contentDescription="@string/logout"
+            android:contentDescription="@string/logout"
             android:src="@drawable/ic_logout" />
 
         <GridLayout

@@ -95,12 +95,10 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                         }
                     }
                 });
-        System.out.println("********************" + animalList.size());
-
         setUpRecyclerView();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
-        //bottomNavigationView.setSelectedItemId(R.id.ic_animals);
+        bottomNavigationView.setSelectedItemId(R.id.ic_animals);
         bottomNavigationView.setOnNavigationItemSelectedListener(AnimalActivity.this);
     }
 

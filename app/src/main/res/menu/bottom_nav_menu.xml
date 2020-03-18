@@ -21,6 +21,6 @@
         android:title="@string/vets" />
     <item
         android:id="@+id/ic_emissions"
-        android:icon="@drawable/co2_icon"
+        android:icon="@drawable/ic_carbon"
         android:title="@string/emissions" />
 </menu>

@@ -18,10 +18,9 @@
     <string name="weather">Weather</string>
     <string name="todolist">To Do List</string>
     <string name="nearbyPlaces">Nearby Places</string>
-    <string name="breed">Breed:</string>
-    <string name="d_o_b">D.O.B.:</string>
-    <string name="name">Name:</string>
-    <string name="tag_number">Tag Number:</string>
+    <string name="breed">Breed </string>
+    <string name="d_o_b">D.O.B. </string>
+    <string name="tag_number">Tag Number </string>
     <string name="some_date">some date</string>
     <string name="service_the_massey_ferguson_tractor">Service the Massey Ferguson Tractor</string>
     <string name="pressure">Pressure</string>
@@ -72,6 +71,18 @@
     <string name="beef_emissions">BEEF EMISSIONS :</string>
     <string name="number_of_bulls">number of bulls</string>
     <string name="total_dairy_emissions_per_annumn">Total Dairy Emissions Per Annumn</string>
+    <string name="click_calendar_to_change_date">Click Calendar to Change Date.</string>
+    <string name="sire">Sire</string>
+    <string name="update_the_animals_info_in_your_herd">Update the Animals\' info in your Herd:</string>
+    <string name="dam">Dam</string>
+    <string name="ai_stock_bull">AI/ Stock Bull</string>
+    <string name="calving_difficulty">Calving Difficulty</string>
+    <string name="update_animals_info">Update Animals\' Info</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="search">Search</string>
+    <string name="name">Name</string>
+    <string name="hospitals">Hospitals</string>
+    <string name="mechanics">Mechanics</string>
 
 
 </resources>
