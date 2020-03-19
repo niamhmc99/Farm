@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".InsertAnimalActivity">
 
-
-
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
@@ -19,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageButton
         android:id="@+id/animal_image"
         android:layout_width="264dp"
         android:layout_height="149dp"

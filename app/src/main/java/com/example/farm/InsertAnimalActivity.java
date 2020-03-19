@@ -23,6 +23,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -88,7 +89,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
     View mParentLayout;
     BottomNavigationView bottomNavigationView;
 
-    private CircleImageView animalProfilePic;
+    private ImageButton animalProfilePic;
     private Uri mainImageURI = null;
 
     private String user_id;
@@ -144,7 +145,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         checkBoxInCalve = findViewById(R.id.checkBoxInCalve);
         textViewDateOfInsemination = findViewById(R.id.textViewDateOfInsemination);
         textViewDateCalculatedCalveAndDelivery = findViewById(R.id.textViewDateCalculatedCalveAndDelivery);
-        textViewRegisteredTimeStamp =findViewById(R.id.animalRegisterTimestamp);
+       // textViewRegisteredTimeStamp =findViewById(R.id.animalRegisterTimestamp);
         //Check point for in calve check or uncheck
         checkBoxInCalve.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

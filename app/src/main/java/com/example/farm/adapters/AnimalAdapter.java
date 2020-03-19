@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,10 +19,8 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapter.AnimalHolder> {
     private OnItemClickListener listener;
@@ -69,7 +68,7 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
 
     class AnimalHolder extends RecyclerView.ViewHolder{
         TextView textViewTagNumber, textViewAnimalName, textViewDob, textViewBreed, animalRegisterTimestamp;
-        CircleImageView animalProfilePic;
+        ImageButton animalProfilePic;
 
         AnimalHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,7 +78,7 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
             textViewDob = itemView.findViewById(R.id.textViewDob);
             textViewBreed = itemView.findViewById(R.id.textViewBreed);
             animalProfilePic = itemView.findViewById(R.id.imageAnimalProfilePic);
-            animalRegisterTimestamp = itemView.findViewById(R.id.animalRegisterTimestamp);
+          //  animalRegisterTimestamp = itemView.findViewById(R.id.animalRegisterTimestamp);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -30,21 +30,20 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="393dp"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="325dp"
         android:orientation="vertical">
 
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageButton
             android:id="@+id/imageAnimalProfilePic"
-            android:layout_width="wrap_content"
-            android:layout_height="114dp"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="25dp"
+            android:layout_width="260dp"
+            android:layout_height="170dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="33dp"
+            android:layout_marginRight="60dp"
             android:shape="ring"
-            android:src="@drawable/animalsmall"
-            app:civ_border_color="#E2E1E1"
-            app:civ_border_width="3dp" />
+            android:src="@drawable/animalsmall" />
 
         <TextView
             android:id="@+id/textViewTagNumber"
@@ -97,15 +96,13 @@
             android:textSize="18sp"
             android:textStyle="normal"
             tools:ignore="UnknownId" />
-
-
-        <TextView
-            android:id="@+id/animalRegisterTimestamp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Date Entered Herd: "
-            android:textStyle="italic" />
+        <!--        <TextView-->
+        <!--            android:id="@+id/animalRegisterTimestamp"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:padding="5dp"-->
+        <!--            android:text="Date Entered Herd: "-->
+        <!--            android:textStyle="italic" />-->
 
     </LinearLayout>
 
