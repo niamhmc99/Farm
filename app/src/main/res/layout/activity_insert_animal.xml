@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/constraintLayout"
     tools:context=".InsertAnimalActivity">
 
     <ProgressBar
@@ -200,18 +201,29 @@
                 android:layout_marginLeft="50dp"
                 android:text="@string/in_calve"
                 android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textViewDateOfInsemination"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="50dp"
+                android:gravity="center|left"
+                android:textSize="18dp"
+                android:layout_marginRight="10dp"
+                android:text="@string/date_of_insemination"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/textViewDateCalculatedCalveAndDelivery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:gravity="center|left"
+                android:textSize="14dp"
                 android:layout_marginBottom="5dp"
-                android:gravity="center|start"
-                android:text="Gellell"
-                android:textSize="14sp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="10dp"
+                android:text="" />
+
 
             <Button
                 android:id="@+id/btnInsertAnimal"
@@ -230,17 +242,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="UnusedAttribute" />
 
-            <TextView
-                android:id="@+id/textViewDateOfInsemination"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center|start"
-                android:text="@string/date_of_insemination"
-                android:textSize="18sp"
-                android:visibility="gone" />
-
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottom_navigation_view"
                 android:layout_width="match_parent"
@@ -254,11 +255,5 @@
                 app:menu="@menu/bottom_nav_menu" />
 
         </LinearLayout>
-
-
     </ScrollView>
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

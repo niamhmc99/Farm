@@ -6,6 +6,8 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 
@@ -25,8 +27,7 @@ public class OnReceive extends BroadcastReceiver {
         sendNotification(context,intN.getStringExtra("message"),intN.getStringExtra("title"));
     }
 
-    //    This method is only generating push notification
-//    It is same as we did in earlier posts
+    //    generating push notification
     private void sendNotification(Context context,String messageBody, String title) {
 
         Intent intent = new Intent(context, SplashScreenActivity.class);
@@ -53,7 +54,7 @@ public class OnReceive extends BroadcastReceiver {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
 
-            //Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             //Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_app_notification_icon);
 
             String channel_id = createNotificationChannel(context);

@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -84,7 +85,10 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
     private ProgressBar addanimalProgress;
     private Spinner spinnerGender, spinnerAiStockBull, spinnerCalvingDiff;
     private CheckBox checkBoxInCalve;
-    View mParentLayout;
+   // View mParentLayout;
+   View myView;
+
+    ConstraintLayout constraintLayout;
     BottomNavigationView bottomNavigationView;
 
     private ImageButton animalProfilePic;
@@ -120,7 +124,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
 
         firebaseAuth = FirebaseAuth.getInstance();
         user_id = firebaseAuth.getCurrentUser().getUid();
-
+constraintLayout= findViewById(R.id.constraintLayout);
         firestoreDB = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -159,7 +163,6 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                 }
             }
         });
-        //Selecting start date of insemination)
         textViewDateOfInsemination.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -187,18 +190,14 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         firestoreDB.collection("animals").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-
                 if(task.isSuccessful()){
-
                     if(task.getResult().exists()){
 
                         String tagNumber = task.getResult().getString("tagNumber");
                         String image = task.getResult().getString("image");
 
                         mainImageURI = Uri.parse(image);
-
                         editTextTagNumber.setText(tagNumber);
-
                         RequestOptions placeholderRequest = new RequestOptions();
                         placeholderRequest.placeholder(R.drawable.animalsmall);
 
@@ -209,7 +208,6 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
 
                     String error = task.getException().getMessage();
                     Toast.makeText(InsertAnimalActivity.this, "(FIRESTORE Retrieve Error) : " + error, Toast.LENGTH_LONG).show();
-
                 }
 
                 addanimalProgress.setVisibility(View.INVISIBLE);
@@ -266,9 +264,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
 
                             @Override
                             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task){
-                                if(task.isSuccessful())
-
-                                {
+                                if(task.isSuccessful()) {
                                     filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
                                     {
                                         @Override
@@ -276,7 +272,6 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                                         {
                                            String downloadUrl = uri.toString();
                                             storeFirestore(downloadUrl, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID, strRegisteredTimestamp);
-
                                         }
                                     });
                                 }
@@ -285,16 +280,10 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                                 }
                             }
                         });
-
                     }
-                    }
-                else
-                    {
-
+                    } else {
                         storeFirestore(null, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID, strRegisteredTimestamp);
-
                     }
-
                 }
 
             });
@@ -304,26 +293,18 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         animalProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-
                     if(ContextCompat.checkSelfPermission(InsertAnimalActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-
                         Toast.makeText(InsertAnimalActivity.this, "Permission Denied", Toast.LENGTH_LONG).show();
                         ActivityCompat.requestPermissions(InsertAnimalActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
                     } else {
-
                         BringImagePicker();
-
                     }
-
                 } else {
 
                     BringImagePicker();
-
                 }
-
             }
 
         });
@@ -381,7 +362,6 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
 //        strRegisteredTimestamp = setTimeAdded(new Timestamp(new Date()));
 
             animalMap.put(KEY_AnimalRegisteredTimestamp, strRegisteredTimestamp);
-
 
             if (!hasValidationErrors(strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire)) {
 
@@ -535,8 +515,8 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         }
     }
 
-    private void makeSnackBarMessage(String message){
-        Snackbar.make(mParentLayout, message, Snackbar.LENGTH_SHORT).show();
+    private void makeSnackBarMessage( String message){
+        Snackbar.make(constraintLayout, message, Snackbar.LENGTH_SHORT).show();
     }
 
     //Calculating expected calve date
@@ -584,7 +564,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             date = sdf.parse(dateInput);
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
-            calendar.add(Calendar.DAY_OF_MONTH,178);
+            calendar.add(Calendar.DAY_OF_MONTH,276); // 283 - 7 days = one week before expected due date
             dateInput = sdf.format(calendar.getTime());
         } catch (ParseException e) {
             e.printStackTrace();
