@@ -3,13 +3,11 @@ package com.example.farm.emissions;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.farm.R;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -21,6 +19,9 @@ import java.util.List;
 public class BeefRecommendationActivity extends AppCompatActivity {
     TextView totalBullEmissions,noOfBulls,totalCowEmissions,totalBeefEmissions,noOfCows;
     PieChart pieChart;
+    int numberOfBullsAmount, numberOfCowsAmount;
+    Double totalBeefEmissionsAmount, totalCowEmissionsAmount, totalBullEmissionAmount ;
+
 //    PieDataSet dataset = new PieDataSet(entries, "");
 //    PieData pieData = new PieData(dataset);
 
@@ -34,11 +35,11 @@ public class BeefRecommendationActivity extends AppCompatActivity {
        // pieChart.setData(pieData);
 
         Intent intent = getIntent();
-        int numberOfBullsAmount = intent.getIntExtra("numberOfBulls",0);
-        int numberOfCowsAmount= intent.getIntExtra("numberOfCows",0);
-        Double totalBeefEmissionsAmount = intent.getDoubleExtra("totalBeefEmissions",0);
-        Double totalCowEmissionsAmount = intent.getDoubleExtra("totalCowEmissions",0);
-        Double totalBullEmissionAmount = intent.getDoubleExtra("totalBullEmissions",0);
+        numberOfBullsAmount = intent.getIntExtra("numberOfBulls",0);
+        numberOfCowsAmount= intent.getIntExtra("numberOfCows",0);
+        totalBeefEmissionsAmount = intent.getDoubleExtra("totalBeefEmissions",0);
+        totalCowEmissionsAmount = intent.getDoubleExtra("totalCowEmissions",0);
+        totalBullEmissionAmount = intent.getDoubleExtra("totalBullEmissions",0);
 
         totalBullEmissions = findViewById(R.id.totalBullEmissions);
         totalBullEmissions.setText(totalBullEmissionAmount.toString());
@@ -58,17 +59,24 @@ public class BeefRecommendationActivity extends AppCompatActivity {
         setPieChartData();
 
     }
+
     public void setPieChartData(){
+
+       int intBullEmissions = totalBullEmissionAmount.intValue();
+        int intTotalBeefEmission = totalBeefEmissionsAmount.intValue();
+        int bullEmissionsPercentage = (intBullEmissions * 100) / intTotalBeefEmission;
+        int cowEmissionsPercentage =  (totalCowEmissionsAmount.intValue() * 100) / intTotalBeefEmission;
+
         List<PieEntry> value = new ArrayList<>();
-        value.add(new PieEntry(30f, "Purchasing"));
-        value.add(new PieEntry(35f, "Bulls"));
-        value.add(new PieEntry(1, "Cows"));
+        value.add(new PieEntry(bullEmissionsPercentage, "Bulls"));
+        value.add(new PieEntry(cowEmissionsPercentage, "Cows"));
 
-
-        PieDataSet pieDataSet = new PieDataSet(value, "Gender Values");
+        PieDataSet pieDataSet = new PieDataSet(value, " :Gender Values");
         PieData pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
-
         pieDataSet.setColors(ColorTemplate.PASTEL_COLORS);
+
     }
+
+
 }

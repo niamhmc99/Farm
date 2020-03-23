@@ -6,8 +6,7 @@ import java.util.Date;
 
 public class Appointment {
 
-    private String id, userId;
-    private String appTitle, appDescription, appDate;
+    private String id, userId, appTitle, appDescription, appDate;
 
     public Appointment(){ }
 

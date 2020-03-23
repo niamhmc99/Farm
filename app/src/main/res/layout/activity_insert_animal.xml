@@ -47,7 +47,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
             <EditText
                 android:id="@+id/editTexttagNumber"
                 android:layout_width="257dp"
@@ -88,7 +87,7 @@
                 android:ems="10"
                 android:hint="@string/date_of_birth"
                 android:importantForAutofill="no"
-                android:inputType="text"
+                android:inputType="date"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

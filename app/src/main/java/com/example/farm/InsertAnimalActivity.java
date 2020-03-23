@@ -54,6 +54,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -85,9 +87,6 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
     private ProgressBar addanimalProgress;
     private Spinner spinnerGender, spinnerAiStockBull, spinnerCalvingDiff;
     private CheckBox checkBoxInCalve;
-   // View mParentLayout;
-   View myView;
-
     ConstraintLayout constraintLayout;
     BottomNavigationView bottomNavigationView;
 
@@ -124,7 +123,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
 
         firebaseAuth = FirebaseAuth.getInstance();
         user_id = firebaseAuth.getCurrentUser().getUid();
-constraintLayout= findViewById(R.id.constraintLayout);
+        constraintLayout= findViewById(R.id.constraintLayout);
         firestoreDB = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -182,10 +181,8 @@ constraintLayout= findViewById(R.id.constraintLayout);
             }
         });
 
-
         addanimalProgress.setVisibility(View.VISIBLE);
         btnInsertAnimal.setEnabled(false);
-
 
         firestoreDB.collection("animals").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -203,13 +200,10 @@ constraintLayout= findViewById(R.id.constraintLayout);
 
                         Glide.with(InsertAnimalActivity.this).setDefaultRequestOptions(placeholderRequest).load(image).into(animalProfilePic);
                     }
-
                 } else {
-
                     String error = task.getException().getMessage();
                     Toast.makeText(InsertAnimalActivity.this, "(FIRESTORE Retrieve Error) : " + error, Toast.LENGTH_LONG).show();
                 }
-
                 addanimalProgress.setVisibility(View.INVISIBLE);
                 btnInsertAnimal.setEnabled(true);
 
@@ -241,9 +235,7 @@ constraintLayout= findViewById(R.id.constraintLayout);
                     if (isChanged) {
 
                         user_id = firebaseAuth.getCurrentUser().getUid();
-
                         File newImageFile = new File(mainImageURI.getPath());
-
                         try {
                             compressedImageFile = new Compressor(InsertAnimalActivity.this)
                                     .setMaxHeight(125)
@@ -287,7 +279,6 @@ constraintLayout= findViewById(R.id.constraintLayout);
                 }
 
             });
-
 
 
         animalProfilePic.setOnClickListener(new View.OnClickListener() {
@@ -387,15 +378,13 @@ constraintLayout= findViewById(R.id.constraintLayout);
                                 Toast.makeText(InsertAnimalActivity.this, "(FIRESTORE Error) : " + e, Toast.LENGTH_LONG).show();
                             }
                         });
-
-
             }
             addanimalProgress.setVisibility(View.INVISIBLE);
         }
 
 
 
-        private boolean hasValidationErrors(String tagNumber, String animalName, String dob, String selectedGender, String breed, String dam, String selectedCalvingDifficulty, String selectedAIStockBull, String sire){
+        private boolean hasValidationErrors(String tagNumber, String animalName, String dob, String selectedGender, String breed, String dam, String selectedCalvingDifficulty, String selectedAIStockBull, String sire) {
             if (tagNumber.trim().isEmpty()) {
                 editTextTagNumber.setError("Tag Number is required");
                 makeSnackBarMessage("Please insert Tag Number.");
@@ -404,49 +393,84 @@ constraintLayout= findViewById(R.id.constraintLayout);
                 editTextAnimalName.setError("Animal Name Required");
                 makeSnackBarMessage("Please insert Animal Name.");
                 return true;
-            }else if(dob.isEmpty()){
+            } else if (dob.isEmpty()) {
                 editTextDob.setError("Date of Birth is required.");
                 makeSnackBarMessage("Please insert Date of Birth.");
                 return true;
-            }
-            else if(selectedGender.isEmpty()){
-                TextView errorText = (TextView)spinnerGender.getSelectedView();
+            } else if (selectedGender.isEmpty()) {
+                TextView errorText = (TextView) spinnerGender.getSelectedView();
                 errorText.setError("");
                 errorText.setTextColor(Color.RED);//just to highlight that this is an error
                 errorText.setText("Please select the Aniamls Gender");//changes the selected item text to this
                 makeSnackBarMessage("Please insert the Animals Sex.");
                 return true;
-            }else if(dam.isEmpty()){
+            } else if (dam.isEmpty()) {
                 editTextDam.setError("The Dam of the Animal is required");
                 makeSnackBarMessage("Please insert the Animals Dam.");
                 return true;
-            }else if(selectedCalvingDifficulty.isEmpty()){
-                TextView errorText = (TextView)spinnerCalvingDiff.getSelectedView();
+            } else if (selectedCalvingDifficulty.isEmpty()) {
+                TextView errorText = (TextView) spinnerCalvingDiff.getSelectedView();
                 errorText.setError("");
                 errorText.setTextColor(Color.RED);//just to highlight that this is an error
                 errorText.setText("Select the Calving Difficulty number");//changes the selected item text to this
                 makeSnackBarMessage("Please insert the Calving Difficulty.");
                 return true;
-            }else if(sire.isEmpty()){
+            } else if (sire.isEmpty()) {
                 editTextsire.setError("The Sire of the Animal is required");
                 makeSnackBarMessage("Please insert the Animals Sire.");
                 return true;
-            }else if(selectedAIStockBull.isEmpty()){
-                TextView errorText = (TextView)spinnerAiStockBull.getSelectedView();
+            } else if (selectedAIStockBull.isEmpty()) {
+                TextView errorText = (TextView) spinnerAiStockBull.getSelectedView();
                 errorText.setError("");
                 errorText.setTextColor(Color.RED);//just to highlight that this is an error
                 errorText.setText("Please select the Sire Type for the animal");//changes the selected item text to this
                 makeSnackBarMessage("Please insert the Sire Type.");
                 return true;
-            }else if(breed.isEmpty()){
+            } else if (breed.isEmpty()) {
                 editTextBreed.setError("Breed of Animal is required");
                 makeSnackBarMessage("Please insert Animal Breed.");
                 return true;
-            }else{
+            } else {
                 return false;
             }
-
         }
+
+    private void checkingIfTagNumberExist(final String tagNumberToCompare) {
+
+        //----------------------------------------------------------------
+        final Query mQuery = firestoreDB.collection("animals").whereEqualTo("tagNumber", tagNumberToCompare);
+        mQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                Log.d(TAG, "checkingIfusernameExist: checking if username exists");
+
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot ds : task.getResult()) {
+                        String userNames = ds.getString("username");
+                        if (userNames.equals(tagNumberToCompare)) {
+                            Log.d(TAG, "checkingIfusernameExist: FOUND A MATCH - Tag number already exists");
+                            Toast.makeText(InsertAnimalActivity.this, "TagNumber Already Exists", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+
+                }
+                //checking if task contains any payload. if no, then update
+                if (task.getResult().size() == 0) {
+                    try {
+
+                        Log.d(TAG, "onComplete: MATCH NOT FOUND - username is available");
+                        Toast.makeText(InsertAnimalActivity.this, "TagNumber changed", Toast.LENGTH_SHORT).show();
+                        //Updating new username............
+
+
+                    } catch (NullPointerException e) {
+                        Log.e(TAG, "NullPointerException: " + e.getMessage());
+                    }
+                }
+            }
+        });
+    }
 
     private void addItemsOnSpinnerCalvingDiff() {
         spinnerCalvingDiff= findViewById(R.id.spinnerCalvingDiff);
