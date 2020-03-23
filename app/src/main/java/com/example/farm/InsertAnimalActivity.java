@@ -46,7 +46,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -74,7 +73,6 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.UUID;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
 
@@ -139,7 +137,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         editTextBreed =findViewById(R.id.editTextBreed);
         spinnerAiStockBull =findViewById(R.id.spinnerAiStockBull);
         animalProfilePic = findViewById(R.id.animal_image);
-        editTextTagNumber = findViewById(R.id.tagNumber);
+        editTextTagNumber = findViewById(R.id.editTexttagNumber);
         btnInsertAnimal = findViewById(R.id.btnInsertAnimal);
         addanimalProgress = findViewById(R.id.progressBar);
         checkBoxInCalve = findViewById(R.id.checkBoxInCalve);

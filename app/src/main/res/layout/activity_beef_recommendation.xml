@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".emissions.BeefRecommendationActivity">
 
     <TextView
@@ -240,4 +241,22 @@
 
     </androidx.cardview.widget.CardView>
 
-    </RelativeLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="318dp"
+        android:layout_below="@+id/cv5"
+        android:layout_marginTop="0dp">
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChartBeef"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="MissingConstraints">
+
+        </com.github.mikephil.charting.charts.PieChart>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</RelativeLayout>

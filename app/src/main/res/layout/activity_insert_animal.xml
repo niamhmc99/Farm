@@ -19,21 +19,22 @@
 
     <ImageButton
         android:id="@+id/animal_image"
-        android:layout_width="264dp"
-        android:layout_height="149dp"
+        android:layout_width="186dp"
+        android:layout_height="136dp"
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="6dp"
         android:layout_marginRight="6dp"
+        android:contentDescription="@string/crop_image_menu_crop"
         android:src="@drawable/animalsmall"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 
     <ScrollView
-        android:layout_width="418dp"
-        android:layout_height="488dp"
+        android:layout_width="409dp"
+        android:layout_height="554dp"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,20 +43,20 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
 
             <EditText
-                android:id="@+id/tagNumber"
-                android:layout_width="match_parent"
+                android:id="@+id/editTexttagNumber"
+                android:layout_width="257dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="38dp"
                 android:ems="10"
-                android:hint="Tag Number"
-                android:inputType="textPersonName"
+                android:hint="@string/tag_number"
+                android:importantForAutofill="no"
+                android:inputType="textCapWords"
                 android:padding="12dp"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -64,10 +65,12 @@
 
             <EditText
                 android:id="@+id/editTextName"
-                android:layout_width="match_parent"
+                android:layout_width="258dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
                 android:ems="10"
-                android:hint="Name"
+                android:hint="@string/name"
+                android:importantForAutofill="no"
                 android:inputType="textPersonName"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -78,12 +81,14 @@
 
             <EditText
                 android:id="@+id/editTextDob"
-                android:layout_width="match_parent"
+                android:layout_width="258dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
                 android:ems="10"
-                android:hint="Date of Birth"
+                android:hint="@string/date_of_birth"
+                android:importantForAutofill="no"
+                android:inputType="text"
                 android:textSize="18sp"
-                android:inputType="textPersonName"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.51"
@@ -93,11 +98,12 @@
 
             <Spinner
                 android:id="@+id/spinnerGender"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:textSize="18sp"
+                android:layout_width="258dp"
+                android:layout_height="42dp"
+                android:layout_marginLeft="50dp"
                 android:hint="@string/gender_prompt"
                 android:prompt="@string/gender_prompt"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.51"
@@ -107,12 +113,14 @@
 
             <EditText
                 android:id="@+id/editTextBreed"
-                android:layout_width="match_parent"
+                android:layout_width="258dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
                 android:ems="10"
-                android:hint="Breed"
-                android:textSize="18sp"
+                android:hint="@string/breed"
+                android:importantForAutofill="no"
                 android:inputType="textPersonName"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -121,12 +129,14 @@
 
             <EditText
                 android:id="@+id/editTextDAM"
-                android:layout_width="match_parent"
+                android:layout_width="258dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
                 android:ems="10"
-                android:hint="Dam"
-                android:textSize="18sp"
+                android:hint="@string/dam"
+                android:importantForAutofill="no"
                 android:inputType="textPersonName"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.505"
@@ -136,11 +146,12 @@
 
             <Spinner
                 android:id="@+id/spinnerCalvingDiff"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_width="259dp"
+                android:layout_height="42dp"
+                android:layout_marginLeft="50dp"
                 android:hint="@string/calvingDifficulty_prompt"
                 android:prompt="@string/calvingDifficulty_prompt"
-                android:text="Calving Difficulty"
+                android:text="@string/calving_difficulty"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -151,11 +162,12 @@
 
             <Spinner
                 android:id="@+id/spinnerAiStockBull"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_width="260dp"
+                android:layout_height="42dp"
+                android:layout_marginLeft="50dp"
                 android:hint="@string/aiStockBull_prompt"
                 android:prompt="@string/aiStockBull_prompt"
-                android:text="AI/ Stock Bull"
+                android:text="@string/ai_stock_bull"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -166,12 +178,14 @@
 
             <EditText
                 android:id="@+id/ediTextSire"
-                android:layout_width="match_parent"
+                android:layout_width="262dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
                 android:ems="10"
-                android:hint="Sire"
-                android:textSize="18sp"
+                android:hint="@string/sire"
+                android:importantForAutofill="no"
                 android:inputType="textPersonName"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -183,71 +197,68 @@
                 android:id="@+id/checkBoxInCalve"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="In Calve"
-                android:textSize="16dp" />
-
-            <Button
-                android:id="@+id/btnInsertAnimal"
-                android:layout_width="387dp"
-                android:layout_height="35dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:backgroundTint="@color/colorAccent"
-                android:padding="15dp"
-                android:text="Insert Animal"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/textViewDateOfInsemination"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center|left"
-                android:textSize="18dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:text="@string/date_of_insemination"
-                android:visibility="gone"
-                />
+                android:layout_marginLeft="50dp"
+                android:text="@string/in_calve"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/textViewDateCalculatedCalveAndDelivery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center|left"
-                android:textSize="14dp"
-                android:layout_marginBottom="5dp"
-                android:visibility="gone"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text=""
+                android:layout_marginBottom="5dp"
+                android:gravity="center|start"
+                android:text="Gellell"
+                android:textSize="14sp"
+                android:visibility="gone" />
 
-                />
+            <Button
+                android:id="@+id/btnInsertAnimal"
+                android:layout_width="387dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="@color/blue"
+                android:padding="15dp"
+                android:text="@string/insert_animal"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="UnusedAttribute" />
+
+            <TextView
+                android:id="@+id/textViewDateOfInsemination"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center|start"
+                android:text="@string/date_of_insemination"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigation_view"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                app:itemBackground="@color/green"
+                app:itemIconTint="@drawable/item_selected"
+                app:itemTextColor="@drawable/item_selected"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:menu="@menu/bottom_nav_menu" />
 
         </LinearLayout>
+
+
     </ScrollView>
 
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation_view"
-        android:layout_width="409dp"
-        android:layout_height="43dp"
-        app:itemIconTint="@drawable/item_selected"
-        app:itemTextColor="@drawable/item_selected"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu"
-        app:itemBackground="@color/green" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/textViewRegisteredTimeStamp"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        tools:layout_editor_absoluteX="4dp"-->
-<!--        tools:layout_editor_absoluteY="175dp" />-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

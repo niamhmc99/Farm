@@ -5,11 +5,11 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/blue</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
-        <item name="android:statusBarColor" tools:targetApi="lollipop"> @color/darkGreen</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop"> @color/green</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

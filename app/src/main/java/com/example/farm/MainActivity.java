@@ -257,6 +257,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_expenses:
                 startActivity(new Intent(MainActivity.this, InvoiceReceiptActivity.class));
                 break;
+            case R.id.nav_carbonEmissions:
+                startActivity(new Intent(MainActivity.this, EmissionsActivity.class));
+                break;
         }
         return true;
     }

@@ -11,7 +11,7 @@
     app:cardBackgroundColor="@color/white">
 
     <LinearLayout
-        android:layout_width="403dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:alpha="0.8"
         android:background="@color/green"
@@ -22,7 +22,7 @@
 
         <ImageButton
             android:id="@+id/update_button"
-            android:layout_width="wrap_content"
+            android:layout_width="76dp"
             android:layout_height="match_parent"
             android:background="@drawable/rounded_image"
             android:src="@android:drawable/ic_menu_edit" />
@@ -31,14 +31,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="325dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
 
         <ImageButton
             android:id="@+id/imageAnimalProfilePic"
-            android:layout_width="260dp"
-            android:layout_height="170dp"
+            android:layout_width="185dp"
+            android:layout_height="161dp"
             android:layout_marginLeft="60dp"
             android:layout_marginTop="33dp"
             android:layout_marginRight="60dp"
