@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.farm.R;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -62,10 +63,11 @@ public class BeefRecommendationActivity extends AppCompatActivity {
 
     public void setPieChartData(){
 
-       int intBullEmissions = totalBullEmissionAmount.intValue();
+        Long longBullEmissions = Math.round(totalBullEmissionAmount);
+        Long longCowEmissions = Math.round(totalBullEmissionAmount);
         int intTotalBeefEmission = totalBeefEmissionsAmount.intValue();
-        int bullEmissionsPercentage = (intBullEmissions * 100) / intTotalBeefEmission;
-        int cowEmissionsPercentage =  (totalCowEmissionsAmount.intValue() * 100) / intTotalBeefEmission;
+        int bullEmissionsPercentage = (Integer.valueOf(longBullEmissions.intValue()) * 100) / intTotalBeefEmission;
+        int cowEmissionsPercentage =  (Integer.valueOf(longCowEmissions.intValue()) * 100) / intTotalBeefEmission;
 
         List<PieEntry> value = new ArrayList<>();
         value.add(new PieEntry(bullEmissionsPercentage, "Bulls"));
@@ -74,9 +76,13 @@ public class BeefRecommendationActivity extends AppCompatActivity {
         PieDataSet pieDataSet = new PieDataSet(value, " :Gender Values");
         PieData pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
+        pieChart.setHoleRadius(10f);
+        Description description = new Description();
+        description.setText("Approx Bull: Cow Beef Emissions");
+        pieChart.setDescription(description);
+        pieChart.setUsePercentValues(true);
+        pieChart.setTransparentCircleRadius(10f);
         pieDataSet.setColors(ColorTemplate.PASTEL_COLORS);
 
     }
-
-
 }
