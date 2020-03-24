@@ -25,16 +25,13 @@
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
             android:layout_marginBottom="675dp"
-            android:background="@color/colorPrimary"
+            android:background="@color/green"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" tools:targetApi="lollipop" />
 
 
     </RelativeLayout>
-
-
-
 
     <ScrollView
     android:layout_width="match_parent"
@@ -46,6 +43,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+
+        <ImageButton
+            android:id="@+id/side_menu"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="-8dp"
+            android:contentDescription="@string/side_menu"
+            android:src="@drawable/ic_menu" />
 
         <RelativeLayout
             android:layout_width="399dp"
@@ -89,7 +95,8 @@
                 android:layout_rowWeight="1"
                 app:cardElevation="6dp"
                 app:cardCornerRadius="26dp"
-                android:layout_margin="12dp">
+                android:layout_margin="12dp"
+                tools:targetApi="lollipop">
 
 
                 <LinearLayout
@@ -127,7 +134,8 @@
                 android:layout_rowWeight="1"
                 app:cardElevation="6dp"
                 app:cardCornerRadius="26dp"
-                android:layout_margin="12dp">
+                android:layout_margin="12dp"
+                tools:targetApi="lollipop">
 
 
                 <LinearLayout
@@ -166,7 +174,8 @@
                 android:layout_rowWeight="1"
                 app:cardElevation="6dp"
                 app:cardCornerRadius="26dp"
-                android:layout_margin="12dp">
+                android:layout_margin="12dp"
+                tools:targetApi="lollipop">
 
 
                 <LinearLayout
@@ -206,7 +215,8 @@
                 android:layout_rowWeight="1"
                 app:cardElevation="6dp"
                 app:cardCornerRadius="26dp"
-                android:layout_margin="12dp">
+                android:layout_margin="12dp"
+                tools:targetApi="lollipop">
 
 
                 <LinearLayout
@@ -229,7 +239,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="To Do List"
+                        android:text="@string/todolist"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:layout_marginTop="12dp"
@@ -245,7 +255,8 @@
                 android:layout_rowWeight="1"
                 app:cardElevation="6dp"
                 app:cardCornerRadius="26dp"
-                android:layout_margin="12dp">
+                android:layout_margin="12dp"
+                tools:targetApi="lollipop">
 
 
                 <LinearLayout
@@ -285,7 +296,8 @@
                 android:layout_rowWeight="1"
                 app:cardElevation="6dp"
                 app:cardCornerRadius="26dp"
-                android:layout_margin="12dp">
+                android:layout_margin="12dp"
+                tools:targetApi="lollipop">
 
 
                 <LinearLayout
@@ -325,7 +337,7 @@
                 android:layout_rowWeight="1"
                 app:cardElevation="6dp"
                 app:cardCornerRadius="26dp"
-                android:layout_margin="12dp">
+                android:layout_margin="12dp" tools:targetApi="lollipop">
 
 
                 <LinearLayout

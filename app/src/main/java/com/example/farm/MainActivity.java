@@ -28,11 +28,13 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    ImageButton imageButtonAnimals, imageButtonVets, buttonLogout, imageButtonWeather, imageButtonMap, imageButtonToDo, imageButtonEmissions, imageButtonInvoiceExpense;
+    ImageButton imageButtonAnimals, imageButtonVets, buttonLogout, imageButtonWeather, imageButtonMap, imageButtonToDo, imageButtonEmissions, imageButtonInvoiceExpense, buttonSideMenu;
     FirebaseAuth auth;
     FirebaseUser user;
     FirebaseAuth.AuthStateListener mAuthStateListener;
     private DrawerLayout drawerLayout;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
 
 
     @Override
@@ -42,6 +44,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
+        buttonSideMenu = findViewById(R.id.side_menu);
+        buttonSideMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
         buttonLogout = findViewById(R.id.imageButtonLogout);
         buttonLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawer(toolbar);
 
@@ -73,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(MainActivity.this);
         getUserName(navigationView);
     }
@@ -122,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         );
     }
 
-
     public void clickVets(View view) {
         imageButtonVets = findViewById(R.id.imageButtonVets);
         imageButtonVets.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +142,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
-
     public void clickWeather(View view) {
         imageButtonWeather = findViewById(R.id.imageButtonWeather);
         imageButtonWeather.setOnClickListener(new View.OnClickListener() {
@@ -145,17 +152,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
     }
-
-//    public void clickWeatherDetz(View view){
-//        Button buttonWeather =findViewById(R.id.buttonWeather);
-//        buttonWeather.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(MainActivity.this, WeatherActivity.class));
-//            }
-//        });
-//
-//    }
 
     public void clickToDoList(View view) {
         imageButtonToDo = findViewById(R.id.imageButtonToDoList);
@@ -200,16 +196,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menumainopts, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menuLogout:
-                Toast.makeText(this, "Logging out", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -266,9 +252,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void closeDrawer() {
         drawerLayout.closeDrawer(GravityCompat.START);
-    }
-
-    private void openDrawer() {
-        drawerLayout.openDrawer(GravityCompat.START);
     }
 }
