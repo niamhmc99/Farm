@@ -23,6 +23,7 @@
             android:text="@string/todolist"
             android:textColor="@color/darkGreen"
             android:textSize="40dp"
+            android:layout_marginTop="5dp"
             app:layout_constraintBottom_toTopOf="@+id/recyclerViewToDo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

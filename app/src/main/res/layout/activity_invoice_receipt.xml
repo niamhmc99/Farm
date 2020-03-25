@@ -52,13 +52,13 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="490dp"
+            android:layout_height="610dp"
             android:scrollbars="vertical" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation_view"
             android:layout_width="match_parent"
-            android:layout_height="297dp"
+            android:layout_height="57dp"
             android:layout_marginBottom="675dp"
             app:itemBackground="@color/green"
             app:itemIconTint="@drawable/item_selected"
@@ -72,8 +72,8 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabInsertInvoiceReceipt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="72dp"
+        android:layout_height="69dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
@@ -81,11 +81,11 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginBottom="76dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="63dp"
         android:src="@drawable/ic_plus_white"
-        app:backgroundTint="#64A407" />
+        app:backgroundTint="@color/blue" />
 
 
 </RelativeLayout>

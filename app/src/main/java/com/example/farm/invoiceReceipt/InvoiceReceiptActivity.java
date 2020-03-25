@@ -213,8 +213,8 @@ public class InvoiceReceiptActivity extends AppCompatActivity implements View.On
     public void addItemsOnSpinnerType(){
         spinnerInvoiceType = findViewById(R.id.spinnerType);
         List<String> list = new ArrayList<String>();
-        list.add("Income");
-        list.add("Expense");
+        list.add("Invoice");
+        list.add("Receipt");
 
         ArrayAdapter<String> invoiceTypeAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
@@ -251,7 +251,6 @@ public class InvoiceReceiptActivity extends AppCompatActivity implements View.On
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 setUpRecyclerView();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 

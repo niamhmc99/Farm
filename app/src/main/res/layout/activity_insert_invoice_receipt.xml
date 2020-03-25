@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     android:gravity="center"
     tools:context="com.example.farm.invoiceReceipt.InsertInvoiceReceiptActivity">
 
@@ -18,20 +19,48 @@
         android:visibility="invisible"
         tools:ignore="MissingConstraints" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/invoiceOrReceiptImage"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/invoiceReceiptTxt"
+        android:text="@string/insert_invoice_receipt"
+        android:textColor="@color/darkGreen"
+        android:fontFamily="@font/fredericka_the_great"
+        android:layout_marginLeft="5dp"
+        android:contentDescription="@string/invoiceOrReceipt"
+        android:textSize="35sp"
+        android:textStyle=""
+        android:layout_marginStart="5dp" />
+
+
+    <TextView
+        android:id="@+id/takePictureTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:contentDescription="@string/invoiceOrReceipt"
+        android:fontFamily="@font/fredericka_the_great"
+        android:text="@string/select_invoice_receipt_image"
+        android:textColor="@color/darkGreen"
+        android:textSize="18sp"
+        android:layout_marginStart="5dp" />
+
+    <ImageButton
+        android:id="@+id/invoiceOrReceiptImage"
+        android:contentDescription="@string/invoiceOrReceipt"
+        android:layout_width="389dp"
+        android:layout_height="246dp"
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="6dp"
         android:layout_marginRight="6dp"
-        android:src="@drawable/animalsmall" />
+        android:background="@color/white"
+        android:src="@drawable/invoice_receipt" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="331dp"
         android:scrollbars="none">
 
 
@@ -42,32 +71,48 @@
             android:layout_marginRight="20dp"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/txtViewType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/invoiceOrReceipt"
+                android:fontFamily="@font/fredericka_the_great"
+                android:text="Select Type:"
+                android:textColor="@color/darkGreen"
+                android:textSize="18sp" />
+
             <Spinner
                 android:id="@+id/spinnerType"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:textSize="18sp"
+                android:layout_height="60dp"
                 android:hint="@string/select_invoice_type"
-                android:prompt="@string/select_invoice_type" />
+                android:prompt="@string/select_invoice_type"
+                android:textSize="18sp" />
 
+            <TextView
+                android:id="@+id/txtViewCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/invoiceOrReceipt"
+                android:fontFamily="@font/fredericka_the_great"
+                android:text="Select category:"
+                android:textColor="@color/darkGreen"
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/spinnerCategory"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:textSize="18sp"
+                android:layout_height="60dp"
                 android:hint="@string/select_category"
-                android:prompt="@string/select_category" />
+                android:prompt="@string/select_category"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btnInsert"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:padding="15dp"
                 android:background="@color/green"
+                android:padding="15dp"
                 android:text="@string/insert_bill"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
@@ -75,24 +120,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottom_navigation_view"
-                android:layout_width="394dp"
-                android:layout_height="653dp"
-                android:layout_marginLeft="0dp"
-                android:layout_marginBottom="675dp"
-                app:itemBackground="@color/green"
-                app:itemIconTint="@drawable/item_selected"
-                app:itemTextColor="@drawable/item_selected"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:menu="@menu/bottom_nav_menu"
-                tools:ignore="NotSibling" />
 
         </LinearLayout>
 
     </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemBackground="@color/green"
+        app:itemIconTint="@drawable/item_selected"
+        app:itemTextColor="@drawable/item_selected"
+        app:menu="@menu/bottom_nav_menu"
+        tools:ignore="NotSibling" />
 
 
 </LinearLayout>

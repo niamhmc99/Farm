@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -66,7 +67,7 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
     private Spinner spinnerType, spinnerCategory;
     View mParentLayout;
 
-    private CircleImageView invoiceReceiptImage;
+    private ImageButton invoiceReceiptImage;
     private Uri mainImageURI = null;
     BottomNavigationView bottomNavigationView;
 
@@ -113,7 +114,6 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
                 final String strUserID = FirebaseAuth.getInstance().getCurrentUser().getUid().trim();
 
                 if (mainImageURI != null) {
-
                     btnInsert.setEnabled(false);
                     progressBar.setVisibility(View.VISIBLE);
 
@@ -135,8 +135,6 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
 
                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
                         compressedImageFile.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-//                        byte[] thumbData = baos.toByteArray();
-
                         final StorageReference filePath = storageReference.child("images/" + UUID.randomUUID().toString());
 
                         filePath.putFile(mainImageURI).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
