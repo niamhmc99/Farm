@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:id="@+id/coordinatorLayout"
     tools:context=".VetActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -12,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:background="@color/green"
+        android:background="@color/lightGreen"
         android:theme="@style/AppTheme.AppBarOverlay">
 
 
@@ -20,14 +21,14 @@
             android:id="@+id/layoutAppointmentInfo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/green"
+            android:background="@color/lightGreen"
             android:orientation="vertical"
             android:padding="16dp">
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/appointmentTitle"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="81dp"
                 android:hint="@string/appointmentTitle"
                 android:inputType="text"
                 android:textColorHint="@color/white"
@@ -54,7 +55,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp">
+            android:layout_height="52dp">
 
             <ImageView
                 android:id="@+id/imageViewButtonCalendarDatePicker"
@@ -67,7 +68,9 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.957"
-                app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+                android:outlineAmbientShadowColor="@color/colorBlack"
+                app:srcCompat="@android:drawable/ic_menu_my_calendar"
+                tools:targetApi="p" />
 
             <TextView
                 android:id="@+id/textViewDate"
@@ -81,7 +84,7 @@
                 android:layout_marginEnd="7dp"
                 android:layout_marginRight="7dp"
                 android:layout_marginBottom="8dp"
-                android:textColor="@color/white"
+                android:textColor="@color/colorBlack"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -92,8 +95,6 @@
                 app:layout_constraintVertical_bias="0.692" />
 
         </RelativeLayout>
-
-
     </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -115,17 +116,16 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewVetAppointment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="438dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="2dp"
         android:scrollbars="vertical"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
-
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="48dp"
         android:layout_gravity="bottom"
         android:layout_marginTop="700dp"
         app:itemBackground="@color/green"

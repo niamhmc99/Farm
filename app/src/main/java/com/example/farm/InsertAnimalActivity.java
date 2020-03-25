@@ -89,18 +89,15 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
     private CheckBox checkBoxInCalve;
     ConstraintLayout constraintLayout;
     BottomNavigationView bottomNavigationView;
-
     private ImageButton animalProfilePic;
     private Uri mainImageURI = null;
 
     private String user_id;
 
     private boolean isChanged = false;
-
     private StorageReference storageReference;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestoreDB;
-
     private Bitmap compressedImageFile;
 
     private static final String KEY_TAGNUMBER = "tagNumber";
@@ -206,10 +203,8 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                 }
                 addanimalProgress.setVisibility(View.INVISIBLE);
                 btnInsertAnimal.setEnabled(true);
-
             }
         });
-
 
         btnInsertAnimal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,11 +224,8 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                 final String strRegisteredTimestamp = String.valueOf(animal.getTimeAdded());
 
                 if (!TextUtils.isEmpty(strTag) && mainImageURI != null) {
-
                     addanimalProgress.setVisibility(View.VISIBLE);
-
                     if (isChanged) {
-
                         user_id = firebaseAuth.getCurrentUser().getUid();
                         File newImageFile = new File(mainImageURI.getPath());
                         try {
@@ -281,27 +273,25 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             });
 
 
-        animalProfilePic.setOnClickListener(new View.OnClickListener() {
+            animalProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     if(ContextCompat.checkSelfPermission(InsertAnimalActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
                         Toast.makeText(InsertAnimalActivity.this, "Permission Denied", Toast.LENGTH_LONG).show();
                         ActivityCompat.requestPermissions(InsertAnimalActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-
                     } else {
                         BringImagePicker();
                     }
                 } else {
-
                     BringImagePicker();
                 }
             }
 
         });
-        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
-        bottomNavigationView.setSelectedItemId(R.id.ic_animals);
-        bottomNavigationView.setOnNavigationItemSelectedListener(InsertAnimalActivity.this);
+            bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+            bottomNavigationView.setSelectedItemId(R.id.ic_animals);
+            bottomNavigationView.setOnNavigationItemSelectedListener(InsertAnimalActivity.this);
 }
 
     @Override
@@ -349,7 +339,6 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             animalMap.put(KEY_AiOrStockbull, strSelectedAIStockBull);
             animalMap.put(KEY_USERID, strUserID);
             animalMap.put(KEY_AnimalProfilePic, downloadUrl);
-
 //        strRegisteredTimestamp = setTimeAdded(new Timestamp(new Date()));
 
             animalMap.put(KEY_AnimalRegisteredTimestamp, strRegisteredTimestamp);
@@ -436,8 +425,6 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         }
 
     private void checkingIfTagNumberExist(final String tagNumberToCompare) {
-
-        //----------------------------------------------------------------
         final Query mQuery = firestoreDB.collection("animals").whereEqualTo("tagNumber", tagNumberToCompare);
         mQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

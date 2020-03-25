@@ -198,17 +198,13 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
         @Override
         public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
             new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                    .addBackgroundColor(ContextCompat.getColor(ToDoListActivity.this, R.color.colorAccent))
+                    .addBackgroundColor(ContextCompat.getColor(ToDoListActivity.this, R.color.blue))
                     .addActionIcon(R.drawable.ic_delete_black_24dp)
                     .create()
                     .decorate();
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
     };
-
-
-
-
 
     //interface method
     @Override

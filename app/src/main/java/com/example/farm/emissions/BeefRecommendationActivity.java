@@ -5,13 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.farm.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -22,10 +26,6 @@ public class BeefRecommendationActivity extends AppCompatActivity {
     PieChart pieChart;
     int numberOfBullsAmount, numberOfCowsAmount;
     Double totalBeefEmissionsAmount, totalCowEmissionsAmount, totalBullEmissionAmount ;
-
-//    PieDataSet dataset = new PieDataSet(entries, "");
-//    PieData pieData = new PieData(dataset);
-
 
 
     @Override
@@ -69,7 +69,7 @@ public class BeefRecommendationActivity extends AppCompatActivity {
         int bullEmissionsPercentage = (Integer.valueOf(longBullEmissions.intValue()) * 100) / intTotalBeefEmission;
         int cowEmissionsPercentage =  (Integer.valueOf(longCowEmissions.intValue()) * 100) / intTotalBeefEmission;
 
-        List<PieEntry> value = new ArrayList<>();
+        final List<PieEntry> value = new ArrayList<>();
         value.add(new PieEntry(bullEmissionsPercentage, "Bulls"));
         value.add(new PieEntry(cowEmissionsPercentage, "Cows"));
 

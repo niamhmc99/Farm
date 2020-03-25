@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,7 +44,7 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
     private Button buttonUpdate;
     private Spinner spinnerGenderUpdate, spinnerCalvingDiffUpdate, spinnerAiStockBullUpdate;
     private String docId;
-    private CircleImageView animalProfilePic;
+    private ImageButton animalProfilePic;
     private Animal animal;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseStorage fireBaseStorage;
@@ -78,8 +79,6 @@ BottomNavigationView bottomNavigationView;
         spinnerAiStockBullUpdate = findViewById(R.id.spinnerAiStockBull);
         animalProfilePic= findViewById(R.id.imageAnimalProfilePic);
         buttonUpdate = findViewById(R.id.buttonUpdateAnimal);
-
-
         //populate animal data before update
         storageReference = fireBaseStorage.getReferenceFromUrl(animal.getAnimalProfilePic());
 
@@ -96,7 +95,6 @@ BottomNavigationView bottomNavigationView;
         editTextSireUpdate.setText(animal.getSire());
         editTextBreedUpdate.setText(animal.getBreed());
         spinnerAiStockBullUpdate.setSelection(getIndex(spinnerAiStockBullUpdate,animal.getAiORstockbull()));
-
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setSelectedItemId(R.id.ic_animals);

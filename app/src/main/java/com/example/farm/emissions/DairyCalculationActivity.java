@@ -22,9 +22,7 @@ public class DairyCalculationActivity extends AppCompatActivity implements Botto
 
     private MaterialEditText editTextNumDairyCows;
     private MaterialEditText editTextAverageMilkYield;
-//    Button btnCalculate;
     BottomNavigationView bottomNavigationView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +32,7 @@ public class DairyCalculationActivity extends AppCompatActivity implements Botto
     editTextAverageMilkYield = findViewById(R.id.editTextAverageMilkYield);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setSelectedItemId(R.id.ic_emissions);
         bottomNavigationView.setOnNavigationItemSelectedListener(DairyCalculationActivity.this);
     }
 
@@ -44,22 +43,18 @@ public class DairyCalculationActivity extends AppCompatActivity implements Botto
                 Intent intent0 = new Intent(DairyCalculationActivity.this, MainActivity.class);
                 startActivity(intent0);
                 break;
-
             case R.id.ic_animals:
                 Intent intent1 = new Intent(DairyCalculationActivity.this, AnimalActivity.class);
                 startActivity(intent1);
                 break;
-
             case R.id.ic_nearbyPlaces:
                 Intent intent2 = new Intent(DairyCalculationActivity.this, MapsActivity.class);
                 startActivity(intent2);
                 break;
-
             case R.id.ic_vetApp:
                 Intent intent3 = new Intent(DairyCalculationActivity.this, VetActivity.class);
                 startActivity(intent3);
                 break;
-
             case R.id.ic_emissions:
                 Intent intent4 = new Intent(DairyCalculationActivity.this, EmissionsActivity.class);
                 startActivity(intent4);

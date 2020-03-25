@@ -80,6 +80,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setSelectedItemId(R.id.ic_nearbyPlaces);
         bottomNavigationView.setOnNavigationItemSelectedListener(MapsActivity.this);
     }
 

@@ -78,7 +78,7 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
     private FirebaseFirestore firestoreDB;
     private Bitmap compressedImageFile;
 
-    private static final String KEY_INVOICERECEIPTTYPE = "invoiceType";
+    private static final String KEY_INVOICERECEIPTTYPE = "invoiceReceiptType";
     private static final String KEY_CATEGORY = "category";
     private static final String KEY_IMAGE= "image";
     private static final String KEY_USERID = "user_id";
@@ -271,8 +271,8 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
             TextView errorText = (TextView)spinnerType.getSelectedView();
             errorText.setError("");
             errorText.setTextColor(Color.RED);//just to highlight that this is an error
-            errorText.setText("Please select the invoice type");//changes the selected item text to this
-            makeSnackBarMessage("Please insert invoice type");
+            errorText.setText("Please select invoice/ receipt");//changes the selected item text to this
+            makeSnackBarMessage("Please insert invoice/ receipt");
             return true;
         }
         if(selectedCategory.isEmpty()){
@@ -285,7 +285,7 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
         }
         else if(!isInvoice)
         {
-            makeSnackBarMessage("Please select image file ");
+            makeSnackBarMessage("Please select image of invoice/ recipt ");
             return true;
         }
         else{
@@ -297,7 +297,7 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
     public void addItemsOnSpinnerInvoiceType(){
         spinnerType = findViewById(R.id.spinnerType);
         List<String> list = new ArrayList<String>();
-        list.add("Income");
+        list.add("Invoice");
         list.add("Receipt");
 
         ArrayAdapter<String> invoiceTypeAdapter = new ArrayAdapter<String>(this,
@@ -348,7 +348,6 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
             }
         }
     }
-
     private void makeSnackBarMessage(String message){
         Snackbar.make(mParentLayout, message, Snackbar.LENGTH_SHORT).show();
     }

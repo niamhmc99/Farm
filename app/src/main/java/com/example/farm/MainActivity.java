@@ -28,7 +28,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    ImageButton imageButtonAnimals, imageButtonVets, buttonLogout, imageButtonWeather, imageButtonMap, imageButtonToDo, imageButtonEmissions, imageButtonInvoiceExpense, buttonSideMenu;
+    ImageButton imageButtonAnimals, imageButtonVets, imageButtonWeather, imageButtonMap, imageButtonToDo, imageButtonEmissions, imageButtonInvoiceExpense, buttonSideMenu;
     FirebaseAuth auth;
     FirebaseUser user;
     FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -49,13 +49,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-        buttonLogout = findViewById(R.id.imageButtonLogout);
-        buttonLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                auth.signOut();
             }
         });
 

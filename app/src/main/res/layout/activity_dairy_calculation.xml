@@ -10,21 +10,20 @@
 
     <TextView
         android:id="@+id/txtViewDairy"
-        android:layout_width="401dp"
-        android:layout_height="122dp"
-        android:layout_marginLeft="20dp"
+        android:layout_width="372dp"
+        android:layout_height="142dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="25dp"
-        android:layout_marginRight="20dp"
         android:fontFamily="@font/fredericka_the_great"
         android:text="@string/dairy_emissions"
         android:textColor="@color/darkGreen"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.589"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.082" />
+        app:layout_constraintVertical_bias="0.074" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/editTextNumDairyCows"

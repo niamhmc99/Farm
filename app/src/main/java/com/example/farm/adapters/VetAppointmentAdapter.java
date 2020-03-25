@@ -19,10 +19,11 @@ public class VetAppointmentAdapter extends FirestoreRecyclerAdapter<Appointment,
     Context context;
     AppointmentListener appointmentListener;
 
-    public VetAppointmentAdapter(@NonNull FirestoreRecyclerOptions<Appointment> options) {
+    public VetAppointmentAdapter(@NonNull FirestoreRecyclerOptions<Appointment> options, AppointmentListener appointmentListener) {
         super(options);
-    }
+        this.appointmentListener = appointmentListener;
 
+    }
 
     @Override
     protected void onBindViewHolder(@NonNull VetAppointmentAdapter.AppointmentHolder holder, int position, @NonNull Appointment appointment) {
@@ -41,7 +42,6 @@ public class VetAppointmentAdapter extends FirestoreRecyclerAdapter<Appointment,
     }
 
     public class AppointmentHolder extends RecyclerView.ViewHolder {
-
         TextView appTitle, appDescription, appDate;
 
         public AppointmentHolder(@NonNull View itemView) {
@@ -53,7 +53,6 @@ public class VetAppointmentAdapter extends FirestoreRecyclerAdapter<Appointment,
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     DocumentSnapshot snapshot = getSnapshots().getSnapshot(getAdapterPosition());
                     appointmentListener.handleEditAppointment(snapshot);
                 }
