@@ -113,78 +113,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void clickAnimals(View view) {
         imageButtonAnimals = findViewById(R.id.imageButtonAnimals);
-        imageButtonAnimals.setOnClickListener(new View.OnClickListener() {
-                                                  @Override
-                                                  public void onClick(View v) {
-                                                      Toast.makeText(MainActivity.this, "Animals Registered", Toast.LENGTH_SHORT).show();
-                                                      startActivity(new Intent(MainActivity.this, AnimalActivity.class));
+        Toast.makeText(MainActivity.this, "Animals Registered", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(MainActivity.this, AnimalActivity.class));
 
-                                                  }
-                                              }
-        );
     }
 
     public void clickVets(View view) {
         imageButtonVets = findViewById(R.id.imageButtonVets);
-        imageButtonVets.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, VetActivity.class));
+        startActivity(new Intent(MainActivity.this, VetActivity.class));
 
-            }
-        });
     }
 
     public void clickWeather(View view) {
         imageButtonWeather = findViewById(R.id.imageButtonWeather);
-        imageButtonWeather.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, WeatherActivity2.class));
-            }
-        });
-
+        startActivity(new Intent(MainActivity.this, WeatherActivity2.class));
     }
 
     public void clickToDoList(View view) {
         imageButtonToDo = findViewById(R.id.imageButtonToDoList);
-        imageButtonToDo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ToDoListActivity.class));
-            }
-        });
+        startActivity(new Intent(MainActivity.this, ToDoListActivity.class));
+
     }
 
     public void clickGoogleMap(View view) {
         imageButtonMap = findViewById(R.id.imageButtonGoogleMap);
-        imageButtonMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, MapsActivity.class));
-            }
-        });
+        startActivity(new Intent(MainActivity.this, MapsActivity.class));
     }
 
     public void clickEmissions(View view) {
         imageButtonEmissions = findViewById(R.id.imageButtonEmissions);
-        imageButtonEmissions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, EmissionsActivity.class));
-            }
-        });
+        startActivity(new Intent(MainActivity.this, EmissionsActivity.class));
     }
 
     public void clickInvoiceExpense(View view) {
         imageButtonInvoiceExpense = findViewById(R.id.imageButtonInvoiceExpense);
-        imageButtonInvoiceExpense.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, InvoiceReceiptActivity.class));
-            }
-        });
+        startActivity(new Intent(MainActivity.this, InvoiceReceiptActivity.class));
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menumainopts, menu);

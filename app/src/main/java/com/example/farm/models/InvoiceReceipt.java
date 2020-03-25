@@ -2,21 +2,21 @@ package com.example.farm.models;
 
 public class InvoiceReceipt {
     private String id;
-    private String type;
+    private String invoiceReceiptType;
     private String category;
     private String image;
-    private String userId;
+    private String user_id;
 
     public InvoiceReceipt() {
 
     }
 
-    public InvoiceReceipt(String id, String type, String category, String image, String userId) {
+    public InvoiceReceipt(String id, String invoiceReceiptType, String category, String image, String user_id) {
         this.id = id;
-        this.type = type;
+        this.invoiceReceiptType = invoiceReceiptType;
         this.category = category;
         this.image = image;
-        this.userId = userId;
+        this.user_id = user_id;
     }
 
     public String getId() {
@@ -27,12 +27,12 @@ public class InvoiceReceipt {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getInvoiceReceiptType() {
+        return invoiceReceiptType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setInvoiceReceiptType(String type) {
+        this.invoiceReceiptType = invoiceReceiptType;
     }
 
     public String getCategory() {
@@ -51,11 +51,13 @@ public class InvoiceReceipt {
         this.image = image;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(String userId) {
-        this.userId =userId;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
+
+
 }

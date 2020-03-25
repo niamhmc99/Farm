@@ -107,8 +107,8 @@ public class InvoiceReceiptActivity extends AppCompatActivity implements View.On
         {
             adapter.stopListening();
         }
-        Query query = collectionReference.orderBy("invoiceType", Query.Direction.DESCENDING)
-                .whereEqualTo("invoiceType",spinnerInvoiceType.getSelectedItem())
+        Query query = collectionReference.orderBy("invoiceReceiptType", Query.Direction.DESCENDING)
+                .whereEqualTo("invoiceReceiptType",spinnerInvoiceType.getSelectedItem())
                 .whereEqualTo("category",spinnerCategory.getSelectedItem());
 
         FirestoreRecyclerOptions options= new FirestoreRecyclerOptions.Builder<InvoiceReceipt>()
@@ -261,9 +261,10 @@ public class InvoiceReceiptActivity extends AppCompatActivity implements View.On
     private void loadData()
     {
         billsList = new ArrayList<>();
+        // .whereEqualTo("invoiceType",spinnerInvoiceType.getSelectedItem())
+        //                .whereEqualTo("category",spinnerCategory.getSelectedItem()).get()
         db.collection("InvoiceReceipts")
-                .whereEqualTo("invoiceType",spinnerInvoiceType.getSelectedItem())
-                .whereEqualTo("category",spinnerCategory.getSelectedItem()).get()
+                .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -277,6 +278,8 @@ public class InvoiceReceiptActivity extends AppCompatActivity implements View.On
                     }
                 });
     }
+
+
 }
 
 

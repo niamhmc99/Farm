@@ -25,7 +25,7 @@ private Context context;
 
     @Override
     protected void onBindViewHolder(@NonNull InvoiceReceiptHolder holder, int position, @NonNull InvoiceReceipt invoiceReceipt) {
-        holder.textViewInvoiceType.setText(invoiceReceipt.getType());
+        holder.textViewInvoiceType.setText(invoiceReceipt.getInvoiceReceiptType());
         holder.textViewCategory.setText(invoiceReceipt.getCategory());
 
         String invoiceImageUrl = invoiceReceipt.getImage();
