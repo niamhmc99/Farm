@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="25dp"
-    android:background="@drawable/weather_stages"
+    android:background="@drawable/blue_orange"
     tools:context=".WeatherActivity2">
 
     <RelativeLayout
         android:id="@+id/mainContainer"
         android:layout_width="wrap_content"
-        android:layout_height="605dp"
+        android:layout_height="557dp"
         android:visibility="visible">
 
         <LinearLayout
@@ -320,12 +320,16 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
-        android:layout_width="wrap_content"
-        android:layout_height="46dp"
+        android:layout_width="386dp"
+        android:layout_height="65dp"
         android:layout_below="@+id/mainContainer"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="29dp"
-        android:layout_marginBottom="1dp"
+        android:layout_marginTop="-2dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="85dp"
         app:itemBackground="@color/green"
         app:itemIconTint="@drawable/item_selected"
         app:itemTextColor="@drawable/item_selected"

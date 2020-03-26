@@ -10,6 +10,7 @@
     android:layout_marginRight="8dp"
     app:cardBackgroundColor="@color/white">
 
+
     <LinearLayout
         android:layout_width="399dp"
         android:layout_height="wrap_content"
@@ -27,30 +28,26 @@
             android:src="@drawable/invoice_receipt" />
 
 
-        <TextView
-            android:id="@+id/textViewType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@string/invoiceOrReceipt"
-            android:textColor="@color/colorBlack"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textViewType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/invoiceOrReceipt"
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textViewCategory"
-            android:layout_width="113dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:text="@string/category"
-            android:textColor="@color/colorBlack"
-            android:textSize="18sp"
-            android:textStyle="normal"
-            tools:ignore="UnknownId" />
+            <TextView
+                android:id="@+id/textViewCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/category"
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp"
+                android:textStyle="normal"
+                android:ellipsize="end"
+                tools:ignore="UnknownId" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

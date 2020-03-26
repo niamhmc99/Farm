@@ -21,7 +21,7 @@
         <TextView
             android:id="@+id/textViewToDo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="72dp"
             android:fontFamily="@font/fredericka_the_great"
             android:gravity="center"
             android:text="@string/todolist"

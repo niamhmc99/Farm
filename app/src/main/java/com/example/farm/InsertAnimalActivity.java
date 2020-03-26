@@ -575,7 +575,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             date = sdf.parse(dateInput);
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
-            calendar.add(Calendar.DAY_OF_MONTH,276); // 283 - 7 days = one week before expected due date
+            calendar.add(Calendar.DAY_OF_MONTH,283); // 283 - 7 days = one week before expected due date
             dateInput = sdf.format(calendar.getTime());
         } catch (ParseException e) {
             e.printStackTrace();
@@ -608,8 +608,8 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
     {
         if(checkBoxInCalve.isChecked() && !textViewDateOfInsemination.getText().toString().equals(getString(R.string.date_of_insemination))) {
             Intent intent = new Intent(InsertAnimalActivity.this, OnReceive.class);
-            intent.putExtra("title", "Alarm notification");
-            intent.putExtra("message", strName + " " + strTag + " is due to calve in/on  " + getCalveDate(textViewDateOfInsemination.getText().toString()));
+            intent.putExtra("title", "Calving Date notification");
+            intent.putExtra("message", strName + " " + strTag + " is due to calve in/on  " + getDeliveryDate(textViewDateOfInsemination.getText().toString()));
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(InsertAnimalActivity.this, 2020, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 

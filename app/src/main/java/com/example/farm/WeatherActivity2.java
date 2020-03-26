@@ -32,7 +32,7 @@ import java.util.Locale;
 
 public class WeatherActivity2 extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-    String CITY = "Dublin,IE"; //value of our search query {city, country code} is the parm used
+    String CITY = "Drumsna,IE"; //value of our search query {city, country code} is the parm used
     String API = "3e73a57a2c75697757c6110ad50aa6da"; //key got from API
     TextView addressTxt, updated_atTxt, statusTxt, tempTxt, temp_minTxt, temp_maxTxt, sunriseTxt,
             sunsetTxt, windTxt, pressureTxt, humidityTxt;
