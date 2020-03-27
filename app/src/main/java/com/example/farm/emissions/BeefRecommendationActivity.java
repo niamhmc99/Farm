@@ -64,7 +64,7 @@ public class BeefRecommendationActivity extends AppCompatActivity {
     public void setPieChartData(){
 
         Long longBullEmissions = Math.round(totalBullEmissionAmount);
-        Long longCowEmissions = Math.round(totalBullEmissionAmount);
+        Long longCowEmissions = Math.round(totalCowEmissionsAmount);
         int intTotalBeefEmission = totalBeefEmissionsAmount.intValue();
         int bullEmissionsPercentage = (Integer.valueOf(longBullEmissions.intValue()) * 100) / intTotalBeefEmission;
         int cowEmissionsPercentage =  (Integer.valueOf(longCowEmissions.intValue()) * 100) / intTotalBeefEmission;
