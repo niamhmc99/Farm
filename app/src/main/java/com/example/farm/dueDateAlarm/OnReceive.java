@@ -87,7 +87,6 @@ public class OnReceive extends BroadcastReceiver {
                 int channelImportance = NotificationManager.IMPORTANCE_DEFAULT;
                 boolean channelEnableVibrate = true;
 
-                // Initializes NotificationChannel.
                 NotificationChannel notificationChannel = new NotificationChannel(channelId, channelName, channelImportance);
                 notificationChannel.setDescription(channelDescription);
                 notificationChannel.enableVibration(channelEnableVibrate);

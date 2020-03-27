@@ -144,6 +144,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         textViewDateOfInsemination = findViewById(R.id.textViewDateOfInsemination);
         textViewDateCalculatedCalveAndDelivery = findViewById(R.id.textViewDateCalculatedCalveAndDelivery);
        // textViewRegisteredTimeStamp =findViewById(R.id.animalRegisterTimestamp);
+
         //Check point for in calve check or uncheck
         checkBoxInCalve.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -169,7 +170,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                         String date = year+"-"+(monthOfYear+1)+"-"+dayOfMonth;
                         textViewDateOfInsemination.setText(date);
                         //Calculating Expected, delivery and notification date
-                        textViewDateCalculatedCalveAndDelivery.setText("Expected calve date is "+getCalveDate(date)+", delivery date is "+getDeliveryDate(date)+" and you will be notified on "+getNotifyDateStr(date));
+                        textViewDateCalculatedCalveAndDelivery.setText("Expected Delivery date is on "+getDeliveryDate(date)+" and you will be notified on "+getNotifyDateStr(date));
                         textViewDateCalculatedCalveAndDelivery.setVisibility(View.VISIBLE);
                     }
                 }, now
@@ -351,9 +352,8 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 Log.d(TAG, "Animal inserted into herd with ID: " + documentReference.getId());
-                                //Help-Comment (Alarm will set here after successful animal insertion)
+                                //Alarm will set here after successful animal insertion
                                 setAlarm(strName, strTag);
-
                                 Toast.makeText(InsertAnimalActivity.this, "The animal profile has been created.", Toast.LENGTH_LONG).show();
                                 Intent mainIntent = new Intent(InsertAnimalActivity.this, AnimalActivity.class);
                                 startActivity(mainIntent);
@@ -575,7 +575,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             date = sdf.parse(dateInput);
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
-            calendar.add(Calendar.DAY_OF_MONTH,283); // 283 - 7 days = one week before expected due date
+            calendar.add(Calendar.DAY_OF_MONTH,276); // 283 - 7 days = one week before expected due date
             dateInput = sdf.format(calendar.getTime());
         } catch (ParseException e) {
             e.printStackTrace();
@@ -594,7 +594,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
 //            calendar.add(Calendar.SECOND,10);
-            calendar.add(Calendar.DAY_OF_MONTH,178);
+            calendar.add(Calendar.DAY_OF_MONTH,276);
             date = calendar.getTime();
         } catch (ParseException e) {
             e.printStackTrace();
@@ -617,6 +617,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             assert alarmManager != null;
             alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
                     + (getNotifyDate(textViewDateOfInsemination.getText().toString()).getTime()-new Date().getTime()), pendingIntent);
+            Log.d("Alarm Date", "calving alarm "+ getNotifyDate(textViewDateOfInsemination.getText().toString()));
         }
     }
 

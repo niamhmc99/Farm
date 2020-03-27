@@ -51,6 +51,7 @@ public class BeefCalculationActivity extends AppCompatActivity implements Bottom
         editTextAverageBullWeight = findViewById(R.id.editTextAverageBullWeight);
         btnCalculate = findViewById(R.id.calculateBtn);
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setSelectedItemId(R.id.ic_emissions);
         bottomNavigationView.setOnNavigationItemSelectedListener(BeefCalculationActivity.this);
 
 

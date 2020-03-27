@@ -27,6 +27,7 @@ public class EmissionsActivity extends AppCompatActivity implements BottomNaviga
         setContentView(R.layout.activity_emissions);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setSelectedItemId(R.id.ic_emissions);
         bottomNavigationView.setOnNavigationItemSelectedListener(EmissionsActivity.this);
     }
 

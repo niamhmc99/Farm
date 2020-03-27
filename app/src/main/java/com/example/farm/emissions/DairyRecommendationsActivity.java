@@ -74,10 +74,6 @@ TextView numCows, averageMilkYieldPA, totalDairyEmissionsPA;
         dataVals.add(new Entry(2,9));
         dataVals.add(new Entry(3,11));*/
 
-
-
-
-
         LineDataSet lineDataSet1 = new LineDataSet(dataVals,"data set 1");
         lineDataSet1.setDrawCircles(true);
         lineDataSet1.setCircleColor(Color.RED);
@@ -99,20 +95,6 @@ TextView numCows, averageMilkYieldPA, totalDairyEmissionsPA;
         float posave = nationalaverage - average;
 
 
-        if(difference< 0 & average < nationalaverage)
-        {
-            results.setText("Congratulations your footprint is improving you have lowered you footprint by: " + differencepositive + "\n" +
-                    "Your average result is: " + average + " Keep up the good work" + "\n" +
-                    "Your average is  " + posave + " lower than the national average " +  " Way to lead by example ");
-
-        }
-        else
-        {
-            results.setText("Your footprint has increased by " + difference + " from your first test this is not good "+ "\n" +
-                    " Your average result is: " + average +  " Please revisit our tips section to lower your footprint" + "\n" +
-                    "your average is  " + (average - nationalaverage) + " ");
-
-        }
 
     }
 }

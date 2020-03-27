@@ -47,7 +47,6 @@ private Context context;
 
         InvoiceReceiptHolder(@NonNull View itemView) {
             super(itemView);
-
             textViewInvoiceType = itemView.findViewById(R.id.textViewType);
             textViewCategory = itemView.findViewById(R.id.textViewCategory);
             image = itemView.findViewById(R.id.invoiceReceiptImage);
