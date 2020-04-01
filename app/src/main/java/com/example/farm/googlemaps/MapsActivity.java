@@ -281,7 +281,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
 
             case R.id.B_send_location:
-                //Help-Comment (Check if location is available other wise will fetch location)
+                //Check if location is available other wise will fetch location
                 if (lastlocation == null) {
                     Toast.makeText(MapsActivity.this,"Loading current location resend again", Toast.LENGTH_LONG).show();
                     checkLocationPermission();
