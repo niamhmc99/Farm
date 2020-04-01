@@ -1,30 +1,40 @@
 package com.example.farm;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.example.farm.emissions.EmissionsActivity;
+import com.example.farm.googlemaps.MapsActivity;
+import com.example.farm.invoiceReceipt.InvoiceReceiptActivity;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-public class MainActivity extends AppCompatActivity {
-    final String TAG= "MainActivity";
-    Button buttonLogut;
-    ImageButton imageButtonAnimals, imageButtonExpenditure, imageButtonVets, imageButtonEmployees;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+
+    ImageButton imageButtonAnimals, imageButtonVets, imageButtonWeather, imageButtonMap, imageButtonToDo, imageButtonEmissions, imageButtonInvoiceExpense, buttonSideMenu;
     FirebaseAuth auth;
     FirebaseUser user;
-    FirebaseFirestore db;
     FirebaseAuth.AuthStateListener mAuthStateListener;
+    private DrawerLayout drawerLayout;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
 
 
     @Override
@@ -34,13 +44,18 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-        buttonLogut = findViewById(R.id.buttonLogout);
-        buttonLogut.setOnClickListener(new View.OnClickListener() {
+        buttonSideMenu = findViewById(R.id.side_menu);
+        buttonSideMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                auth.signOut();
+                drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        drawer(toolbar);
+
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -53,6 +68,30 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
+    private void drawer(Toolbar toolbar) {
+        drawerLayout = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(MainActivity.this);
+        getUserName(navigationView);
+    }
+
+
+    private void getUserName(NavigationView navigationView) {
+
+        View headerLayout = navigationView.getHeaderView(0);
+        TextView username = headerLayout.findViewById(R.id.farmersEmail);
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(currentUser!=null) {
+            username.setText(currentUser.getEmail());
+        }
+
+    }
     @Override
     protected void onResume() {
         if (auth.getCurrentUser() == null) {
@@ -73,76 +112,103 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickAnimals(View view) {
-        imageButtonAnimals = (ImageButton) findViewById(R.id.imageButtonAnimals);
-        imageButtonAnimals.setOnClickListener(new View.OnClickListener() {
-                                                  @Override
-                                                  public void onClick(View v) {
-                                                      Toast.makeText(MainActivity.this, "Animals Registered", Toast.LENGTH_SHORT).show();
-                                                      startActivity(new Intent(MainActivity.this, AnimalActivity.class));
+        imageButtonAnimals = findViewById(R.id.imageButtonAnimals);
+        Toast.makeText(MainActivity.this, "Animals Registered", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(MainActivity.this, AnimalActivity.class));
 
-                                                  }
-                                              }
-        );
     }
 
-    public void clickExpenses(View view){
-        imageButtonExpenditure = (ImageButton) findViewById(R.id.imageButtonExpenses);
-        imageButtonExpenditure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ExpenditureActivity.class));
-            }
-        });
+    public void clickVets(View view) {
+        imageButtonVets = findViewById(R.id.imageButtonVets);
+        startActivity(new Intent(MainActivity.this, VetActivity.class));
+
     }
 
-    public void clickVets (View view){
-        imageButtonVets = (ImageButton) findViewById(R.id.imageButtonVets);
-        imageButtonVets.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, VetActivity.class));
-
-            }
-        });
+    public void clickWeather(View view) {
+        imageButtonWeather = findViewById(R.id.imageButtonWeather);
+        startActivity(new Intent(MainActivity.this, WeatherActivity2.class));
     }
 
-    public void clickEmployees(View view) {
-        imageButtonEmployees = (ImageButton) findViewById(R.id.imageButtonEmployees);
-        imageButtonEmployees.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, EmployeeActivity.class));
-            }
-        });
+    public void clickToDoList(View view) {
+        imageButtonToDo = findViewById(R.id.imageButtonToDoList);
+        startActivity(new Intent(MainActivity.this, ToDoListActivity.class));
+
     }
 
-    public boolean onCreateOptionsMenu(Menu menu){
+    public void clickGoogleMap(View view) {
+        imageButtonMap = findViewById(R.id.imageButtonGoogleMap);
+        startActivity(new Intent(MainActivity.this, MapsActivity.class));
+    }
+
+    public void clickEmissions(View view) {
+        imageButtonEmissions = findViewById(R.id.imageButtonEmissions);
+        startActivity(new Intent(MainActivity.this, EmissionsActivity.class));
+    }
+
+    public void clickInvoiceExpense(View view) {
+        imageButtonInvoiceExpense = findViewById(R.id.imageButtonInvoiceExpense);
+        startActivity(new Intent(MainActivity.this, InvoiceReceiptActivity.class));
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menumainopts, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.menuLogout:
-                Toast.makeText(this, "Logging out", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
-        return super.onOptionsItemSelected(item);
     }
 
-//    public void getUsers() {
-//        DocumentReference docRef = db.collection("cities").document("SF");
+    public void getUsers() {
+//        DocumentReference docRef = db.collection("users").document("SF");
 //// asynchronously retrieve the document
-//        ApiFuture<DocumentSnapshot> future = docRef.get();
+//       // ApiFuture<DocumentSnapshot> future = docRef.get();
 //// ...
 //// future.get() blocks on response
-//        DocumentSnapshot document = future.get();
+//       // DocumentSnapshot document = future.get();
 //        if (document.exists()) {
 //            System.out.println("Document data: " + document.getData());
 //        } else {
 //            System.out.println("No such document!");
 //        }
-//    }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        closeDrawer();
+        switch (menuItem.getItemId()) {
+            case R.id.nav_home:
+                closeDrawer();
+                break;
+            case R.id.nav_animal:
+                startActivity(new Intent(MainActivity.this, AnimalActivity.class));
+                break;
+            case R.id.nav_weather:
+                startActivity(new Intent(MainActivity.this, WeatherActivity2.class));
+                break;
+            case R.id.nav_nearbyPlaces:
+                startActivity(new Intent(MainActivity.this, MapsActivity.class));
+                break;
+            case R.id.nav_vets:
+                startActivity(new Intent(MainActivity.this, VetActivity.class));
+                break;
+            case R.id.nav_expenses:
+                startActivity(new Intent(MainActivity.this, InvoiceReceiptActivity.class));
+                break;
+            case R.id.nav_carbonEmissions:
+                startActivity(new Intent(MainActivity.this, EmissionsActivity.class));
+                break;
+        }
+        return true;
+    }
+
+    private void closeDrawer() {
+        drawerLayout.closeDrawer(GravityCompat.START);
+    }
 }

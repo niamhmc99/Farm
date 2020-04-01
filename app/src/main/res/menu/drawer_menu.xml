@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+    <item android:title="">
+            <item
+                android:id="@+id/nav_home"
+                android:icon="@drawable/ic_home_black_24dp"
+                android:title="@string/menu_home" />
+            <item
+                android:id="@+id/nav_animal"
+                android:icon="@drawable/ic_cow"
+                android:title="@string/animals" />
+            <item
+                android:id="@+id/nav_weather"
+                android:icon="@drawable/ic_weather"
+                android:title="@string/weather" />
+            <item
+                android:id="@+id/nav_nearbyPlaces"
+                android:icon="@drawable/ic_nearby_places"
+                android:title="@string/nearbyPlaces" />
+
+            <item
+                android:id="@+id/nav_vets"
+                android:icon="@drawable/ic_vet"
+                android:title="@string/vets" />
+
+            <item
+                android:id="@+id/nav_expenses"
+                android:icon="@drawable/ic_expenses"
+                android:title="@string/invoiceReceipt" />
+
+            <item
+                android:id="@+id/nav_carbonEmissions"
+                android:icon="@drawable/ic_carbon"
+                android:title="@string/emissions" />
+    </item>
+    </group>
+
+    <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_logout"
+                    android:icon="@drawable/ic_logout"
+                    android:title="@string/logout" />
+    </group>
+</menu>

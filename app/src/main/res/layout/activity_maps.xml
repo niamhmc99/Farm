@@ -1,0 +1,114 @@
+<RelativeLayout
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    xmlns:http="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <EditText
+        android:id="@+id/TF_location"
+        android:layout_width="279dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:hint="@string/name"
+        android:inputType="textPersonName"
+        android:importantForAutofill="no" />
+
+    <Button
+        android:id="@+id/B_search"
+        android:layout_width="121dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_toEndOf="@+id/TF_location"
+        android:layout_toRightOf="@+id/TF_location"
+        android:onClick="onClick"
+        android:text="@string/search" />
+
+
+    <Button
+        android:id="@+id/B_hopistals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/TF_location"
+        android:onClick="onClick"
+        android:text="@string/hospitals"
+        android:layout_alignParentLeft="true" />
+
+    <Button
+        android:id="@+id/B_mechanic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TF_location"
+        android:layout_toEndOf="@+id/B_hopistals"
+        android:onClick="onClick"
+        android:text="@string/mechanics"
+        android:layout_toRightOf="@+id/B_hopistals" />
+
+    <Button
+        android:id="@+id/B_vets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TF_location"
+        android:layout_toEndOf="@+id/B_mechanic"
+        android:onClick="onClick"
+        android:text="@string/vets"
+        android:layout_toRightOf="@+id/B_mechanic" />
+
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="528dp"
+        android:layout_below="@+id/B_hopistals"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="110dp"
+        tools:context="com.example.farm.googlemaps.MapsActivity" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="169dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="562dp"
+        android:layout_marginBottom="0dp"
+        app:itemBackground="@color/green"
+        app:itemIconTint="@drawable/item_selected"
+        app:itemTextColor="@drawable/item_selected"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_insetEdge="bottom"
+        app:menu="@menu/bottom_nav_menu"
+        tools:ignore="NotSibling" >
+
+        <Button
+            android:id="@+id/B_send_location"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:backgroundTint="@color/blue"
+            android:onClick="onClick"
+            android:text="Search for help" />
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+</RelativeLayout>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".emissions.EmissionsActivity">
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/imageEmissions"
+            android:layout_width="198dp"
+            android:layout_height="198dp"
+            android:contentDescription="@string/emissions"
+            android:src="@drawable/farm_carbon_edit" />
+
+        <TextView
+            android:id="@+id/txtViewEmissionsImage"
+            android:layout_width="wrap_content"
+            android:layout_height="216dp"
+            android:fontFamily="casual"
+            android:text="@string/calulateEmission"
+            android:textAllCaps="true"
+            android:textColor="@color/green"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtViewChooseEmissionOption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:accessibilityHeading="true"
+        android:fontFamily="@font/amaranth"
+        android:text="@string/emissionsOptions"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.429" />
+
+    <GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+        android:alignmentMode="alignMargins"
+        android:columnCount="2"
+        android:columnOrderPreserved="false"
+        android:rowCount="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewChooseEmissionOption"
+        app:layout_constraintVertical_bias="0.105"
+        tools:ignore="@string/emissions">
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="12dp"
+            app:cardCornerRadius="26dp"
+            app:cardElevation="6dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <ImageButton
+                    android:id="@+id/imageButtonBeef"
+                    android:layout_width="107dp"
+                    android:layout_height="90dp"
+                    android:background="@color/white"
+                    android:contentDescription="@string/beef"
+                    android:onClick="clickBeef"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/cowcalf" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/beefDesc"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="135dp"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="12dp"
+            app:cardCornerRadius="26dp"
+            app:cardElevation="6dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <ImageButton
+                    android:id="@+id/imageButtonDairy"
+                    android:layout_width="100dp"
+                    android:layout_height="80dp"
+                    android:background="@color/white"
+                    android:contentDescription="@string/dairy"
+                    android:onClick="clickDairy"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/dairy_cow" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/dairyDesc"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </GridLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="700dp"
+        app:itemBackground="@color/green"
+        app:itemIconTint="@drawable/item_selected"
+        app:itemTextColor="@drawable/item_selected"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu"
+        tools:ignore="NotSibling" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginRight="8dp"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0.8"
+        android:background="@color/green"
+        android:elevation="10dp"
+        android:gravity="end"
+        android:orientation="horizontal" tools:targetApi="lollipop">
+
+
+        <ImageButton
+            android:id="@+id/update_button"
+            android:layout_width="76dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/rounded_image"
+            android:src="@android:drawable/ic_menu_edit"
+            android:contentDescription="@string/update_animals_info" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/imageAnimalProfilePic"
+            android:layout_width="179dp"
+            android:layout_height="173dp"
+            android:layout_marginTop="32dp"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:shape="ring"
+            android:scaleType="fitXY"
+            android:src="@drawable/animalsmall"
+            android:contentDescription="@string/insert_animal" />
+
+        <TextView
+            android:id="@+id/textViewTagNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/tag_number"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewAnimalName"
+            android:layout_width="113dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:text="@string/name"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            tools:ignore="UnknownId" />
+
+        <TextView
+            android:id="@+id/textViewDob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="0dp"
+            android:text="@string/d_o_b"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/textViewBreed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:text="@string/breed"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            tools:ignore="UnknownId" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

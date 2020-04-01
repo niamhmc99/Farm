@@ -1,151 +1,375 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity"
+    tools:openDrawer="start">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="702dp"
+            android:background="@color/green"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            tools:targetApi="lollipop" />
+
+
+    </RelativeLayout>
+
+    <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/blue_with_grass">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome You Have Logged In Successfully"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.435"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.078" />
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/buttonLogout"
+
+        <ImageButton
+            android:id="@+id/side_menu"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="-8dp"
+            android:contentDescription="@string/side_menu"
+            android:src="@drawable/ic_menu" />
+
+        <RelativeLayout
+            android:layout_width="393dp"
+            android:layout_height="78dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="20dp">
+
+            <TextView
+                android:id="@+id/txtViewFileFarm"
+                android:layout_width="357dp"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/fredericka_the_great"
+                android:gravity="start"
+                android:text="@string/file_a_farm"
+                android:textColor="@color/darkGreen"
+                android:textSize="60sp" />
+        </RelativeLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:rowCount="3"
+            android:columnOrderPreserved="false"
+            android:alignmentMode="alignMargins">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="26dp"
+                android:layout_margin="12dp"
+                tools:targetApi="lollipop">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/imageButtonAnimals"
+                        android:src="@drawable/cowcalf"
+                        android:scaleType="fitXY"
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:background="@color/white"
+                        android:contentDescription="@string/animals"
+                        android:onClick="clickAnimals"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/animals"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="12dp"
+                        android:textColor="@color/colorBlack"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="26dp"
+                android:layout_margin="12dp"
+                tools:targetApi="lollipop">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/imageButtonWeather"
+                        android:src="@drawable/weather"
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:scaleType="fitXY"
+                        android:background="@color/white"
+                        android:onClick="clickWeather"
+                        android:contentDescription="@string/weather" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/weather"
+                        android:textStyle="bold"
+                        android:textSize="13sp"
+                        android:layout_marginTop="12dp"
+                        android:textColor="@color/colorBlack"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="26dp"
+                android:layout_margin="12dp"
+                tools:targetApi="lollipop">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/imageButtonVets"
+                        android:src="@drawable/vet3"
+                        android:layout_width="120dp"
+                        android:layout_height="100dp"
+                        android:scaleType="fitXY"
+                        android:onClick="clickVets"
+                        android:background="@color/white"
+                        android:contentDescription="@string/vets" />
+
+                    <TextView
+                        android:id="@+id/textViewVet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/vets"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="12dp"
+                        android:textColor="@color/colorBlack"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="26dp"
+                android:layout_margin="12dp"
+                tools:targetApi="lollipop">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/imageButtonToDoList"
+                        android:src="@drawable/todoicon"
+                        android:layout_width="120dp"
+                        android:scaleType="fitXY"
+                        android:layout_height="100dp"
+                        android:onClick="clickToDoList"
+                        android:background="@color/white"
+                        android:contentDescription="@string/todolist" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/todolist"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="12dp"
+                        android:textColor="@color/colorBlack"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="26dp"
+                android:layout_margin="12dp"
+                tools:targetApi="lollipop">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/imageButtonGoogleMap"
+                        android:src="@drawable/google_maps"
+                        android:scaleType="fitXY"
+                        android:layout_width="80dp"
+                        android:layout_height="100dp"
+                        android:background="@color/white"
+                        android:contentDescription="@string/nearbyPlaces"
+                        android:onClick="clickGoogleMap"/>
+
+                    <TextView
+                        android:id="@+id/textViewGoogleMaps"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nearbyPlaces"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="12dp"
+                        android:textColor="@color/colorBlack"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="26dp"
+                android:layout_margin="12dp"
+                tools:targetApi="lollipop">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/imageButtonEmissions"
+                        android:src="@drawable/co2_icon"
+                        android:scaleType="fitXY"
+                        android:layout_width="120dp"
+                        android:layout_height="100dp"
+                        android:background="@color/white"
+                        android:contentDescription="@string/emissions"
+                        android:onClick="clickEmissions"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/emissions"
+                        android:textSize="13sp"
+                        android:layout_marginTop="12dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorBlack"/>
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="26dp"
+                android:layout_margin="12dp" tools:targetApi="lollipop">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/imageButtonInvoiceExpense"
+                        android:src="@drawable/expense"
+                        android:scaleType="fitXY"
+                        android:layout_width="120dp"
+                        android:layout_height="100dp"
+                        android:background="@color/white"
+                        android:onClick="clickInvoiceExpense"
+                        android:contentDescription="@string/invoiceReceipt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/invoiceOrReceipt"
+                        android:textSize="13sp"
+                        android:layout_marginTop="12dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorBlack"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+         </GridLayout>
+    </LinearLayout>
+</ScrollView>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Log Out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.919" />
-
-    <TextView
-        android:id="@+id/loggedInUser"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageButton
-        android:id="@+id/imageButtonAnimals"
-        android:layout_width="155dp"
-        android:layout_height="147dp"
-        android:onClick="clickAnimals"
-        android:contentDescription="@string/animals"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.117"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.236"
-        app:srcCompat="@drawable/cowcalf" />
-
-    <ImageButton
-        android:id="@+id/imageButtonExpenses"
-        android:layout_width="155dp"
-        android:layout_height="147dp"
-        android:onClick="clickExpenses"
-        android:contentDescription="@string/expense"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.894"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.236"
-        app:srcCompat="@drawable/expense" />
-
-
-    <ImageButton
-        android:id="@+id/imageButtonVets"
-        android:layout_width="155dp"
-        android:layout_height="147dp"
-        android:onClick="clickVets"
-        android:contentDescription="@string/vets"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.148"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.672"
-        app:srcCompat="@drawable/vet2" />
-
-    <ImageButton
-        android:id="@+id/imageButtonEmployees"
-        android:layout_width="155dp"
-        android:layout_height="147dp"
-        android:onClick="clickEmployees"
-        android:contentDescription="@string/employees"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.894"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.672"
-        app:srcCompat="@drawable/employee" />
-
-    <TextView
-        android:id="@+id/textViewAnimals"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Animals"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.236"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.426" />
-
-    <TextView
-        android:id="@+id/textViewExpenditure"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Expenditure"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.806"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.426" />
-
-    <TextView
-        android:id="@+id/textViewVet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Vet History"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/loggedInUser"
-        app:layout_constraintHorizontal_bias="0.241"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.789" />
-
-    <TextView
-        android:id="@+id/textViewEmployee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Employees"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.769"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.789" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:itemIconTint="@color/green"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_menu" />
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -60,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String pass = password.getText().toString().trim();
                 String confirmpass = confirmPassword.getText().toString().trim();
                 String herd = herdid.getText().toString().trim();
+
                 if(email.isEmpty()){
                     emailId.setError("Please Enter Email Address");
                     emailId.requestFocus();
@@ -69,14 +70,17 @@ public class RegisterActivity extends AppCompatActivity {
                     emailId.requestFocus();
                 }
                 else if (email.isEmpty() && checkPassword(pass, confirmpass)){
-                    Toast.makeText(RegisterActivity.this, "Field can't be empty", Toast.LENGTH_LONG).show();
-                }else if(!(email.isEmpty() && checkPassword(pass, confirmpass))){
-                    auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                    Toast.makeText(RegisterActivity.this, "Please Enter an Email and Password to Register", Toast.LENGTH_LONG).show();
+                }
+                else if(!(email.isEmpty() && checkPassword(pass, confirmpass))){
+                    Log.d("", "createAccount:" + email);
+                    auth.createUserWithEmailAndPassword(email, pass)
+                            .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (!task.isSuccessful()){
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(RegisterActivity.this, "SignUp Unsuccessful, Please Try Again ", Toast.LENGTH_LONG).show();
+                                Toast.makeText(RegisterActivity.this, "SignUp UnSuccessful, Please Try Again ", Toast.LENGTH_LONG).show();
                             }else{
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "createUserWithEmail:success");

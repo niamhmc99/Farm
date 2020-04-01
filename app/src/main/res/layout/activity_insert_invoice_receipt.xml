@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:gravity="center"
+    tools:context="com.example.farm.invoiceReceipt.InsertInvoiceReceiptActivity">
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/invoiceReceiptTxt"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:contentDescription="@string/invoiceOrReceipt"
+        android:fontFamily="@font/fredericka_the_great"
+        android:text="@string/insert_invoice_receipt"
+        android:textColor="@color/darkGreen"
+        android:textSize="30sp"
+        android:textStyle="" />
+
+
+    <TextView
+        android:id="@+id/takePictureTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:contentDescription="@string/invoiceOrReceipt"
+        android:fontFamily="@font/fredericka_the_great"
+        android:text="@string/select_invoice_receipt_image"
+        android:textColor="@color/darkGreen"
+        android:textSize="18sp" />
+
+    <ImageButton
+        android:id="@+id/invoiceOrReceiptImage"
+        android:layout_width="330dp"
+        android:layout_height="215dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="6dp"
+        android:background="@color/white"
+        android:contentDescription="@string/invoiceOrReceipt"
+        android:scaleType="fitXY"
+        android:src="@drawable/invoice_receipt" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="256dp"
+        android:scrollbars="none">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtViewType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/invoiceOrReceipt"
+                android:fontFamily="@font/fredericka_the_great"
+                android:text="@string/select_type"
+                android:textColor="@color/darkGreen"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/spinnerType"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:hint="@string/select_invoice_type"
+                android:prompt="@string/select_invoice_type"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtViewCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/invoiceOrReceipt"
+                android:fontFamily="@font/fredericka_the_great"
+                android:text="@string/select_category"
+                android:textColor="@color/darkGreen"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/spinnerCategory"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:hint="@string/select_category"
+                android:prompt="@string/select_category"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btnInsert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blue"
+                android:layout_marginTop="10dp"
+                android:padding="15dp"
+                android:text="@string/insert_bill"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemBackground="@color/green"
+        app:itemIconTint="@drawable/item_selected"
+        app:itemTextColor="@drawable/item_selected"
+        app:menu="@menu/bottom_nav_menu"
+        tools:ignore="NotSibling" />
+
+
+</LinearLayout>
