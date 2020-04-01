@@ -49,6 +49,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.common.collect.Maps;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.trenzlr.firebasenotificationhelper.FirebaseNotiCallBack;
 import com.trenzlr.firebasenotificationhelper.FirebaseNotificationHelper;
 
@@ -78,6 +79,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+        System.out.println("*********FCM " + FirebaseMessaging.getInstance());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
