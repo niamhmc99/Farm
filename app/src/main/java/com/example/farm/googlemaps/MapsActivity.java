@@ -1,6 +1,9 @@
 package com.example.farm.googlemaps;
 
 import android.Manifest;
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -45,9 +48,16 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.common.collect.Maps;
+import com.google.firebase.auth.FirebaseAuth;
+import com.trenzlr.firebasenotificationhelper.FirebaseNotiCallBack;
+import com.trenzlr.firebasenotificationhelper.FirebaseNotificationHelper;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -270,6 +280,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Toast.makeText(MapsActivity.this, "Showing Nearby Vets", Toast.LENGTH_SHORT).show();
                 break;
 
+            case R.id.B_send_location:
+                //Help-Comment (Check if location is available other wise will fetch location)
+                if (lastlocation == null) {
+                    Toast.makeText(MapsActivity.this,"Loading current location resend again", Toast.LENGTH_LONG).show();
+                    checkLocationPermission();
+                } else {
+                    Toast.makeText(MapsActivity.this,"Sending current location please wait", Toast.LENGTH_LONG).show();
+                    Geocoder geocoder = new Geocoder(MapsActivity.this, Locale.getDefault());
+                    try {
+                        final List<Address> fromLocation = geocoder.getFromLocation(lastlocation.getLatitude(), lastlocation.getLongitude(), 1);
+                        if(fromLocation != null && fromLocation.size() != 0)
+                        {
+                            //Help-Comment (Send push notification to all users other then me of current location to find help)
+                            FirebaseNotificationHelper.initialize(getString(R.string.server_key))
+                                    .defaultJson(false, getJsonBody(fromLocation.get(0)))
+                                    .setCallBack(new FirebaseNotiCallBack() {
+                                        @Override
+                                        public void success(String s) {
+                                            showMessage(MapsActivity.this, fromLocation.get(0).getAddressLine(0)+" sent to all user");
+                                        }
+
+                                        @Override
+                                        public void fail(String s) {
+                                            showMessage(MapsActivity.this, "Unable to sent "+fromLocation.get(0).getAddressLine(0)+" due to " + s);
+                                        }
+                                    })
+                                    .receiverFirebaseToken("/topics/" + getString(R.string.topic))
+                                    .send();
+
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+
         }
     }
 
@@ -307,7 +353,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-
     public boolean checkLocationPermission()
     {
         if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)  != PackageManager.PERMISSION_GRANTED )
@@ -327,7 +372,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         else
             return true;
     }
-
 
     @Override
     public void onConnectionSuspended(int i) {
@@ -355,6 +399,44 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 startActivity(new Intent(MapsActivity.this, MainActivity.class));
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showMessage(Context context, String message) {
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(context, R.style.Base_Theme_AppCompat_Light_Dialog_Alert);
+        if (message.equals("")) {
+            message = "No error message has received from server.";
+        }
+        alertDialogBuilder.setMessage(message);
+        alertDialogBuilder.setCancelable(false);
+        alertDialogBuilder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.M)
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+
+        final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+
+        alertDialog.show();
+    }
+
+    //Create custom body to send in push notification
+    private String getJsonBody(Address location) {
+
+        JSONObject jsonObjectData = new JSONObject();
+        try {
+            jsonObjectData.put("sender", FirebaseAuth.getInstance().getCurrentUser().getUid());
+            jsonObjectData.put("latitude",location.getLatitude());
+            jsonObjectData.put("longitude",location.getLongitude());
+            jsonObjectData.put("title", "Is anyone available to help me?");
+            jsonObjectData.put("message", "At this location -> "+location.getAddressLine(0));
+            //jsonObjectData.put("success", "anything");
+        } catch (
+                JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObjectData.toString();
     }
 
 }

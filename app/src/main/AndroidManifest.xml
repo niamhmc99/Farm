@@ -73,6 +73,17 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
+
+        <service android:name="com.example.farm.firebase.FireBaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <receiver android:name="com.example.farm.dueDateAlarm.OnReceive" >
+        </receiver>
+
+
     </application>
 
 </manifest>

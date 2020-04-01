@@ -73,6 +73,9 @@
     <string name="click_calendar_to_change_date">Click Calendar to Change Date.</string>
     <string name="update_the_animals_info_in_your_herd">Update the Animals\' info in your Herd:</string>
     <string name="dam">Dam</string>
+    <string name="topic">location_notify</string>
+    <string name="server_key">AAAAzctonMc:APA91bG9MGnJnzB4UxQZfgqpG1iss7d-T9nIVOJ3n3evlXAbZSdxbpWzmcP6hbmtbWnHWdnANPZnNYiKElimIIUEsaGt8IUoFr8yd8I7_KBjPtCIlTL9noPtrnHyEe5ZftnEog8R-1Jo</string>
+
 
     <string name="update_animals_info">Update Animals\' Info</string>
     <string name="search">Search</string>

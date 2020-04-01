@@ -62,10 +62,15 @@ dependencies {
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
+    implementation 'com.tarun0.zxing-standalone:zxing-standalone:1.0.0'
+    implementation 'com.google.firebase:firebase-messaging:20.0.1'
+
+    implementation 'com.github.prabhat1707:Firebase-Push-Notification-Api-:1.1'
 
     // RETROFIT 2
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+
 }
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'

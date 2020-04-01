@@ -75,6 +75,7 @@ public class OnReceive extends BroadcastReceiver {
             notificationManager.notify((int) ((new Date(System.currentTimeMillis()).getTime() / 1000L) % Integer.MAX_VALUE) /* ID of notification */, notificationBuilder.build());
         }
 
+
         public String createNotificationChannel(Context context){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
