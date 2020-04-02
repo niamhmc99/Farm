@@ -22,7 +22,7 @@
             android:id="@+id/textViewToDo"
             android:layout_width="match_parent"
             android:layout_height="72dp"
-            android:fontFamily="@font/fredericka_the_great"
+            android:fontFamily="@font/libre_baskerville_bold"
             android:gravity="center"
             android:text="@string/todolist"
             android:textColor="@color/darkGreen"

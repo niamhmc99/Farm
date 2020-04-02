@@ -82,16 +82,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     private void getUserName(NavigationView navigationView) {
-
         View headerLayout = navigationView.getHeaderView(0);
         TextView username = headerLayout.findViewById(R.id.farmersEmail);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
         if(currentUser!=null) {
             username.setText(currentUser.getEmail());
         }
-
     }
+
     @Override
     protected void onResume() {
         if (auth.getCurrentUser() == null) {
@@ -203,6 +201,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_carbonEmissions:
                 startActivity(new Intent(MainActivity.this, EmissionsActivity.class));
+                break;
+            case R.id.nav_logout:
+                auth.signOut();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 break;
         }
         return true;

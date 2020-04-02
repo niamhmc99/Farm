@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/blue_recycleview">
+    android:background="@drawable/blue_with_grass">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -24,9 +24,9 @@
             android:layout_gravity="center_horizontal"
             android:drawableLeft="@drawable/ic_barcode"
             android:drawablePadding="5dp"
-            android:fontFamily="@font/fredericka_the_great"
+            android:fontFamily="@font/libre_baskerville_bold"
             android:text="@string/scan_barcode"
-            android:textColor="@color/white"
+            android:textColor="@color/darkGreen"
             android:textSize="25sp"
             android:textStyle="bold"
             android:drawableStart="@drawable/ic_barcode" />
