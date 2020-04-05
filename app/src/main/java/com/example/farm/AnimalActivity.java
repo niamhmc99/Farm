@@ -50,26 +50,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AnimalActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener{
+public class AnimalActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener, View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener{
 
     private static final String TAG = "AnimalActivity";
     private List<Animal> animalList;
-    private FirebaseAuth.AuthStateListener mAuthListener;
+    //private FirebaseAuth.AuthStateListener mAuthListener;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference animalRef = db.collection("animals");
-    private AnimalAdapter adapter;
     private FloatingActionButton mFabAddAnimal;
     View mParentLayout;
     ImageButton updateButton;
     TextView tvScanBarcode;
     BottomNavigationView bottomNavigationView;
     private static final int CAMERA_PERMISSION_CODE = 100;
+    RecyclerView recyclerView;
+    AnimalAdapter adapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal);
+        recyclerView = findViewById(R.id.recyclerViewAnimal);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         updateButton = findViewById(R.id.update_button);
         mFabAddAnimal = findViewById(R.id.fabInsertAnimal);
@@ -77,7 +80,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         mParentLayout = findViewById(android.R.id.content);
         tvScanBarcode = findViewById(R.id.tvScanBarcode);
         tvScanBarcode.setOnClickListener(this);
-        setupFirebaseAuth();
+       // setupFirebaseAuth();
 
         animalList = new ArrayList<>();
         db.collection("animals").get()
@@ -94,7 +97,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                         }
                     }
                 });
-        setUpRecyclerView();
+        //setUpRecyclerView();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setSelectedItemId(R.id.ic_animals);
@@ -133,19 +136,21 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    private void setUpRecyclerView(){
-        Query query = animalRef.orderBy("tagNumber", Query.Direction.DESCENDING);
+    private void setUpRecyclerView(FirebaseUser user){
+        Query query = animalRef.whereEqualTo("userId", user.getUid())
+                .orderBy("tagNumber", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Animal> options= new FirestoreRecyclerOptions.Builder<Animal>()
                 .setQuery(query, Animal.class)
                 .build();
-        adapter = new AnimalAdapter(options);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new AnimalAdapter(options);
         recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        adapter.startListening();
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -268,27 +273,28 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private void setupFirebaseAuth(){
-        Log.d(TAG, "setupFirebaseAuth: started.");
-
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-
-                } else {
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                    Intent intent = new Intent(AnimalActivity.this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-        };
-    }
+//    private void setupFirebaseAuth(){
+//        Log.d(TAG, "setupFirebaseAuth: started.");
+//
+//        mAuthListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                FirebaseUser user = firebaseAuth.getCurrentUser();
+//                if (user != null) {
+//
+//                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+//                    setUpRecyclerView(firebaseAuth.getCurrentUser());
+//
+//                } else {
+//                    Log.d(TAG, "onAuthStateChanged:signed_out");
+//                    Intent intent = new Intent(AnimalActivity.this, LoginActivity.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                    startActivity(intent);
+//                    finish();
+//                }
+//            }
+//        };
+//    }
 
     public void checkPermission(String permission, int requestCode) {
         if (ContextCompat.checkSelfPermission(AnimalActivity.this, permission)
@@ -323,17 +329,14 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         @Override
     public void onStart() {
         super.onStart();
-        FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
-        adapter.startListening();
+        FirebaseAuth.getInstance().addAuthStateListener(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (mAuthListener != null) {
-            FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
-        }
-        if (adapter != null) {
+        FirebaseAuth.getInstance().removeAuthStateListener(this);
+         if (adapter != null) {
             adapter.stopListening();
         }
     }
@@ -397,6 +400,22 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         });
         final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+            Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+            setUpRecyclerView(firebaseAuth.getCurrentUser());
+        } else {
+            Log.d(TAG, "onAuthStateChanged:signed_out");
+            Intent intent = new Intent(AnimalActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            return;
+        }
     }
 
 

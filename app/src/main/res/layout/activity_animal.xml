@@ -36,7 +36,7 @@
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/recyclerViewAnimal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="vertical"
@@ -67,7 +67,7 @@
                 app:itemBackground="@color/green"
                 app:itemIconTint="@drawable/item_selected"
                 app:itemTextColor="@drawable/item_selected"
-                app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+                app:layout_constraintBottom_toBottomOf="@+id/recyclerViewAnimal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:menu="@menu/bottom_nav_menu" />

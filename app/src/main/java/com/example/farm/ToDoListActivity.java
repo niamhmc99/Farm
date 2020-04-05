@@ -136,7 +136,7 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
     }
 
 
-    private void setUpRecyclerView(FirebaseUser user) { //initalise recycler view
+    private void setUpRecyclerView(FirebaseUser user) {
             Query query = FirebaseFirestore.getInstance()
                     .collection("Tasks")
                     .whereEqualTo("userId", user.getUid())

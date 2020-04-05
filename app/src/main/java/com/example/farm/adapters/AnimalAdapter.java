@@ -32,7 +32,6 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
 
     public AnimalAdapter(@NonNull FirestoreRecyclerOptions<Animal> options) {
         super(options);
-        dateFormat = new SimpleDateFormat("dd/MM HH:mm", Locale.getDefault());
 
     }
 
