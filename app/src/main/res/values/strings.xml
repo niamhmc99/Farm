@@ -12,7 +12,7 @@
     <string name="viewAnimals">View Herd </string>
     <string name="title_activity_maps">Map</string>
     <string name="file_a_farm">File A Farm</string>
-    <string name="farm_mananagement_filing_app">Farm Mananagement Filing App</string>
+    <string name="farm_mananagement_filing_app">Farm Management Filing App</string>
     <string name="filefarmlogo">FileFarmLogo</string>
     <string name="weather">Weather</string>
     <string name="todolist">To Do List</string>
@@ -63,20 +63,20 @@
     <string name="average_milk_yield_per_cow">Average Milk Yield Per Cow P.A. (L): </string>
     <string name="number_of_milk_producing_cows">Number of Milk Producing Cows: </string>
     <string name="dairy_emissions_caps">DAIRY EMISSIONS :</string>
-    <string name="numBeefCows">Number of Cows</string>
+    <string name="numBeefCows">Number of Cows:</string>
     <string name="total_beef_bull_emissions">Approx total bull emissions (KGs)</string>
     <string name="total_beef_cows_emissions">Approx total cow emissions (KGs)</string>
     <string name="scan_barcode">Scan Barcode</string>
     <string name="beef_emissions">BEEF EMISSIONS :</string>
-    <string name="number_of_bulls">number of bulls</string>
-    <string name="total_dairy_emissions_per_annumn">Total Dairy Emissions Per Annumn</string>
+    <string name="number_of_bulls">Number of Bulls:</string>
+    <string name="total_dairy_emissions_per_annum">Total Dairy Emissions Per Annum </string>
     <string name="click_calendar_to_change_date">Click Calendar to Change Date.</string>
-    <string name="update_the_animals_info_in_your_herd">Update the Animals\' info in your Herd:</string>
+    <string name="update_the_animals_info_in_your_herd">Update the Animals info in your Herd:</string>
     <string name="dam">Dam</string>
     <string name="topic">location_notify</string>
     <string name="server_key">AAAAzctonMc:APA91bG9MGnJnzB4UxQZfgqpG1iss7d-T9nIVOJ3n3evlXAbZSdxbpWzmcP6hbmtbWnHWdnANPZnNYiKElimIIUEsaGt8IUoFr8yd8I7_KBjPtCIlTL9noPtrnHyEe5ZftnEog8R-1Jo</string>
 
-    <string name="update_animals_info">Update Animals\' Info</string>
+    <string name="update_animals_info">Update Animals Information</string>
     <string name="search">Search</string>
     <string name="name">Name</string>
     <string name="hospitals">Hospitals</string>
@@ -95,15 +95,20 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="create_password">Create Password</string>
     <string name="email_address">Email Address</string>
-    <string name="already_registered_login_here">Already Registered? Login Here.</string>
+    <string name="already_registered_login_here">Already Registered? <u>Login Here.</u></string>
     <string name="sign_up">Sign Up</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="welcome_to_file_a_farm">Welcome To File A Farm.</string>
-    <string name="not_registered_sign_up_here">Not Registered? Sign Up Here.</string>
+    <string name="not_registered_sign_up_here">Not Registered? <u>Sign Up Here.</u></string>
     <string name="farmers_email">Farmers Email</string>
-    <string name="enter_calving_information">Enter Calving Information</string>
+    <string name="enter_calving_information">Enter Calving Information:</string>
     <string name="update">Update</string>
+    <string name="title">Title</string>
+    <string name="for_more_detail_click_here"><u>To View More Details Click Here.</u></string>
+    <string name="visit_website"><u>To Visit Website Click Here.</u></string>
+    <string name="ways_to_reduce_beef_emisson"><u>Find out ways to reduce Beef Emissions. </u></string>
+    <string name="find_out_ways_to_reduce_dairy_emissions"><u>Find out ways to reduce Dairy Emissions.</u></string>
 
 
 </resources>

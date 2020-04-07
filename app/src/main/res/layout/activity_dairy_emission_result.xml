@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".emissions.DairyRecommendationsActivity">
+    tools:context=".emissions.DairyEmissionResultActivity">
 
     <TextView
         android:id="@+id/dairyEmissions"
@@ -18,7 +18,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:fontFamily="@font/fredericka_the_great"
+        android:fontFamily="@font/libre_baskerville_bold"
         android:text="@string/dairy_emissions_caps"
         android:textColor="@color/darkGreen"
         android:textSize="24sp" />
@@ -126,7 +126,7 @@
                 android:textAllCaps="true"
                 android:textColor="@color/darkGreen"
                 android:gravity="center_vertical"
-                android:text="@string/total_dairy_emissions_per_annumn"
+                android:text="@string/total_dairy_emissions_per_annum"
                 android:id="@+id/labelTotalBullEmissions"
                 android:layout_toLeftOf="@id/totalDairyEmissionsPA"
                 android:background="@android:color/transparent"
@@ -150,11 +150,31 @@
 
     </androidx.cardview.widget.CardView>
 
+    <TextView
+        android:id="@+id/waysToReduceDairy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:fontFamily="@font/libre_baskerville_bold"
+        android:text="@string/find_out_ways_to_reduce_dairy_emissions"
+        android:textColor="@color/darkGreen"
+        android:layout_below="@+id/cv3"
+        android:textSize="14sp" />
+
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/linechart"
         android:layout_width="match_parent"
-        android:layout_height="318dp"
+        android:layout_height="372dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -163,11 +183,10 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginTop="274dp"
+        android:layout_marginTop="352dp"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp"
-        android:layout_marginBottom="118dp" />
-
+        android:layout_marginBottom="7dp" />
 
     <TextView
         android:id="@+id/results"

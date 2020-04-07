@@ -8,28 +8,23 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.farm.AnimalActivity;
 import com.example.farm.MainActivity;
 import com.example.farm.R;
-import com.example.farm.UpdateAnimalActivity;
 import com.example.farm.VetActivity;
 import com.example.farm.googlemaps.MapsActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BeefCalculationActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -132,7 +127,7 @@ public class BeefCalculationActivity extends AppCompatActivity implements Bottom
             double totalCowEmissions = totalCowWeight * 25.43;
             double totalBullEmissions = totalBullWeight * 25.43;
             double totalBeefEmissions = totalBullEmissions + totalCowEmissions;
-            Intent intent = new Intent(BeefCalculationActivity.this, BeefRecommendationActivity.class);
+            Intent intent = new Intent(BeefCalculationActivity.this, BeefEmissionResultActivity.class);
             intent.putExtra("numberOfBulls", numberOfBulls);
             intent.putExtra("numberOfCows", numberOfCows);
             intent.putExtra("totalCowEmissions", totalCowEmissions);

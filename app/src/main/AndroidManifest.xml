@@ -28,10 +28,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AnimalsExpectingToCalveActivity"></activity>
-        <activity android:name=".emissions.DairyRecommendationsActivity" />
+        <activity android:name=".emissions.WaysToReduceEmissionsActivity"></activity>
+        <activity android:name=".AnimalsExpectingToCalveActivity" />
+        <activity android:name=".emissions.DairyEmissionResultActivity" />
         <activity android:name=".invoiceReceipt.InsertInvoiceReceiptActivity" />
-        <activity android:name=".emissions.BeefRecommendationActivity" />
+        <activity android:name=".emissions.BeefEmissionResultActivity" />
         <activity android:name=".invoiceReceipt.InvoiceReceiptActivity" />
         <activity android:name=".emissions.DairyCalculationActivity" />
         <activity android:name=".emissions.BeefCalculationActivity" />

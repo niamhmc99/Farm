@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.farm.AnimalActivity;
@@ -73,7 +72,7 @@ public class DairyCalculationActivity extends AppCompatActivity implements Botto
        double oneDairyCowEmissionsPA =  averageMilkYield * 1039 / 1000;
        double totalDairyEmissionsPA = oneDairyCowEmissionsPA * numberDairyCows;
 
-        Intent intent = new Intent(DairyCalculationActivity.this, DairyRecommendationsActivity.class);
+        Intent intent = new Intent(DairyCalculationActivity.this, DairyEmissionResultActivity.class);
         intent.putExtra("NumberDairyCows", numberDairyCows);
         intent.putExtra("AverageMilkYield", averageMilkYield);
         intent.putExtra("OneCowEmissionsPA", oneDairyCowEmissionsPA);

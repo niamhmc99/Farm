@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.farm.R;
 import com.github.mikephil.charting.charts.LineChart;
@@ -20,7 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class DairyRecommendationsActivity extends AppCompatActivity {
+public class DairyEmissionResultActivity extends AppCompatActivity {
 
 
     LineChart linechart;
@@ -40,7 +40,7 @@ TextView numCows, averageMilkYieldPA, totalDairyEmissionsPA;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dairy_recommendations);
+        setContentView(R.layout.activity_dairy_emission_result);
 
 
         Intent intent = getIntent();
@@ -59,6 +59,15 @@ TextView numCows, averageMilkYieldPA, totalDairyEmissionsPA;
 
         averageMilkYieldPA= findViewById(R.id.averageMilkYieldPA);
         averageMilkYieldPA.setText(String.valueOf(averageMilkYield));
+
+        findViewById(R.id.waysToReduceDairy).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DairyEmissionResultActivity.this, WaysToReduceEmissionsActivity.class);
+                intent.putExtra("fileName", "DairyEmission.json");
+                startActivity(intent);
+            }
+        });
     }
 
     public void display(){

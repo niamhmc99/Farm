@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".emissions.BeefRecommendationActivity">
+    tools:context=".emissions.BeefEmissionResultActivity">
 
     <TextView
         android:id="@+id/beefEmissions"
-        android:layout_width="381dp"
-        android:layout_height="51dp"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="14dp"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:fontFamily="@font/fredericka_the_great"
+        android:fontFamily="@font/libre_baskerville"
         android:text="@string/beef_emissions"
         android:textColor="@color/darkGreen"
         android:textSize="24sp" />
@@ -55,13 +56,13 @@
                     android:textAllCaps="true"
                     android:gravity="center_vertical"
                     android:text="@string/number_of_bulls"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/darkGreen"
                     android:id="@+id/labelNoBulls"
                     android:layout_toLeftOf="@id/noBulls"
                     android:textSize="14sp"
                     android:background="@android:color/transparent"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="45dp"
 
                      android:layout_toStartOf="@id/noBulls" />
 
@@ -88,7 +89,7 @@
 
                 <TextView
                     android:textAllCaps="true"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/darkGreen"
                     android:gravity="center_vertical"
                     android:text="@string/total_beef_bull_emissions"
                     android:id="@+id/labelTotalBullEmissions"
@@ -96,7 +97,8 @@
                     android:background="@android:color/transparent"
                     android:layout_width="match_parent"
                     android:textSize="14sp"
-                    android:layout_height="60dp"
+                    android:fontFamily=""
+                    android:layout_height="45dp"
                     android:layout_toStartOf="@id/totalBullEmissions" />
 
                 <TextView
@@ -132,14 +134,14 @@
                 <TextView
                     android:textAllCaps="true"
                     android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/darkGreen"
                     android:text="@string/numBeefCows"
                     android:id="@+id/labelNoCows"
                     android:layout_toLeftOf="@id/noCows"
                     android:background="@android:color/transparent"
                     android:layout_width="match_parent"
                     android:textSize="14sp"
-                    android:layout_height="60dp"
+                    android:layout_height="45dp"
                     android:layout_toStartOf="@id/noCows" />
 
                 <TextView
@@ -171,17 +173,17 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:textAllCaps="true"
-                android:textColor="@color/colorPrimaryDark"
-                android:gravity="center_vertical"
-                android:text="@string/total_beef_cows_emissions"
                 android:id="@+id/labelTotalCowEmissions"
+                android:layout_width="354dp"
+                android:layout_height="45dp"
+                android:layout_toStartOf="@id/totalCowEmissions"
                 android:layout_toLeftOf="@id/totalCowEmissions"
                 android:background="@android:color/transparent"
-                android:layout_width="match_parent"
-                android:textSize="14sp"
-                android:layout_height="60dp"
-                android:layout_toStartOf="@id/totalCowEmissions" />
+                android:gravity="center_vertical"
+                android:text="@string/total_beef_cows_emissions"
+                android:textAllCaps="true"
+                android:textColor="@color/darkGreen"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/totalCowEmissions"
@@ -215,7 +217,7 @@
 
             <TextView
                 android:textAllCaps="true"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/darkGreen"
                 android:gravity="center_vertical"
                 android:text="@string/total_beef_emissions"
                 android:id="@+id/labelTotalBeefEmissions"
@@ -223,7 +225,7 @@
                 android:background="@android:color/transparent"
                 android:layout_width="match_parent"
                 android:textSize="14sp"
-                android:layout_height="60dp"
+                android:layout_height="45dp"
                 android:layout_toStartOf="@id/totalBeefEmissions" />
 
             <TextView
@@ -241,17 +243,45 @@
 
     </androidx.cardview.widget.CardView>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="318dp"
+        android:layout_height="432dp"
         android:layout_below="@+id/cv5"
-        android:layout_marginTop="0dp">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp">
+
+        <TextView
+            android:id="@+id/waysToReduce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:fontFamily="@font/libre_baskerville"
+            android:gravity="center"
+            android:text="@string/ways_to_reduce_beef_emisson"
+            android:textColor="@color/darkGreen"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pieChartBeef"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="406dp"
+            android:layout_height="315dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/waysToReduce"
             tools:ignore="MissingConstraints">
 
         </com.github.mikephil.charting.charts.PieChart>
