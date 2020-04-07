@@ -102,6 +102,8 @@
     <string name="welcome_to_file_a_farm">Welcome To File A Farm.</string>
     <string name="not_registered_sign_up_here">Not Registered? Sign Up Here.</string>
     <string name="farmers_email">Farmers Email</string>
+    <string name="enter_calving_information">Enter Calving Information</string>
+    <string name="update">Update</string>
 
 
 </resources>

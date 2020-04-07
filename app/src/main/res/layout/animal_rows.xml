@@ -96,6 +96,39 @@
             android:textSize="18sp"
             android:textStyle="normal"
             tools:ignore="UnknownId" />
+
+    <LinearLayout
+        android:id="@+id/llInCalve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textInseminationDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:text="@string/breed"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            tools:ignore="UnknownId" />
+
+        <TextView
+            android:id="@+id/textCalveDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:text="@string/breed"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            tools:ignore="UnknownId" />
+    </LinearLayout>
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

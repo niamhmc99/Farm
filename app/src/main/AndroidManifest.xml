@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -27,7 +28,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".emissions.DairyRecommendationsActivity"></activity>
+        <activity android:name=".AnimalsExpectingToCalveActivity"></activity>
+        <activity android:name=".emissions.DairyRecommendationsActivity" />
         <activity android:name=".invoiceReceipt.InsertInvoiceReceiptActivity" />
         <activity android:name=".emissions.BeefRecommendationActivity" />
         <activity android:name=".invoiceReceipt.InvoiceReceiptActivity" />
@@ -74,16 +76,13 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
 
-        <service android:name="com.example.farm.firebase.FireBaseMessagingService">
+        <service android:name=".firebase.FireBaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <receiver android:name="com.example.farm.dueDateAlarm.OnReceive" >
-        </receiver>
-
-
+        <receiver android:name=".dueDateAlarm.OnReceive" />
     </application>
 
 </manifest>

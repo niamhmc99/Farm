@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.farm.adapters.AnimalAdapter;
 import com.example.farm.emissions.EmissionsActivity;
 import com.example.farm.fragments.AnimalDialogFragment;
+import com.example.farm.fragments.CalvingDescriptionFragment;
 import com.example.farm.googlemaps.MapsActivity;
 import com.example.farm.models.Animal;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -50,7 +51,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-public class AnimalActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener{
+public class AnimalsExpectingToCalveActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener{
 
     private static final String TAG = "AnimalActivity";
     private List<Animal> animalList;
@@ -82,8 +83,10 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         user_id = firebaseAuth.getCurrentUser().getUid();
         setupFirebaseAuth();
 
+        findViewById(R.id.fabInsertAnimal).setVisibility(View.GONE);
+        tvScanBarcode.setVisibility(View.GONE);
         animalList = new ArrayList<>();
-        db.collection("animals").whereEqualTo("user_id",user_id).get()
+        db.collection("animals").whereEqualTo("inCalve","1").whereEqualTo("user_id",user_id).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -101,34 +104,34 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setSelectedItemId(R.id.ic_animals);
-        bottomNavigationView.setOnNavigationItemSelectedListener(AnimalActivity.this);
+        bottomNavigationView.setOnNavigationItemSelectedListener(AnimalsExpectingToCalveActivity.this);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.ic_home:
-                Intent intent0 = new Intent(AnimalActivity.this, MainActivity.class);
+                Intent intent0 = new Intent(AnimalsExpectingToCalveActivity.this, MainActivity.class);
                 startActivity(intent0);
                 break;
 
             case R.id.ic_animals:
-                Intent intent1 = new Intent(AnimalActivity.this, AnimalActivity.class);
+                Intent intent1 = new Intent(AnimalsExpectingToCalveActivity.this, AnimalActivity.class);
                 startActivity(intent1);
                 break;
 
             case R.id.ic_nearbyPlaces:
-                Intent intent2 = new Intent(AnimalActivity.this, MapsActivity.class);
+                Intent intent2 = new Intent(AnimalsExpectingToCalveActivity.this, MapsActivity.class);
                 startActivity(intent2);
                 break;
 
             case R.id.ic_vetApp:
-                Intent intent3 = new Intent(AnimalActivity.this, VetActivity.class);
+                Intent intent3 = new Intent(AnimalsExpectingToCalveActivity.this, VetActivity.class);
                 startActivity(intent3);
                 break;
 
             case R.id.ic_emissions:
-                Intent intent4 = new Intent(AnimalActivity.this, EmissionsActivity.class);
+                Intent intent4 = new Intent(AnimalsExpectingToCalveActivity.this, EmissionsActivity.class);
                 startActivity(intent4);
                 break;
         }
@@ -137,14 +140,14 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
 
 
     private void setUpRecyclerView(){
-        Query query = animalRef.orderBy("tagNumber", Query.Direction.DESCENDING).whereEqualTo("user_id",user_id);
+        Query query = animalRef.orderBy("tagNumber", Query.Direction.DESCENDING).whereEqualTo("inCalve","1").whereEqualTo("user_id",user_id);
 
         FirestoreRecyclerOptions<Animal> options= new FirestoreRecyclerOptions.Builder<Animal>()
                 .setQuery(query, Animal.class)
                 .build();
         adapter = new AnimalAdapter(options);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewAnimal);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -162,7 +165,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                 //adapter.deleteItem(viewHolder.getAdapterPosition());
                 // Toast.makeText(AnimalActivity.this, "Animal Has Been Deleted from Herd.", Toast.LENGTH_SHORT).show();
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(AnimalActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AnimalsExpectingToCalveActivity.this);
                 builder.setTitle("Are you sure about this?");
                 builder.setMessage("Deletion is permanent...");
 
@@ -186,7 +189,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
             }
         }).attachToRecyclerView(recyclerView);
 
-        db.collection("animals").whereEqualTo("user_id",user_id).get()
+        db.collection("animals").whereEqualTo("inCalve","1").whereEqualTo("user_id",user_id).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -206,17 +209,17 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                 final Animal animal = documentSnapshot.toObject(Animal.class);
 
                 final String docId = documentSnapshot.getId();
-                AlertDialog.Builder builder = new AlertDialog.Builder(AnimalActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AnimalsExpectingToCalveActivity.this);
 
                 builder.setTitle("Choose option");
-                builder.setMessage("Update Animals' Information?");
-                builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                builder.setMessage("Add Calving Information' Information?");
+                builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(AnimalActivity.this, UpdateAnimalActivity.class);
-                        intent.putExtra("animal", animal);
-                        intent.putExtra("documentId", docId);
-                        startActivity(intent);
+                        CalvingDescriptionFragment calvingDescriptionFragment=new CalvingDescriptionFragment();
+                        calvingDescriptionFragment.setAnimal(animal);
+                        calvingDescriptionFragment.setDocId(docId);
+                        calvingDescriptionFragment.show(getSupportFragmentManager(), CalvingDescriptionFragment.class.getSimpleName());
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -242,10 +245,10 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.menuLogout:
                 Toast.makeText(this, "Logging out", Toast.LENGTH_SHORT).show();
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(AnimalActivity.this, LoginActivity.class));
+                startActivity(new Intent(AnimalsExpectingToCalveActivity.this, LoginActivity.class));
             case R.id.menuHome:
                 Toast.makeText(this, "Home Page", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(AnimalActivity.this, MainActivity.class));
+                startActivity(new Intent(AnimalsExpectingToCalveActivity.this, MainActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -262,11 +265,11 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                 startActivityForResult(intent, 0);
                 break;
             case R.id.fabInsertAnimal:
-                startActivity(new Intent(AnimalActivity.this, InsertAnimalActivity.class));
+                startActivity(new Intent(AnimalsExpectingToCalveActivity.this, InsertAnimalActivity.class));
                 break;
 
             case R.id.update_button:
-                startActivity(new Intent(AnimalActivity.this, UpdateAnimalActivity.class));
+                startActivity(new Intent(AnimalsExpectingToCalveActivity.this, UpdateAnimalActivity.class));
                 break;
         }
     }
@@ -284,7 +287,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
 
                 } else {
                     Log.d(TAG, "onAuthStateChanged:signed_out");
-                    Intent intent = new Intent(AnimalActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(AnimalsExpectingToCalveActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
@@ -294,14 +297,14 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     public void checkPermission(String permission, int requestCode) {
-        if (ContextCompat.checkSelfPermission(AnimalActivity.this, permission)
+        if (ContextCompat.checkSelfPermission(AnimalsExpectingToCalveActivity.this, permission)
                 == PackageManager.PERMISSION_DENIED) {
 
-            ActivityCompat.requestPermissions(AnimalActivity.this,
+            ActivityCompat.requestPermissions(AnimalsExpectingToCalveActivity.this,
                     new String[] { permission },
                     requestCode);
         } else {
-            Toast.makeText(AnimalActivity.this,
+            Toast.makeText(AnimalsExpectingToCalveActivity.this,
                     "Permission already granted",
                     Toast.LENGTH_SHORT)
                     .show();
@@ -314,10 +317,10 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
 
         if (requestCode == CAMERA_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(AnimalActivity.this,
+                Toast.makeText(AnimalsExpectingToCalveActivity.this,
                         "Camera Permission Granted", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(AnimalActivity.this,
+                Toast.makeText(AnimalsExpectingToCalveActivity.this,
                         "Camera Permission Denied", Toast.LENGTH_SHORT).show();
             }
         }
@@ -350,10 +353,10 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
             if (resultCode == RESULT_OK) {
                 final String contents = intent.getStringExtra("SCAN_RESULT");
                 //Fetching data of related animal by data scanned from barcode)
-                db.collection("animals").whereEqualTo("user_id",user_id).whereEqualTo("tagNumber",contents).get().addOnFailureListener(new OnFailureListener() {
+                db.collection("animals").whereEqualTo("tagNumber",contents).whereEqualTo("inCalve","1").get().addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        showMessage(AnimalActivity.this,"Animal with barcode " + contents + " not found within the herd");
+                        showMessage(AnimalsExpectingToCalveActivity.this,"Animal with barcode " + contents + " not found within the herd");
                     }
                 })  .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -370,11 +373,11 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                                 break;
                             }
                             if(list.size() == 0) {
-                                showMessage(AnimalActivity.this,"Animal with barcode " + contents + " not found within the herd");
+                                showMessage(AnimalsExpectingToCalveActivity.this,"Animal with barcode " + contents + " not found within the herd");
                             }
                         }
                         else {
-                            showMessage(AnimalActivity.this,"Animal with barcode " + contents + " not found");
+                            showMessage(AnimalsExpectingToCalveActivity.this,"Animal with barcode " + contents + " not found");
                         }
                     }
                 });
@@ -401,59 +404,5 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-
-
-    //    private void goToViewAnimalDetails(){
-//        Intent intent = new Intent(mContext, UpdateAnimalActivity.class);
-//        // pass all the data from animal to  Update Activity.class all in one?
-//        intent.putExtra("Animal", animal);
-//        mContext.startActivity(intent);
-//    }
-
-
-//    public void listOfAnimals(){
-//        db.collection("Animals").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    List<String> list = new ArrayList<>();
-//                    for (QueryDocumentSnapshot document : task.getResult()) {
-//                        list.add(document.getId());
-//                    }
-//                    Log.d(TAG, list.toString());
-//                } else {
-//                    Log.d(TAG, "Error getting documents: ", task.getException());
-//                }
-//            }
-//        });
-//    }
-
-//    public void loadAnimal(View view){
-//        animalRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//            @Override
-//            public void onSuccess(QuerySnapshot  queryDocumentSnapshots) {
-//                List<DocumentReference> animals = new ArrayList<>();
-//                for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots) {
-//                    Animal animal = documentSnapshot.toObject(Animal.class);
-//
-//                    String tagNumber = animal.getTagNumber();
-//                    String name = animal.getAnimalName();
-//                    String breed = animal.getBreed();
-//                    String dob = animal.getDob();
-//                    String sex = animal.getSex();
-//                    String calvingDif = animal.getCalvingDifficulty();
-//                    String aiOrBull = animal.getAiORstockbull();
-//                    String dam = animal.getDam();
-//                    String sire = animal.getSire();
-//                }
-//                animals.add(animal);
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//
-//            }
-//        });
-//    }
 
 }

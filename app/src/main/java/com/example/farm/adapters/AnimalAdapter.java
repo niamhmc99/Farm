@@ -6,9 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -21,17 +20,21 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 
 public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapter.AnimalHolder> {
     private OnItemClickListener listener;
 
-    Context context;
+    private Context context;
     private SimpleDateFormat dateFormat;
 
 
 
     public AnimalAdapter(@NonNull FirestoreRecyclerOptions<Animal> options) {
         super(options);
+        dateFormat = new SimpleDateFormat("dd/MM HH:mm", Locale.getDefault());
 
     }
 
@@ -50,8 +53,24 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
         animalHolder.textViewAnimalName.setText(animal.getAnimalName());
         animalHolder.textViewDob.setText(animal.getDob());
         animalHolder.textViewBreed.setText(animal.getBreed());
+        if(animal.getInCalve().equals("1"))
+        {
+            animalHolder.llInCalve.setVisibility(View.VISIBLE);
+            animalHolder.textInseminationDate.setText("Insemination on "+animal.getDoi());
+            if(animal.getDescription() != null) {
+                animalHolder.textCalveDate.setText(animal.getDoc() + "\n\nCalving Infromation\n" + animal.getDescription());
+            }
+            else
+            {
+                animalHolder.textCalveDate.setText(animal.getDoc());
+            }
+        }
+        else
+        {
+            animalHolder.llInCalve.setVisibility(View.GONE);
+        }
 //        animalHolder.animalRegisterTimestamp.setText(dateFormat.format(animal.getTimeAdded().toDate()));
-    //    animalHolder.animalRegisterTimestamp.setText(dateFormat.format(new Date(String.valueOf(animal.getTimeAdded()))));
+        //    animalHolder.animalRegisterTimestamp.setText(dateFormat.format(new Date(String.valueOf(animal.getTimeAdded()))));
 
 //        String timeAdded = (String) DateUtils.getRelativeTimeSpanString(animal
 //                .getTimeAdded()
@@ -66,8 +85,9 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
     }
 
     class AnimalHolder extends RecyclerView.ViewHolder{
-        TextView textViewTagNumber, textViewAnimalName, textViewDob, textViewBreed, animalRegisterTimestamp;
+        TextView textViewTagNumber, textViewAnimalName, textViewDob, textViewBreed, animalRegisterTimestamp,textInseminationDate,textCalveDate;
         ImageButton animalProfilePic;
+        LinearLayout llInCalve;
 
         AnimalHolder(@NonNull View itemView) {
             super(itemView);
@@ -76,9 +96,11 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
             textViewAnimalName = itemView.findViewById(R.id.textViewAnimalName);
             textViewDob = itemView.findViewById(R.id.textViewDob);
             textViewBreed = itemView.findViewById(R.id.textViewBreed);
+            textInseminationDate = itemView.findViewById(R.id.textInseminationDate);
+            textCalveDate = itemView.findViewById(R.id.textCalveDate);
+            llInCalve = itemView.findViewById(R.id.llInCalve);
             animalProfilePic = itemView.findViewById(R.id.imageAnimalProfilePic);
-          //  animalRegisterTimestamp = itemView.findViewById(R.id.animalRegisterTimestamp);
-
+            //  animalRegisterTimestamp = itemView.findViewById(R.id.animalRegisterTimestamp);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -90,9 +112,9 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
             });
         }
 
-        public void setAnimalImage(String animalImageUrl)
+        private void setAnimalImage(String animalImageUrl)
         {
-              animalProfilePic = itemView.findViewById(R.id.imageAnimalProfilePic);
+            animalProfilePic = itemView.findViewById(R.id.imageAnimalProfilePic);
 
             RequestOptions placeholderOption= new RequestOptions();
             placeholderOption.placeholder(R.drawable.animalsmall);
