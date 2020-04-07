@@ -166,7 +166,7 @@
         android:gravity="center"
         android:fontFamily="@font/libre_baskerville_bold"
         android:text="@string/find_out_ways_to_reduce_dairy_emissions"
-        android:textColor="@color/darkGreen"
+        android:textColor="@color/darkBlue"
         android:layout_below="@+id/cv3"
         android:textSize="14sp" />
 

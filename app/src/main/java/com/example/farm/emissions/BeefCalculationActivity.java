@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -36,6 +37,9 @@ public class BeefCalculationActivity extends AppCompatActivity implements Bottom
     private Button btnCalculate;
     private ArrayList<Integer> maleFemaleQuantity = new ArrayList<>();
     BottomNavigationView bottomNavigationView;
+    private FirebaseAuth firebaseAuth;
+    private String currentUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +52,11 @@ public class BeefCalculationActivity extends AppCompatActivity implements Bottom
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setSelectedItemId(R.id.ic_emissions);
         bottomNavigationView.setOnNavigationItemSelectedListener(BeefCalculationActivity.this);
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentUser = firebaseAuth.getCurrentUser().getUid();
 
 
-        final Task<QuerySnapshot> maleQuery = db.collection("animals").whereEqualTo("gender", "Male").get()
+        final Task<QuerySnapshot> maleQuery = db.collection("animals").whereEqualTo("user_id",currentUser).whereEqualTo("gender", "Male").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {

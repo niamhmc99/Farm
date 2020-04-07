@@ -176,10 +176,8 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
                     if (ContextCompat.checkSelfPermission(InsertInvoiceReceiptActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-
                         Toast.makeText(InsertInvoiceReceiptActivity.this, "Permission Denied", Toast.LENGTH_LONG).show();
                         ActivityCompat.requestPermissions(InsertInvoiceReceiptActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-
                     } else {
                         BringImagePicker();
                     }
@@ -321,7 +319,6 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
     }
 
     private void BringImagePicker() {
-
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.OFF)
                 .start(InsertInvoiceReceiptActivity.this);
@@ -334,14 +331,11 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-
                 mainImageURI = result.getUri();
                 invoiceReceiptImage.setImageURI(mainImageURI);
-
                 isChanged = true;
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-
                 Exception error = result.getError();
             }
         }

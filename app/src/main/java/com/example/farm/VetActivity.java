@@ -70,7 +70,8 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
     BottomNavigationView bottomNavigationView;
     private MaterialEditText editTextAppTitle, editTextAppDesc;
     private CoordinatorLayout coordinatorLayout;
-
+    private FirebaseAuth firebaseAuth;
+    private String currentUser;
     VetAppointmentAdapter appointmentAdapter;
 
     @Override
@@ -79,6 +80,8 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
         setContentView(R.layout.activity_vet);
         coordinatorLayout = findViewById(R.id.coordinatorLayout);
         firestoreDB = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentUser = firebaseAuth.getCurrentUser().getUid();
 
         imageViewCalendarDateButton = findViewById(R.id.imageViewButtonCalendarDatePicker);
         imageViewCalendarDateButton.setOnClickListener(new View.OnClickListener() {
@@ -89,11 +92,8 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
             }
         });
 
-
         editTextAppTitle = findViewById(R.id.appointmentTitle);
         editTextAppDesc = findViewById(R.id.appointmentDescription);
-        //editTextAppDate.getDate();
-
         fabAdd = findViewById(R.id.fabAddApp);
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +104,6 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
                    textViewDate.setText("");
                }
         });
-
 //        appointmentList = new ArrayList<>();
 //        firestoreDB.collection("VetAppointments").get()
 //                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -158,7 +157,7 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
 
     private void setUpRecyclerView(FirebaseUser user) {
 
-        Query query = vetRef.orderBy("appDate", Query.Direction.DESCENDING);
+        Query query = vetRef.orderBy("appDate", Query.Direction.DESCENDING).whereEqualTo("user_id",currentUser);
 
         FirestoreRecyclerOptions<Appointment> options= new FirestoreRecyclerOptions.Builder<Appointment>()
                 .setQuery(query, Appointment.class)
@@ -176,31 +175,13 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
-    private boolean hasValidationErrors(String textTitle, String textDesc, String date){
-
-        if (textTitle.trim().isEmpty()) {
-            editTextAppTitle.setError("Vet Appointment Title is required");
-            makeSnackBarMessage("Please insert Tag Number.");
-            return true;
-        } else if (textDesc.isEmpty()) {
-            editTextAppDesc.setError("Appointment Description is Required");
-            makeSnackBarMessage("Please insert Appointment Description.");
-            return true;
-        }else if (date.isEmpty()) {
-            textViewDate.setError("Appointment Date is Required");
-            makeSnackBarMessage("Please insert Appointment Date.");
-            return true;
-        } else{
-            return false;
-        }
-    }
 
     private void makeSnackBarMessage( String message){
         Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT).show();
     }
 
 
-    private void addVetApp(final String textTitle, String textDesc, String date) {
+    private void addVetApp(String textTitle, String textDesc, String date) {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Appointment appointment = new Appointment(textTitle, textDesc, userId, date);
 
@@ -224,6 +205,24 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
         }
     }
 
+    private boolean hasValidationErrors(String textTitle, String textDesc, String date){
+
+        if (textTitle.trim().isEmpty()) {
+            editTextAppTitle.setError("Vet Appointment Title is required");
+            makeSnackBarMessage("Please insert Tag Number.");
+            return true;
+        } else if (textDesc.isEmpty()) {
+            editTextAppDesc.setError("Appointment Description is Required");
+            makeSnackBarMessage("Please insert Appointment Description.");
+            return true;
+        }else if (date.isEmpty()) {
+            textViewDate.setError("Appointment Date is Required");
+            makeSnackBarMessage("Please insert Appointment Date.");
+            return true;
+        } else{
+            return false;
+        }
+    }
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         @Override

@@ -15,6 +15,7 @@ import com.example.farm.R;
 import com.example.farm.VetActivity;
 import com.example.farm.googlemaps.MapsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 public class DairyCalculationActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
@@ -27,8 +28,8 @@ public class DairyCalculationActivity extends AppCompatActivity implements Botto
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dairy_calculation);
-    editTextNumDairyCows = findViewById(R.id.editTextNumDairyCows);
-    editTextAverageMilkYield = findViewById(R.id.editTextAverageMilkYield);
+        editTextNumDairyCows = findViewById(R.id.editTextNumDairyCows);
+        editTextAverageMilkYield = findViewById(R.id.editTextAverageMilkYield);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setSelectedItemId(R.id.ic_emissions);
