@@ -2,6 +2,8 @@ package com.example.farm.emissions;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +21,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -39,6 +42,8 @@ public class BeefCalculationActivity extends AppCompatActivity implements Bottom
     BottomNavigationView bottomNavigationView;
     private FirebaseAuth firebaseAuth;
     private String currentUser;
+    private ConstraintLayout constraintLayout;
+
 
 
     @Override
@@ -54,7 +59,7 @@ public class BeefCalculationActivity extends AppCompatActivity implements Bottom
         bottomNavigationView.setOnNavigationItemSelectedListener(BeefCalculationActivity.this);
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser().getUid();
-
+        constraintLayout = findViewById(R.id.constraintLayoutBeef);
 
         final Task<QuerySnapshot> maleQuery = db.collection("animals").whereEqualTo("user_id",currentUser).whereEqualTo("gender", "Male").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -141,7 +146,7 @@ public class BeefCalculationActivity extends AppCompatActivity implements Bottom
             intent.putExtra("totalBeefEmissions",totalBeefEmissions);
             startActivity(intent);
         } else {
-            Log.d("Quantity", "Male Female number retrieval failed");
+            Log.d("Quantity", "Male Female Number Retrieval Failed");
         }
     }
 
@@ -149,13 +154,25 @@ public class BeefCalculationActivity extends AppCompatActivity implements Bottom
     public double getTotalCowWeight(int numberOfCows) {
         String cowWeight = editTextAverageCowWeight.getText().toString();
         Double totalCowWeight = Double.parseDouble(cowWeight) * numberOfCows;
-        return totalCowWeight;
+        if(cowWeight.isEmpty()){
+            editTextAverageCowWeight.setError("Average Cow Weight is Required");
+            makeSnackBarMessage("Please insert the Average Weight of your Cows.");
+        }
+            return totalCowWeight;
     }
 
     public double getTotalBullWeight(int numberOfBulls) {
         String bullWeight = editTextAverageBullWeight.getText().toString();
         Double totalBullWeight = Double.parseDouble(bullWeight) * numberOfBulls;
+        if(bullWeight.isEmpty()){
+            editTextAverageBullWeight.setError("Average Bull Weight is Required");
+            makeSnackBarMessage("Please insert the Average Weight of your Bulls.");
+        }
         return totalBullWeight;
+    }
+
+    private void makeSnackBarMessage( String message){
+        Snackbar.make(constraintLayout, message, Snackbar.LENGTH_SHORT).show();
     }
 
 }

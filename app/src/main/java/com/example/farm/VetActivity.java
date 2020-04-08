@@ -70,8 +70,7 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
     BottomNavigationView bottomNavigationView;
     private MaterialEditText editTextAppTitle, editTextAppDesc;
     private CoordinatorLayout coordinatorLayout;
-    private FirebaseAuth firebaseAuth;
-    private String currentUser;
+
     VetAppointmentAdapter appointmentAdapter;
 
     @Override
@@ -80,8 +79,7 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
         setContentView(R.layout.activity_vet);
         coordinatorLayout = findViewById(R.id.coordinatorLayout);
         firestoreDB = FirebaseFirestore.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
-        currentUser = firebaseAuth.getCurrentUser().getUid();
+
 
         imageViewCalendarDateButton = findViewById(R.id.imageViewButtonCalendarDatePicker);
         imageViewCalendarDateButton.setOnClickListener(new View.OnClickListener() {
@@ -157,11 +155,16 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
 
     private void setUpRecyclerView(FirebaseUser user) {
 
-        Query query = vetRef.orderBy("appDate", Query.Direction.DESCENDING).whereEqualTo("user_id",currentUser);
+       // final String strUserID = FirebaseAuth.getInstance().getCurrentUser().getUid().trim();
+
+
+        Query query = vetRef.whereEqualTo("user_id",user.getUid())
+                .orderBy("appDate", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Appointment> options= new FirestoreRecyclerOptions.Builder<Appointment>()
                 .setQuery(query, Appointment.class)
                 .build();
+
         appointmentAdapter = new VetAppointmentAdapter(options, this);
 
         recyclerView = findViewById(R.id.recyclerViewVetAppointment);

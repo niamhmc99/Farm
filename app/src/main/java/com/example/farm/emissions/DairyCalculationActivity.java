@@ -2,6 +2,8 @@ package com.example.farm.emissions;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import com.example.farm.R;
 import com.example.farm.VetActivity;
 import com.example.farm.googlemaps.MapsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -23,6 +26,8 @@ public class DairyCalculationActivity extends AppCompatActivity implements Botto
     private MaterialEditText editTextNumDairyCows;
     private MaterialEditText editTextAverageMilkYield;
     BottomNavigationView bottomNavigationView;
+    private ConstraintLayout constraintLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,7 @@ public class DairyCalculationActivity extends AppCompatActivity implements Botto
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setSelectedItemId(R.id.ic_emissions);
         bottomNavigationView.setOnNavigationItemSelectedListener(DairyCalculationActivity.this);
+        constraintLayout = findViewById(R.id.constraintLayoutDairy);
     }
 
     @Override
@@ -73,18 +79,30 @@ public class DairyCalculationActivity extends AppCompatActivity implements Botto
        double oneDairyCowEmissionsPA =  averageMilkYield * 1039 / 1000;
        double totalDairyEmissionsPA = oneDairyCowEmissionsPA * numberDairyCows;
 
-        Intent intent = new Intent(DairyCalculationActivity.this, DairyEmissionResultActivity.class);
-        intent.putExtra("NumberDairyCows", numberDairyCows);
-        intent.putExtra("AverageMilkYield", averageMilkYield);
-        intent.putExtra("OneCowEmissionsPA", oneDairyCowEmissionsPA);
-        intent.putExtra("TotalEmissionsPA", totalDairyEmissionsPA);
-        startActivity(intent);
 
-        System.out.println("One Dairy Emissions ***" + oneDairyCowEmissionsPA);
-        System.out.println("Total Dairy Emissions ***" + totalDairyEmissionsPA);
+       if (numDairyCows.isEmpty()) {
+           editTextNumDairyCows.setError("Number of Milk Producing Cows is Required");
+           makeSnackBarMessage("Please insert Number of Milk Producing Cows.");
+       } else if (avgMilkYield.isEmpty()) {
+           editTextAverageMilkYield.setError("Average Milk Yield Per Cow P.A. is Required");
+           makeSnackBarMessage("Please insert Average Milk Yield Per Cow Per Annum.");
+       }else {
+
+           Intent intent = new Intent(DairyCalculationActivity.this, DairyEmissionResultActivity.class);
+           intent.putExtra("NumberDairyCows", numberDairyCows);
+           intent.putExtra("AverageMilkYield", averageMilkYield);
+           intent.putExtra("OneCowEmissionsPA", oneDairyCowEmissionsPA);
+           intent.putExtra("TotalEmissionsPA", totalDairyEmissionsPA);
+           startActivity(intent);
+
+           System.out.println("One Dairy Emissions ***" + oneDairyCowEmissionsPA);
+           System.out.println("Total Dairy Emissions ***" + totalDairyEmissionsPA);
 
 
-        Toast.makeText(DairyCalculationActivity.this, "Total Dairy Emissions Per Annumn: " + totalDairyEmissionsPA, Toast.LENGTH_LONG);
-
+           Toast.makeText(DairyCalculationActivity.this, "Total Average Dairy Emissions Per Annum: " + totalDairyEmissionsPA, Toast.LENGTH_LONG);
+       }
+    }
+    private void makeSnackBarMessage( String message){
+        Snackbar.make(constraintLayout, message, Snackbar.LENGTH_SHORT).show();
     }
 }
