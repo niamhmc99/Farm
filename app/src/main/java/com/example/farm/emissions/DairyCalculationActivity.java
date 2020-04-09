@@ -72,21 +72,18 @@ public class DairyCalculationActivity extends AppCompatActivity implements Botto
     public void calculateDairyEmissions(View view){
 
         String numDairyCows = editTextNumDairyCows.getText().toString();
-        int numberDairyCows = Integer.parseInt(numDairyCows);
         String avgMilkYield = editTextAverageMilkYield.getText().toString();
+
+        if(!hasValidationErrors(numDairyCows, avgMilkYield)){
+        int numberDairyCows = Integer.parseInt(numDairyCows);
+
         int averageMilkYield = Integer.parseInt(avgMilkYield);
 
        double oneDairyCowEmissionsPA =  averageMilkYield * 1039 / 1000;
        double totalDairyEmissionsPA = oneDairyCowEmissionsPA * numberDairyCows;
 
 
-       if (numDairyCows.isEmpty()) {
-           editTextNumDairyCows.setError("Number of Milk Producing Cows is Required");
-           makeSnackBarMessage("Please insert Number of Milk Producing Cows.");
-       } else if (avgMilkYield.isEmpty()) {
-           editTextAverageMilkYield.setError("Average Milk Yield Per Cow P.A. is Required");
-           makeSnackBarMessage("Please insert Average Milk Yield Per Cow Per Annum.");
-       }else {
+
 
            Intent intent = new Intent(DairyCalculationActivity.this, DairyEmissionResultActivity.class);
            intent.putExtra("NumberDairyCows", numberDairyCows);
@@ -98,10 +95,25 @@ public class DairyCalculationActivity extends AppCompatActivity implements Botto
            System.out.println("One Dairy Emissions ***" + oneDairyCowEmissionsPA);
            System.out.println("Total Dairy Emissions ***" + totalDairyEmissionsPA);
 
-
            Toast.makeText(DairyCalculationActivity.this, "Total Average Dairy Emissions Per Annum: " + totalDairyEmissionsPA, Toast.LENGTH_LONG);
        }
     }
+
+    private boolean hasValidationErrors(String numDairyCows, String avgMilkYield) {
+        if (numDairyCows.isEmpty()) {
+            editTextNumDairyCows.setError("Number of Milk Producing Cows is Required");
+            makeSnackBarMessage("Please insert Number of Milk Producing Cows.");
+            return true;
+        } else if (avgMilkYield.isEmpty()) {
+            editTextAverageMilkYield.setError("Average Milk Yield Per Cow P.A. is Required");
+            makeSnackBarMessage("Please insert Average Milk Yield Per Cow Per Annum.");
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+
     private void makeSnackBarMessage( String message){
         Snackbar.make(constraintLayout, message, Snackbar.LENGTH_SHORT).show();
     }

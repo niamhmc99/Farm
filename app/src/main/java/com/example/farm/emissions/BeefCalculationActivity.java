@@ -133,11 +133,13 @@ public class BeefCalculationActivity extends AppCompatActivity implements Bottom
         if (maleFemaleQuantity.size() > 0) {
             int numberOfCows = maleFemaleQuantity.get(1);
             int numberOfBulls = maleFemaleQuantity.get(0);
+
             double totalCowWeight = getTotalCowWeight(numberOfCows);
             double totalBullWeight = getTotalBullWeight(numberOfBulls);
             double totalCowEmissions = totalCowWeight * 25.43;
             double totalBullEmissions = totalBullWeight * 25.43;
             double totalBeefEmissions = totalBullEmissions + totalCowEmissions;
+
             Intent intent = new Intent(BeefCalculationActivity.this, BeefEmissionResultActivity.class);
             intent.putExtra("numberOfBulls", numberOfBulls);
             intent.putExtra("numberOfCows", numberOfCows);
@@ -151,25 +153,77 @@ public class BeefCalculationActivity extends AppCompatActivity implements Bottom
     }
 
 
+
+
+
     public double getTotalCowWeight(int numberOfCows) {
         String cowWeight = editTextAverageCowWeight.getText().toString();
-        Double totalCowWeight = Double.parseDouble(cowWeight) * numberOfCows;
+        if (!cowWeightHasValidationError(cowWeight)) {
+            Double totalCowWeight = Double.parseDouble(cowWeight) * numberOfCows;
+            return totalCowWeight;
+        }
+        return 0;
+    }
+
+//        if(cowWeight.isEmpty()){
+//            editTextAverageCowWeight.setError("Average Cow Weight is Required");
+//            makeSnackBarMessage("Please insert the Average Weight of your Cows.");
+//        }
+//        if (cowWeight != null && cowWeight.length() > 0) {
+//            try {
+//                Double totalCowWeight = Double.parseDouble(cowWeight) * numberOfCows;
+//                return totalCowWeight;
+//            } catch(Exception e) {
+//                return -1;
+//                        //makeSnackBarMessage("Please insert the Average Weight of your Cows.");   // or some value to mark this field is wrong. or make a function validates field first ...
+//            }
+//        }
+//        else return 0;
+
+    private boolean cowWeightHasValidationError(String cowWeight){
         if(cowWeight.isEmpty()){
             editTextAverageCowWeight.setError("Average Cow Weight is Required");
             makeSnackBarMessage("Please insert the Average Weight of your Cows.");
+            return true;
+        }else {
+            return false;
         }
-            return totalCowWeight;
+    }
+
+    private boolean bullWeightHasValidationError(String bullWeight){
+        if(bullWeight.isEmpty()){
+            editTextAverageBullWeight.setError("Average Bull Weight is Required");
+            makeSnackBarMessage("Please insert the Average Weight of your Bulls.");
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public double getTotalBullWeight(int numberOfBulls) {
         String bullWeight = editTextAverageBullWeight.getText().toString();
-        Double totalBullWeight = Double.parseDouble(bullWeight) * numberOfBulls;
-        if(bullWeight.isEmpty()){
-            editTextAverageBullWeight.setError("Average Bull Weight is Required");
-            makeSnackBarMessage("Please insert the Average Weight of your Bulls.");
+        if (!bullWeightHasValidationError(bullWeight)) {
+            Double totalBullWeight = Double.parseDouble(bullWeight) * numberOfBulls;
+            return totalBullWeight;
         }
-        return totalBullWeight;
+        return 0;
     }
+
+//        if (bullWeight != null && bullWeight.length() > 0) {
+//            try {
+//                Double totalBullWeight = Double.parseDouble(bullWeight) * numberOfBulls;
+//                return totalBullWeight;
+//            } catch(Exception e) {
+//                return -1;
+//                //makeSnackBarMessage("Please insert the Average Weight of your Cows.");   // or some value to mark this field is wrong. or make a function validates field first ...
+//            }
+//        }
+//        if(bullWeight.isEmpty()){
+//            editTextAverageBullWeight.setError("Average Bull Weight is Required");
+//            makeSnackBarMessage("Please insert the Average Weight of your Bulls.");
+//        }
+//        return totalBullWeight;
+
 
     private void makeSnackBarMessage( String message){
         Snackbar.make(constraintLayout, message, Snackbar.LENGTH_SHORT).show();
