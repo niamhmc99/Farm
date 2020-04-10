@@ -328,7 +328,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
 
     private void storeFirestore(String downloadUrl, final String strTag, final String strName, String strDob, String strSelectedGender, String strBreed, String strDam, String strSelectedCalvingDif, String strSelectedAIStockBull, String strSire, String strUserID, String strRegisteredTimestamp) {
 
-            Map<String, Object> animalMap = new HashMap<>();
+            final Map<String, Object> animalMap = new HashMap<>();
             animalMap.put(KEY_TAGNUMBER, strTag);
             animalMap.put(KEY_ANIMALNAME, strName);
             animalMap.put(KEY_DOB, strDob);
@@ -340,18 +340,17 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             animalMap.put(KEY_AiOrStockbull, strSelectedAIStockBull);
             animalMap.put(KEY_USERID, strUserID);
             animalMap.put(KEY_AnimalProfilePic, downloadUrl);
-//        strRegisteredTimestamp = setTimeAdded(new Timestamp(new Date()));
-
             animalMap.put(KEY_AnimalRegisteredTimestamp, strRegisteredTimestamp);
 
-            if (!hasValidationErrors(strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire)) {
+
+            if (!hasValidationErrors(strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire) && !checkingIfTagNumberExist1(strTag)){
+
 
                 firestoreDB.collection("animals")
                         .add(animalMap)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
-                                Log.d(TAG, "Animal inserted into herd with ID: " + documentReference.getId());
                                 //Alarm will set here after successful animal insertion
                                 setAlarm(strName, strTag);
                                 Toast.makeText(InsertAnimalActivity.this, "The animal profile has been created.", Toast.LENGTH_LONG).show();
@@ -361,15 +360,17 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error adding animal into herd", e);
-                                Toast.makeText(InsertAnimalActivity.this, "(FIRESTORE Error) : " + e, Toast.LENGTH_LONG).show();
-                            }
-                        });
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.w(TAG, "Error adding animal into herd", e);
+                                                        Toast.makeText(InsertAnimalActivity.this, "(FIRESTORE Error) : " + e, Toast.LENGTH_LONG).show();
+                                                    }
+                                                });
             }
+
             addanimalProgress.setVisibility(View.INVISIBLE);
         }
+
 
 
 
@@ -377,6 +378,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             if (tagNumber.trim().isEmpty()) {
                 editTextTagNumber.setError("Tag Number is required");
                 makeSnackBarMessage("Please insert Tag Number.");
+
                 return true;
             } else if (animalName.isEmpty()) {
                 editTextAnimalName.setError("Animal Name Required");
@@ -424,40 +426,62 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             }
         }
 
-    private void checkingIfTagNumberExist(final String tagNumberToCompare) {
+    private boolean checkingIfTagNumberExist1(final String tagNumberToCompare) {
         final Query mQuery = firestoreDB.collection("animals").whereEqualTo("tagNumber", tagNumberToCompare);
         mQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Log.d(TAG, "checkingIfusernameExist: checking if username exists");
-
+                Log.d(TAG, "checkingIfusernameExist: checking if tag number exists");
                 if (task.isSuccessful()) {
-                    for (DocumentSnapshot ds : task.getResult()) {
-                        String userNames = ds.getString("username");
-                        if (userNames.equals(tagNumberToCompare)) {
-                            Log.d(TAG, "checkingIfusernameExist: FOUND A MATCH - Tag number already exists");
-                            Toast.makeText(InsertAnimalActivity.this, "TagNumber Already Exists", Toast.LENGTH_SHORT).show();
+                    for (DocumentSnapshot document : task.getResult()) {
+                        if (document.exists()) {
+                            String tagnum = document.getString("tagNumber");
+                            editTextTagNumber.setError("Tag Number already exists");
+                            makeSnackBarMessage("Please insert Tag Number.");
+                            Log.d(TAG, "Tag Number already exists");
+                           // Toast.makeText(InsertAnimalActivity.this, "Tag Number Already Exists", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.d(TAG, "Tag Number does not exists");
 
                         }
                     }
-
-                }
-                //checking if task contains any payload. if no, then update
-                if (task.getResult().size() == 0) {
-                    try {
-
-                        Log.d(TAG, "onComplete: MATCH NOT FOUND - username is available");
-                        Toast.makeText(InsertAnimalActivity.this, "TagNumber changed", Toast.LENGTH_SHORT).show();
-                        //Updating new username............
-
-
-                    } catch (NullPointerException e) {
-                        Log.e(TAG, "NullPointerException: " + e.getMessage());
-                    }
+                } else {
+                    Log.d("TAG", "Error getting documents: ", task.getException());
                 }
             }
         });
+        return false;
     }
+
+
+
+//                if (task.isSuccessful()) {
+//                    for (DocumentSnapshot ds : task.getResult()) {
+//                        String tagNumber = ds.getString("tagNumber");
+//                        if (tagNumber.equals(tagNumberToCompare)) {
+//                            Log.d(TAG, "checkingIfusernameExist: FOUND A MATCH - Tag number already exists");
+//                            Toast.makeText(InsertAnimalActivity.this, "TagNumber Already Exists", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//
+//                }
+//                //checking if task contains any payload. if no, then update
+//                if (task.getResult().size() == 0) {
+//                    try {
+//
+//                        Log.d(TAG, "onComplete: MATCH NOT FOUND - tag number is available");
+//                        Toast.makeText(InsertAnimalActivity.this, "TagNumber changed", Toast.LENGTH_SHORT).show();
+//                        //Updating new username............
+//
+//
+//                    } catch (NullPointerException e) {
+//                        Log.e(TAG, "NullPointerException: " + e.getMessage());
+//                    }
+//                }
+//            }
+
+
+
 
     private void addItemsOnSpinnerCalvingDiff() {
         spinnerCalvingDiff= findViewById(R.id.spinnerCalvingDiff);

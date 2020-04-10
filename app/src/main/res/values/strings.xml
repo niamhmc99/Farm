@@ -104,11 +104,11 @@
     <string name="farmers_email">Farmers Email</string>
     <string name="enter_calving_information">Enter Calving Information:</string>
     <string name="update">Update</string>
-    <string name="title">Title</string>
     <string name="for_more_detail_click_here"><u>To View More Details Click Here.</u></string>
     <string name="visit_website"><u>To Visit Website Click Here.</u></string>
     <string name="ways_to_reduce_beef_emisson"><u>Find out ways to reduce Beef Emissions. </u></string>
     <string name="find_out_ways_to_reduce_dairy_emissions"><u>Find out ways to reduce Dairy Emissions.</u></string>
+    <string name="title">Title</string>
 
 
 </resources>

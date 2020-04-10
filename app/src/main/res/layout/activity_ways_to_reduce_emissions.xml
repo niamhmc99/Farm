@@ -51,7 +51,7 @@
                 android:layout_height="168dp"
                 android:layout_margin="6dp"
                 android:fontFamily="@font/libre_baskerville"
-                android:text="Title"
+                android:text="@string/title"
                 android:textColor="@color/darkGreen"
                 android:textSize="14sp" />
 
