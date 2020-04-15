@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
-///** A class to parse the Google Places in JSON format */
+// parse the Google Places in JSON format
    private  String googlePlacesData;
     private GoogleMap mMap;
     String url;

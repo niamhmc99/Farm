@@ -220,9 +220,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 EditText tf_location =  findViewById(R.id.TF_location);
                 String location = tf_location.getText().toString();
                 List<Address> addressList;
-//                latitude = myAddress.getLatitude();
-//                longitude = myAddress.getLongitude();
-//                Address myAddress = addressList.get(i);
 
                 if(location!=null && !location.equals(""))
                 {
@@ -322,7 +319,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-
     private String getUrl(double latitude , double longitude , String nearbyPlace)
     {
 
@@ -332,12 +328,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         googlePlaceUrl.append("&type="+nearbyPlace);
         googlePlaceUrl.append("&sensor=true");
         googlePlaceUrl.append("&key="+"" + "AIzaSyDzyCapVx5jEfA3haEGUCI0jSIYFu3xUxI");
-                //"AIzaSyBLEPBRfw7sMb73Mr88L91Jqh3tuE4mKsE"); tutorial one
-               // "AIzaSyDzyCapVx5jEfA3haEGUCI0jSIYFu3xUxI");
-        //sensor replace by keyword
 
         Log.d("MapsActivity", "url = "+googlePlaceUrl.toString());
-
         return googlePlaceUrl.toString();
     }
 
@@ -432,14 +424,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             jsonObjectData.put("sender", FirebaseAuth.getInstance().getCurrentUser().getUid());
             jsonObjectData.put("latitude",location.getLatitude());
             jsonObjectData.put("longitude",location.getLongitude());
-            jsonObjectData.put("title", "Is anyone available to help me?");
+            jsonObjectData.put("title", "Is anyone available to help?");
             jsonObjectData.put("message", "At this location -> "+location.getAddressLine(0));
-            //jsonObjectData.put("success", "anything");
         } catch (
                 JSONException e) {
             e.printStackTrace();
         }
         return jsonObjectData.toString();
     }
-
 }

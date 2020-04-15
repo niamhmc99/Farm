@@ -12,7 +12,6 @@ import java.util.List;
 
 
 public class DataParser {
-    //get json data
     public List<HashMap<String, String>> parse(String jsonData)
     {
         JSONArray jsonArray = null;
@@ -34,8 +33,6 @@ public class DataParser {
         int placesCount = jsonArray.length();
         List<HashMap<String, String>> placesList = new ArrayList<>();
         HashMap<String, String> placeMap = null;
-        Log.d("Places", "getPlaces");
-
         for (int i = 0; i < placesCount; i++) {
             try {
                 placeMap = getPlace((JSONObject) jsonArray.get(i));

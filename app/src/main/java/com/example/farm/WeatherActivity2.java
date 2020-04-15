@@ -36,12 +36,7 @@ public class WeatherActivity2 extends AppCompatActivity implements BottomNavigat
     String API = "3e73a57a2c75697757c6110ad50aa6da"; //key got from API
     TextView addressTxt, updated_atTxt, statusTxt, tempTxt, temp_minTxt, temp_maxTxt, sunriseTxt,
             sunsetTxt, windTxt, pressureTxt, humidityTxt;
-    private FusedLocationProviderClient mFusedLocationClient;
-    LocationRequest mLocationRequest;
     BottomNavigationView bottomNavigationView;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +58,6 @@ public class WeatherActivity2 extends AppCompatActivity implements BottomNavigat
 
         new weatherTask().execute();
 
-        // use to get lat and lon
-//        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-//        mLocationRequest = new LocationRequest();
-//        mLocationRequest.setInterval(1000000);
-//        mLocationRequest.setFastestInterval(100000);
-//        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(WeatherActivity2.this);
     }
@@ -108,13 +97,9 @@ public class WeatherActivity2 extends AppCompatActivity implements BottomNavigat
     class weatherTask extends AsyncTask<String, Void, String> {
 
         @Override
-        protected void onPreExecute() { //shows something before doInBackground
+        protected void onPreExecute() {
             super.onPreExecute();
 
-            /* Showing the ProgressBar, Making the main design GONE */
-      //      findViewById(R.id.loader).setVisibility(View.VISIBLE);
-//            findViewById(R.id.mainContainer).setVisibility(View.GONE);
-//            findViewById(R.id.errorText).setVisibility(View.GONE);
         }
 
         protected String doInBackground(String... args) {
@@ -128,9 +113,7 @@ public class WeatherActivity2 extends AppCompatActivity implements BottomNavigat
 
         @Override
         protected void onPostExecute(String result) {
-//        update ui of background operation result.
             //response from the url is passed here. It's in JSON Format -- extract data
-
             try {
                 JSONObject jsonObj = new JSONObject(result); // parent is {
                 JSONObject main = jsonObj.getJSONObject("main");
@@ -154,18 +137,10 @@ public class WeatherActivity2 extends AppCompatActivity implements BottomNavigat
 
                 String address = jsonObj.getString("name") + ", " + sys.getString("country");
 
-                Log.d("Address", address);
-                Log.d("Temp", temp);
-                Log.d("Temp MIN", tempMin);
-                Log.d("Sunrise", String.valueOf(sunrise));
-                Log.d("wind speed", windSpeed);
-                Log.d("Address", address);
-
                 temp= Math.round(Float.parseFloat(temp))+ "°C";
                 tempMin = "Min Temp: " + Math.round(Float.parseFloat(tempMin)) + "°C";
                 tempMax = "Max Temp: " + Math.round(Float.parseFloat(tempMax)) + "°C";
 
-                // Populating the extracted data into our text views in the activity
                 addressTxt.setText(address);
                 updated_atTxt.setText(updatedAtText);
                 statusTxt.setText(weatherDescription.toUpperCase());
@@ -177,8 +152,6 @@ public class WeatherActivity2 extends AppCompatActivity implements BottomNavigat
                 windTxt.setText(windSpeed);
                 pressureTxt.setText(pressure);
                 humidityTxt.setText(humidity);
-
-                /* Views populated, Hiding the loader, Showing the main design */
                 findViewById(R.id.loader).setVisibility(View.GONE);
                 findViewById(R.id.mainContainer).setVisibility(View.VISIBLE);
 
