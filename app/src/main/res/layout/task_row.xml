@@ -32,7 +32,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="18dp"
             android:layout_marginEnd="321dp"
             android:layout_marginRight="321dp"
             android:text="@string/some_date"
@@ -41,7 +41,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/taskTextView"
-            app:layout_constraintHorizontal_bias="0.148"
+            app:layout_constraintHorizontal_bias="0.064"
             app:layout_constraintStart_toStartOf="@+id/taskTextView"
             app:layout_constraintTop_toBottomOf="@+id/taskTextView" />
 

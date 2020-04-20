@@ -47,12 +47,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/blue"
-
             android:layout_below="@+id/TF_location"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:onClick="onClick"
-            android:text="@string/hospitals" />
+            android:text="@string/hospitals"
+            tools:ignore="UnusedAttribute"/>
 
         <Button
             android:id="@+id/B_mechanic"
@@ -63,7 +63,8 @@
             android:layout_toEndOf="@+id/B_hopistals"
             android:layout_toRightOf="@+id/B_hopistals"
             android:onClick="onClick"
-            android:text="@string/mechanics" />
+            android:text="@string/mechanics"
+            tools:ignore="UnusedAttribute"/>
 
         <Button
             android:id="@+id/B_vets"
@@ -74,11 +75,9 @@
             android:layout_toEndOf="@+id/B_mechanic"
             android:layout_toRightOf="@+id/B_mechanic"
             android:onClick="onClick"
-            android:text="@string/vets" />
-
-
+            android:text="@string/vets"
+            tools:ignore="UnusedAttribute"/>
     </RelativeLayout>
-
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -99,7 +98,8 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/blue"
         android:onClick="onClick"
-        android:text="Search for help" />
+        android:text="@string/search_for_help"
+        tools:ignore="UnusedAttribute" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
@@ -110,13 +110,7 @@
         app:itemIconTint="@drawable/item_selected"
         app:itemTextColor="@drawable/item_selected"
         app:menu="@menu/bottom_nav_menu"
-        tools:ignore="NotSibling" />
-
-
-
+        tools:ignore="NotSibling,ObsoleteLayoutParam" />
 </LinearLayout>
-
-
-
 
 </RelativeLayout>
