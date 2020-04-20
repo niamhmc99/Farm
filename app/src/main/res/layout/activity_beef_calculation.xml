@@ -78,6 +78,7 @@
         android:onClick="calculateBeefEmissions"
         android:text="@string/calculate"
         android:textSize="18sp"
+        android:textColor="@color/white"
         app:backgroundTint="@color/green"
         app:icon="@drawable/co2_icon"
         app:layout_constraintBottom_toBottomOf="parent"

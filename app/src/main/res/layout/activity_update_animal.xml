@@ -4,12 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/white_fone_grass"
     tools:context=".UpdateAnimalActivity">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <TextView
+        android:id="@+id/textViewAnimalsPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/update_the_animals_info_in_your_herd"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/darkGreen"
+        android:fontFamily="@font/libre_baskerville_bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.008" />
+
+    <ImageButton
         android:id="@+id/animal_image"
-        android:layout_width="212dp"
-        android:layout_height="111dp"
+        android:layout_width="235dp"
+        android:layout_height="116dp"
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
         android:layout_marginEnd="6dp"
@@ -22,173 +38,239 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.048" />
 
-    <EditText
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="574dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/animal_image">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/animal_image"
+        android:orientation="vertical">
+
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/editTextTagNumber"
-        android:layout_width="wrap_content"
+        android:layout_width="258dp"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:layout_gravity="center"
+        android:fontFamily="@font/libre_baskerville"
         android:hint="@string/tag_number"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:inputType="textCapWords"
+        android:textColorHint="@color/darkGreen"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        app:met_baseColor="@color/darkGreen"
+        app:met_floatingLabel="normal"
+        app:met_primaryColor="@color/darkGreen"
+        app:met_singleLineEllipsis="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.205"
-        android:autofillHints=""
-        tools:ignore="TextFields" />
+        app:layout_constraintTop_toBottomOf="@+id/animal_image" />
 
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/editTextName"
-        android:layout_width="wrap_content"
+        android:layout_width="258dp"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:fontFamily="@font/libre_baskerville"
+        android:layout_gravity="center"
+        android:textStyle="bold"
         android:hint="@string/name"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.282"
-        android:autofillHints="" />
+        android:inputType="textCapWords"
+        android:textColorHint="@color/darkGreen"
+        android:textSize="15sp"
+        app:met_baseColor="@color/darkGreen"
+        app:met_floatingLabel="none"
+        app:met_primaryColor="@color/darkGreen"
+        app:met_singleLineEllipsis="true" />
 
-    <EditText
+
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/editTextDob"
-        android:layout_width="wrap_content"
+        android:layout_width="258dp"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:layout_gravity="center"
+        android:fontFamily="@font/libre_baskerville"
         android:hint="@string/date_of_birth"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.358" />
+        android:inputType="date"
+        android:textColorHint="@color/darkGreen"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:met_baseColor="@color/darkGreen"
+        app:met_floatingLabel="normal"
+        app:met_primaryColor="@color/darkGreen"
+        app:met_singleLineEllipsis="true" />
+
 
     <Spinner
         android:id="@+id/spinnerGender"
-        android:layout_width="218dp"
-        android:layout_height="47dp"
+        android:layout_width="261dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
         android:hint="@string/gender_prompt"
         android:prompt="@string/gender_prompt"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.44" />
-
-    <EditText
-        android:id="@+id/editTextBreed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/breed"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.521" />
+        app:layout_constraintVertical_bias="0.463" />
 
-    <EditText
-        android:id="@+id/editTextDAM"
-        android:layout_width="wrap_content"
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/editTextBreed"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:layout_gravity="center"
+        android:fontFamily="@font/libre_baskerville"
+        android:hint="@string/breed"
+        android:inputType="textPersonName"
+        android:textColorHint="@color/darkGreen"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:met_baseColor="@color/darkGreen"
+        app:met_floatingLabel="normal"
+        app:met_primaryColor="@color/darkGreen"
+        app:met_singleLineEllipsis="true" />
+
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/editTextDAM"
+        android:layout_width="258dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/libre_baskerville"
         android:hint="@string/dam"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.603" />
+        android:textColorHint="@color/darkGreen"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        app:met_baseColor="@color/darkGreen"
+        app:met_floatingLabel="highlight"
+        app:met_primaryColor="@color/darkGreen"
+        app:met_singleLineEllipsis="true" />
 
     <Spinner
         android:id="@+id/spinnerCalvingDiff"
-        android:layout_width="203dp"
-        android:layout_height="39dp"
+        android:layout_width="258dp"
+        android:layout_height="42dp"
+        android:layout_gravity="center"
         android:hint="@string/calvingDifficulty_prompt"
         android:prompt="@string/calvingDifficulty_prompt"
         android:text="@string/calving_difficulty"
         android:textSize="18sp"
+        android:outlineSpotShadowColor="@color/darkGreen"
+        android:outlineAmbientShadowColor="@color/darkGreen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.475"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.754" />
+        app:layout_constraintVertical_bias="0.83"
+        />
 
     <Spinner
         android:id="@+id/spinnerAiStockBull"
-        android:layout_width="214dp"
-        android:layout_height="45dp"
+        android:layout_width="258dp"
+        android:layout_height="42dp"
+        android:layout_gravity="center"
         android:hint="@string/aiStockBull_prompt"
         android:prompt="@string/aiStockBull_prompt"
         android:text="@string/ai_stock_bull"
         android:textSize="18sp"
+        android:outlineSpotShadowColor="@color/darkGreen"
+        android:outlineAmbientShadowColor="@color/darkGreen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.682" />
+        app:layout_constraintVertical_bias="0.678" />
 
-    <EditText
-        android:id="@+id/ediTextSire"
-        android:layout_width="wrap_content"
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/editTextSire"
+        android:layout_width="258dp"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:layout_gravity="center"
+        android:fontFamily="@font/libre_baskerville"
         android:hint="@string/sire"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.829"
-        android:autofillHints="" />
+        android:textColorHint="@color/darkGreen"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:met_baseColor="@color/darkGreen"
+        app:met_floatingLabel="highlight"
+        app:met_primaryColor="@color/darkGreen"
+        app:met_singleLineEllipsis="true" />
+
+    <CheckBox
+        android:id="@+id/checkBoxInCalve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/in_calve"
+        android:textColor="@color/darkGreen"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        />
 
     <TextView
-        android:id="@+id/textViewAnimalsPage"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewDateOfInsemination"
+        android:layout_width="258dp"
         android:layout_height="wrap_content"
-        android:text="@string/update_the_animals_info_in_your_herd"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.008" />
+        android:layout_gravity="center"
+        android:textColor="@color/darkGreen"
+        android:text="@string/date_of_insemination"
+        android:visibility="gone"
+        android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/buttonUpdateAnimal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="72dp"
-        android:onClick="updateAnimal"
-        android:text="@string/update_animals_info"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:itemBackground="@color/green"
-        app:itemIconTint="@drawable/item_selected"
-        app:itemTextColor="@drawable/item_selected"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu"
-        tools:ignore="NotSibling" />
+    <TextView
+        android:id="@+id/textViewDateCalculatedCalveAndDelivery"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="start"
+        android:text=""
+        android:textColor="@color/darkGreen"
+        android:textSize="14sp"
+        android:layout_marginStart="5dp" />
+
+        <Button
+            android:id="@+id/buttonUpdateAnimal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="72dp"
+            android:onClick="updateAnimal"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/blue"
+            android:text="@string/update_animals_info"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation_view"
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            app:itemBackground="@color/green"
+            app:itemIconTint="@drawable/item_selected"
+            app:itemTextColor="@drawable/item_selected"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_nav_menu"
+            tools:ignore="NotSibling" />
+    </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

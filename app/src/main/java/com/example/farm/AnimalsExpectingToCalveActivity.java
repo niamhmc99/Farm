@@ -147,7 +147,7 @@ public class AnimalsExpectingToCalveActivity extends AppCompatActivity implement
                 .build();
         adapter = new AnimalAdapter(options);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewAnimal);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);

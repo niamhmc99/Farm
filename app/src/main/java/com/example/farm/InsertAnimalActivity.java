@@ -83,7 +83,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
     private final String  TAG= "InsertAnimalActivity";
     private EditText  editTextTagNumber, editTextAnimalName, editTextDob, editTextDam, editTextsire, editTextBreed;
     private Button btnInsertAnimal;
-    private TextView textViewRegisteredTimeStamp, textViewDateOfInsemination,textViewDateCalculatedCalveAndDelivery;;
+    private TextView textViewDateOfInsemination,textViewDateCalculatedCalveAndDelivery;
     private ProgressBar addanimalProgress;
     private Spinner spinnerGender, spinnerAiStockBull, spinnerCalvingDiff;
     private CheckBox checkBoxInCalve;
@@ -111,8 +111,9 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
     private static final String KEY_BREED = "breed";
     private static final String KEY_USERID = "user_id";
     private static final String KEY_AnimalProfilePic = "animalProfilePic";
-    private static final String KEY_AnimalRegisteredTimestamp = "animalTimeAddedHerd";
-
+    private static final String KEY_IN_CALVE = "inCalve";
+    private static final String KEY_DOI = "doi";
+    private static final String KEY_DOC = "doc";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,7 +134,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         editTextDob = findViewById(R.id.editTextDob);
         spinnerGender = findViewById(R.id.spinnerGender);
         spinnerCalvingDiff = findViewById(R.id.spinnerCalvingDiff);
-        editTextsire =findViewById(R.id.ediTextSire);
+        editTextsire =findViewById(R.id.editTextSire);
         editTextBreed =findViewById(R.id.editTextBreed);
         spinnerAiStockBull =findViewById(R.id.spinnerAiStockBull);
         animalProfilePic = findViewById(R.id.animal_image);
@@ -143,7 +144,6 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         checkBoxInCalve = findViewById(R.id.checkBoxInCalve);
         textViewDateOfInsemination = findViewById(R.id.textViewDateOfInsemination);
         textViewDateCalculatedCalveAndDelivery = findViewById(R.id.textViewDateCalculatedCalveAndDelivery);
-       // textViewRegisteredTimeStamp =findViewById(R.id.animalRegisterTimestamp);
 
         //Check point for in calve check or uncheck
         checkBoxInCalve.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -196,7 +196,9 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                         RequestOptions placeholderRequest = new RequestOptions();
                         placeholderRequest.placeholder(R.drawable.animalsmall);
 
-                        Glide.with(InsertAnimalActivity.this).setDefaultRequestOptions(placeholderRequest).load(image).into(animalProfilePic);
+                        Glide.with(InsertAnimalActivity.this)
+                                .setDefaultRequestOptions(placeholderRequest)
+                                .load(image).into(animalProfilePic);
                     }
                 } else {
                     String error = task.getException().getMessage();
@@ -241,7 +243,6 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
 
                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
                         compressedImageFile.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                        byte[] thumbData = baos.toByteArray();
 
                    final StorageReference filePath = storageReference.child("images/"+ UUID.randomUUID().toString());
 
@@ -340,8 +341,17 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             animalMap.put(KEY_AiOrStockbull, strSelectedAIStockBull);
             animalMap.put(KEY_USERID, strUserID);
             animalMap.put(KEY_AnimalProfilePic, downloadUrl);
-            animalMap.put(KEY_AnimalRegisteredTimestamp, strRegisteredTimestamp);
-
+             if(checkBoxInCalve.isChecked()) {
+                animalMap.put(KEY_IN_CALVE, "1");
+                animalMap.put(KEY_DOI,textViewDateOfInsemination.getText().toString());
+                animalMap.put(KEY_DOC,textViewDateCalculatedCalveAndDelivery.getText().toString());
+            }
+            else
+            {
+                animalMap.put(KEY_IN_CALVE, "0");
+                animalMap.put(KEY_DOI,"");
+                animalMap.put(KEY_DOC,"");
+             }
 
             if (!hasValidationErrors(strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire) && !checkingIfTagNumberExist1(strTag)){
 
@@ -391,8 +401,8 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             } else if (selectedGender.isEmpty()) {
                 TextView errorText = (TextView) spinnerGender.getSelectedView();
                 errorText.setError("");
-                errorText.setTextColor(Color.RED);//just to highlight that this is an error
-                errorText.setText("Please select the Aniamls Gender");//changes the selected item text to this
+                errorText.setTextColor(Color.RED);
+                errorText.setText("Please select the Aniamls Gender");
                 makeSnackBarMessage("Please insert the Animals Sex.");
                 return true;
             } else if (dam.isEmpty()) {
@@ -402,8 +412,8 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             } else if (selectedCalvingDifficulty.isEmpty()) {
                 TextView errorText = (TextView) spinnerCalvingDiff.getSelectedView();
                 errorText.setError("");
-                errorText.setTextColor(Color.RED);//just to highlight that this is an error
-                errorText.setText("Select the Calving Difficulty number");//changes the selected item text to this
+                errorText.setTextColor(Color.RED);
+                errorText.setText("Select the Calving Difficulty number");
                 makeSnackBarMessage("Please insert the Calving Difficulty.");
                 return true;
             } else if (sire.isEmpty()) {
@@ -413,8 +423,8 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             } else if (selectedAIStockBull.isEmpty()) {
                 TextView errorText = (TextView) spinnerAiStockBull.getSelectedView();
                 errorText.setError("");
-                errorText.setTextColor(Color.RED);//just to highlight that this is an error
-                errorText.setText("Please select the Sire Type for the animal");//changes the selected item text to this
+                errorText.setTextColor(Color.RED);
+                errorText.setText("Please select the Sire Type for the animal");
                 makeSnackBarMessage("Please insert the Sire Type.");
                 return true;
             } else if (breed.isEmpty()) {
@@ -452,36 +462,6 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         });
         return false;
     }
-
-
-
-//                if (task.isSuccessful()) {
-//                    for (DocumentSnapshot ds : task.getResult()) {
-//                        String tagNumber = ds.getString("tagNumber");
-//                        if (tagNumber.equals(tagNumberToCompare)) {
-//                            Log.d(TAG, "checkingIfusernameExist: FOUND A MATCH - Tag number already exists");
-//                            Toast.makeText(InsertAnimalActivity.this, "TagNumber Already Exists", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//
-//                }
-//                //checking if task contains any payload. if no, then update
-//                if (task.getResult().size() == 0) {
-//                    try {
-//
-//                        Log.d(TAG, "onComplete: MATCH NOT FOUND - tag number is available");
-//                        Toast.makeText(InsertAnimalActivity.this, "TagNumber changed", Toast.LENGTH_SHORT).show();
-//                        //Updating new username............
-//
-//
-//                    } catch (NullPointerException e) {
-//                        Log.e(TAG, "NullPointerException: " + e.getMessage());
-//                    }
-//                }
-//            }
-
-
-
 
     private void addItemsOnSpinnerCalvingDiff() {
         spinnerCalvingDiff= findViewById(R.id.spinnerCalvingDiff);
@@ -522,14 +502,11 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
 
     }
 
-
     private void BringImagePicker() {
-
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setAspectRatio(1, 1)
                 .start(InsertAnimalActivity.this);
-
     }
 
     @Override
@@ -552,24 +529,6 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
 
     private void makeSnackBarMessage( String message){
         Snackbar.make(constraintLayout, message, Snackbar.LENGTH_SHORT).show();
-    }
-
-    //Calculating expected calve date
-    private String getCalveDate(String dateInput) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setTimeZone(TimeZone.getDefault());
-        Date date = null;
-        try {
-            date = sdf.parse(dateInput);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            calendar.add(Calendar.DAY_OF_MONTH,183);
-            dateInput = sdf.format(calendar.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return dateInput;
     }
 
     //Calculating insemination end of delivery date

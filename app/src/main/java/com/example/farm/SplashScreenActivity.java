@@ -28,10 +28,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             setContentView(R.layout.activity_splash_screen);
 
             image = findViewById(R.id.imageViewSplashScreen);
-//            txtFileFarmLogo = findViewById(R.id.textViewFileFarm);
-//            slogan = findViewById(R.id.textViewSlogan);
 
-            //Animations
             topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
             bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
 

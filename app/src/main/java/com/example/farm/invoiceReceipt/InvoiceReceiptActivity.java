@@ -1,5 +1,4 @@
 package com.example.farm.invoiceReceipt;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -21,7 +20,6 @@ import com.example.farm.AnimalActivity;
 import com.example.farm.LoginActivity;
 import com.example.farm.MainActivity;
 import com.example.farm.R;
-import com.example.farm.ToDoListActivity;
 import com.example.farm.VetActivity;
 import com.example.farm.adapters.InvoiceReceiptAdapter;
 import com.example.farm.emissions.EmissionsActivity;
