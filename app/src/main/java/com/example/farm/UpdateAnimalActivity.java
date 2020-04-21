@@ -79,8 +79,6 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
     private Bitmap compressedImageFile;
     private CheckBox checkBoxInCalve;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,32 +119,6 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
         checkBoxInCalve.setText(animal.getInCalve());
         animalImageUri=  animal.getAnimalProfilePic();
         setAnimalImage(animalImageUri);
-
-//        firestoreDB.collection("animals").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    if (task.getResult().exists()) {
-//
-//                        String tagNumber = task.getResult().getString("tagNumber");
-//                        String image = task.getResult().getString("animalProfilePic");
-//
-//                        mainImageURI = Uri.parse(image);
-//                        editTextTagNumberUpdate.setText(tagNumber);
-//                        RequestOptions placeholderRequest = new RequestOptions();
-//                        placeholderRequest.placeholder(R.drawable.animalsmall);
-//
-//                        Glide.with(UpdateAnimalActivity.this)
-//                                .setDefaultRequestOptions(placeholderRequest)
-//                                .load(image).into(animalProfilePic);
-//                    }
-//                } else {
-//                    String error = task.getException().getMessage();
-//                    Toast.makeText(UpdateAnimalActivity.this, "(FIRESTORE Retrieve Error) : " + error, Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        });
-
 
         animalProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override

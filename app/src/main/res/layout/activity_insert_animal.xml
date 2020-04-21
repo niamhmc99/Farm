@@ -8,42 +8,57 @@
     android:id="@+id/constraintLayout"
     tools:context=".InsertAnimalActivity">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
 
-    <ImageButton
-        android:id="@+id/animal_image"
-        android:layout_width="261dp"
-        android:layout_height="128dp"
-        android:backgroundTint="@color/white"
-        android:contentDescription="@string/crop_image_menu_crop"
-        android:src="@drawable/animalsmall"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="407dp"
+            android:layout_height="10dp"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <ImageButton
+            android:id="@+id/animal_image"
+            android:layout_width="wrap_content"
+            android:layout_height="129dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/white"
+            android:contentDescription="@string/crop_image_menu_crop"
+            android:src="@drawable/animalsmall"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBar"
+            tools:targetApi="lollipop" />
+
+    </LinearLayout>
+
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="574dp"
+        android:id="@+id/scrollView2"
+        android:layout_width="389dp"
+        android:layout_height="422dp"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/animal_image">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.455">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/animal_image"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/animal_image">
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/editTexttagNumber"
@@ -54,27 +69,27 @@
                 android:hint="@string/tag_number"
                 android:inputType="textCapWords"
                 android:textColorHint="@color/darkGreen"
-                android:textStyle="bold"
                 android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/animal_image"
                 app:met_baseColor="@color/darkGreen"
                 app:met_floatingLabel="normal"
                 app:met_primaryColor="@color/darkGreen"
-                app:met_singleLineEllipsis="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/animal_image" />
+                app:met_singleLineEllipsis="true" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/editTextName"
                 android:layout_width="258dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/libre_baskerville"
                 android:layout_gravity="center"
-                android:textStyle="bold"
+                android:fontFamily="@font/libre_baskerville"
                 android:hint="@string/name"
                 android:inputType="textCapWords"
                 android:textColorHint="@color/darkGreen"
                 android:textSize="15sp"
+                android:textStyle="bold"
                 app:met_baseColor="@color/darkGreen"
                 app:met_floatingLabel="none"
                 app:met_primaryColor="@color/darkGreen"
@@ -100,8 +115,8 @@
 
             <Spinner
                 android:id="@+id/spinnerGender"
-                android:layout_width="261dp"
-                android:layout_height="48dp"
+                android:layout_width="258dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:hint="@string/gender_prompt"
                 android:prompt="@string/gender_prompt"
@@ -139,8 +154,8 @@
                 android:hint="@string/dam"
                 android:inputType="textPersonName"
                 android:textColorHint="@color/darkGreen"
-                android:textStyle="bold"
                 android:textSize="15sp"
+                android:textStyle="bold"
                 app:met_baseColor="@color/darkGreen"
                 app:met_floatingLabel="highlight"
                 app:met_primaryColor="@color/darkGreen"
@@ -152,18 +167,18 @@
                 android:layout_height="42dp"
                 android:layout_gravity="center"
                 android:hint="@string/calvingDifficulty_prompt"
+                android:outlineAmbientShadowColor="@color/darkGreen"
+                android:outlineSpotShadowColor="@color/darkGreen"
                 android:prompt="@string/calvingDifficulty_prompt"
                 android:text="@string/calving_difficulty"
                 android:textSize="18sp"
-                android:outlineSpotShadowColor="@color/darkGreen"
-                android:outlineAmbientShadowColor="@color/darkGreen"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.83"
-                />
+                tools:targetApi="p" />
 
             <Spinner
                 android:id="@+id/spinnerAiStockBull"
@@ -171,17 +186,18 @@
                 android:layout_height="42dp"
                 android:layout_gravity="center"
                 android:hint="@string/aiStockBull_prompt"
+                android:outlineAmbientShadowColor="@color/darkGreen"
+                android:outlineSpotShadowColor="@color/darkGreen"
                 android:prompt="@string/aiStockBull_prompt"
                 android:text="@string/ai_stock_bull"
                 android:textSize="18sp"
-                android:outlineSpotShadowColor="@color/darkGreen"
-                android:outlineAmbientShadowColor="@color/darkGreen"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.512"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.678" />
+                app:layout_constraintVertical_bias="0.678"
+                tools:targetApi="p" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/editTextSire"
@@ -201,68 +217,64 @@
 
             <CheckBox
                 android:id="@+id/checkBoxInCalve"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="130dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:text="@string/in_calve"
                 android:textColor="@color/darkGreen"
-                android:textStyle="bold"
                 android:textSize="16sp"
-                 />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textViewDateOfInsemination"
-                android:layout_width="258dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="@color/darkGreen"
                 android:text="@string/date_of_insemination"
-                android:visibility="gone"
-                android:textSize="18sp" />
+                android:textColor="@color/darkGreen"
+                android:textSize="18sp"
+                android:visibility="gone" />
 
 
             <TextView
                 android:id="@+id/textViewDateCalculatedCalveAndDelivery"
-                android:layout_width="300dp"
-                android:layout_height="30dp"
+                android:layout_width="295dp"
+                android:layout_height="46dp"
                 android:layout_gravity="center"
+                android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginBottom="5dp"
                 android:gravity="start"
                 android:text=""
                 android:textColor="@color/darkGreen"
                 android:textSize="14sp"
-                android:layout_marginStart="5dp" />
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btnInsertAnimal"
-                android:layout_width="match_parent"
+                android:layout_width="295dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_gravity="center"
                 android:backgroundTint="@color/blue"
-                android:padding="15dp"
                 android:text="@string/insert_animal"
-                android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="UnusedAttribute" />
+                tools:targetApi="lollipop" />
 
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottom_navigation_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:itemBackground="@color/green"
-                app:itemIconTint="@drawable/item_selected"
-                app:itemTextColor="@drawable/item_selected"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:menu="@menu/bottom_nav_menu" />
 
         </LinearLayout>
     </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_view"
+        android:layout_width="413dp"
+        android:layout_height="43dp"
+        app:itemBackground="@color/green"
+        app:itemIconTint="@drawable/item_selected"
+        app:itemTextColor="@drawable/item_selected"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>
