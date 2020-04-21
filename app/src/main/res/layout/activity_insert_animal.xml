@@ -44,7 +44,7 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="389dp"
+        android:layout_width="match_parent"
         android:layout_height="422dp"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -227,7 +227,7 @@
 
             <TextView
                 android:id="@+id/textViewDateOfInsemination"
-                android:layout_width="wrap_content"
+                android:layout_width="258dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/date_of_insemination"
