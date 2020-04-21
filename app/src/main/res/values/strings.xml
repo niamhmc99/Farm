@@ -6,7 +6,7 @@
     <string name="invoiceReceipt">Invoice/ Receipt </string>
     <string name="employees">Employees </string>
     <string name="vets">Vets </string>
-    <string name="calvingDifficulty_prompt">Calving Difficulty</string>
+    <string name="calvingDifficulty_prompt">Select Calving Difficulty</string>
     <string name="gender_prompt">Select Gender</string>
     <string name="aiStockBull_prompt">Select AI/ Stock Bull</string>
     <string name="viewAnimals">View Herd </string>
@@ -78,7 +78,7 @@
 
     <string name="update_animals_info">Update Animal </string>
     <string name="search">Search</string>
-    <string name="name">Name</string>
+    <string name="name">Search here..</string>
     <string name="hospitals">Hospitals</string>
     <string name="mechanics">Mechanics</string>
     <string name="calving_difficulty">Calving Difficulty</string>
@@ -109,7 +109,7 @@
     <string name="ways_to_reduce_beef_emisson"><u>Find out ways to reduce Beef Emissions. </u></string>
     <string name="find_out_ways_to_reduce_dairy_emissions"><u>Find out ways to reduce Dairy Emissions.</u></string>
     <string name="title">Title</string>
-    <string name="search_for_help">Search for help</string>
+    <string name="search_for_help">Send Location</string>
 
 
 </resources>

@@ -14,7 +14,7 @@
 
         <EditText
             android:id="@+id/TF_location"
-            android:layout_width="279dp"
+            android:layout_width="269dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
@@ -38,45 +38,49 @@
             android:layout_toEndOf="@+id/TF_location"
             android:layout_toRightOf="@+id/TF_location"
             android:backgroundTint="@color/blue"
+            android:textColor="@color/white"
             android:onClick="onClick"
             android:text="@string/search" />
 
 
         <Button
             android:id="@+id/B_hopistals"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/blue"
             android:layout_below="@+id/TF_location"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
+            android:backgroundTint="@color/green"
             android:onClick="onClick"
             android:text="@string/hospitals"
-            tools:ignore="UnusedAttribute"/>
+            android:textColor="@color/white"
+            tools:ignore="UnusedAttribute" />
 
         <Button
             android:id="@+id/B_mechanic"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/blue"
             android:layout_below="@+id/TF_location"
             android:layout_toEndOf="@+id/B_hopistals"
             android:layout_toRightOf="@+id/B_hopistals"
+            android:backgroundTint="@color/green"
             android:onClick="onClick"
             android:text="@string/mechanics"
-            tools:ignore="UnusedAttribute"/>
+            android:textColor="@color/white"
+            tools:ignore="UnusedAttribute" />
 
         <Button
             android:id="@+id/B_vets"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/blue"
             android:layout_below="@+id/TF_location"
             android:layout_toEndOf="@+id/B_mechanic"
             android:layout_toRightOf="@+id/B_mechanic"
+            android:backgroundTint="@color/green"
             android:onClick="onClick"
             android:text="@string/vets"
-            tools:ignore="UnusedAttribute"/>
+            android:textColor="@color/white"
+            tools:ignore="UnusedAttribute" />
     </RelativeLayout>
 
 <LinearLayout
@@ -98,6 +102,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/blue"
         android:onClick="onClick"
+        android:textColor="@color/white"
         android:text="@string/search_for_help"
         tools:ignore="UnusedAttribute" />
 

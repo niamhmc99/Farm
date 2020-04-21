@@ -68,7 +68,7 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
     FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
     private CollectionReference vetRef = firestoreDB.collection("VetAppointments");
     BottomNavigationView bottomNavigationView;
-    private MaterialEditText editTextAppTitle, editTextAppDesc;
+    private EditText editTextAppTitle, editTextAppDesc;
     private CoordinatorLayout coordinatorLayout;
 
     VetAppointmentAdapter appointmentAdapter;
@@ -80,7 +80,6 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
         coordinatorLayout = findViewById(R.id.coordinatorLayout);
         firestoreDB = FirebaseFirestore.getInstance();
 
-
         imageViewCalendarDateButton = findViewById(R.id.imageViewButtonCalendarDatePicker);
         imageViewCalendarDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,19 +88,11 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
                 datePicker.show(getSupportFragmentManager(), "date picker");
             }
         });
-
+        textViewDate= findViewById(R.id.textViewDate);
         editTextAppTitle = findViewById(R.id.appointmentTitle);
         editTextAppDesc = findViewById(R.id.appointmentDescription);
         fabAdd = findViewById(R.id.fabAddApp);
-        fabAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                   addVetApp(editTextAppTitle.getText().toString(), editTextAppDesc.getText().toString(), textViewDate.getText().toString());
-                   editTextAppTitle.setText("");
-                   editTextAppDesc.setText("");
-                   textViewDate.setText("");
-               }
-        });
+
 //        appointmentList = new ArrayList<>();
 //        firestoreDB.collection("VetAppointments").get()
 //                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -156,9 +147,7 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
     private void setUpRecyclerView(FirebaseUser user) {
 
        // final String strUserID = FirebaseAuth.getInstance().getCurrentUser().getUid().trim();
-
-
-        Query query = vetRef.whereEqualTo("user_id",user.getUid())
+        Query query = vetRef.whereEqualTo("userId",user.getUid())
                 .orderBy("appDate", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Appointment> options= new FirestoreRecyclerOptions.Builder<Appointment>()
@@ -188,7 +177,6 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Appointment appointment = new Appointment(textTitle, textDesc, userId, date);
 
-        if (!hasValidationErrors(textTitle, textDesc, date)){
             FirebaseFirestore.getInstance()
                     .collection("VetAppointments")
                     .add(appointment)
@@ -205,22 +193,21 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
                             Toast.makeText(VetActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
-        }
     }
 
     private boolean hasValidationErrors(String textTitle, String textDesc, String date){
 
         if (textTitle.trim().isEmpty()) {
             editTextAppTitle.setError("Vet Appointment Title is required");
-            makeSnackBarMessage("Please insert Tag Number.");
+            makeSnackBarMessage("Please enter Appointment Title.");
             return true;
-        } else if (textDesc.isEmpty()) {
+        } else if (textDesc.trim().isEmpty()) {
             editTextAppDesc.setError("Appointment Description is Required");
-            makeSnackBarMessage("Please insert Appointment Description.");
+            makeSnackBarMessage("Please enter Appointment Description.");
             return true;
-        }else if (date.isEmpty()) {
+        }else if (date.trim().isEmpty()) {
             textViewDate.setError("Appointment Date is Required");
-            makeSnackBarMessage("Please insert Appointment Date.");
+            makeSnackBarMessage("Please enter Appointment Date.");
             return true;
         } else{
             return false;
@@ -415,6 +402,21 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
         FirebaseAuth.getInstance().removeAuthStateListener(this);
         if (appointmentAdapter != null) {
             appointmentAdapter.stopListening();
+        }
+    }
+
+    public void addVetAppointment(View view) {
+
+        String appDate= textViewDate.getText().toString();
+        String appTitle = editTextAppTitle.getText().toString();
+        String appDesc = editTextAppDesc.getText().toString();
+
+
+        if (!hasValidationErrors(appTitle, appDesc, appDate)) {
+            addVetApp(appTitle, appDesc, appDate);
+            editTextAppTitle.setText("");
+            editTextAppDesc.setText("");
+            textViewDate.setText("");
         }
     }
 }

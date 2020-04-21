@@ -37,8 +37,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewToDo"
-        android:layout_width="413dp"
-        android:layout_height="585dp"
+        android:layout_width="357dp"
+        android:layout_height="505dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,16 +73,15 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:itemBackground="@color/green"
-            android:layout_marginBottom="0dp"
-            app:itemIconTint="@drawable/item_selected"
-            app:itemTextColor="@drawable/item_selected"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/bottom_nav_menu" />
+        android:id="@+id/bottom_navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="43dp"
+        app:itemBackground="@color/green"
+        app:itemIconTint="@drawable/item_selected"
+        app:itemTextColor="@drawable/item_selected"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

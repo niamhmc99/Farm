@@ -107,6 +107,7 @@
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"
         app:fabSize="normal"
+        android:onClick="addVetAppointment"
         app:backgroundTint="@color/blue"
         app:layout_anchor="@id/appBarLayout"
         app:layout_anchorGravity="bottom|right"

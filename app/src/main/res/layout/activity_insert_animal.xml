@@ -29,7 +29,7 @@
         <ImageButton
             android:id="@+id/animal_image"
             android:layout_width="wrap_content"
-            android:layout_height="129dp"
+            android:layout_height="139dp"
             android:layout_gravity="center"
             android:backgroundTint="@color/white"
             android:contentDescription="@string/crop_image_menu_crop"
@@ -44,8 +44,8 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="match_parent"
-        android:layout_height="422dp"
+        android:layout_width="363dp"
+        android:layout_height="410dp"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -112,6 +112,14 @@
                 app:met_primaryColor="@color/darkGreen"
                 app:met_singleLineEllipsis="true" />
 
+            <TextView
+                android:id="@+id/txtViewSelectGender"
+                android:layout_width="258dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/libre_baskerville_bold"
+                android:text="@string/gender_prompt"
+                android:textColor="@color/darkGreen" />
 
             <Spinner
                 android:id="@+id/spinnerGender"
@@ -130,7 +138,7 @@
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/editTextBreed"
-                android:layout_width="260dp"
+                android:layout_width="258dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/libre_baskerville"
@@ -161,6 +169,15 @@
                 app:met_primaryColor="@color/darkGreen"
                 app:met_singleLineEllipsis="true" />
 
+            <TextView
+                android:id="@+id/txtViewCalvingDifficulty"
+                android:layout_width="258dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/libre_baskerville_bold"
+                android:text="@string/calvingDifficulty_prompt"
+                android:textColor="@color/darkGreen" />
+
             <Spinner
                 android:id="@+id/spinnerCalvingDiff"
                 android:layout_width="258dp"
@@ -179,6 +196,15 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.83"
                 tools:targetApi="p" />
+
+            <TextView
+                android:id="@+id/txtViewAIStockBull"
+                android:layout_width="258dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/libre_baskerville_bold"
+                android:text="@string/aiStockBull_prompt"
+                android:textColor="@color/darkGreen" />
 
             <Spinner
                 android:id="@+id/spinnerAiStockBull"
@@ -230,6 +256,7 @@
                 android:layout_width="258dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="@font/libre_baskerville"
                 android:text="@string/date_of_insemination"
                 android:textColor="@color/darkGreen"
                 android:textSize="18sp"
@@ -244,6 +271,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginBottom="5dp"
+                android:fontFamily="@font/libre_baskerville"
                 android:gravity="start"
                 android:text=""
                 android:textColor="@color/darkGreen"
@@ -252,7 +280,7 @@
 
             <Button
                 android:id="@+id/btnInsertAnimal"
-                android:layout_width="295dp"
+                android:layout_width="279dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:backgroundTint="@color/blue"
@@ -267,7 +295,7 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
-        android:layout_width="413dp"
+        android:layout_width="match_parent"
         android:layout_height="43dp"
         app:itemBackground="@color/green"
         app:itemIconTint="@drawable/item_selected"

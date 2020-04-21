@@ -61,6 +61,9 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
                 showAlertDialog();
             }
         });
+
+        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(ToDoListActivity.this);
     }
     private void showAlertDialog() {
         final EditText taskEditText = new EditText(this);
@@ -98,10 +101,6 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
                         Toast.makeText(ToDoListActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-
-
-        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
-        bottomNavigationView.setOnNavigationItemSelectedListener(ToDoListActivity.this);
     }
 
     @Override
@@ -155,7 +154,6 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
 
             ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
             itemTouchHelper.attachToRecyclerView(recyclerView);
-//        toDoListAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -291,6 +289,13 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
             toDoListAdapter.stopListening();
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (toDoListAdapter != null) {
+            toDoListAdapter.notifyDataSetChanged();
+        }    }
 
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();

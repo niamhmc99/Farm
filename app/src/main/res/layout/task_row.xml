@@ -15,6 +15,7 @@
             android:id="@+id/taskTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="@string/service_the_massey_ferguson_tractor"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintBottom_toTopOf="@+id/dateTextView"
@@ -30,6 +31,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:gravity="center"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="18dp"
             android:layout_marginEnd="321dp"
@@ -40,7 +42,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/taskTextView"
-            app:layout_constraintHorizontal_bias="0.064"
+            app:layout_constraintHorizontal_bias="0.148"
             app:layout_constraintStart_toStartOf="@+id/taskTextView"
             app:layout_constraintTop_toBottomOf="@+id/taskTextView" />
 
@@ -50,11 +52,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="36dp"
-            android:layout_marginRight="36dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.454" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

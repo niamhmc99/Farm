@@ -1,14 +1,12 @@
 package com.example.farm.models;
 
-import com.rengwuxian.materialedittext.MaterialEditText;
-
-import java.util.Date;
-
 public class Appointment {
 
-    private String id, userId, appTitle, appDescription, appDate;
+    private String userId, appTitle, appDescription, appDate;
 
-    public Appointment(){ }
+    public Appointment(){
+
+    }
 
     public Appointment(String textTitle, String textDesc, String userId, String date){
         this.appTitle = textTitle;
@@ -41,11 +39,11 @@ public class Appointment {
         this.appDate = appDate;
     }
 
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

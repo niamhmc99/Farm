@@ -41,7 +41,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-         />
+        tools:targetApi="lollipop"
+        android:contentDescription="@string/crop_image_menu_crop"
+        />
 
     </LinearLayout>
 
@@ -115,6 +117,14 @@
                 app:met_primaryColor="@color/darkGreen"
                 app:met_singleLineEllipsis="true" />
 
+            <TextView
+                android:id="@+id/txtViewSelectGender"
+                android:layout_width="258dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/libre_baskerville_bold"
+                android:textColor="@color/darkGreen"
+                android:text="@string/gender_prompt" />
 
             <Spinner
                 android:id="@+id/spinnerGender"
@@ -164,6 +174,15 @@
                 app:met_primaryColor="@color/darkGreen"
                 app:met_singleLineEllipsis="true" />
 
+            <TextView
+                android:id="@+id/txtViewCalvingDifficulty"
+                android:layout_width="258dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/libre_baskerville_bold"
+                android:textColor="@color/darkGreen"
+                android:text="@string/calvingDifficulty_prompt" />
+
             <Spinner
                 android:id="@+id/spinnerCalvingDiff"
                 android:layout_width="258dp"
@@ -180,8 +199,16 @@
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.83" />
+                app:layout_constraintVertical_bias="0.83" tools:targetApi="p" />
 
+            <TextView
+                android:id="@+id/txtViewAIStockBull"
+                android:layout_width="258dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/libre_baskerville_bold"
+                android:textColor="@color/darkGreen"
+                android:text="@string/aiStockBull_prompt" />
             <Spinner
                 android:id="@+id/spinnerAiStockBull"
                 android:layout_width="258dp"
@@ -198,7 +225,7 @@
                 app:layout_constraintHorizontal_bias="0.512"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.678" />
+                app:layout_constraintVertical_bias="0.678" tools:targetApi="p" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/editTextSire"
@@ -260,14 +287,14 @@
                 android:onClick="updateAnimal"
                 android:text="@string/update_animals_info"
                 android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp" tools:targetApi="lollipop" />
 
         </LinearLayout>
     </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
-        android:layout_width="413dp"
+        android:layout_width="match_parent"
         android:layout_height="43dp"
         app:itemBackground="@color/green"
         app:itemIconTint="@drawable/item_selected"

@@ -171,7 +171,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                     public void onClick(DialogInterface dialog, int which) {
                         adapter.deleteItem(viewHolder.getAdapterPosition());
                     }
-                });//
+                });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -228,26 +228,6 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                 builder.create().show();
             }
         });
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menumainopts, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.menuLogout:
-                Toast.makeText(this, "Logging out", Toast.LENGTH_SHORT).show();
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(AnimalActivity.this, LoginActivity.class));
-            case R.id.menuHome:
-                Toast.makeText(this, "Home Page", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(AnimalActivity.this, MainActivity.class));
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -401,59 +381,4 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-
-
-    //    private void goToViewAnimalDetails(){
-//        Intent intent = new Intent(mContext, UpdateAnimalActivity.class);
-//        // pass all the data from animal to  Update Activity.class all in one?
-//        intent.putExtra("Animal", animal);
-//        mContext.startActivity(intent);
-//    }
-
-
-//    public void listOfAnimals(){
-//        db.collection("Animals").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    List<String> list = new ArrayList<>();
-//                    for (QueryDocumentSnapshot document : task.getResult()) {
-//                        list.add(document.getId());
-//                    }
-//                    Log.d(TAG, list.toString());
-//                } else {
-//                    Log.d(TAG, "Error getting documents: ", task.getException());
-//                }
-//            }
-//        });
-//    }
-
-//    public void loadAnimal(View view){
-//        animalRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//            @Override
-//            public void onSuccess(QuerySnapshot  queryDocumentSnapshots) {
-//                List<DocumentReference> animals = new ArrayList<>();
-//                for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots) {
-//                    Animal animal = documentSnapshot.toObject(Animal.class);
-//
-//                    String tagNumber = animal.getTagNumber();
-//                    String name = animal.getAnimalName();
-//                    String breed = animal.getBreed();
-//                    String dob = animal.getDob();
-//                    String sex = animal.getSex();
-//                    String calvingDif = animal.getCalvingDifficulty();
-//                    String aiOrBull = animal.getAiORstockbull();
-//                    String dam = animal.getDam();
-//                    String sire = animal.getSire();
-//                }
-//                animals.add(animal);
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//
-//            }
-//        });
-//    }
-
 }
