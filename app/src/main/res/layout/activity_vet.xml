@@ -20,7 +20,7 @@
         <LinearLayout
             android:id="@+id/layoutAppointmentInfo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/lightGreen"
             android:orientation="vertical"
             android:padding="16dp">
@@ -119,7 +119,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewVetAppointment"
         android:layout_width="match_parent"
-        android:layout_height="438dp"
+        android:layout_height="350dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="2dp"
         android:scrollbars="vertical"

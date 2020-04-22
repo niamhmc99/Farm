@@ -269,8 +269,7 @@ public class VetActivity extends AppCompatActivity implements DatePickerDialog.O
         input3.setText(strAppDate);
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle(
-                "Update Appointment Details:").setView(
+        alert.setView(
                 textEntryView).setPositiveButton("Update",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,

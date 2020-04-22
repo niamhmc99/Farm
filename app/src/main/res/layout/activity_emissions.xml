@@ -30,12 +30,13 @@
 
         <TextView
             android:id="@+id/txtViewEmissionsImage"
-            android:layout_width="wrap_content"
-            android:layout_height="220dp"
+            android:layout_width="186dp"
+            android:layout_height="140dp"
+            android:layout_gravity="center"
             android:fontFamily="@font/libre_baskerville"
             android:text="@string/calulateEmission"
             android:textAllCaps="true"
-            android:textColor="@color/green"
+            android:textColor="@color/darkGreen"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
