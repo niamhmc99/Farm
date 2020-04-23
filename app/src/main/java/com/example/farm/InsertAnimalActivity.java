@@ -55,6 +55,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -65,6 +66,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -93,6 +95,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
     private Uri mainImageURI = null;
 
     private String user_id;
+    ArrayList<QueryDocumentSnapshot> tagNumbers;
 
     private boolean isChanged = false;
     private StorageReference storageReference;
@@ -351,7 +354,9 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                 animalMap.put(KEY_DOC,"");
              }
 
-            if (!hasValidationErrors(strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire) && !checkingIfTagNumberExist1(strTag)){
+             int tagNumberExistCount = tagNumberExistsInList(strTag);
+
+            if ((!hasValidationErrors(strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire)) && tagNumberExistCount==0){
 
                 firestoreDB.collection("animals")
                         .add(animalMap)
@@ -431,31 +436,52 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             }
         }
 
-    private boolean checkingIfTagNumberExist1(final String tagNumberToCompare) {
-        final Query mQuery = firestoreDB.collection("animals").whereEqualTo("tagNumber", tagNumberToCompare);
-        mQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Log.d(TAG, "checkingIfusernameExist: checking if tag number exists");
-                if (task.isSuccessful()) {
-                    for (DocumentSnapshot document : task.getResult()) {
-                        if (document.exists()) {
-                            String tagnum = document.getString("tagNumber");
-                            editTextTagNumber.setError("Tag Number already exists");
-                            makeSnackBarMessage("Please insert Tag Number.");
-                            Log.d(TAG, "Tag Number already exists");
-                           // Toast.makeText(InsertAnimalActivity.this, "Tag Number Already Exists", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.d(TAG, "Tag Number does not exists");
+//    private int tagNumberExistsInList(final String tagNumberToCompare) {
+//        int numberOfTags;
+//        tagNumbers= new ArrayList<>();
+//        firestoreDB.collection("animals")
+//                .whereEqualTo("tagNumber", tagNumberToCompare)
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                Log.d(TAG, document.getId() + " => " + document.getData());
+//                                System.out.println(document.getId() + " => " + document.getData()+ "XXXXXXXX");
+//                                System.out.println(tagNumbers.size());
+//                            }
+//                        } else {
+//                            Log.d(TAG, "Error getting documents: ", task.getException());
+//                        }
+//                    }
+//                });
+//         numberOfTags= tagNumbers.size();
+//         return numberOfTags;
+//    }
 
+    private int tagNumberExistsInList(final String tagNumberToCompare) {
+        int numberOfTags;
+        tagNumbers= new ArrayList<>();
+        firestoreDB.collection("animals")
+                .whereEqualTo("tagNumber", tagNumberToCompare)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                System.out.println(document.getId() + " => " + document.getData()+ "XXXXXXXX");
+                                System.out.println(tagNumbers.size());
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
-                } else {
-                    Log.d("TAG", "Error getting documents: ", task.getException());
-                }
-            }
-        });
-        return false;
+                });
+        numberOfTags= tagNumbers.size();
+        return numberOfTags;
     }
 
     private void addItemsOnSpinnerCalvingDiff() {
