@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void clickWeather(View view) {
         imageButtonWeather = findViewById(R.id.imageButtonWeather);
-        startActivity(new Intent(MainActivity.this, WeatherActivity2.class));
+        startActivity(new Intent(MainActivity.this, WeatherActivity.class));
     }
 
     public void clickToDoList(View view) {
@@ -163,20 +163,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public void getUsers() {
-//        DocumentReference docRef = db.collection("users").document("SF");
-//// asynchronously retrieve the document
-//       // ApiFuture<DocumentSnapshot> future = docRef.get();
-//// ...
-//// future.get() blocks on response
-//       // DocumentSnapshot document = future.get();
-//        if (document.exists()) {
-//            System.out.println("Document data: " + document.getData());
-//        } else {
-//            System.out.println("No such document!");
-//        }
-    }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         closeDrawer();
@@ -188,13 +174,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(MainActivity.this, AnimalActivity.class));
                 break;
             case R.id.nav_weather:
-                startActivity(new Intent(MainActivity.this, WeatherActivity2.class));
+                startActivity(new Intent(MainActivity.this, WeatherActivity.class));
                 break;
             case R.id.nav_nearbyPlaces:
                 startActivity(new Intent(MainActivity.this, MapsActivity.class));
                 break;
             case R.id.nav_vets:
                 startActivity(new Intent(MainActivity.this, VetActivity.class));
+                break;
+            case R.id.nav_toDoList:
+                startActivity(new Intent(MainActivity.this, ToDoListActivity.class));
                 break;
             case R.id.nav_expenses:
                 startActivity(new Intent(MainActivity.this, InvoiceReceiptActivity.class));

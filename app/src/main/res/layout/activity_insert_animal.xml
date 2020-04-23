@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/libre_baskerville"
-                android:hint="@string/name"
+                android:hint="@string/animal_name"
                 android:inputType="textCapWords"
                 android:textColorHint="@color/darkGreen"
                 android:textSize="15sp"

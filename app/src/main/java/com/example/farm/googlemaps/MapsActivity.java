@@ -152,8 +152,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
      * This is where we can add markers or lines, add listeners or move the camera. In this case,
      * we just add a marker near Sydney, Australia.
      * If Google Play services is not installed on the device, the user will be prompted to install
@@ -191,7 +189,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if(currentLocationmMarker != null)
         {
             currentLocationmMarker.remove();
-
         }
         Log.d("lat = ",""+latitude);
         LatLng latLng = new LatLng(location.getLatitude() , location.getLongitude());
@@ -257,7 +254,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Toast.makeText(MapsActivity.this, "Showing Nearby Hospitals", Toast.LENGTH_SHORT).show();
                 break;
 
-
             case R.id.B_mechanic:
                 mMap.clear();
                 String feed = "car_repair";
@@ -281,7 +277,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
 
             case R.id.B_send_location:
-                //Check if location is available other wise will fetch location
                 if (lastlocation == null) {
                     Toast.makeText(MapsActivity.this,"Loading current location resend again", Toast.LENGTH_LONG).show();
                     checkLocationPermission();
@@ -292,7 +287,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         final List<Address> fromLocation = geocoder.getFromLocation(lastlocation.getLatitude(), lastlocation.getLongitude(), 1);
                         if(fromLocation != null && fromLocation.size() != 0)
                         {
-                            //Help-Comment (Send push notification to all users other then me of current location to find help)
+                            //Send push notification to all users other then me of current location to find help
                             FirebaseNotificationHelper.initialize(getString(R.string.server_key))
                                     .defaultJson(false, getJsonBody(fromLocation.get(0)))
                                     .setCallBack(new FirebaseNotiCallBack() {
@@ -300,7 +295,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                         public void success(String s) {
                                             showMessage(MapsActivity.this, fromLocation.get(0).getAddressLine(0)+" sent to all user");
                                         }
-
                                         @Override
                                         public void fail(String s) {
                                             showMessage(MapsActivity.this, "Unable to sent "+fromLocation.get(0).getAddressLine(0)+" due to " + s);
@@ -308,7 +302,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     })
                                     .receiverFirebaseToken("/topics/" + getString(R.string.topic))
                                     .send();
-
                         }
                     } catch (IOException e) {
                         e.printStackTrace();

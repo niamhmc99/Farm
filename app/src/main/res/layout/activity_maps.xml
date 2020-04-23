@@ -20,6 +20,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:ems="10"
+            android:fontFamily="@font/libre_baskerville"
             android:hint="@string/name"
             android:importantForAutofill="no"
             android:inputType="textPersonName" />
@@ -39,6 +40,7 @@
             android:layout_toRightOf="@+id/TF_location"
             android:backgroundTint="@color/blue"
             android:textColor="@color/white"
+            android:fontFamily="@font/libre_baskerville_bold"
             android:onClick="onClick"
             android:text="@string/search" />
 
@@ -53,17 +55,22 @@
             android:backgroundTint="@color/green"
             android:onClick="onClick"
             android:text="@string/hospitals"
+            android:fontFamily="@font/libre_baskerville_bold"
             android:textColor="@color/white"
             tools:ignore="UnusedAttribute" />
 
         <Button
             android:id="@+id/B_mechanic"
-            android:layout_width="120dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/TF_location"
+            android:layout_marginStart="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="0dp"
             android:layout_toEndOf="@+id/B_hopistals"
             android:layout_toRightOf="@+id/B_hopistals"
             android:backgroundTint="@color/green"
+            android:fontFamily="@font/libre_baskerville_bold"
             android:onClick="onClick"
             android:text="@string/mechanics"
             android:textColor="@color/white"
@@ -71,51 +78,56 @@
 
         <Button
             android:id="@+id/B_vets"
-            android:layout_width="120dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/TF_location"
+            android:layout_marginStart="3dp"
+            android:layout_marginLeft="3dp"
             android:layout_toEndOf="@+id/B_mechanic"
             android:layout_toRightOf="@+id/B_mechanic"
             android:backgroundTint="@color/green"
+            android:fontFamily="@font/libre_baskerville_bold"
             android:onClick="onClick"
             android:text="@string/vets"
             android:textColor="@color/white"
             tools:ignore="UnusedAttribute" />
     </RelativeLayout>
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_below="@id/search_rel">
-
-    <fragment
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="431dp"
-        tools:context="com.example.farm.googlemaps.MapsActivity" />
+        android:layout_height="523dp"
+        android:layout_below="@id/search_rel"
+        android:background="@color/blue"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/B_send_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/blue"
-        android:onClick="onClick"
-        android:textColor="@color/white"
-        android:text="@string/search_for_help"
-        tools:ignore="UnusedAttribute" />
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="452dp"
+            tools:context="com.example.farm.googlemaps.MapsActivity" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation_view"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_below="@id/B_send_location"
-        app:itemBackground="@color/green"
-        app:itemIconTint="@drawable/item_selected"
-        app:itemTextColor="@drawable/item_selected"
-        app:menu="@menu/bottom_nav_menu"
-        tools:ignore="NotSibling,ObsoleteLayoutParam" />
-</LinearLayout>
+        <Button
+            android:id="@+id/B_send_location"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:background="@color/blue"
+            android:onClick="onClick"
+            android:fontFamily="@font/libre_baskerville_bold"
+            android:text="@string/search_for_help"
+            android:textColor="@color/white"
+            tools:ignore="UnusedAttribute" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation_view"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:layout_below="@id/B_send_location"
+            app:itemBackground="@color/green"
+            app:itemIconTint="@drawable/item_selected"
+            app:itemTextColor="@drawable/item_selected"
+            app:menu="@menu/bottom_nav_menu"
+            tools:ignore="NotSibling,ObsoleteLayoutParam" />
+    </LinearLayout>
 
 </RelativeLayout>

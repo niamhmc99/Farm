@@ -15,6 +15,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,11 @@ public class BeefEmissionResultActivity extends AppCompatActivity {
        // pieChart.setData(pieData);
 
         Intent intent = getIntent();
+
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        decimalFormat.setGroupingUsed(true);
+        decimalFormat.setGroupingSize(3);
+
         numberOfBullsAmount = intent.getIntExtra("numberOfBulls",0);
         numberOfCowsAmount= intent.getIntExtra("numberOfCows",0);
         totalBeefEmissionsAmount = intent.getDoubleExtra("totalBeefEmissions",0);
@@ -40,10 +46,10 @@ public class BeefEmissionResultActivity extends AppCompatActivity {
         totalBullEmissionAmount = intent.getDoubleExtra("totalBullEmissions",0);
 
         totalBullEmissions = findViewById(R.id.totalBullEmissions);
-        totalBullEmissions.setText(totalBullEmissionAmount.toString());
+        totalBullEmissions.setText(decimalFormat.format(totalBullEmissionAmount));
 
         totalCowEmissions = findViewById(R.id.totalCowEmissions);
-        totalCowEmissions.setText(totalCowEmissionsAmount.toString());
+        totalCowEmissions.setText(decimalFormat.format(totalCowEmissionsAmount));
 
         noOfBulls = findViewById(R.id.noBulls);
         noOfBulls.setText(String.valueOf(numberOfBullsAmount));
@@ -52,9 +58,11 @@ public class BeefEmissionResultActivity extends AppCompatActivity {
         noOfCows.setText(String.valueOf(numberOfCowsAmount));
 
         totalBeefEmissions = findViewById(R.id.totalBeefEmissions);
-        totalBeefEmissions.setText(totalBeefEmissionsAmount.toString());
+        totalBeefEmissions.setText(decimalFormat.format(totalBeefEmissionsAmount));
 
-        setPieChartData();
+        if (totalBeefEmissionsAmount>0) {
+            setPieChartData();
+        }
 
         findViewById(R.id.waysToReduce).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -18,6 +18,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class DairyEmissionResultActivity extends AppCompatActivity {
@@ -45,6 +46,10 @@ TextView numCows, averageMilkYieldPA, totalDairyEmissionsPA;
 
         Intent intent = getIntent();
 
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        decimalFormat.setGroupingUsed(true);
+        decimalFormat.setGroupingSize(3);
+
 
         int numberOfCows = intent.getIntExtra("NumberDairyCows",0);
         int averageMilkYield= intent.getIntExtra("AverageMilkYield",0);
@@ -52,7 +57,7 @@ TextView numCows, averageMilkYieldPA, totalDairyEmissionsPA;
         double totalEmissionsPA= intent.getDoubleExtra("TotalEmissionsPA",0);
 
         totalDairyEmissionsPA = findViewById(R.id.totalDairyEmissionsPA);
-        totalDairyEmissionsPA.setText(String.valueOf(totalEmissionsPA));
+        totalDairyEmissionsPA.setText(decimalFormat.format(totalEmissionsPA));
 
         numCows = findViewById(R.id.numCows);
         numCows.setText(String.valueOf(numberOfCows));

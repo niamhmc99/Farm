@@ -40,7 +40,7 @@ public class ToDoListAdapter extends FirestoreRecyclerAdapter<Task, ToDoListAdap
     protected void onBindViewHolder(@NonNull TaskViewHolder holder, int i, @NonNull Task task) {
         holder.taskTextView.setText(task.getText());
         holder.checkBox.setChecked(task.getCompleted());
-        CharSequence dateCharSeq = DateFormat.format("EEEE, MMM d, yyyy h:mm:ss a", task.getCreated().toDate());
+        CharSequence dateCharSeq = DateFormat.format("EEEE, MMM d, yyyy h:mm a", task.getCreated().toDate());
         holder.dateTextView.setText(dateCharSeq);
     }
 
@@ -68,7 +68,6 @@ public class ToDoListAdapter extends FirestoreRecyclerAdapter<Task, ToDoListAdap
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     DocumentSnapshot snapshot = getSnapshots().getSnapshot(getAdapterPosition());
                     taskListener.handleEditTask(snapshot);
                 }
@@ -80,7 +79,6 @@ public class ToDoListAdapter extends FirestoreRecyclerAdapter<Task, ToDoListAdap
         }
     }
 
-    //implemented in activity
     public interface TaskListener {
          void handleCheckChanged(boolean isChecked, DocumentSnapshot snapshot);
          void handleEditTask(DocumentSnapshot snapshot);

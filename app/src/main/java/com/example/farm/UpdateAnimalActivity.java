@@ -227,7 +227,6 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
 
 
     public void updateAnimal(View view) {
-
         final String strTag = editTextTagNumberUpdate.getText().toString().trim();
         final String strName = editTextAnimalNameUpdate.getText().toString().trim();
         final String strDob = editTextDobUpdate.getText().toString().trim();
@@ -284,13 +283,9 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
     private void updateFirestore(String downloadUrl,String strTag, String strName, String strDob, String strGender, String strBreed, String strDam, String strCalvingDif, String strAiOrStockbull, String strSire,String strInCalve){
 
 
-    if(!hasValidationErrors(strTag, strName, strDob, strGender, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire))
-
-    {
-
+    if(!hasValidationErrors(strTag, strName, strDob, strGender, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire)) {
         db.collection("animals").document(docId)
                 .update(
-
                         "tagNumber", strTag,
                         "animalName", strName,
                         "dob", strDob,
@@ -316,7 +311,6 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
             }
         });
     }
-
 }
 
     private void addItemsOnSpinnerCalvingDiff() {
@@ -374,10 +368,8 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
     private void setAnimalImage(String animalImageUrl)
     {
         animalProfilePic= findViewById(R.id.animal_image);
-
         RequestOptions placeholderOption= new RequestOptions();
         placeholderOption.placeholder(R.drawable.animalsmall);
-
         //Preconditions.checkNotNull(mContext); -- this is throwing null pointer exception
         Glide.with(this)
                 .setDefaultRequestOptions(placeholderOption).

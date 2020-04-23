@@ -39,13 +39,13 @@
             android:id="@+id/imageAnimalProfilePic"
             android:layout_width="179dp"
             android:layout_height="173dp"
-            android:layout_marginTop="32dp"
             android:layout_gravity="center"
+            android:layout_marginTop="32dp"
             android:background="@color/white"
-            android:shape="ring"
+            android:contentDescription="@string/insert_animal"
             android:scaleType="fitXY"
-            android:src="@drawable/animalsmall"
-            android:contentDescription="@string/insert_animal" />
+            android:shape="ring"
+            android:src="@drawable/animalsmall" />
 
         <TextView
             android:id="@+id/textViewTagNumber"
@@ -55,9 +55,10 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
             android:ellipsize="end"
+            android:fontFamily="@font/libre_baskerville_bold"
             android:maxLines="1"
             android:text="@string/tag_number"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/darkGreen"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -67,9 +68,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginLeft="15dp"
-            android:text="@string/name"
-            android:textColor="@color/colorBlack"
-            android:textSize="18sp"
+            android:fontFamily="@font/libre_baskerville"
+            android:text="@string/animal_name"
+            android:textColor="@color/darkGreen"
+            android:textSize="16sp"
             android:textStyle="normal"
             tools:ignore="UnknownId" />
 
@@ -80,9 +82,10 @@
             android:layout_marginStart="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="0dp"
+            android:fontFamily="@font/libre_baskerville"
             android:text="@string/d_o_b"
-            android:textColor="@color/colorBlack"
-            android:textSize="18sp"
+            android:textColor="@color/darkGreen"
+            android:textSize="16sp"
             android:textStyle="normal" />
 
         <TextView
@@ -91,43 +94,46 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginLeft="15dp"
+            android:fontFamily="@font/libre_baskerville"
             android:text="@string/breed"
-            android:textColor="@color/colorBlack"
-            android:textSize="18sp"
+            android:textColor="@color/darkGreen"
+            android:textSize="16sp"
             android:textStyle="normal"
             tools:ignore="UnknownId" />
 
-    <LinearLayout
-        android:id="@+id/llInCalve"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textInseminationDate"
+        <LinearLayout
+            android:id="@+id/checkboxInCalve"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:text="@string/breed"
-            android:textColor="@color/colorBlack"
-            android:textSize="18sp"
-            android:textStyle="normal"
-            tools:ignore="UnknownId" />
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        <TextView
-            android:id="@+id/textCalveDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:text="@string/breed"
-            android:textColor="@color/colorBlack"
-            android:textSize="18sp"
-            android:textStyle="normal"
-            tools:ignore="UnknownId" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textInseminationDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/libre_baskerville"
+                android:text="@string/breed"
+                android:textColor="@color/darkGreen"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                tools:ignore="UnknownId" />
+
+            <TextView
+                android:id="@+id/textCalveDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/libre_baskerville"
+                android:text="@string/breed"
+                android:textColor="@color/darkGreen"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                tools:ignore="UnknownId" />
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -110,22 +110,18 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
                 Intent intent0 = new Intent(ToDoListActivity.this, MainActivity.class);
                 startActivity(intent0);
                 break;
-
             case R.id.ic_animals:
                 Intent intent1 = new Intent(ToDoListActivity.this, AnimalActivity.class);
                 startActivity(intent1);
                 break;
-
             case R.id.ic_nearbyPlaces:
                 Intent intent2 = new Intent(ToDoListActivity.this, MapsActivity.class);
                 startActivity(intent2);
                 break;
-
             case R.id.ic_vetApp:
                 Intent intent3 = new Intent(ToDoListActivity.this, VetActivity.class);
                 startActivity(intent3);
                 break;
-
             case R.id.ic_emissions:
                 Intent intent4 = new Intent(ToDoListActivity.this, EmissionsActivity.class);
                 startActivity(intent4);
@@ -150,21 +146,17 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
             recyclerView.setHasFixedSize(true);
             toDoListAdapter = new ToDoListAdapter(options, this);
             recyclerView.setAdapter(toDoListAdapter);
-            toDoListAdapter.startListening();//listen real time updates
-
+            toDoListAdapter.startListening();
             ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
             itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     @Override
     public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-        //called from on start method
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
-
             Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
             setUpRecyclerView(firebaseAuth.getCurrentUser());
-
         } else {
             Log.d(TAG, "onAuthStateChanged:signed_out");
             Intent intent = new Intent(ToDoListActivity.this, LoginActivity.class);
@@ -173,12 +165,8 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
             finish();
             return;
         }
-
-
     }
 
-
-    //for the recycler view
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -189,7 +177,6 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             if (direction == ItemTouchHelper.LEFT) {
                 Toast.makeText(ToDoListActivity.this, "Deleting Task", Toast.LENGTH_SHORT).show();
-                //delete item if swiped left
                 ToDoListAdapter.TaskViewHolder taskViewHolder = (ToDoListAdapter.TaskViewHolder) viewHolder;
                 taskViewHolder.deleteItem();
             }
@@ -205,7 +192,6 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
         }
     };
 
-    //interface method
     @Override
     public void handleCheckChanged(boolean isChecked, DocumentSnapshot snapshot) {
         Log.d(TAG, "handleCheckChanged: " + isChecked);
@@ -256,7 +242,6 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
     public void handleDeleteItem(DocumentSnapshot snapshot) {
         final DocumentReference documentReference = snapshot.getReference();
         final Task task = snapshot.toObject(Task.class);
-
         documentReference.delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -271,8 +256,7 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
                     public void onClick(View view) {
                         documentReference.set(task);
                     }
-                })
-                .show();
+                }).show();
     }
 
     @Override
@@ -295,13 +279,13 @@ public class ToDoListActivity extends AppCompatActivity implements FirebaseAuth.
         super.onResume();
         if (toDoListAdapter != null) {
             toDoListAdapter.notifyDataSetChanged();
-        }    }
+        }
+    }
 
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menumainopts, menu);
         return true;
-
     }
 
     @Override

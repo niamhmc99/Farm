@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/blue_orange"
-    tools:context=".WeatherActivity2">
+    android:background="@drawable/orange_blue_cropped"
+    tools:context=".WeatherActivity">
 
     <RelativeLayout
         android:id="@+id/mainContainer"
@@ -29,6 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Dublin"
+                android:fontFamily="@font/libre_baskerville_bold"
                 android:textColorHighlight="@color/colorBlack"
                 android:textSize="36dp"
                 android:textStyle="bold" />
@@ -37,16 +38,17 @@
                 android:id="@+id/updated_at"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/libre_baskerville"
                 android:text="12 Decemember 2019, 10:08 AM"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
 
         <LinearLayout
             android:id="@+id/overviewContainer"
-            android:layout_width="353dp"
-            android:layout_height="202dp"
+            android:layout_width="360dp"
+            android:layout_height="194dp"
             android:layout_centerInParent="true"
             android:orientation="vertical">
 
@@ -55,6 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="@font/libre_baskerville"
                 android:text="Clear Sky"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -64,9 +67,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="sans-serif-thin"
+                android:fontFamily="@font/libre_baskerville_bold"
+
                 android:text="09°C"
-                android:textSize="90dp"
+                android:textSize="80sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -79,6 +83,7 @@
                     android:id="@+id/temp_min"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/libre_baskerville"
                     android:text="Min Temp: 05:05 AM"
                     android:textStyle="bold" />
 
@@ -89,7 +94,8 @@
                 <TextView
                     android:id="@+id/temp_max"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/libre_baskerville"
                     android:text="Max Temp: 05:05 PM"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -133,6 +139,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/sunrise"
+                        android:fontFamily="@font/libre_baskerville"
                         android:textSize="12sp" />
 
                     <TextView
@@ -140,6 +147,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="06:40 AM"
+                        android:fontFamily="@font/libre_baskerville"
                         android:textSize="14dp" />
                 </LinearLayout>
 
@@ -170,6 +178,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Sunset"
+                        android:fontFamily="@font/libre_baskerville"
                         android:textSize="12dp" />
 
                     <TextView
@@ -177,6 +186,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="06:40 AM"
+                        android:fontFamily="@font/libre_baskerville"
                         android:textSize="14dp" />
                 </LinearLayout>
 
@@ -207,6 +217,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/wind"
+                        android:fontFamily="@font/libre_baskerville"
                         android:textSize="12sp" />
 
                     <TextView
@@ -214,6 +225,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/_06_40_am"
+                        android:fontFamily="@font/libre_baskerville"
                         android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -252,6 +264,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/pressure"
+                        android:fontFamily="@font/libre_baskerville"
                         android:textSize="12sp" />
 
                     <TextView
@@ -259,6 +272,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="06:40 AM"
+                        android:fontFamily="@font/libre_baskerville"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -289,6 +303,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/humidity"
+                        android:fontFamily="@font/libre_baskerville"
                         android:textSize="12sp" />
 
                     <TextView
@@ -296,6 +311,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="06:40 AM"
+                        android:fontFamily="@font/libre_baskerville"
                         android:textSize="14sp" />
 
 

@@ -5,7 +5,7 @@
     <string name="animals">Animals </string>
     <string name="invoiceReceipt">Invoice/ Receipt </string>
     <string name="employees">Employees </string>
-    <string name="vets">Vets </string>
+    <string name="vets">Vet Appointments </string>
     <string name="calvingDifficulty_prompt">Select Calving Difficulty</string>
     <string name="gender_prompt">Select Gender</string>
     <string name="aiStockBull_prompt">Select AI/ Stock Bull</string>
@@ -95,7 +95,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="create_password">Create Password</string>
     <string name="email_address">Email Address</string>
-    <string name="already_registered_login_here">Already Registered? <u>Login Here.</u></string>
+    <string name="already_registered_login_here">Already Registered? <u><b>Login Here.</b></u></string>
     <string name="sign_up">Sign Up</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
@@ -111,6 +111,7 @@
     <string name="title">Title</string>
     <string name="search_for_help">Send Location</string>
     <string name="date_of_appointment">Date of Appointment</string>
+    <string name="animal_name">Name</string>
 
 
 </resources>

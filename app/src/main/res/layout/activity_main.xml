@@ -61,15 +61,6 @@
             android:layout_marginTop="32dp"
             android:layout_marginRight="20dp">
 
-<!--            <TextView-->
-<!--                android:id="@+id/txtViewFileFarm"-->
-<!--                android:layout_width="357dp"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:fontFamily="@font/fredericka_the_great"-->
-<!--                android:gravity="start"-->
-<!--                android:text="@string/file_a_farm"-->
-<!--                android:textColor="@color/darkGreen"-->
-<!--                android:textSize="60sp" />-->
         </RelativeLayout>
 
         <GridLayout
@@ -370,6 +361,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:itemIconTint="@color/green"
+        android:background="@color/white"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -98,7 +98,7 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
             textViewBreed = itemView.findViewById(R.id.textViewBreed);
             textInseminationDate = itemView.findViewById(R.id.textInseminationDate);
             textCalveDate = itemView.findViewById(R.id.textCalveDate);
-            llInCalve = itemView.findViewById(R.id.llInCalve);
+            llInCalve = itemView.findViewById(R.id.checkboxInCalve);
             animalProfilePic = itemView.findViewById(R.id.imageAnimalProfilePic);
             //  animalRegisterTimestamp = itemView.findViewById(R.id.animalRegisterTimestamp);
             itemView.setOnClickListener(new View.OnClickListener() {

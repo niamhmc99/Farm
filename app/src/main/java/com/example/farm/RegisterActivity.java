@@ -91,10 +91,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (!task.isSuccessful()) {
-                                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                         Toast.makeText(RegisterActivity.this, "SignUp UnSuccessful, Please Try Again ", Toast.LENGTH_LONG).show();
                                     } else {
-                                        // Sign in success, update UI with the signed-in user's information
                                         Log.d(TAG, "createUserWithEmail:success");
                                         saveUser();
                                         FirebaseUser user = auth.getCurrentUser();
@@ -158,10 +156,6 @@ public class RegisterActivity extends AppCompatActivity {
                                             Log.w(TAG, "Error adding user", e);
                                         }
                                     });
-                        }
-
-    private void makeSnackBarMessage(String message) {
-        Snackbar.make(linearLayout, message, Snackbar.LENGTH_SHORT).show();
     }
 
 

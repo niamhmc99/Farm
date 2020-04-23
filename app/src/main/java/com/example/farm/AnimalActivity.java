@@ -159,9 +159,6 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
 
-                //adapter.deleteItem(viewHolder.getAdapterPosition());
-                // Toast.makeText(AnimalActivity.this, "Animal Has Been Deleted from Herd.", Toast.LENGTH_SHORT).show();
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(AnimalActivity.this);
                 builder.setTitle("Are you sure about this?");
                 builder.setMessage("Deletion is permanent...");
@@ -325,39 +322,38 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
-                final String contents = intent.getStringExtra("SCAN_RESULT");
-                //Fetching data of related animal by data scanned from barcode)
-                db.collection("animals").whereEqualTo("user_id",user_id).whereEqualTo("tagNumber",contents).get().addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        showMessage(AnimalActivity.this,"Animal with barcode " + contents + " not found within the herd");
-                    }
-                })  .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if (!queryDocumentSnapshots.isEmpty()) {
-                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                            for (DocumentSnapshot d : list) {
-                                //convert d to our animal object
-                                Animal a = d.toObject(Animal.class);
-                                //=(Dialog to show animal data)
-                                AnimalDialogFragment animalDialogFragment=new AnimalDialogFragment();
-                                animalDialogFragment.setAnimal(a);
-                                animalDialogFragment.show(getSupportFragmentManager(), AnimalDialogFragment.class.getSimpleName());
-                                break;
+                final String tagNumberResult = intent.getStringExtra("SCAN_RESULT");
+                db.collection("animals")
+                        .whereEqualTo("user_id",user_id)
+                        .whereEqualTo("tagNumber",tagNumberResult)
+                        .get().addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                            showMessage(AnimalActivity.this,"Animal with barcode " + tagNumberResult + " not found within the herd");
                             }
-                            if(list.size() == 0) {
-                                showMessage(AnimalActivity.this,"Animal with barcode " + contents + " not found within the herd");
+                        })  .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                if (!queryDocumentSnapshots.isEmpty()) {
+                                List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                                for (DocumentSnapshot d : list) {
+                                    Animal a = d.toObject(Animal.class);
+                                    AnimalDialogFragment animalDialogFragment=new AnimalDialogFragment();
+                                    animalDialogFragment.setAnimal(a);
+                                    animalDialogFragment.show(getSupportFragmentManager(), AnimalDialogFragment.class.getSimpleName());
+                                    break;
+                                }
+                                    if(list.size() == 0) {
+                                        showMessage(AnimalActivity.this,"Animal with barcode " + tagNumberResult + " not found within the herd");
+                                     }
+                                }
+                                else {
+                                    showMessage(AnimalActivity.this,"Animal with barcode " + tagNumberResult + " not found");
+                                }
                             }
-                        }
-                        else {
-                            showMessage(AnimalActivity.this,"Animal with barcode " + contents + " not found");
-                        }
-                    }
-                });
+                        });
             } else if (resultCode == RESULT_CANCELED) {
                 Log.d(TAG, "RESULT_CANCELED");
             }

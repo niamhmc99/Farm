@@ -345,16 +345,13 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                 animalMap.put(KEY_IN_CALVE, "1");
                 animalMap.put(KEY_DOI,textViewDateOfInsemination.getText().toString());
                 animalMap.put(KEY_DOC,textViewDateCalculatedCalveAndDelivery.getText().toString());
-            }
-            else
-            {
+            } else {
                 animalMap.put(KEY_IN_CALVE, "0");
                 animalMap.put(KEY_DOI,"");
                 animalMap.put(KEY_DOC,"");
              }
 
             if (!hasValidationErrors(strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire) && !checkingIfTagNumberExist1(strTag)){
-
 
                 firestoreDB.collection("animals")
                         .add(animalMap)
@@ -373,11 +370,9 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
                                                         Log.w(TAG, "Error adding animal into herd", e);
-                                                        Toast.makeText(InsertAnimalActivity.this, "(FIRESTORE Error) : " + e, Toast.LENGTH_LONG).show();
-                                                    }
+                                                        Toast.makeText(InsertAnimalActivity.this, "(FIRESTORE Error) : " + e, Toast.LENGTH_LONG).show(); }
                                                 });
             }
-
             addanimalProgress.setVisibility(View.INVISIBLE);
         }
 
@@ -586,7 +581,6 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         return date;
     }
 
-    //Alarm for notification will using this
     private void setAlarm(String strName, String strTag)
     {
         if(checkBoxInCalve.isChecked() && !textViewDateOfInsemination.getText().toString().equals(getString(R.string.date_of_insemination))) {

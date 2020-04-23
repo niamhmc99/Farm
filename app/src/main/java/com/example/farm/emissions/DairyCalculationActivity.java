@@ -79,11 +79,8 @@ public class DairyCalculationActivity extends AppCompatActivity implements Botto
 
         int averageMilkYield = Integer.parseInt(avgMilkYield);
 
-       double oneDairyCowEmissionsPA =  averageMilkYield * 1039 / 1000;
+       double oneDairyCowEmissionsPA =  averageMilkYield * 1309 / 1000;
        double totalDairyEmissionsPA = oneDairyCowEmissionsPA * numberDairyCows;
-
-
-
 
            Intent intent = new Intent(DairyCalculationActivity.this, DairyEmissionResultActivity.class);
            intent.putExtra("NumberDairyCows", numberDairyCows);
@@ -91,9 +88,6 @@ public class DairyCalculationActivity extends AppCompatActivity implements Botto
            intent.putExtra("OneCowEmissionsPA", oneDairyCowEmissionsPA);
            intent.putExtra("TotalEmissionsPA", totalDairyEmissionsPA);
            startActivity(intent);
-
-           System.out.println("One Dairy Emissions ***" + oneDairyCowEmissionsPA);
-           System.out.println("Total Dairy Emissions ***" + totalDairyEmissionsPA);
 
            Toast.makeText(DairyCalculationActivity.this, "Total Average Dairy Emissions Per Annum: " + totalDairyEmissionsPA, Toast.LENGTH_LONG);
        }
