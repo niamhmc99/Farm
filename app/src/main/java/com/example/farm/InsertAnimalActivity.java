@@ -80,9 +80,9 @@ import static com.example.farm.dueDateAlarm.UtilHelper.getNotifyDateStr;
 
 public class InsertAnimalActivity extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemSelectedListener {
     private final String  TAG= "InsertAnimalActivity";
-    private EditText  editTextTagNumber, editTextAnimalName, editTextDob, editTextDam, editTextsire, editTextBreed;
+    private EditText  editTextTagNumber, editTextAnimalName, editTextDob, editTextDam, editTextsire, editTextBreed, editTextDateOfInsemination;
     private Button btnInsertAnimal;
-    private TextView textViewDateOfInsemination,textViewDateCalculatedCalveAndDelivery, textViewDob;
+    private TextView textViewDateCalculatedCalveAndDelivery;
     private ProgressBar addanimalProgress;
     private Spinner spinnerGender, spinnerAiStockBull, spinnerCalvingDiff;
     private CheckBox checkBoxInCalve;
@@ -132,7 +132,6 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         editTextDob = findViewById(R.id.editTextDob);
         editTextDob.setFocusable(false);
         editTextDob.setKeyListener(null);
-        textViewDob = findViewById(R.id.textViewDob);
         spinnerGender = findViewById(R.id.spinnerGender);
         spinnerCalvingDiff = findViewById(R.id.spinnerCalvingDiff);
         editTextsire =findViewById(R.id.editTextSire);
@@ -143,7 +142,9 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         btnInsertAnimal = findViewById(R.id.btnInsertAnimal);
         addanimalProgress = findViewById(R.id.progressBar);
         checkBoxInCalve = findViewById(R.id.checkBoxInCalve);
-        textViewDateOfInsemination = findViewById(R.id.textViewDateOfInsemination);
+        editTextDateOfInsemination = findViewById(R.id.textViewDateOfInsemination);
+        editTextDateOfInsemination.setFocusable(false);
+        editTextDateOfInsemination.setKeyListener(null);
         textViewDateCalculatedCalveAndDelivery = findViewById(R.id.textViewDateCalculatedCalveAndDelivery);
 
         //Check point for in calve check or uncheck
@@ -151,17 +152,16 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b) {
-                    textViewDateOfInsemination.setVisibility(View.VISIBLE);
-                    textViewDateOfInsemination.setText("Click here to enter Insemination Date");
+                    editTextDateOfInsemination.setVisibility(View.VISIBLE);
                     textViewDateCalculatedCalveAndDelivery.setVisibility(View.GONE);
                 }
                 else {
-                    textViewDateOfInsemination.setVisibility(View.GONE);
+                    editTextDateOfInsemination.setVisibility(View.GONE);
                     textViewDateCalculatedCalveAndDelivery.setVisibility(View.GONE);
                 }
             }
         });
-        textViewDateOfInsemination.setOnClickListener(new View.OnClickListener() {
+        editTextDateOfInsemination.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar now = Calendar.getInstance();
@@ -169,7 +169,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
                         String date = year+"-"+(monthOfYear+1)+"-"+dayOfMonth;
-                        textViewDateOfInsemination.setText(date);
+                        editTextDateOfInsemination.setText(date);
                         //Calculating Expected, delivery and notification date
                         textViewDateCalculatedCalveAndDelivery.setText("Expected Delivery date is on "+getDeliveryDate(date)+" and you will be notified on "+getNotifyDateStr(date));
                         textViewDateCalculatedCalveAndDelivery.setVisibility(View.VISIBLE);
@@ -202,9 +202,16 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position==1){
                     checkBoxInCalve.setVisibility(View.VISIBLE);
+                    editTextDateOfInsemination.setVisibility(View.VISIBLE);
+                    textViewDateCalculatedCalveAndDelivery.setVisibility(View.VISIBLE);
                 }
                 else{
+                    checkBoxInCalve.setChecked(false);
                     checkBoxInCalve.setVisibility(View.GONE);
+                    editTextDateOfInsemination.setText("");
+                    editTextDateOfInsemination.setVisibility(View.GONE);
+                    textViewDateCalculatedCalveAndDelivery.setText("");
+                    textViewDateCalculatedCalveAndDelivery.setVisibility(View.GONE);
                 }
             }
 
@@ -258,7 +265,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                 final String strBreed = editTextBreed.getText().toString().trim();
                 final String strSelectedAIStockBull = String.valueOf(spinnerAiStockBull.getSelectedItem());
                 final String strUserID = FirebaseAuth.getInstance().getCurrentUser().getUid().trim();
-                final String dateOfInsemination = textViewDateOfInsemination.getText().toString().trim();
+                final String dateOfInsemination = editTextDateOfInsemination.getText().toString().trim();
                 final boolean inCalve= checkBoxInCalve.isChecked();
                 animal.setTimeAdded(new Timestamp(new Date()));
                 final String strRegisteredTimestamp = String.valueOf(animal.getTimeAdded());
@@ -376,7 +383,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             animalMap.put(KEY_AiOrStockbull, strSelectedAIStockBull);
             animalMap.put(KEY_USERID, strUserID);
             animalMap.put(KEY_AnimalProfilePic, downloadUrl);
-             if(inCalve) {
+             if(inCalve && spinnerGender.getSelectedItemPosition()==1) {
                 animalMap.put(KEY_IN_CALVE, true);
                 animalMap.put(KEY_DOI,dateOfInsemination);
                 animalMap.put(KEY_DOC,textViewDateCalculatedCalveAndDelivery.getText().toString());
@@ -442,8 +449,8 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                 editTextBreed.setError("Breed of Animal is required");
                 makeSnackBarMessage("Please insert Animal Breed.");
                 return true;
-            } else if (inCalve && dateOfInsemination.equalsIgnoreCase("Click here to enter Insemination Date")){
-                textViewDateOfInsemination.setError("Date of Insemination is required");
+            } else if (inCalve && dateOfInsemination.isEmpty()){
+                editTextDateOfInsemination.setError("Date of Insemination is required");
                 makeSnackBarMessage("If inCalve is checked insemination date must be entered");
                 return true;
             }
@@ -562,18 +569,18 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
 
     private void setAlarm(String strName, String strTag)
     {
-        if(checkBoxInCalve.isChecked() && !textViewDateOfInsemination.getText().toString().equals(getString(R.string.date_of_insemination))) {
+        if(checkBoxInCalve.isChecked() && !editTextDateOfInsemination.getText().toString().equals(getString(R.string.date_of_insemination))) {
             Intent intent = new Intent(InsertAnimalActivity.this, OnReceive.class);
             intent.putExtra("title", "Calving Date notification");
-            intent.putExtra("message", strName + " " + strTag + " is due to calve in/on  " + getDeliveryDate(textViewDateOfInsemination.getText().toString()));
+            intent.putExtra("message", strName + " " + strTag + " is due to calve in/on  " + getDeliveryDate(editTextDateOfInsemination.getText().toString()));
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(InsertAnimalActivity.this, 2020, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             assert alarmManager != null;
             alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
-                    + (getNotifyDate(textViewDateOfInsemination.getText().toString()).getTime()-new Date().getTime()), pendingIntent);
-            Log.d("Alarm Date", "calving alarm "+ getNotifyDate(textViewDateOfInsemination.getText().toString()));
+                    + (getNotifyDate(editTextDateOfInsemination.getText().toString()).getTime()-new Date().getTime()), pendingIntent);
+            Log.d("Alarm Date", "calving alarm "+ getNotifyDate(editTextDateOfInsemination.getText().toString()));
         }
     }
 

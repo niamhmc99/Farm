@@ -111,7 +111,7 @@
                 app:met_floatingLabel="normal"
                 app:met_primaryColor="@color/darkGreen"
                 app:met_singleLineEllipsis="true" />
-            
+
             <TextView
                 android:id="@+id/txtViewSelectGender"
                 android:layout_width="258dp"
@@ -251,22 +251,28 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <TextView
+            <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/textViewDateOfInsemination"
                 android:layout_width="258dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/libre_baskerville"
-                android:text="@string/date_of_insemination"
-                android:textColor="@color/darkGreen"
-                android:textSize="18sp"
-                android:visibility="gone" />
+                android:hint="@string/date_of_insemination"
+                android:inputType="date"
+                android:textColorHint="@color/darkGreen"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:met_baseColor="@color/darkGreen"
+                app:met_floatingLabel="normal"
+                app:met_primaryColor="@color/darkGreen"
+                app:met_singleLineEllipsis="true" />
 
 
             <TextView
                 android:id="@+id/textViewDateCalculatedCalveAndDelivery"
-                android:layout_width="295dp"
-                android:layout_height="46dp"
+                android:layout_width="255dp"
+                android:layout_height="62dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"

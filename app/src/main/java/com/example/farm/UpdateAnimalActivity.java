@@ -42,10 +42,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -60,7 +57,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
 import static com.example.farm.dueDateAlarm.UtilHelper.getDeliveryDate;
@@ -68,11 +64,11 @@ import static com.example.farm.dueDateAlarm.UtilHelper.getNotifyDateStr;
 
 public class UpdateAnimalActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     private final String TAG = "UpdateAnimalActivity";
-    private EditText editTextTagNumberUpdate, editTextAnimalNameUpdate, editTextDobUpdate, editTextDamUpdate, editTextCalvingDifficultyUpdate, editTextSireUpdate, editTextAiORstockbullUpdate, editTextBreedUpdate;
+    private EditText editTextTagNumberUpdate, editTextAnimalNameUpdate, editTextDobUpdate, editTextDamUpdate, editTextSireUpdate, editTextBreedUpdate, editTextDateOfInsemination;
     private Button buttonUpdate;
     private Spinner spinnerGenderUpdate, spinnerCalvingDiffUpdate, spinnerAiStockBullUpdate;
     private String docId, animalImageUri;
-    private TextView textViewDateOfInsemination, textViewDateCalculatedCalveAndDelivery;
+    private TextView textViewDateCalculatedCalveAndDelivery;
     private ImageButton animalProfilePic;
     private Animal animal;
     private FirebaseAuth firebaseAuth;
@@ -115,7 +111,9 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
         spinnerAiStockBullUpdate = findViewById(R.id.spinnerAiStockBull);
         buttonUpdate = findViewById(R.id.buttonUpdateAnimal);
         checkBoxInCalve = findViewById(R.id.checkBoxInCalve);
-        textViewDateOfInsemination = findViewById(R.id.textViewDateOfInsemination);
+        editTextDateOfInsemination = findViewById(R.id.textViewDateOfInsemination);
+        editTextDateOfInsemination.setFocusable(false);
+        editTextDateOfInsemination.setKeyListener(null);
         textViewDateCalculatedCalveAndDelivery = findViewById(R.id.textViewDateCalculatedCalveAndDelivery);
         editTextTagNumberUpdate.setText(animal.getTagNumber());
         editTextAnimalNameUpdate.setText(animal.getAnimalName());
@@ -128,9 +126,9 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
         spinnerAiStockBullUpdate.setSelection(getIndex(spinnerAiStockBullUpdate, animal.getAiORstockbull()));
         checkBoxInCalve.setChecked(animal.getInCalve());
         if(animal.getInCalve()){
-            textViewDateOfInsemination.setVisibility(View.VISIBLE);
+            editTextDateOfInsemination.setVisibility(View.VISIBLE);
             textViewDateCalculatedCalveAndDelivery.setVisibility(View.VISIBLE);
-            textViewDateOfInsemination.setText(animal.getDoi());
+            editTextDateOfInsemination.setText(animal.getDoi());
             textViewDateCalculatedCalveAndDelivery.setText(animal.getDoc());
         }
         animalImageUri=  animal.getAnimalProfilePic();
@@ -157,18 +155,17 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b) {
-                    textViewDateOfInsemination.setVisibility(View.VISIBLE);
-                    textViewDateOfInsemination.setText("Click here to enter Insemination Date");
+                    editTextDateOfInsemination.setVisibility(View.VISIBLE);
                     textViewDateCalculatedCalveAndDelivery.setVisibility(View.GONE);
                 }
                 else {
-                    textViewDateOfInsemination.setVisibility(View.GONE);
+                    editTextDateOfInsemination.setVisibility(View.GONE);
                     textViewDateCalculatedCalveAndDelivery.setVisibility(View.GONE);
                 }
             }
         });
 
-        textViewDateOfInsemination.setOnClickListener(new View.OnClickListener() {
+        editTextDateOfInsemination.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar now = Calendar.getInstance();
@@ -176,7 +173,7 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
                         String date = year+"-"+(monthOfYear+1)+"-"+dayOfMonth;
-                        textViewDateOfInsemination.setText(date);
+                        editTextDateOfInsemination.setText(date);
                         //Calculating Expected, delivery and notification date
                         textViewDateCalculatedCalveAndDelivery.setText("Expected Delivery date is on "+getDeliveryDate(date)+" and you will be notified on "+getNotifyDateStr(date));
                         textViewDateCalculatedCalveAndDelivery.setVisibility(View.VISIBLE);
@@ -209,9 +206,16 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position==1){
                     checkBoxInCalve.setVisibility(View.VISIBLE);
+                    editTextDateOfInsemination.setVisibility(View.VISIBLE);
+                    textViewDateCalculatedCalveAndDelivery.setVisibility(View.VISIBLE);
                 }
                 else{
+                    checkBoxInCalve.setChecked(false);
                     checkBoxInCalve.setVisibility(View.GONE);
+                    editTextDateOfInsemination.setText("");
+                    editTextDateOfInsemination.setVisibility(View.GONE);
+                    textViewDateCalculatedCalveAndDelivery.setText("");
+                    textViewDateCalculatedCalveAndDelivery.setVisibility(View.GONE);
                 }
             }
 
@@ -304,8 +308,8 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
             editTextBreedUpdate.setError("Breed of Animal is Required");
             makeSnackBarMessage("Please insert Animal Breed.");
             return true;
-        } else if (checkBoxInCalve.isChecked() && dateOfInsemination.equalsIgnoreCase("Click here to enter Insemination Date")){
-            textViewDateOfInsemination.setError("Date of Insemination is required");
+        } else if (checkBoxInCalve.isChecked() && dateOfInsemination.isEmpty()){
+            editTextDateOfInsemination.setError("Date of Insemination is required");
             makeSnackBarMessage("If inCalve is checked insemination date must be entered");
             return true;
         }
@@ -326,7 +330,7 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
         final String strSire = editTextSireUpdate.getText().toString().trim();
         final String strBreed = editTextBreedUpdate.getText().toString().trim();
         final String strAiOrStockbull = String.valueOf(spinnerAiStockBullUpdate.getSelectedItemId());
-        final String dateOfInsemination= textViewDateOfInsemination.getText().toString().trim();
+        final String dateOfInsemination= editTextDateOfInsemination.getText().toString().trim();
         final String dateOfCalving= textViewDateCalculatedCalveAndDelivery.getText().toString().trim();
         final boolean inCalve = checkBoxInCalve.isChecked();
 
