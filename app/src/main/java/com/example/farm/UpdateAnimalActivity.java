@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -17,9 +18,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -52,11 +56,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
+
+import static com.example.farm.dueDateAlarm.UtilHelper.getDeliveryDate;
+import static com.example.farm.dueDateAlarm.UtilHelper.getNotifyDateStr;
 
 public class UpdateAnimalActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     private final String TAG = "UpdateAnimalActivity";
@@ -98,6 +106,8 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
         editTextAnimalNameUpdate = findViewById(R.id.editTextName);
         editTextDamUpdate = findViewById(R.id.editTextDAM);
         editTextDobUpdate = findViewById(R.id.editTextDob);
+        editTextDobUpdate.setFocusable(false);
+        editTextDobUpdate.setKeyListener(null);
         spinnerGenderUpdate = findViewById(R.id.spinnerGender);
         spinnerCalvingDiffUpdate = findViewById(R.id.spinnerCalvingDiff);
         editTextSireUpdate = findViewById(R.id.editTextSire);
@@ -117,6 +127,12 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
         editTextBreedUpdate.setText(animal.getBreed());
         spinnerAiStockBullUpdate.setSelection(getIndex(spinnerAiStockBullUpdate, animal.getAiORstockbull()));
         checkBoxInCalve.setChecked(animal.getInCalve());
+        if(animal.getInCalve()){
+            textViewDateOfInsemination.setVisibility(View.VISIBLE);
+            textViewDateCalculatedCalveAndDelivery.setVisibility(View.VISIBLE);
+            textViewDateOfInsemination.setText(animal.getDoi());
+            textViewDateCalculatedCalveAndDelivery.setText(animal.getDoc());
+        }
         animalImageUri=  animal.getAnimalProfilePic();
         setAnimalImage(animalImageUri);
 
@@ -134,6 +150,75 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
                     BringImagePicker();
                 }
             }
+
+        });
+
+        checkBoxInCalve.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b) {
+                    textViewDateOfInsemination.setVisibility(View.VISIBLE);
+                    textViewDateOfInsemination.setText("Click here to enter Insemination Date");
+                    textViewDateCalculatedCalveAndDelivery.setVisibility(View.GONE);
+                }
+                else {
+                    textViewDateOfInsemination.setVisibility(View.GONE);
+                    textViewDateCalculatedCalveAndDelivery.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        textViewDateOfInsemination.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar now = Calendar.getInstance();
+                new DatePickerDialog(UpdateAnimalActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                        String date = year+"-"+(monthOfYear+1)+"-"+dayOfMonth;
+                        textViewDateOfInsemination.setText(date);
+                        //Calculating Expected, delivery and notification date
+                        textViewDateCalculatedCalveAndDelivery.setText("Expected Delivery date is on "+getDeliveryDate(date)+" and you will be notified on "+getNotifyDateStr(date));
+                        textViewDateCalculatedCalveAndDelivery.setVisibility(View.VISIBLE);
+                    }
+                }, now
+                        .get(Calendar.YEAR), now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        editTextDobUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar dobCalendar = Calendar.getInstance();
+                new DatePickerDialog(UpdateAnimalActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                        String date = year+"-"+(monthOfYear+1)+"-"+dayOfMonth;
+                        editTextDobUpdate.setText(date);
+                    }
+                }, dobCalendar
+                        .get(Calendar.YEAR), dobCalendar.get(Calendar.MONTH),
+                        dobCalendar.get(Calendar.DAY_OF_MONTH)).show();
+
+            }
+        });
+
+        spinnerGenderUpdate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position==1){
+                    checkBoxInCalve.setVisibility(View.VISIBLE);
+                }
+                else{
+                    checkBoxInCalve.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                    checkBoxInCalve.setVisibility(View.GONE);
+                }
 
         });
 
@@ -173,7 +258,7 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
         return true;
     }
 
-    private boolean hasValidationErrors(String tagNumber, String animalName, String dob, String gender, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire) {
+    private boolean hasValidationErrors(String tagNumber, String animalName, String dob, String gender, String breed, String dam, String calvingDifficulty, String aiORstockbull, String sire, String dateOfInsemination) {
         if (tagNumber.trim().isEmpty()) {
             editTextTagNumberUpdate.setError("TagNumber is required");
             makeSnackBarMessage("Please insert Tag Number.");
@@ -219,7 +304,12 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
             editTextBreedUpdate.setError("Breed of Animal is Required");
             makeSnackBarMessage("Please insert Animal Breed.");
             return true;
-        } else {
+        } else if (checkBoxInCalve.isChecked() && dateOfInsemination.equalsIgnoreCase("Click here to enter Insemination Date")){
+            textViewDateOfInsemination.setError("Date of Insemination is required");
+            makeSnackBarMessage("If inCalve is checked insemination date must be entered");
+            return true;
+        }
+        else {
             return false;
         }
 
@@ -236,6 +326,8 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
         final String strSire = editTextSireUpdate.getText().toString().trim();
         final String strBreed = editTextBreedUpdate.getText().toString().trim();
         final String strAiOrStockbull = String.valueOf(spinnerAiStockBullUpdate.getSelectedItemId());
+        final String dateOfInsemination= textViewDateOfInsemination.getText().toString().trim();
+        final String dateOfCalving= textViewDateCalculatedCalveAndDelivery.getText().toString().trim();
         final boolean inCalve = checkBoxInCalve.isChecked();
 
         if (!TextUtils.isEmpty(strTag) && mainImageURI != null) {
@@ -266,7 +358,7 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     String downloadUrl = uri.toString();
-                                    updateFirestore(downloadUrl,strTag, strName, strDob, strGender, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire,inCalve);
+                                    updateFirestore(downloadUrl,strTag, strName, strDob, strGender, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire,inCalve,dateOfInsemination,dateOfCalving);
                                 }
                             });
                         } else {
@@ -276,14 +368,14 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
                 });
             }
         } else {
-            updateFirestore(animalImageUri,strTag, strName, strDob, strGender, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire,inCalve);
+            updateFirestore(animalImageUri,strTag, strName, strDob, strGender, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire,inCalve,dateOfInsemination,dateOfCalving);
         }
     }
 
-    private void updateFirestore(String downloadUrl,String strTag, String strName, String strDob, String strGender, String strBreed, String strDam, String strCalvingDif, String strAiOrStockbull, String strSire,boolean inCalve){
+    private void updateFirestore(String downloadUrl,String strTag, String strName, String strDob, String strGender, String strBreed, String strDam, String strCalvingDif, String strAiOrStockbull, String strSire,boolean inCalve,String dateOfInsemination,String dateOfCalving){
 
 
-    if(!hasValidationErrors(strTag, strName, strDob, strGender, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire)) {
+    if(!hasValidationErrors(strTag, strName, strDob, strGender, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire,dateOfInsemination)) {
         db.collection("animals").document(docId)
                 .update(
                         "tagNumber", strTag,
@@ -296,6 +388,8 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
                         "calvingDifficulty", strCalvingDif,
                         "breed", strBreed,
                         "inCalve", inCalve,
+                        "doi",dateOfInsemination,
+                        "doc",dateOfCalving,
                         "animalProfilePic", downloadUrl
                 )
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -370,7 +464,7 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
         animalProfilePic= findViewById(R.id.animal_image);
         RequestOptions placeholderOption= new RequestOptions();
         placeholderOption.placeholder(R.drawable.animalsmall);
-        //Preconditions.checkNotNull(mContext); -- this is throwing null pointer exception
+
         Glide.with(this)
                 .setDefaultRequestOptions(placeholderOption).
                 load(animalImageUrl).into(animalProfilePic);

@@ -17,6 +17,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -35,7 +36,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.farm.dueDateAlarm.OnReceive;
@@ -53,8 +53,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -65,26 +63,26 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 import java.util.UUID;
 
 import id.zelory.compressor.Compressor;
+
+import static com.example.farm.dueDateAlarm.UtilHelper.getDeliveryDate;
+import static com.example.farm.dueDateAlarm.UtilHelper.getNotifyDate;
+import static com.example.farm.dueDateAlarm.UtilHelper.getNotifyDateStr;
 
 
 public class InsertAnimalActivity extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemSelectedListener {
     private final String  TAG= "InsertAnimalActivity";
     private EditText  editTextTagNumber, editTextAnimalName, editTextDob, editTextDam, editTextsire, editTextBreed;
     private Button btnInsertAnimal;
-    private TextView textViewDateOfInsemination,textViewDateCalculatedCalveAndDelivery;
+    private TextView textViewDateOfInsemination,textViewDateCalculatedCalveAndDelivery, textViewDob;
     private ProgressBar addanimalProgress;
     private Spinner spinnerGender, spinnerAiStockBull, spinnerCalvingDiff;
     private CheckBox checkBoxInCalve;
@@ -132,6 +130,9 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         editTextAnimalName = findViewById(R.id.editTextName);
         editTextDam = findViewById(R.id.editTextDAM);
         editTextDob = findViewById(R.id.editTextDob);
+        editTextDob.setFocusable(false);
+        editTextDob.setKeyListener(null);
+        textViewDob = findViewById(R.id.textViewDob);
         spinnerGender = findViewById(R.id.spinnerGender);
         spinnerCalvingDiff = findViewById(R.id.spinnerCalvingDiff);
         editTextsire =findViewById(R.id.editTextSire);
@@ -151,7 +152,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b) {
                     textViewDateOfInsemination.setVisibility(View.VISIBLE);
-                    textViewDateOfInsemination.setText("Date of insemination");
+                    textViewDateOfInsemination.setText("Click here to enter Insemination Date");
                     textViewDateCalculatedCalveAndDelivery.setVisibility(View.GONE);
                 }
                 else {
@@ -176,6 +177,40 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                 }, now
                         .get(Calendar.YEAR), now.get(Calendar.MONTH),
                         now.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        editTextDob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar dobCalendar = Calendar.getInstance();
+                new DatePickerDialog(InsertAnimalActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                        String date = year+"-"+(monthOfYear+1)+"-"+dayOfMonth;
+                        editTextDob.setText(date);
+                    }
+                }, dobCalendar
+                        .get(Calendar.YEAR), dobCalendar.get(Calendar.MONTH),
+                        dobCalendar.get(Calendar.DAY_OF_MONTH)).show();
+
+            }
+        });
+
+        spinnerGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position==1){
+                    checkBoxInCalve.setVisibility(View.VISIBLE);
+                }
+                else{
+                    checkBoxInCalve.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                    checkBoxInCalve.setVisibility(View.GONE);
             }
         });
 
@@ -223,6 +258,8 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                 final String strBreed = editTextBreed.getText().toString().trim();
                 final String strSelectedAIStockBull = String.valueOf(spinnerAiStockBull.getSelectedItem());
                 final String strUserID = FirebaseAuth.getInstance().getCurrentUser().getUid().trim();
+                final String dateOfInsemination = textViewDateOfInsemination.getText().toString().trim();
+                final boolean inCalve= checkBoxInCalve.isChecked();
                 animal.setTimeAdded(new Timestamp(new Date()));
                 final String strRegisteredTimestamp = String.valueOf(animal.getTimeAdded());
 
@@ -257,7 +294,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                                        public void onSuccess(Uri uri)
                                         {
                                            String downloadUrl = uri.toString();
-                                            storeFirestore(downloadUrl, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID);
+                                            storeFirestore(downloadUrl, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID,inCalve,dateOfInsemination);
                                         }
                                     });
                                 }
@@ -268,7 +305,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                         });
                     }
                     } else {
-                        storeFirestore(null, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID);
+                        storeFirestore(null, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID,inCalve, dateOfInsemination);
                     }
                 }
             });
@@ -325,7 +362,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         return true;
     }
 
-    private void storeFirestore(String downloadUrl, final String strTag, final String strName, String strDob, String strSelectedGender, String strBreed, String strDam, String strSelectedCalvingDif, String strSelectedAIStockBull, String strSire, String strUserID) {
+    private void storeFirestore(String downloadUrl, final String strTag, final String strName, String strDob, String strSelectedGender, String strBreed, String strDam, String strSelectedCalvingDif, String strSelectedAIStockBull, String strSire, String strUserID,boolean inCalve,String dateOfInsemination) {
 
             final Map<String, Object> animalMap = new HashMap<>();
             animalMap.put(KEY_TAGNUMBER, strTag);
@@ -339,9 +376,9 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             animalMap.put(KEY_AiOrStockbull, strSelectedAIStockBull);
             animalMap.put(KEY_USERID, strUserID);
             animalMap.put(KEY_AnimalProfilePic, downloadUrl);
-             if(checkBoxInCalve.isChecked()) {
+             if(inCalve) {
                 animalMap.put(KEY_IN_CALVE, true);
-                animalMap.put(KEY_DOI,textViewDateOfInsemination.getText().toString());
+                animalMap.put(KEY_DOI,dateOfInsemination);
                 animalMap.put(KEY_DOC,textViewDateCalculatedCalveAndDelivery.getText().toString());
             } else {
                 animalMap.put(KEY_IN_CALVE, false);
@@ -349,7 +386,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                 animalMap.put(KEY_DOC,"");
              }
 
-            if ((!hasValidationErrors(strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire))){
+            if ((!hasValidationErrors(strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire,inCalve,dateOfInsemination))){
 
                 insertAnimal(animalMap,strName,strTag);
             }
@@ -359,11 +396,10 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
 
 
 
-        private boolean hasValidationErrors(String tagNumber, String animalName, String dob, String selectedGender, String breed, String dam, String selectedCalvingDifficulty, String selectedAIStockBull, String sire) {
+        private boolean hasValidationErrors(String tagNumber, String animalName, String dob, String selectedGender, String breed, String dam, String selectedCalvingDifficulty, String selectedAIStockBull, String sire,boolean inCalve,String dateOfInsemination) {
             if (tagNumber.trim().isEmpty()) {
                 editTextTagNumber.setError("Tag Number is required");
                 makeSnackBarMessage("Please insert Tag Number.");
-
                 return true;
             } else if (animalName.isEmpty()) {
                 editTextAnimalName.setError("Animal Name Required");
@@ -406,7 +442,12 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                 editTextBreed.setError("Breed of Animal is required");
                 makeSnackBarMessage("Please insert Animal Breed.");
                 return true;
-            } else {
+            } else if (inCalve && dateOfInsemination.equalsIgnoreCase("Click here to enter Insemination Date")){
+                textViewDateOfInsemination.setError("Date of Insemination is required");
+                makeSnackBarMessage("If inCalve is checked insemination date must be entered");
+                return true;
+            }
+            else {
                 return false;
             }
         }
@@ -517,61 +558,6 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
 
     private void makeSnackBarMessage( String message){
         Snackbar.make(constraintLayout, message, Snackbar.LENGTH_SHORT).show();
-    }
-
-    //Calculating insemination end of delivery date
-    private String getDeliveryDate(String dateInput) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setTimeZone(TimeZone.getDefault());
-        Date date;
-        try {
-            date = sdf.parse(dateInput);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            calendar.add(Calendar.DAY_OF_MONTH,283);
-            dateInput = sdf.format(calendar.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return dateInput;
-    }
-
-    //(Calculating notification date as string
-    private String getNotifyDateStr(String dateInput) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setTimeZone(TimeZone.getDefault());
-        Date date;
-        try {
-            date = sdf.parse(dateInput);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            calendar.add(Calendar.DAY_OF_MONTH,276); // 283 - 7 days = one week before expected due date
-            dateInput = sdf.format(calendar.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return dateInput;
-    }
-
-    //Calculating notification date
-    private Date getNotifyDate(String dateInput) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setTimeZone(TimeZone.getDefault());
-        Date date = null;
-        try {
-            date = sdf.parse(dateInput);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-//            calendar.add(Calendar.SECOND,10);
-            calendar.add(Calendar.DAY_OF_MONTH,276);
-            date = calendar.getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return date;
     }
 
     private void setAlarm(String strName, String strTag)

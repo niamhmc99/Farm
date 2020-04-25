@@ -31,7 +31,6 @@ public class BeefEmissionResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beef_emission_result);
         pieChart = findViewById(R.id.pieChartBeef);
-       // pieChart.setData(pieData);
 
         Intent intent = getIntent();
 

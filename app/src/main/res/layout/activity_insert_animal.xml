@@ -111,7 +111,7 @@
                 app:met_floatingLabel="normal"
                 app:met_primaryColor="@color/darkGreen"
                 app:met_singleLineEllipsis="true" />
-
+            
             <TextView
                 android:id="@+id/txtViewSelectGender"
                 android:layout_width="258dp"
