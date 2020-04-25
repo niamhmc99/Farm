@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (auth.getCurrentUser() == null) {
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+//                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     finish();
                 }
             }
@@ -193,7 +193,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_logout:
                 auth.signOut();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 break;
         }
         return true;

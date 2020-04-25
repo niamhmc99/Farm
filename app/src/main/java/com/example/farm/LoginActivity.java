@@ -29,7 +29,6 @@ public class LoginActivity extends AppCompatActivity{
     TextView textViewSignUp;
     FirebaseAuth mFirebaseAuth;
     FirebaseAuth.AuthStateListener mAuthStateListener;
-    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +45,6 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
-                //checking to see if the email exists in db
                 if (mFirebaseUser != null) {
                    String user = mFirebaseUser.getEmail();
                     Toast.makeText(LoginActivity.this, user + ": is logged in", Toast.LENGTH_SHORT).show();
@@ -82,12 +80,10 @@ public class LoginActivity extends AppCompatActivity{
                                 Log.w("", "signInWithEmail:failure", task.getException());
                                 Toast.makeText(LoginActivity.this, "Error: " + task.getException().getMessage(),
                                         Toast.LENGTH_SHORT).show();
-                                //Toast.makeText(LoginActivity.this, "Login Error, Please Login Again", Toast.LENGTH_SHORT).show();
                             } else {
                                 Log.d("", "signInWithEmail:success");
                                 FirebaseUser user = mFirebaseAuth.getCurrentUser();
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
                             }
                         }
                     });
@@ -114,6 +110,4 @@ public class LoginActivity extends AppCompatActivity{
         super.onStart();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
-
-
 }
