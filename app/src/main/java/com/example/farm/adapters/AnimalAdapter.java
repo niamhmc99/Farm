@@ -53,7 +53,7 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
         animalHolder.textViewAnimalName.setText(animal.getAnimalName());
         animalHolder.textViewDob.setText(animal.getDob());
         animalHolder.textViewBreed.setText(animal.getBreed());
-        if(animal.getInCalve().equals("1"))
+        if(animal.getInCalve()==true)
         {
             animalHolder.llInCalve.setVisibility(View.VISIBLE);
             animalHolder.textInseminationDate.setText("Insemination on "+animal.getDoi());

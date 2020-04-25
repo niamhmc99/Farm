@@ -62,7 +62,7 @@ public class AnimalsExpectingToCalveActivity extends AppCompatActivity implement
     private FloatingActionButton mFabAddAnimal;
     View mParentLayout;
     ImageButton updateButton;
-    TextView tvScanBarcode;
+    TextView tvScanBarcode, tvAnimalsInCalve;
     BottomNavigationView bottomNavigationView;
     private static final int CAMERA_PERMISSION_CODE = 100;
     private FirebaseAuth firebaseAuth;
@@ -77,6 +77,8 @@ public class AnimalsExpectingToCalveActivity extends AppCompatActivity implement
         mFabAddAnimal = findViewById(R.id.fabInsertAnimal);
         mFabAddAnimal.setOnClickListener(this);
         mParentLayout = findViewById(android.R.id.content);
+        tvAnimalsInCalve = findViewById(R.id.tvAnimalsInCalve);
+        tvAnimalsInCalve.setVisibility(View.VISIBLE);
         tvScanBarcode = findViewById(R.id.tvScanBarcode);
         tvScanBarcode.setOnClickListener(this);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -86,7 +88,7 @@ public class AnimalsExpectingToCalveActivity extends AppCompatActivity implement
         findViewById(R.id.fabInsertAnimal).setVisibility(View.GONE);
         tvScanBarcode.setVisibility(View.GONE);
         animalList = new ArrayList<>();
-        db.collection("animals").whereEqualTo("inCalve","1").whereEqualTo("user_id",user_id).get()
+        db.collection("animals").whereEqualTo("inCalve",true).whereEqualTo("user_id",user_id).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -140,7 +142,7 @@ public class AnimalsExpectingToCalveActivity extends AppCompatActivity implement
 
 
     private void setUpRecyclerView(){
-        Query query = animalRef.orderBy("tagNumber", Query.Direction.DESCENDING).whereEqualTo("inCalve","1").whereEqualTo("user_id",user_id);
+        Query query = animalRef.orderBy("tagNumber", Query.Direction.DESCENDING).whereEqualTo("inCalve",true).whereEqualTo("user_id",user_id);
 
         FirestoreRecyclerOptions<Animal> options= new FirestoreRecyclerOptions.Builder<Animal>()
                 .setQuery(query, Animal.class)
@@ -189,7 +191,7 @@ public class AnimalsExpectingToCalveActivity extends AppCompatActivity implement
             }
         }).attachToRecyclerView(recyclerView);
 
-        db.collection("animals").whereEqualTo("inCalve","1").whereEqualTo("user_id",user_id).get()
+        db.collection("animals").whereEqualTo("inCalve",true).whereEqualTo("user_id",user_id).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -353,7 +355,7 @@ public class AnimalsExpectingToCalveActivity extends AppCompatActivity implement
             if (resultCode == RESULT_OK) {
                 final String contents = intent.getStringExtra("SCAN_RESULT");
                 //Fetching data of related animal by data scanned from barcode)
-                db.collection("animals").whereEqualTo("tagNumber",contents).whereEqualTo("inCalve","1").get().addOnFailureListener(new OnFailureListener() {
+                db.collection("animals").whereEqualTo("tagNumber",contents).whereEqualTo("inCalve",true).get().addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         showMessage(AnimalsExpectingToCalveActivity.this,"Animal with barcode " + contents + " not found within the herd");

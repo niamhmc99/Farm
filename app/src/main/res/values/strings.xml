@@ -52,7 +52,7 @@
     <string name="calulateEmission">Calculate Average Farm Emissions</string>
     <string name="date_of_insemination">Date Of Insemination</string>
     <string name="cancel">Cancel</string>
-    <string name="total_beef_emissions">Total Beef Emissions (KGs)</string>
+    <string name="total_beef_emissions">Total Beef Emissions (KGs): </string>
     <string name="invoiceOrReceipt">Invoice or Receipt</string>
     <string name="category">Category</string>
     <string name="select_invoice_type">Select Invoice/ Receipt </string>
@@ -64,12 +64,12 @@
     <string name="number_of_milk_producing_cows">Number of Milk Producing Cows: </string>
     <string name="dairy_emissions_caps">DAIRY EMISSIONS :</string>
     <string name="numBeefCows">Number of Cows:</string>
-    <string name="total_beef_bull_emissions">Approx total bull emissions (KGs)</string>
-    <string name="total_beef_cows_emissions">Approx total cow emissions (KGs)</string>
+    <string name="total_beef_bull_emissions">Approx total bull emissions (KGs): </string>
+    <string name="total_beef_cows_emissions">Approx total cow emissions (KGs): </string>
     <string name="scan_barcode">Scan Barcode</string>
     <string name="beef_emissions">BEEF EMISSIONS :</string>
     <string name="number_of_bulls">Number of Bulls:</string>
-    <string name="total_dairy_emissions_per_annum">Total Dairy Emissions Per Annum </string>
+    <string name="total_dairy_emissions_per_annum">Total Dairy Emissions Per Annum: </string>
     <string name="click_calendar_to_change_date">Click Calendar to Change Date.</string>
     <string name="update_the_animals_info_in_your_herd">Update the Animals info in your Herd:</string>
     <string name="dam">Dam</string>

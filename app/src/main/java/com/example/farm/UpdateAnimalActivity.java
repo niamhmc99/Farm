@@ -116,7 +116,7 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
         editTextSireUpdate.setText(animal.getSire());
         editTextBreedUpdate.setText(animal.getBreed());
         spinnerAiStockBullUpdate.setSelection(getIndex(spinnerAiStockBullUpdate, animal.getAiORstockbull()));
-        checkBoxInCalve.setText(animal.getInCalve());
+        checkBoxInCalve.setChecked(animal.getInCalve());
         animalImageUri=  animal.getAnimalProfilePic();
         setAnimalImage(animalImageUri);
 
@@ -236,7 +236,7 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
         final String strSire = editTextSireUpdate.getText().toString().trim();
         final String strBreed = editTextBreedUpdate.getText().toString().trim();
         final String strAiOrStockbull = String.valueOf(spinnerAiStockBullUpdate.getSelectedItemId());
-        final String strInCalve = String.valueOf(checkBoxInCalve.isSelected());
+        final boolean inCalve = checkBoxInCalve.isChecked();
 
         if (!TextUtils.isEmpty(strTag) && mainImageURI != null) {
             if (isChanged) {
@@ -266,7 +266,7 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     String downloadUrl = uri.toString();
-                                    updateFirestore(downloadUrl,strTag, strName, strDob, strGender, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire,strInCalve);
+                                    updateFirestore(downloadUrl,strTag, strName, strDob, strGender, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire,inCalve);
                                 }
                             });
                         } else {
@@ -276,11 +276,11 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
                 });
             }
         } else {
-            updateFirestore("",strTag, strName, strDob, strGender, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire,strInCalve);
+            updateFirestore(animalImageUri,strTag, strName, strDob, strGender, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire,inCalve);
         }
     }
 
-    private void updateFirestore(String downloadUrl,String strTag, String strName, String strDob, String strGender, String strBreed, String strDam, String strCalvingDif, String strAiOrStockbull, String strSire,String strInCalve){
+    private void updateFirestore(String downloadUrl,String strTag, String strName, String strDob, String strGender, String strBreed, String strDam, String strCalvingDif, String strAiOrStockbull, String strSire,boolean inCalve){
 
 
     if(!hasValidationErrors(strTag, strName, strDob, strGender, strBreed, strDam, strCalvingDif, strAiOrStockbull, strSire)) {
@@ -295,7 +295,7 @@ public class UpdateAnimalActivity extends AppCompatActivity implements BottomNav
                         "aiORstockbull", strAiOrStockbull,
                         "calvingDifficulty", strCalvingDif,
                         "breed", strBreed,
-                        "inCalve", strInCalve,
+                        "inCalve", inCalve,
                         "animalProfilePic", downloadUrl
                 )
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

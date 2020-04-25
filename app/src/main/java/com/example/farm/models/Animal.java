@@ -20,7 +20,7 @@ public class Animal implements Serializable {
     private String sire;
     private String user_id; //admin_id left out of () atm
     private Timestamp timeAdded;
-    private String inCalve;
+    private boolean inCalve;
     private String doi;
     private String doc;
     private String description;
@@ -188,15 +188,11 @@ public class Animal implements Serializable {
         this.timeAdded = timeAdded;
     }
 
-    public String getInCalve() {
-        if(inCalve == null)
-        {
-            inCalve = "0";
-        }
+    public boolean getInCalve() {
         return inCalve;
     }
 
-    public void setInCalve(String inCalve) {
+    public void setInCalve(boolean inCalve) {
 
         this.inCalve = inCalve;
     }

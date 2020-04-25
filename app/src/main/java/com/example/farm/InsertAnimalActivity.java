@@ -53,7 +53,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -95,8 +94,6 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
     private Uri mainImageURI = null;
 
     private String user_id;
-    ArrayList<QueryDocumentSnapshot> tagNumbers;
-
     private boolean isChanged = false;
     private StorageReference storageReference;
     private FirebaseAuth firebaseAuth;
@@ -260,7 +257,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                                        public void onSuccess(Uri uri)
                                         {
                                            String downloadUrl = uri.toString();
-                                            storeFirestore(downloadUrl, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID, strRegisteredTimestamp);
+                                            storeFirestore(downloadUrl, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID);
                                         }
                                     });
                                 }
@@ -271,12 +268,10 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                         });
                     }
                     } else {
-                        storeFirestore(null, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID, strRegisteredTimestamp);
+                        storeFirestore(null, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID);
                     }
                 }
-
             });
-
 
             animalProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -330,7 +325,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         return true;
     }
 
-    private void storeFirestore(String downloadUrl, final String strTag, final String strName, String strDob, String strSelectedGender, String strBreed, String strDam, String strSelectedCalvingDif, String strSelectedAIStockBull, String strSire, String strUserID, String strRegisteredTimestamp) {
+    private void storeFirestore(String downloadUrl, final String strTag, final String strName, String strDob, String strSelectedGender, String strBreed, String strDam, String strSelectedCalvingDif, String strSelectedAIStockBull, String strSire, String strUserID) {
 
             final Map<String, Object> animalMap = new HashMap<>();
             animalMap.put(KEY_TAGNUMBER, strTag);
@@ -345,38 +340,18 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             animalMap.put(KEY_USERID, strUserID);
             animalMap.put(KEY_AnimalProfilePic, downloadUrl);
              if(checkBoxInCalve.isChecked()) {
-                animalMap.put(KEY_IN_CALVE, "1");
+                animalMap.put(KEY_IN_CALVE, true);
                 animalMap.put(KEY_DOI,textViewDateOfInsemination.getText().toString());
                 animalMap.put(KEY_DOC,textViewDateCalculatedCalveAndDelivery.getText().toString());
             } else {
-                animalMap.put(KEY_IN_CALVE, "0");
+                animalMap.put(KEY_IN_CALVE, false);
                 animalMap.put(KEY_DOI,"");
                 animalMap.put(KEY_DOC,"");
              }
 
-             int tagNumberExistCount = tagNumberExistsInList(strTag);
+            if ((!hasValidationErrors(strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire))){
 
-            if ((!hasValidationErrors(strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire)) && tagNumberExistCount==0){
-
-                firestoreDB.collection("animals")
-                        .add(animalMap)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                //Alarm will set here after successful animal insertion
-                                setAlarm(strName, strTag);
-                                Toast.makeText(InsertAnimalActivity.this, "The animal profile has been created.", Toast.LENGTH_LONG).show();
-                                Intent mainIntent = new Intent(InsertAnimalActivity.this, AnimalActivity.class);
-                                startActivity(mainIntent);
-                                finish();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Log.w(TAG, "Error adding animal into herd", e);
-                                                        Toast.makeText(InsertAnimalActivity.this, "(FIRESTORE Error) : " + e, Toast.LENGTH_LONG).show(); }
-                                                });
+                insertAnimal(animalMap,strName,strTag);
             }
             addanimalProgress.setVisibility(View.INVISIBLE);
         }
@@ -436,52 +411,44 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             }
         }
 
-//    private int tagNumberExistsInList(final String tagNumberToCompare) {
-//        int numberOfTags;
-//        tagNumbers= new ArrayList<>();
-//        firestoreDB.collection("animals")
-//                .whereEqualTo("tagNumber", tagNumberToCompare)
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            for (QueryDocumentSnapshot document : task.getResult()) {
-//                                Log.d(TAG, document.getId() + " => " + document.getData());
-//                                System.out.println(document.getId() + " => " + document.getData()+ "XXXXXXXX");
-//                                System.out.println(tagNumbers.size());
-//                            }
-//                        } else {
-//                            Log.d(TAG, "Error getting documents: ", task.getException());
-//                        }
-//                    }
-//                });
-//         numberOfTags= tagNumbers.size();
-//         return numberOfTags;
-//    }
+    private void insertAnimal(final Map<String, Object> animalMap,final String strName,final String strTag){
 
-    private int tagNumberExistsInList(final String tagNumberToCompare) {
-        int numberOfTags;
-        tagNumbers= new ArrayList<>();
         firestoreDB.collection("animals")
-                .whereEqualTo("tagNumber", tagNumberToCompare)
+                .whereEqualTo("tagNumber", strTag)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                System.out.println(document.getId() + " => " + document.getData()+ "XXXXXXXX");
-                                System.out.println(tagNumbers.size());
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            QuerySnapshot snapshot= task.getResult();
+                           if (snapshot.size()==0){
+                               firestoreDB.collection("animals")
+                                       .add(animalMap)
+                                       .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                           @Override
+                                           public void onSuccess(DocumentReference documentReference) {
+                                               //Alarm will set here after successful animal insertion
+                                               setAlarm(strName, strTag);
+                                               Toast.makeText(InsertAnimalActivity.this, "The animal profile has been created.", Toast.LENGTH_LONG).show();
+                                               Intent mainIntent = new Intent(InsertAnimalActivity.this, AnimalActivity.class);
+                                               startActivity(mainIntent);
+                                               finish();
+                                           }
+                                       })
+                                       .addOnFailureListener(new OnFailureListener() {
+                                           @Override
+                                           public void onFailure(@NonNull Exception e) {
+                                               Log.w(TAG, "Error adding animal into herd", e);
+                                               Toast.makeText(InsertAnimalActivity.this, "(FIRESTORE Error) : " + e, Toast.LENGTH_LONG).show(); }
+                                       });
+                           }
+                           else {
+                               Toast.makeText(InsertAnimalActivity.this, "Tag Number already exists", Toast.LENGTH_LONG).show();
+                           }
                         }
                     }
                 });
-        numberOfTags= tagNumbers.size();
-        return numberOfTags;
+
     }
 
     private void addItemsOnSpinnerCalvingDiff() {
@@ -543,7 +510,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                 isChanged = true;
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
+                result.getError();
             }
         }
     }
@@ -556,7 +523,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
     private String getDeliveryDate(String dateInput) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setTimeZone(TimeZone.getDefault());
-        Date date = null;
+        Date date;
         try {
             date = sdf.parse(dateInput);
             Calendar calendar = Calendar.getInstance();
@@ -574,7 +541,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
     private String getNotifyDateStr(String dateInput) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setTimeZone(TimeZone.getDefault());
-        Date date = null;
+        Date date;
         try {
             date = sdf.parse(dateInput);
             Calendar calendar = Calendar.getInstance();

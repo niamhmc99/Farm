@@ -3,11 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".emissions.DairyEmissionResultActivity">
+
 
     <TextView
         android:id="@+id/dairyEmissions"
-        android:layout_width="379dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
@@ -15,20 +18,21 @@
         android:layout_alignParentRight="true"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:fontFamily="@font/libre_baskerville_bold"
         android:text="@string/dairy_emissions_caps"
         android:textColor="@color/darkGreen"
-        android:textSize="24sp" />
-
+        android:textSize="30sp" />
 
     <androidx.cardview.widget.CardView
         android:layout_marginLeft="25dp"
         android:layout_below="@+id/dairyEmissions"
         android:id="@+id/cv1"
-        android:layout_marginTop="8dp"
+        app:contentPadding="1dp"
+        android:backgroundTint="@color/darkGreen"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +41,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
             <TextView
                 android:id="@+id/numCows"
@@ -68,7 +73,9 @@
         android:layout_marginLeft="25dp"
         android:layout_below="@+id/cv1"
         android:id="@+id/cv2"
-        android:layout_marginTop="8dp"
+        app:contentPadding="1dp"
+        android:backgroundTint="@color/darkGreen"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,7 +84,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
             <TextView
                 android:textAllCaps="true"
@@ -103,37 +111,41 @@
                 android:layout_marginEnd="16dp" />
 
         </RelativeLayout>
-
-
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:layout_marginLeft="25dp"
         android:layout_below="@+id/cv2"
         android:id="@+id/cv3"
-        android:layout_marginTop="8dp"
+        app:contentPadding="1dp"
+        android:backgroundTint="@color/darkGreen"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="25dp">
+        android:layout_marginStart="25dp"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
             <TextView
-                android:textAllCaps="true"
-                android:textColor="@color/darkGreen"
-                android:gravity="center_vertical"
-                android:text="@string/total_dairy_emissions_per_annum"
                 android:id="@+id/labelTotalBullEmissions"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_toStartOf="@id/totalDairyEmissionsPA"
                 android:layout_toLeftOf="@id/totalDairyEmissionsPA"
                 android:background="@android:color/transparent"
-                android:layout_width="match_parent"
-                android:textSize="14sp"
-                android:layout_height="60dp"
-                android:layout_toStartOf="@id/totalDairyEmissionsPA" />
+                android:gravity="center_vertical"
+                android:text="@string/total_dairy_emissions_per_annum"
+                android:textAllCaps="true"
+                android:textColor="@color/darkGreen"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/totalDairyEmissionsPA"
@@ -146,64 +158,26 @@
                 android:layout_marginEnd="16dp" />
 
         </RelativeLayout>
-
-
     </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/waysToReduceDairy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/cv3"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="20dp"
-        android:gravity="center"
+        android:layout_marginRight="10dp"
         android:fontFamily="@font/libre_baskerville_bold"
+        android:gravity="center"
         android:text="@string/find_out_ways_to_reduce_dairy_emissions"
         android:textColor="@color/darkBlue"
-        android:layout_below="@+id/cv3"
-        android:textSize="14sp" />
-
-
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/linechart"
-        android:layout_width="match_parent"
-        android:layout_height="372dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="352dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="7dp" />
-
-    <TextView
-        android:id="@+id/results"
-        android:layout_width="377dp"
-        android:layout_height="109dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="595dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
-        android:layout_marginBottom="6dp" />
-
+        android:textSize="15sp" />
 
 </RelativeLayout>

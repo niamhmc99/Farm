@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
 
     tools:context=".emissions.BeefEmissionResultActivity">
 
@@ -31,6 +32,8 @@
             android:layout_marginLeft="25dp"
             android:layout_below="@+id/beefEmissions"
             android:id="@+id/cv1"
+            app:contentPadding="1dp"
+            android:backgroundTint="@color/darkGreen"
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
             android:layout_width="match_parent"
@@ -40,7 +43,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/white">
 
                 <TextView
                     android:id="@+id/noBulls"
@@ -76,6 +80,8 @@
             android:layout_marginLeft="25dp"
             android:layout_below="@+id/cv1"
             android:id="@+id/cv2"
+            app:contentPadding="1dp"
+            android:backgroundTint="@color/darkGreen"
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
             android:layout_width="match_parent"
@@ -85,7 +91,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/white">
 
                 <TextView
                     android:textAllCaps="true"
@@ -120,6 +127,8 @@
             android:layout_marginLeft="25dp"
             android:layout_below="@+id/cv2"
             android:id="@+id/cv3"
+            app:contentPadding="1dp"
+            android:backgroundTint="@color/darkGreen"
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
             android:layout_width="match_parent"
@@ -129,7 +138,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/white">
 
                 <TextView
                     android:textAllCaps="true"
@@ -161,6 +171,8 @@
         android:layout_marginLeft="25dp"
         android:layout_below="@+id/cv3"
         android:id="@+id/cv4"
+        app:contentPadding="1dp"
+        android:backgroundTint="@color/darkGreen"
         android:layout_marginTop="8dp"
         android:layout_marginRight="16dp"
         android:layout_width="match_parent"
@@ -170,7 +182,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
             <TextView
                 android:id="@+id/labelTotalCowEmissions"
@@ -204,6 +217,8 @@
         android:layout_marginLeft="25dp"
         android:layout_below="@+id/cv4"
         android:id="@+id/cv5"
+        app:contentPadding="1dp"
+        android:backgroundTint="@color/darkGreen"
         android:layout_marginTop="8dp"
         android:layout_marginRight="16dp"
         android:layout_width="match_parent"
@@ -213,7 +228,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
             <TextView
                 android:textAllCaps="true"
