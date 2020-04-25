@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/invoiceReceiptImage"
-            android:layout_width="384dp"
-            android:layout_height="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="188dp"
             android:layout_marginTop="10dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/invoiceReceipt"
@@ -32,19 +32,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/category"
+                android:fontFamily="@font/libre_baskerville"
                 android:textColor="@color/colorBlack"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:ellipsize="end"
-                tools:ignore="UnknownId" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textViewType"
+            android:id="@+id/textViewAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@string/invoiceOrReceipt"
+            android:fontFamily="@font/libre_baskerville"
+            android:text="@string/amount"
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/libre_baskerville"
+            android:text="@string/date"
             android:textColor="@color/colorBlack"
             android:textSize="15sp"
             android:textStyle="bold" />

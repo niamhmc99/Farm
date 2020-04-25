@@ -50,18 +50,18 @@
                 android:layout_height="match_parent"
                 android:layout_below="@+id/linearLayout">
 
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="354dp"
+                    android:layout_height="516dp"
                     android:scrollbars="vertical"
-                    tools:ignore="MissingConstraints"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"/>
-
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:ignore="MissingConstraints" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fabInsertInvoiceReceipt"
@@ -71,24 +71,24 @@
                     app:backgroundTint="@color/blue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.954"
+                    app:layout_constraintHorizontal_bias="0.947"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.923"
+                    app:layout_constraintVertical_bias="0.917"
                     tools:ignore="MissingConstraints" />
 
                 <com.google.android.material.bottomnavigation.BottomNavigationView
                     android:id="@+id/bottom_navigation_view"
-                    android:layout_width="414dp"
-                    android:layout_height="44dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="43dp"
                     android:layout_gravity="bottom"
                     app:itemBackground="@color/green"
                     app:itemIconTint="@drawable/item_selected"
                     app:itemTextColor="@drawable/item_selected"
-                    app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:menu="@menu/bottom_nav_menu" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
+
 </RelativeLayout>

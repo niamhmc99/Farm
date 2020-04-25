@@ -1,7 +1,5 @@
 package com.example.farm;
 
-
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,7 +10,6 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,14 +17,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
@@ -40,13 +34,10 @@ public class RegisterActivity extends AppCompatActivity {
     Button buttonSignUp;
     TextView textViewSignIn;
     private FirebaseAuth auth;
-    private LinearLayout linearLayout;
 
     FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
     private static final String KEY_EMAIL = "email";
-    private static final String KEY_PASSWORD = "password";
     private static final String KEY_HERDID = "herdid";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +50,6 @@ public class RegisterActivity extends AppCompatActivity {
         herdid = findViewById(R.id.editTextHerdid);
         confirmPassword = findViewById(R.id.editTextConfirmPassword);
         textViewSignIn = findViewById(R.id.textViewLogin);
-        linearLayout = findViewById(R.id.linearLayoutReg);
         textViewSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
         final String email = emailId.getText().toString().trim();
         final String pass = password.getText().toString().trim();
         String confirmpass = confirmPassword.getText().toString().trim();
-        String herd = herdid.getText().toString().trim().toUpperCase();
+        final String herd = herdid.getText().toString().trim().toUpperCase();
 
         if (email.isEmpty()) {
             emailId.setError("Please Enter Email Address");
@@ -107,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                         Toast.makeText(RegisterActivity.this, "SignUp UnSuccessful, Please Try Again ", Toast.LENGTH_LONG).show();
                                                     } else {
                                                         Log.d(TAG, "createUserWithEmail:success");
-                                                        saveUser();
+                                                        saveUser(email, herd);
                                                         FirebaseUser user = auth.getCurrentUser();
                                                         startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                                                     }
@@ -139,9 +129,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    public void saveUser() {
-        String email = emailId.getText().toString().trim();
-        String herdId = herdid.getText().toString().trim().toUpperCase();
+    public void saveUser(String email, String herdId) {
 
         final Map<String, Object> user = new HashMap<>();
         user.put(KEY_EMAIL, email);
@@ -163,9 +151,3 @@ public class RegisterActivity extends AppCompatActivity {
                                     });
     }
 }
-
-
-
-
-
-

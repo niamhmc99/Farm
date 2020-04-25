@@ -112,6 +112,9 @@
     <string name="search_for_help">Send Location</string>
     <string name="date_of_appointment">Date of Appointment</string>
     <string name="animal_name">Name</string>
+    <string name="vets_map_button">Vets</string>
+    <string name="amount">Amount €</string>
+    <string name="date">Date</string>
 
 
 </resources>

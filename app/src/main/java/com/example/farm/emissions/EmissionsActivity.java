@@ -12,7 +12,6 @@ import android.widget.ImageButton;
 import com.example.farm.AnimalActivity;
 import com.example.farm.MainActivity;
 import com.example.farm.R;
-import com.example.farm.ToDoListActivity;
 import com.example.farm.VetActivity;
 import com.example.farm.googlemaps.MapsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

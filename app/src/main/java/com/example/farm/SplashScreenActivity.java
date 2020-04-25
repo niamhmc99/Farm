@@ -33,8 +33,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
 
             image.setAnimation(topAnim);
-            //txtFileFarmLogo.setAnimation(bottomAnim);
-            //slogan.setAnimation(bottomAnim);
+
             //Calling New Activity after SPLASH_SCREEN seconds 1s = 1000
             new Handler().postDelayed(new Runnable() {
                                           @Override

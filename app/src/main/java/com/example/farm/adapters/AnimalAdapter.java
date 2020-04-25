@@ -69,15 +69,6 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
         {
             animalHolder.llInCalve.setVisibility(View.GONE);
         }
-//        animalHolder.animalRegisterTimestamp.setText(dateFormat.format(animal.getTimeAdded().toDate()));
-        //    animalHolder.animalRegisterTimestamp.setText(dateFormat.format(new Date(String.valueOf(animal.getTimeAdded()))));
-
-//        String timeAdded = (String) DateUtils.getRelativeTimeSpanString(animal
-//                .getTimeAdded()
-//                .getSeconds() * 1000);
-//        animalHolder.animalRegisterTimestamp.setText(timeAdded);
-
-
 
         String animalImageUrl = animal.getAnimalProfilePic();
         animalHolder.setAnimalImage(animalImageUrl);

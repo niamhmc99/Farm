@@ -15,9 +15,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.farm.AnimalsExpectingToCalveActivity;
-import com.example.farm.MainActivity;
 import com.example.farm.R;
-import com.example.farm.SplashScreenActivity;
 
 import java.util.Date;
 

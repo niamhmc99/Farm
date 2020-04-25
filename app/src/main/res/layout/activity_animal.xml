@@ -23,7 +23,8 @@
             android:layout_height="46dp"
             android:text="List of Animals Expecting to Calve"
             android:fontFamily="@font/libre_baskerville_bold"
-            android:textSize="14sp"
+            android:textSize="18sp"
+            android:layout_gravity="center"
             android:gravity="center"
             android:textStyle="bold"
             android:visibility="gone" />

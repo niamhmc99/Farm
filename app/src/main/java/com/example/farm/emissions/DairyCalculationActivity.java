@@ -3,7 +3,6 @@ package com.example.farm.emissions;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import com.example.farm.VetActivity;
 import com.example.farm.googlemaps.MapsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 public class DairyCalculationActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{

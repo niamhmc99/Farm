@@ -193,7 +193,6 @@ public class InvoiceReceiptActivity extends AppCompatActivity implements View.On
     @Override
     public void onStart() {
         super.onStart();
-        //FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
         adapter.startListening();
     }
 

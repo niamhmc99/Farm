@@ -88,7 +88,7 @@
             android:backgroundTint="@color/green"
             android:fontFamily="@font/libre_baskerville_bold"
             android:onClick="onClick"
-            android:text="@string/vets"
+            android:text="@string/vets_map_button"
             android:textColor="@color/white"
             tools:ignore="UnusedAttribute" />
     </RelativeLayout>
