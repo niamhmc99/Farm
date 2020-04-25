@@ -113,6 +113,7 @@
         android:layout_height="38dp"
         android:backgroundTint="@color/white"
         android:text="@string/sign_up"
+        android:onClick="signUp"
         android:fontFamily="@font/libre_baskerville_bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
