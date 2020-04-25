@@ -256,8 +256,6 @@ public class InvoiceReceiptActivity extends AppCompatActivity implements View.On
     private void loadData()
     {
         billsList = new ArrayList<>();
-        // .whereEqualTo("invoiceType",spinnerInvoiceType.getSelectedItem())
-        //                .whereEqualTo("category",spinnerCategory.getSelectedItem()).get()
         db.collection("InvoiceReceipts")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

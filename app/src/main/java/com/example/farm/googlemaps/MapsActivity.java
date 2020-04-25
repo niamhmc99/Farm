@@ -78,7 +78,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
          FirebaseMessaging.getInstance().setAutoInitEnabled(true);
-        System.out.println("*********FCM " + FirebaseMessaging.getInstance());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
@@ -407,7 +406,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         alertDialog.show();
     }
 
-    //Create custom body to send in push notification
     private String getJsonBody(Address location) {
 
         JSONObject jsonObjectData = new JSONObject();
