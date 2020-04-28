@@ -202,8 +202,8 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position==1){
                     checkBoxInCalve.setVisibility(View.VISIBLE);
-                    editTextDateOfInsemination.setVisibility(View.VISIBLE);
-                    textViewDateCalculatedCalveAndDelivery.setVisibility(View.VISIBLE);
+                    editTextDateOfInsemination.setVisibility(View.GONE);
+                    textViewDateCalculatedCalveAndDelivery.setVisibility(View.GONE);
                 }
                 else{
                     checkBoxInCalve.setChecked(false);

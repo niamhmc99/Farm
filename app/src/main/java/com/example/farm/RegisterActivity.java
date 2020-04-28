@@ -88,13 +88,12 @@ public class RegisterActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 QuerySnapshot snapshot = task.getResult();
                                 if (snapshot.size() == 0) {
-
                                     auth.createUserWithEmailAndPassword(email, pass)
                                             .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                                     if (!task.isSuccessful()) {
-                                                        Toast.makeText(RegisterActivity.this, "SignUp UnSuccessful, Please Try Again ", Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(RegisterActivity.this, "SignUp UnSuccessful, An account with that email already exists ", Toast.LENGTH_LONG).show();
                                                     } else {
                                                         Log.d(TAG, "createUserWithEmail:success");
                                                         saveUser(email, herd);

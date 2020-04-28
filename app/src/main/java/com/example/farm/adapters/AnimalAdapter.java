@@ -83,7 +83,7 @@ public class AnimalAdapter extends FirestoreRecyclerAdapter<Animal, AnimalAdapte
         AnimalHolder(@NonNull View itemView) {
             super(itemView);
 
-            textViewTagNumber = itemView.findViewById(R.id.textViewTagNumber);
+            textViewTagNumber = itemView.findViewById(R.id.textViewCalvingInfo);
             textViewAnimalName = itemView.findViewById(R.id.textViewAnimalName);
             textViewDob = itemView.findViewById(R.id.textViewDob);
             textViewBreed = itemView.findViewById(R.id.textViewBreed);

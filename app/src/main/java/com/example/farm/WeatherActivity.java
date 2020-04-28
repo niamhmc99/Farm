@@ -93,10 +93,10 @@ public class WeatherActivity extends AppCompatActivity implements BottomNavigati
             super.onPreExecute();
 
         }
+        //Async Task allows to perform background operations and ease use of UI thread
+        //need to get weather info from API --make http request --use Async Task to do this
 
         protected String doInBackground(String... args) {
-            //Async Task allows to perform background operations and ease use of UI thread
-            //need to get weather info from API --make http request --use Async Task to do this
             String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?q=" + CITY + "&units=metric&appid=" + API);
             return response;
         }

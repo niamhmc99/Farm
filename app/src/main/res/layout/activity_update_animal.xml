@@ -287,14 +287,15 @@
 
             <Button
                 android:id="@+id/buttonUpdateAnimal"
-                android:layout_width="259dp"
+                android:layout_width="254dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:backgroundTint="@color/blue"
                 android:onClick="updateAnimal"
                 android:text="@string/update_animals_info"
                 android:textColor="@android:color/white"
-                android:textSize="18sp" tools:targetApi="lollipop" />
+                android:textSize="18sp"
+                tools:targetApi="lollipop" />
 
         </LinearLayout>
     </ScrollView>

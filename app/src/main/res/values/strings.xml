@@ -115,6 +115,7 @@
     <string name="vets_map_button">Vets</string>
     <string name="amount">Amount €</string>
     <string name="date">Date</string>
+    <string name="expected_calving_date">Expected Calving Date</string>
 
 
 </resources>

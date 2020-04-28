@@ -75,7 +75,6 @@ public class BeefEmissionResultActivity extends AppCompatActivity {
     }
 
     public void setPieChartData(){
-
         Long longBullEmissions = Math.round(totalBullEmissionAmount);
         Long longCowEmissions = Math.round(totalCowEmissionsAmount);
         int intTotalBeefEmission = totalBeefEmissionsAmount.intValue();
@@ -96,6 +95,5 @@ public class BeefEmissionResultActivity extends AppCompatActivity {
         pieChart.setUsePercentValues(true);
         pieChart.setTransparentCircleRadius(10f);
         pieDataSet.setColors(ColorTemplate.PASTEL_COLORS);
-
     }
 }

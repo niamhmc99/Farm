@@ -24,6 +24,7 @@
             android:text="List of Animals Expecting to Calve"
             android:fontFamily="@font/libre_baskerville_bold"
             android:textSize="18sp"
+            android:textColor="@color/darkGreen"
             android:layout_gravity="center"
             android:gravity="center"
             android:textStyle="bold"
