@@ -37,7 +37,7 @@
     <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/blue_with_grass">
+    android:background="@drawable/green_splash_image_cropped">
 
 
     <LinearLayout
@@ -61,15 +61,6 @@
             android:layout_marginTop="32dp"
             android:layout_marginRight="20dp">
 
-            <TextView
-                android:id="@+id/txtViewFileFarm"
-                android:layout_width="357dp"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/fredericka_the_great"
-                android:gravity="start"
-                android:text="@string/file_a_farm"
-                android:textColor="@color/darkGreen"
-                android:textSize="60sp" />
         </RelativeLayout>
 
         <GridLayout
@@ -104,7 +95,7 @@
                         android:scaleType="fitXY"
                         android:layout_width="100dp"
                         android:layout_height="80dp"
-                        android:background="@color/white"
+                        android:background="@color/lime"
                         android:contentDescription="@string/animals"
                         android:onClick="clickAnimals"/>
                     <TextView
@@ -143,7 +134,7 @@
                         android:layout_width="100dp"
                         android:layout_height="80dp"
                         android:scaleType="fitXY"
-                        android:background="@color/white"
+                        android:background="@color/lime"
                         android:onClick="clickWeather"
                         android:contentDescription="@string/weather" />
 
@@ -370,6 +361,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:itemIconTint="@color/green"
+        android:background="@color/white"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>

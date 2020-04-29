@@ -9,19 +9,22 @@
     android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp"
     android:layout_marginRight="8dp"
-    app:cardBackgroundColor="#FFFFE8">
+    app:cardBackgroundColor="@color/white">
 
 
         <TextView
             android:id="@+id/taskTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="291dp"
+            android:layout_height="23dp"
+            android:fontFamily="@font/libre_baskerville"
+            android:gravity="start"
             android:text="@string/service_the_massey_ferguson_tractor"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintBottom_toTopOf="@+id/dateTextView"
-            app:layout_constraintEnd_toStartOf="@+id/checkBox"
+            android:textSize="16sp"
+            android:textColor="@color/colorBlack"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/dateTextView"
@@ -31,8 +34,10 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:gravity="start"
+            android:textSize="12sp"
+            android:fontFamily="@font/libre_baskerville"
+            android:layout_marginLeft="18dp"
             android:layout_marginEnd="321dp"
             android:layout_marginRight="321dp"
             android:text="@string/some_date"
@@ -40,7 +45,6 @@
             android:textColor="@color/colorRed"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/taskTextView"
             app:layout_constraintHorizontal_bias="0.148"
             app:layout_constraintStart_toStartOf="@+id/taskTextView"
             app:layout_constraintTop_toBottomOf="@+id/taskTextView" />
@@ -51,8 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="36dp"
-            android:layout_marginRight="36dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

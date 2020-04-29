@@ -1,5 +1,4 @@
 package com.example.farm.invoiceReceipt;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -21,7 +20,6 @@ import com.example.farm.AnimalActivity;
 import com.example.farm.LoginActivity;
 import com.example.farm.MainActivity;
 import com.example.farm.R;
-import com.example.farm.ToDoListActivity;
 import com.example.farm.VetActivity;
 import com.example.farm.adapters.InvoiceReceiptAdapter;
 import com.example.farm.emissions.EmissionsActivity;
@@ -53,7 +51,9 @@ public class InvoiceReceiptActivity extends AppCompatActivity implements View.On
     View mParentLayout;
     private Spinner spinnerInvoiceType, spinnerCategory;
     BottomNavigationView bottomNavigationView;
-    private FirestoreRecyclerOptions<InvoiceReceipt> options;
+    private static final String KEY_INVOICERECEIPTTYPE = "invoiceReceiptType";
+    private static final String KEY_CATEGORY = "category";
+    private static final String KEY_USERID = "user_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,9 +107,11 @@ public class InvoiceReceiptActivity extends AppCompatActivity implements View.On
         {
             adapter.stopListening();
         }
+        final String strUserID = FirebaseAuth.getInstance().getCurrentUser().getUid().trim();
         Query query = collectionReference.orderBy("invoiceReceiptType", Query.Direction.DESCENDING)
-                .whereEqualTo("invoiceReceiptType",spinnerInvoiceType.getSelectedItem())
-                .whereEqualTo("category",spinnerCategory.getSelectedItem());
+                .whereEqualTo(KEY_INVOICERECEIPTTYPE,spinnerInvoiceType.getSelectedItem())
+                .whereEqualTo(KEY_USERID, strUserID)
+                .whereEqualTo(KEY_CATEGORY,spinnerCategory.getSelectedItem());
 
         FirestoreRecyclerOptions options= new FirestoreRecyclerOptions.Builder<InvoiceReceipt>()
                 .setQuery(query, InvoiceReceipt.class)
@@ -152,11 +154,8 @@ public class InvoiceReceiptActivity extends AppCompatActivity implements View.On
 
                     }
                 });
-
                 AlertDialog ad = builder.create();
                 ad.show();
-
-
             }
         }).attachToRecyclerView(recyclerView);
         loadData();
@@ -165,7 +164,6 @@ public class InvoiceReceiptActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-
             case R.id.fabInsertInvoiceReceipt:
                 startActivity(new Intent(InvoiceReceiptActivity.this, InsertInvoiceReceiptActivity.class));
                 break;
@@ -180,9 +178,7 @@ public class InvoiceReceiptActivity extends AppCompatActivity implements View.On
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-
                 } else {
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                     Intent intent = new Intent(InvoiceReceiptActivity.this, LoginActivity.class);
@@ -197,7 +193,6 @@ public class InvoiceReceiptActivity extends AppCompatActivity implements View.On
     @Override
     public void onStart() {
         super.onStart();
-        //FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
         adapter.startListening();
     }
 
@@ -261,8 +256,6 @@ public class InvoiceReceiptActivity extends AppCompatActivity implements View.On
     private void loadData()
     {
         billsList = new ArrayList<>();
-        // .whereEqualTo("invoiceType",spinnerInvoiceType.getSelectedItem())
-        //                .whereEqualTo("category",spinnerCategory.getSelectedItem()).get()
         db.collection("InvoiceReceipts")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -278,8 +271,4 @@ public class InvoiceReceiptActivity extends AppCompatActivity implements View.On
                     }
                 });
     }
-
-
 }
-
-

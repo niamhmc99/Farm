@@ -54,7 +54,7 @@ public class AnimalDialogFragment extends DialogFragment {
                 return false;
             }
         });
-        ((TextView)customView.findViewById(R.id.textViewTagNumber)).setText(animal.getTagNumber());
+        ((TextView)customView.findViewById(R.id.textViewCalvingInfo)).setText(animal.getTagNumber());
         ((TextView)customView.findViewById(R.id.textViewAnimalName)).setText(animal.getAnimalName());
         ((TextView)customView.findViewById(R.id.textViewDob)).setText(animal.getDob());
         ((TextView)customView.findViewById(R.id.textViewBreed)).setText(animal.getBreed());

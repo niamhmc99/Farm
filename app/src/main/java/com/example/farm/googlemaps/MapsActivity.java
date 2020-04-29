@@ -30,7 +30,6 @@ import com.example.farm.LoginActivity;
 import com.example.farm.MainActivity;
 import com.example.farm.R;
 import com.example.farm.VetActivity;
-import com.example.farm.emissions.BeefCalculationActivity;
 import com.example.farm.emissions.EmissionsActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -47,8 +46,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.common.collect.Maps;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.trenzlr.firebasenotificationhelper.FirebaseNotiCallBack;
 import com.trenzlr.firebasenotificationhelper.FirebaseNotificationHelper;
 
@@ -78,6 +77,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
@@ -149,8 +149,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
      * This is where we can add markers or lines, add listeners or move the camera. In this case,
      * we just add a marker near Sydney, Australia.
      * If Google Play services is not installed on the device, the user will be prompted to install
@@ -188,7 +186,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if(currentLocationmMarker != null)
         {
             currentLocationmMarker.remove();
-
         }
         Log.d("lat = ",""+latitude);
         LatLng latLng = new LatLng(location.getLatitude() , location.getLongitude());
@@ -217,9 +214,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 EditText tf_location =  findViewById(R.id.TF_location);
                 String location = tf_location.getText().toString();
                 List<Address> addressList;
-//                latitude = myAddress.getLatitude();
-//                longitude = myAddress.getLongitude();
-//                Address myAddress = addressList.get(i);
 
                 if(location!=null && !location.equals(""))
                 {
@@ -257,7 +251,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Toast.makeText(MapsActivity.this, "Showing Nearby Hospitals", Toast.LENGTH_SHORT).show();
                 break;
 
-
             case R.id.B_mechanic:
                 mMap.clear();
                 String feed = "car_repair";
@@ -281,7 +274,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
 
             case R.id.B_send_location:
-                //Help-Comment (Check if location is available other wise will fetch location)
                 if (lastlocation == null) {
                     Toast.makeText(MapsActivity.this,"Loading current location resend again", Toast.LENGTH_LONG).show();
                     checkLocationPermission();
@@ -292,7 +284,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         final List<Address> fromLocation = geocoder.getFromLocation(lastlocation.getLatitude(), lastlocation.getLongitude(), 1);
                         if(fromLocation != null && fromLocation.size() != 0)
                         {
-                            //Help-Comment (Send push notification to all users other then me of current location to find help)
+                            //Send push notification to all users other then me of current location to find help
                             FirebaseNotificationHelper.initialize(getString(R.string.server_key))
                                     .defaultJson(false, getJsonBody(fromLocation.get(0)))
                                     .setCallBack(new FirebaseNotiCallBack() {
@@ -300,7 +292,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                         public void success(String s) {
                                             showMessage(MapsActivity.this, fromLocation.get(0).getAddressLine(0)+" sent to all user");
                                         }
-
                                         @Override
                                         public void fail(String s) {
                                             showMessage(MapsActivity.this, "Unable to sent "+fromLocation.get(0).getAddressLine(0)+" due to " + s);
@@ -308,7 +299,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     })
                                     .receiverFirebaseToken("/topics/" + getString(R.string.topic))
                                     .send();
-
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -319,7 +309,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-
     private String getUrl(double latitude , double longitude , String nearbyPlace)
     {
 
@@ -329,12 +318,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         googlePlaceUrl.append("&type="+nearbyPlace);
         googlePlaceUrl.append("&sensor=true");
         googlePlaceUrl.append("&key="+"" + "AIzaSyDzyCapVx5jEfA3haEGUCI0jSIYFu3xUxI");
-                //"AIzaSyBLEPBRfw7sMb73Mr88L91Jqh3tuE4mKsE"); tutorial one
-               // "AIzaSyDzyCapVx5jEfA3haEGUCI0jSIYFu3xUxI");
-        //sensor replace by keyword
 
         Log.d("MapsActivity", "url = "+googlePlaceUrl.toString());
-
         return googlePlaceUrl.toString();
     }
 
@@ -421,7 +406,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         alertDialog.show();
     }
 
-    //Create custom body to send in push notification
     private String getJsonBody(Address location) {
 
         JSONObject jsonObjectData = new JSONObject();
@@ -429,14 +413,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             jsonObjectData.put("sender", FirebaseAuth.getInstance().getCurrentUser().getUid());
             jsonObjectData.put("latitude",location.getLatitude());
             jsonObjectData.put("longitude",location.getLongitude());
-            jsonObjectData.put("title", "Is anyone available to help me?");
+            jsonObjectData.put("title", "Is anyone available to help?");
             jsonObjectData.put("message", "At this location -> "+location.getAddressLine(0));
-            //jsonObjectData.put("success", "anything");
         } catch (
                 JSONException e) {
             e.printStackTrace();
         }
         return jsonObjectData.toString();
     }
-
 }

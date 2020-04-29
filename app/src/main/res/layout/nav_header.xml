@@ -6,23 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:gravity="bottom"
-    android:padding="16dp"
-    android:background="@drawable/fileafarm">
+    android:padding="4dp"
+    android:background="@drawable/logo_image_email">
 
     <TextView
         android:id="@+id/farmersEmail"
-        android:layout_width="397dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:text="Farmers Email"
+        android:text="@string/farmers_email"
+        android:fontFamily="@font/libre_baskerville_bold"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/white"
-        android:textSize="26sp"
-        android:textStyle="bold" />
-
+        android:textColor="@color/darkGreen"
+        android:textSize="16sp" />
 </LinearLayout>

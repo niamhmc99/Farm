@@ -1,7 +1,5 @@
 package com.example.farm;
 
-
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,21 +22,22 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
-    private final String  TAG= "RegisterActivitys";
+    private final String TAG = "RegisterActivitys";
 
     public EditText emailId, password, herdid, confirmPassword;
     Button buttonSignUp;
     TextView textViewSignIn;
-    FirebaseAuth auth;
+    private FirebaseAuth auth;
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
     private static final String KEY_EMAIL = "email";
-    private static final String KEY_PASSWORD = "password";
+    private static final String KEY_HERDID = "herdid";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,55 +50,6 @@ public class RegisterActivity extends AppCompatActivity {
         herdid = findViewById(R.id.editTextHerdid);
         confirmPassword = findViewById(R.id.editTextConfirmPassword);
         textViewSignIn = findViewById(R.id.textViewLogin);
-
-        buttonSignUp = findViewById(R.id.buttonSignUp);
-        buttonSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = emailId.getText().toString().trim();
-                String pass = password.getText().toString().trim();
-                String confirmpass = confirmPassword.getText().toString().trim();
-                String herd = herdid.getText().toString().trim();
-
-                if(email.isEmpty()){
-                    emailId.setError("Please Enter Email Address");
-                    emailId.requestFocus();
-                }
-                else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                    emailId.setError("Please Enter a valid email address");
-                    emailId.requestFocus();
-                }
-                else if (email.isEmpty() && checkPassword(pass, confirmpass)){
-                    Toast.makeText(RegisterActivity.this, "Please Enter an Email and Password to Register", Toast.LENGTH_LONG).show();
-                }
-                else if(!(email.isEmpty() && checkPassword(pass, confirmpass))){
-                    Log.d("", "createAccount:" + email);
-                    auth.createUserWithEmailAndPassword(email, pass)
-                            .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (!task.isSuccessful()){
-                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(RegisterActivity.this, "SignUp UnSuccessful, Please Try Again ", Toast.LENGTH_LONG).show();
-                            }else{
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d(TAG, "createUserWithEmail:success");
-                                saveUser();
-                                FirebaseUser user = auth.getCurrentUser();
-
-                                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                            }
-                        }
-
-
-                    });
-                }
-                else{
-                    Toast.makeText(RegisterActivity.this, "Error Occured", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
         textViewSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,66 +59,94 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private boolean checkPassword(String password, String confirmPassword){
+    public void signUp(View view) {
+        buttonSignUp = findViewById(R.id.buttonSignUp);
+        final String email = emailId.getText().toString().trim();
+        final String pass = password.getText().toString().trim();
+        String confirmpass = confirmPassword.getText().toString().trim();
+        final String herd = herdid.getText().toString().trim().toUpperCase();
+
+        if (email.isEmpty()) {
+            emailId.setError("Please Enter Email Address");
+            emailId.requestFocus();
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailId.setError("Please Enter a valid Email Address");
+            emailId.requestFocus();
+        } else if (herd.isEmpty()) {
+            herdid.setError("Please Enter a valid Herd Number");
+            herdid.requestFocus();
+        } else if (email.isEmpty() && checkPassword(pass, confirmpass) && herd.isEmpty()) {
+            Toast.makeText(RegisterActivity.this, "Please Fill in All Fields to Register", Toast.LENGTH_LONG).show();
+        } else if (!(email.isEmpty() && checkPassword(pass, confirmpass))) {
+            Log.d("", "createAccount:" + email);
+
+            firestoreDB.collection("Users").whereEqualTo("herdid", herd)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                QuerySnapshot snapshot = task.getResult();
+                                if (snapshot.size() == 0) {
+                                    auth.createUserWithEmailAndPassword(email, pass)
+                                            .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                                    if (!task.isSuccessful()) {
+                                                        Toast.makeText(RegisterActivity.this, "SignUp UnSuccessful, An account with that email already exists ", Toast.LENGTH_LONG).show();
+                                                    } else {
+                                                        Log.d(TAG, "createUserWithEmail:success");
+                                                        saveUser(email, herd);
+                                                        FirebaseUser user = auth.getCurrentUser();
+                                                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                                                    }
+                                                }
+                                            });
+                                } else {
+                                    Toast.makeText(RegisterActivity.this, "Herd ID already exists!", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        }
+                    });
+        }
+    }
+
+
+
+    private boolean checkPassword(String password, String confirmPassword) {
         if (password.isEmpty() || confirmPassword.isEmpty()) {
-            Toast.makeText(RegisterActivity.this, "Please enter your password and confirm it", Toast.LENGTH_SHORT ).show();
+            Toast.makeText(RegisterActivity.this, "Please enter your password and confirm it", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(password.length() < 6 || confirmPassword.length() < 6){
-            Toast.makeText(RegisterActivity.this, "Password must contain at least 6 Characters", Toast.LENGTH_SHORT ).show();
+        } else if (password.length() < 6 || confirmPassword.length() < 6) {
+            Toast.makeText(RegisterActivity.this, "Password must contain at least 6 Characters", Toast.LENGTH_SHORT).show();
             return false;
         } else if (!password.equals(confirmPassword)) {
-            Toast.makeText(RegisterActivity.this, "Both password fields must be identical ", Toast.LENGTH_SHORT ).show();
+            Toast.makeText(RegisterActivity.this, "Both password fields must be identical ", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             return true;
         }
     }
 
-    public void saveUser(){
-        String email = emailId.getText().toString();
-        String pass = password.getText().toString();
+    public void saveUser(String email, String herdId) {
 
-        Map<String, Object> user = new HashMap<>();
+        final Map<String, Object> user = new HashMap<>();
         user.put(KEY_EMAIL, email);
-        user.put(KEY_PASSWORD, pass);
+        user.put(KEY_HERDID, herdId);
 
-        db.collection("Users")
+        firestoreDB.collection("Users")
                 .add(user)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "User added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding user", e);
-                    }
-                });
+                                        @Override
+                                        public void onSuccess(DocumentReference documentReference) {
+                                            Log.d(TAG, "User added with ID: " + documentReference.getId());
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w(TAG, "Error adding user", e);
+                                        }
+                                    });
     }
-
-
-
-//    *****SEND EMAIL VERIFICATION
-//     mFirebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-//        @Override
-//        public void onComplete(@NonNull Task<Void> task) {
-//            if(task.isSuccessful())
-//                Toast.makeText(getContext(), "Email Verfication Sent", Toast.LENGTH_LONG).show();
-//            else {
-//                try{
-//                    throw task.getException();
-//                }catch (Exception e) {
-//
-//                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-//                }
-//
-//            }
-//        }
-//    });
-
-
 }
-
-

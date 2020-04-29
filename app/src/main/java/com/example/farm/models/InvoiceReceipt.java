@@ -6,17 +6,21 @@ public class InvoiceReceipt {
     private String category;
     private String image;
     private String user_id;
+    private double amount;
+    private String date;
 
     public InvoiceReceipt() {
 
     }
 
-    public InvoiceReceipt(String id, String invoiceReceiptType, String category, String image, String user_id) {
+    public InvoiceReceipt(String id, String invoiceReceiptType, String category, String image, String user_id, double amount, String date) {
         this.id = id;
         this.invoiceReceiptType = invoiceReceiptType;
         this.category = category;
         this.image = image;
         this.user_id = user_id;
+        this.amount = amount;
+        this.date = date;
     }
 
     public String getId() {
@@ -59,5 +63,19 @@ public class InvoiceReceipt {
         this.user_id = user_id;
     }
 
+    public double getAmount() {
+        return amount;
+    }
 
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 }

@@ -16,12 +16,10 @@ import android.widget.TextView;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-        private static int SPLASH_SCREEN = 2500;
-        private Context context;
+        private static int SPLASH_SCREEN = 2800;
 
         Animation topAnim, bottomAnim;
         ImageView image;
-        TextView txtFileFarmLogo, slogan;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -30,17 +28,12 @@ public class SplashScreenActivity extends AppCompatActivity {
             setContentView(R.layout.activity_splash_screen);
 
             image = findViewById(R.id.imageViewSplashScreen);
-            txtFileFarmLogo = findViewById(R.id.textViewFileFarm);
-            slogan = findViewById(R.id.textViewSlogan);
 
-            //Animations
             topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
             bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
 
-            //Set animation to elements
             image.setAnimation(topAnim);
-            txtFileFarmLogo.setAnimation(bottomAnim);
-            slogan.setAnimation(bottomAnim);
+
             //Calling New Activity after SPLASH_SCREEN seconds 1s = 1000
             new Handler().postDelayed(new Runnable() {
                                           @Override
@@ -48,10 +41,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                                               Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
                                               startActivity(intent);
                                               finish();
-
                                           }
-                                      }, //Pass time here
-                    SPLASH_SCREEN);
-
+                                      }, SPLASH_SCREEN);
         }
     }

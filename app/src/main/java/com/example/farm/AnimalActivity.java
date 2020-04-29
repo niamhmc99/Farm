@@ -1,14 +1,5 @@
 package com.example.farm;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -19,8 +10,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -49,6 +38,15 @@ import com.google.zxing.client.android.CaptureActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 
 public class AnimalActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener{
 
@@ -64,7 +62,8 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     TextView tvScanBarcode;
     BottomNavigationView bottomNavigationView;
     private static final int CAMERA_PERMISSION_CODE = 100;
-
+    private FirebaseAuth firebaseAuth;
+    private String user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +76,12 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         mParentLayout = findViewById(android.R.id.content);
         tvScanBarcode = findViewById(R.id.tvScanBarcode);
         tvScanBarcode.setOnClickListener(this);
+        firebaseAuth = FirebaseAuth.getInstance();
+        user_id = firebaseAuth.getCurrentUser().getUid();
         setupFirebaseAuth();
 
         animalList = new ArrayList<>();
-        db.collection("animals").get()
+        db.collection("animals").whereEqualTo("user_id",user_id).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -134,14 +135,14 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
 
 
     private void setUpRecyclerView(){
-        Query query = animalRef.orderBy("tagNumber", Query.Direction.DESCENDING);
+        Query query = animalRef.orderBy("tagNumber", Query.Direction.DESCENDING).whereEqualTo("user_id",user_id);
 
         FirestoreRecyclerOptions<Animal> options= new FirestoreRecyclerOptions.Builder<Animal>()
                 .setQuery(query, Animal.class)
                 .build();
         adapter = new AnimalAdapter(options);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewAnimal);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -156,9 +157,6 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
 
-                //adapter.deleteItem(viewHolder.getAdapterPosition());
-               // Toast.makeText(AnimalActivity.this, "Animal Has Been Deleted from Herd.", Toast.LENGTH_SHORT).show();
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(AnimalActivity.this);
                 builder.setTitle("Are you sure about this?");
                 builder.setMessage("Deletion is permanent...");
@@ -168,7 +166,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                     public void onClick(DialogInterface dialog, int which) {
                         adapter.deleteItem(viewHolder.getAdapterPosition());
                     }
-                });//
+                });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -183,7 +181,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
             }
         }).attachToRecyclerView(recyclerView);
 
-        db.collection("animals").get()
+        db.collection("animals").whereEqualTo("user_id",user_id).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -200,7 +198,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         adapter.setOnItemClickListener(new AnimalAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, final int position) {
-                 final Animal animal = documentSnapshot.toObject(Animal.class);
+                final Animal animal = documentSnapshot.toObject(Animal.class);
 
                 final String docId = documentSnapshot.getId();
                 AlertDialog.Builder builder = new AlertDialog.Builder(AnimalActivity.this);
@@ -213,7 +211,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                         Intent intent = new Intent(AnimalActivity.this, UpdateAnimalActivity.class);
                         intent.putExtra("animal", animal);
                         intent.putExtra("documentId", docId);
-                         startActivity(intent);
+                        startActivity(intent);
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -225,26 +223,6 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
                 builder.create().show();
             }
         });
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menumainopts, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.menuLogout:
-                Toast.makeText(this, "Logging out", Toast.LENGTH_SHORT).show();
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(AnimalActivity.this, LoginActivity.class));
-            case R.id.menuHome:
-                Toast.makeText(this, "Home Page", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(AnimalActivity.this, MainActivity.class));
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -320,7 +298,7 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-        @Override
+    @Override
     public void onStart() {
         super.onStart();
         FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
@@ -342,36 +320,35 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
-                final String contents = intent.getStringExtra("SCAN_RESULT");
-                //Fetching data of related animal by data scanned from barcode)
-                db.collection("animals").whereEqualTo("tagNumber",contents).get().addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        showMessage(AnimalActivity.this,"Animal with barcode " + contents + " not found within the herd");
-                    }
-                })  .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                final String tagNumberResult = intent.getStringExtra("SCAN_RESULT");
+                db.collection("animals")
+                        .whereEqualTo("user_id",user_id)
+                        .whereEqualTo("tagNumber",tagNumberResult)
+                        .get().addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                            showMessage(AnimalActivity.this,"Animal with barcode " + tagNumberResult + " not found within the herd");
+                            }
+                        })  .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override
                             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                 if (!queryDocumentSnapshots.isEmpty()) {
-                                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                                    for (DocumentSnapshot d : list) {
-                                        //convert d to our animal object
-                                        Animal a = d.toObject(Animal.class);
-                                        //=(Dialog to show animal data)
-                                        AnimalDialogFragment animalDialogFragment=new AnimalDialogFragment();
-                                        animalDialogFragment.setAnimal(a);
-                                        animalDialogFragment.show(getSupportFragmentManager(),AnimalDialogFragment.class.getSimpleName());
-                                        break;
-                                    }
+                                List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                                for (DocumentSnapshot d : list) {
+                                    Animal a = d.toObject(Animal.class);
+                                    AnimalDialogFragment animalDialogFragment=new AnimalDialogFragment();
+                                    animalDialogFragment.setAnimal(a);
+                                    animalDialogFragment.show(getSupportFragmentManager(), AnimalDialogFragment.class.getSimpleName());
+                                    break;
+                                }
                                     if(list.size() == 0) {
-                                        showMessage(AnimalActivity.this,"Animal with barcode " + contents + " not found within the herd");
-                                    }
+                                        showMessage(AnimalActivity.this,"Animal with barcode " + tagNumberResult + " not found within the herd");
+                                     }
                                 }
                                 else {
-                                    showMessage(AnimalActivity.this,"Animal with barcode " + contents + " not found");
+                                    showMessage(AnimalActivity.this,"Animal with barcode " + tagNumberResult + " not found");
                                 }
                             }
                         });
@@ -398,59 +375,4 @@ public class AnimalActivity extends AppCompatActivity implements View.OnClickLis
         final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-
-
-    //    private void goToViewAnimalDetails(){
-//        Intent intent = new Intent(mContext, UpdateAnimalActivity.class);
-//        // pass all the data from animal to  Update Activity.class all in one?
-//        intent.putExtra("Animal", animal);
-//        mContext.startActivity(intent);
-//    }
-
-
-//    public void listOfAnimals(){
-//        db.collection("Animals").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    List<String> list = new ArrayList<>();
-//                    for (QueryDocumentSnapshot document : task.getResult()) {
-//                        list.add(document.getId());
-//                    }
-//                    Log.d(TAG, list.toString());
-//                } else {
-//                    Log.d(TAG, "Error getting documents: ", task.getException());
-//                }
-//            }
-//        });
-//    }
-
-//    public void loadAnimal(View view){
-//        animalRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//            @Override
-//            public void onSuccess(QuerySnapshot  queryDocumentSnapshots) {
-//                List<DocumentReference> animals = new ArrayList<>();
-//                for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots) {
-//                    Animal animal = documentSnapshot.toObject(Animal.class);
-//
-//                    String tagNumber = animal.getTagNumber();
-//                    String name = animal.getAnimalName();
-//                    String breed = animal.getBreed();
-//                    String dob = animal.getDob();
-//                    String sex = animal.getSex();
-//                    String calvingDif = animal.getCalvingDifficulty();
-//                    String aiOrBull = animal.getAiORstockbull();
-//                    String dam = animal.getDam();
-//                    String sire = animal.getSire();
-//                }
-//                animals.add(animal);
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//
-//            }
-//        });
-//    }
-
 }

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout2"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/textViewLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/libre_baskerville_bold"
+        android:text="Update Animal's Information"
+        android:textSize="18sp"
+        android:textColor="@color/darkGreen"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.271" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/appointmentTitleUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/libre_baskerville"
+        android:hint="@string/appointmentTitle"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="@color/darkGreen"
+        android:textSize="17sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:met_baseColor="@color/darkGreen"
+        app:met_floatingLabel="normal"
+        app:met_primaryColor="@color/darkGreen"
+        app:met_singleLineEllipsis="true"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="2dp" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/appointmentDescriptionUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/libre_baskerville"
+        android:hint="@string/appointmentDescription"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="@color/darkGreen"
+        android:textSize="17sp"
+        app:met_baseColor="@color/darkGreen"
+        app:met_floatingLabel="normal"
+        app:met_primaryColor="@color/darkGreen"
+        app:met_singleLineEllipsis="true" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/appointmentDateUpdate"
+            android:layout_width="277dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="80dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginRight="3dp"
+            android:fontFamily="@font/libre_baskerville"
+            android:hint="@string/date_of_appointment"
+            android:textColor="@color/colorBlack"
+            android:textColorHint="@color/darkGreen"
+            android:textSize="17sp"
+            app:met_baseColor="@color/darkGreen"
+            app:met_floatingLabel="normal"
+            app:met_primaryColor="@color/darkGreen"
+            app:met_singleLineEllipsis="true"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="123dp" />
+
+        <ImageView
+            android:id="@+id/updateDateImageViewPicker"
+            android:layout_width="78dp"
+            android:layout_height="67dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="282dp"
+            android:layout_marginRight="282dp"
+            android:contentDescription="@string/click_calendar_to_change_date"
+            android:outlineAmbientShadowColor="@color/colorBlack"
+            android:outlineSpotShadowColor="@color/blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.957"
+            app:srcCompat="@android:drawable/ic_menu_my_calendar"
+            tools:targetApi="p" />
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

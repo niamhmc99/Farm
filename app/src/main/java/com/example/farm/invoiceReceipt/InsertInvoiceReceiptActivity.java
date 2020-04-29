@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -18,6 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -25,10 +28,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.farm.AnimalActivity;
-import com.example.farm.InsertAnimalActivity;
 import com.example.farm.MainActivity;
 import com.example.farm.R;
-import com.example.farm.ToDoListActivity;
 import com.example.farm.VetActivity;
 import com.example.farm.emissions.EmissionsActivity;
 import com.example.farm.googlemaps.MapsActivity;
@@ -51,6 +52,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +67,7 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
     private Button btnInsert;
     private ProgressBar progressBar;
     private Spinner spinnerType, spinnerCategory;
+    private EditText editTextAmount, editTextDate;
     View mParentLayout;
 
     private ImageButton invoiceReceiptImage;
@@ -83,6 +86,8 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
     private static final String KEY_CATEGORY = "category";
     private static final String KEY_IMAGE= "image";
     private static final String KEY_USERID = "user_id";
+    private static final String KEY_AMOUNT="amount";
+    private static final String KEY_DATE="date";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +95,10 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
         setContentView(R.layout.activity_insert_invoice_receipt);
 
         mParentLayout = findViewById(android.R.id.content);
-
+        editTextAmount = findViewById(R.id.ediTextAmount);
+        editTextDate = findViewById(R.id.editTextDate);
+        editTextDate.setFocusable(false);
+        editTextDate.setKeyListener(null);
         firebaseAuth = FirebaseAuth.getInstance();
         user_id = firebaseAuth.getCurrentUser().getUid();
 
@@ -104,6 +112,23 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
         btnInsert = findViewById(R.id.btnInsert);
         progressBar = findViewById(R.id.progressBar);
 
+        editTextDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar dobCalendar = Calendar.getInstance();
+                new DatePickerDialog(InsertInvoiceReceiptActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                        String date = year+"-"+(monthOfYear+1)+"-"+dayOfMonth;
+                        editTextDate.setText(date);
+                    }
+                }, dobCalendar
+                        .get(Calendar.YEAR), dobCalendar.get(Calendar.MONTH),
+                        dobCalendar.get(Calendar.DAY_OF_MONTH)).show();
+
+            }
+        });
+
 
         //Invoice will be inserted by clicking insert invoice button will call his)
         btnInsert.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +137,8 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
                 final String strSelectedType = String.valueOf(spinnerType.getSelectedItem());
                 final String strSelectedCategory = String.valueOf(spinnerCategory.getSelectedItem());
                 final String strUserID = FirebaseAuth.getInstance().getCurrentUser().getUid().trim();
+                final double amount = Double.parseDouble(editTextAmount.getText().toString());
+                final String strDate = editTextDate.getText().toString().trim();
 
                 if (mainImageURI != null) {
                     btnInsert.setEnabled(false);
@@ -146,7 +173,7 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
                                         @Override
                                         public void onSuccess(Uri uri) {
                                             String downloadUrl = uri.toString();
-                                            storeFirestore(isChanged, strUserID, strSelectedType, strSelectedCategory, downloadUrl);
+                                            storeFirestore(isChanged, strUserID, strSelectedType, strSelectedCategory, downloadUrl, amount, strDate);
 
                                         }
                                     });
@@ -176,10 +203,8 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
                     if (ContextCompat.checkSelfPermission(InsertInvoiceReceiptActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-
                         Toast.makeText(InsertInvoiceReceiptActivity.this, "Permission Denied", Toast.LENGTH_LONG).show();
                         ActivityCompat.requestPermissions(InsertInvoiceReceiptActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-
                     } else {
                         BringImagePicker();
                     }
@@ -223,7 +248,7 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
         return true;
     }
 
-    private void storeFirestore(boolean isInvoice,String strUserID,String strInvoiceReceiptType,String strCategory,String downloadUrl) {
+    private void storeFirestore(boolean isInvoice,String strUserID,String strInvoiceReceiptType,String strCategory,String downloadUrl, double amount, String date) {
 
 
         Map<String, Object> invoiceMap = new HashMap<>();
@@ -231,8 +256,10 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
         invoiceMap.put(KEY_CATEGORY, strCategory);
         invoiceMap.put(KEY_USERID, strUserID);
         invoiceMap.put(KEY_IMAGE, downloadUrl);
+        invoiceMap.put(KEY_AMOUNT, amount);
+        invoiceMap.put(KEY_DATE, date);
 
-        if (!hasValidationErrors(strInvoiceReceiptType, strCategory, isInvoice)) {
+        if (!hasValidationErrors(strInvoiceReceiptType, strCategory, isInvoice, date)) {
 
             firestoreDB.collection("InvoiceReceipts")
                     .add(invoiceMap)
@@ -264,26 +291,31 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
 
     }
 
-    private boolean hasValidationErrors(String selectedType, String selectedCategory, boolean isInvoice){
+    private boolean hasValidationErrors(String selectedType, String selectedCategory, boolean isInvoice, String date){
         if(selectedType.isEmpty()){
             TextView errorText = (TextView)spinnerType.getSelectedView();
             errorText.setError("");
-            errorText.setTextColor(Color.RED);//just to highlight that this is an error
-            errorText.setText("Please select invoice/ receipt");//changes the selected item text to this
+            errorText.setTextColor(Color.RED);
+            errorText.setText("Please select invoice/ receipt");
             makeSnackBarMessage("Please insert invoice/ receipt");
             return true;
         }
         if(selectedCategory.isEmpty()){
             TextView errorText = (TextView)spinnerCategory.getSelectedView();
             errorText.setError("");
-            errorText.setTextColor(Color.RED);//just to highlight that this is an error
-            errorText.setText("Please select a category");//changes the selected item text to this
+            errorText.setTextColor(Color.RED);
+            errorText.setText("Please select a category");
             makeSnackBarMessage("Please insert the type of category");
             return true;
         }
         else if(!isInvoice)
         {
-            makeSnackBarMessage("Please select image of invoice/ recipt ");
+            makeSnackBarMessage("Please select image of invoice/ receipt ");
+            return true;
+        }else if (date.isEmpty()){
+            editTextDate.setError("Please select a Date");
+            editTextDate.setTextColor(Color.RED);
+            makeSnackBarMessage("Please insert a Date");
             return true;
         }
         else{
@@ -321,7 +353,6 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
     }
 
     private void BringImagePicker() {
-
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.OFF)
                 .start(InsertInvoiceReceiptActivity.this);
@@ -334,14 +365,11 @@ public class InsertInvoiceReceiptActivity extends AppCompatActivity implements B
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-
                 mainImageURI = result.getUri();
                 invoiceReceiptImage.setImageURI(mainImageURI);
-
                 isChanged = true;
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-
                 Exception error = result.getError();
             }
         }

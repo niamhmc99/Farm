@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -27,9 +28,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".emissions.DairyRecommendationsActivity"></activity>
+        <activity android:name=".emissions.WaysToReduceEmissionsActivity"></activity>
+        <activity android:name=".AnimalsExpectingToCalveActivity" />
+        <activity android:name=".emissions.DairyEmissionResultActivity" />
         <activity android:name=".invoiceReceipt.InsertInvoiceReceiptActivity" />
-        <activity android:name=".emissions.BeefRecommendationActivity" />
+        <activity android:name=".emissions.BeefEmissionResultActivity" />
         <activity android:name=".invoiceReceipt.InvoiceReceiptActivity" />
         <activity android:name=".emissions.DairyCalculationActivity" />
         <activity android:name=".emissions.BeefCalculationActivity" />
@@ -42,7 +45,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".InsertAnimalActivity" />
-        <activity android:name=".weather.ui.WeatherActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
@@ -64,9 +66,8 @@
         <activity
             android:name=".googlemaps.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".EmployeeActivity" />
         <activity android:name=".ToDoListActivity" />
-        <activity android:name=".WeatherActivity2" />
+        <activity android:name=".WeatherActivity" />
         <activity android:name=".UpdateAnimalActivity" />
         <activity android:name=".VetActivity" />
         <activity android:name=".AnimalActivity" />
@@ -74,16 +75,13 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
 
-        <service android:name="com.example.farm.firebase.FireBaseMessagingService">
+        <service android:name=".firebase.FireBaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <receiver android:name="com.example.farm.dueDateAlarm.OnReceive" >
-        </receiver>
-
-
+        <receiver android:name=".dueDateAlarm.OnReceive" />
     </application>
 
 </manifest>

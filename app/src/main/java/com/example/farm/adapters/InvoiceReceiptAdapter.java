@@ -25,9 +25,9 @@ private Context context;
 
     @Override
     protected void onBindViewHolder(@NonNull InvoiceReceiptHolder holder, int position, @NonNull InvoiceReceipt invoiceReceipt) {
-        holder.textViewInvoiceType.setText(invoiceReceipt.getInvoiceReceiptType());
         holder.textViewCategory.setText(invoiceReceipt.getCategory());
-
+        holder.textViewAmount.setText(String.valueOf(invoiceReceipt.getAmount()));
+        holder.textViewDate.setText(invoiceReceipt.getDate());
         String invoiceImageUrl = invoiceReceipt.getImage();
         holder.setImage(invoiceImageUrl);
     }
@@ -42,13 +42,14 @@ private Context context;
     }
 
     class InvoiceReceiptHolder extends RecyclerView.ViewHolder{
-        TextView textViewInvoiceType, textViewCategory;
+        TextView  textViewCategory, textViewAmount, textViewDate;
         ImageView image;
 
         InvoiceReceiptHolder(@NonNull View itemView) {
             super(itemView);
-            textViewInvoiceType = itemView.findViewById(R.id.textViewType);
             textViewCategory = itemView.findViewById(R.id.textViewCategory);
+            textViewAmount = itemView.findViewById(R.id.textViewAmount);
+            textViewDate = itemView.findViewById(R.id.textViewDate);
             image = itemView.findViewById(R.id.invoiceReceiptImage);
         }
 

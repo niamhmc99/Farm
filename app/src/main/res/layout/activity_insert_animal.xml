@@ -4,106 +4,128 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/white_fone_grass"
     android:id="@+id/constraintLayout"
     tools:context=".InsertAnimalActivity">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
 
-    <ImageButton
-        android:id="@+id/animal_image"
-        android:layout_width="186dp"
-        android:layout_height="136dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginRight="6dp"
-        android:contentDescription="@string/crop_image_menu_crop"
-        android:src="@drawable/animalsmall"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="407dp"
+            android:layout_height="10dp"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <ImageButton
+            android:id="@+id/animal_image"
+            android:layout_width="wrap_content"
+            android:layout_height="139dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/white"
+            android:contentDescription="@string/crop_image_menu_crop"
+            android:src="@drawable/animalsmall"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBar"
+            tools:targetApi="lollipop" />
+
+    </LinearLayout>
+
 
     <ScrollView
-        android:layout_width="408dp"
-        android:layout_height="574dp"
+        android:id="@+id/scrollView2"
+        android:layout_width="363dp"
+        android:layout_height="410dp"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/animal_image">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.455">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/animal_image">
 
-            <EditText
+            <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/editTexttagNumber"
-                android:layout_width="257dp"
+                android:layout_width="258dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="38dp"
-                android:ems="10"
+                android:layout_gravity="center"
+                android:fontFamily="@font/libre_baskerville"
                 android:hint="@string/tag_number"
-                android:importantForAutofill="no"
                 android:inputType="textCapWords"
-                android:padding="12dp"
-                android:textSize="18sp"
+                android:textColorHint="@color/darkGreen"
+                android:textSize="15sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/animal_image"
-                android:layout_marginStart="50dp" />
+                app:met_baseColor="@color/darkGreen"
+                app:met_floatingLabel="normal"
+                app:met_primaryColor="@color/darkGreen"
+                app:met_singleLineEllipsis="true" />
 
-            <EditText
+            <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/editTextName"
                 android:layout_width="258dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:ems="10"
-                android:hint="@string/name"
-                android:importantForAutofill="no"
-                android:inputType="textPersonName"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.33"
-                android:layout_marginStart="50dp" />
+                android:layout_gravity="center"
+                android:fontFamily="@font/libre_baskerville"
+                android:hint="@string/animal_name"
+                android:inputType="textCapWords"
+                android:textColorHint="@color/darkGreen"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:met_baseColor="@color/darkGreen"
+                app:met_floatingLabel="normal"
+                app:met_primaryColor="@color/darkGreen"
+                app:met_singleLineEllipsis="true" />
 
-            <EditText
+
+            <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/editTextDob"
                 android:layout_width="258dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:ems="10"
+                android:layout_gravity="center"
+                android:fontFamily="@font/libre_baskerville"
                 android:hint="@string/date_of_birth"
-                android:importantForAutofill="no"
                 android:inputType="date"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.51"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.397"
-                android:layout_marginStart="50dp" />
+                android:textColorHint="@color/darkGreen"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:met_baseColor="@color/darkGreen"
+                app:met_floatingLabel="normal"
+                app:met_primaryColor="@color/darkGreen"
+                app:met_singleLineEllipsis="true" />
+
+            <TextView
+                android:id="@+id/txtViewSelectGender"
+                android:layout_width="258dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/libre_baskerville_bold"
+                android:text="@string/gender_prompt"
+                android:textColor="@color/darkGreen" />
 
             <Spinner
                 android:id="@+id/spinnerGender"
                 android:layout_width="258dp"
-                android:layout_height="42dp"
-                android:layout_marginLeft="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
                 android:hint="@string/gender_prompt"
                 android:prompt="@string/gender_prompt"
                 android:textSize="18sp"
@@ -112,50 +134,58 @@
                 app:layout_constraintHorizontal_bias="0.51"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.463"
-                android:layout_marginStart="50dp" />
+                app:layout_constraintVertical_bias="0.463" />
 
-            <EditText
+            <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/editTextBreed"
                 android:layout_width="258dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:ems="10"
+                android:layout_gravity="center"
+                android:fontFamily="@font/libre_baskerville"
                 android:hint="@string/breed"
-                android:importantForAutofill="no"
                 android:inputType="textPersonName"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.529"
-                android:layout_marginStart="50dp" />
+                android:textColorHint="@color/darkGreen"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:met_baseColor="@color/darkGreen"
+                app:met_floatingLabel="normal"
+                app:met_primaryColor="@color/darkGreen"
+                app:met_singleLineEllipsis="true" />
 
-            <EditText
+
+            <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/editTextDAM"
                 android:layout_width="258dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:ems="10"
+                android:layout_gravity="center"
+                android:fontFamily="@font/libre_baskerville"
                 android:hint="@string/dam"
-                android:importantForAutofill="no"
                 android:inputType="textPersonName"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.505"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.594"
-                android:layout_marginStart="50dp" />
+                android:textColorHint="@color/darkGreen"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:met_baseColor="@color/darkGreen"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="@color/darkGreen"
+                app:met_singleLineEllipsis="true" />
+
+            <TextView
+                android:id="@+id/txtViewCalvingDifficulty"
+                android:layout_width="258dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/libre_baskerville_bold"
+                android:text="@string/calvingDifficulty_prompt"
+                android:textColor="@color/darkGreen" />
 
             <Spinner
                 android:id="@+id/spinnerCalvingDiff"
-                android:layout_width="259dp"
+                android:layout_width="258dp"
                 android:layout_height="42dp"
-                android:layout_marginLeft="50dp"
+                android:layout_gravity="center"
                 android:hint="@string/calvingDifficulty_prompt"
+                android:outlineAmbientShadowColor="@color/darkGreen"
+                android:outlineSpotShadowColor="@color/darkGreen"
                 android:prompt="@string/calvingDifficulty_prompt"
                 android:text="@string/calving_difficulty"
                 android:textSize="18sp"
@@ -165,14 +195,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.83"
-                android:layout_marginStart="50dp" />
+                tools:targetApi="p" />
+
+            <TextView
+                android:id="@+id/txtViewAIStockBull"
+                android:layout_width="258dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/libre_baskerville_bold"
+                android:text="@string/aiStockBull_prompt"
+                android:textColor="@color/darkGreen" />
 
             <Spinner
                 android:id="@+id/spinnerAiStockBull"
-                android:layout_width="260dp"
+                android:layout_width="258dp"
                 android:layout_height="42dp"
-                android:layout_marginLeft="50dp"
+                android:layout_gravity="center"
                 android:hint="@string/aiStockBull_prompt"
+                android:outlineAmbientShadowColor="@color/darkGreen"
+                android:outlineSpotShadowColor="@color/darkGreen"
                 android:prompt="@string/aiStockBull_prompt"
                 android:text="@string/ai_stock_bull"
                 android:textSize="18sp"
@@ -182,92 +223,92 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.678"
-                android:layout_marginStart="50dp" />
+                tools:targetApi="p" />
 
-            <EditText
-                android:id="@+id/ediTextSire"
-                android:layout_width="262dp"
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/editTextSire"
+                android:layout_width="258dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:ems="10"
+                android:layout_gravity="center"
+                android:fontFamily="@font/libre_baskerville"
                 android:hint="@string/sire"
-                android:importantForAutofill="no"
                 android:inputType="textPersonName"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.756"
-                android:layout_marginStart="50dp" />
-
+                android:textColorHint="@color/darkGreen"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:met_baseColor="@color/darkGreen"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="@color/darkGreen"
+                app:met_singleLineEllipsis="true" />
 
             <CheckBox
                 android:id="@+id/checkBoxInCalve"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
+                android:layout_width="130dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
                 android:text="@string/in_calve"
+                android:textColor="@color/darkGreen"
                 android:textSize="16sp"
-                android:layout_marginStart="50dp" />
+                android:textStyle="bold" />
 
-            <TextView
+            <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/textViewDateOfInsemination"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="10dp"
-                android:gravity="start"
-                android:text="@string/date_of_insemination"
-                android:textSize="18sp"
+                android:layout_width="258dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/libre_baskerville"
+                android:hint="@string/date_of_insemination"
+                android:inputType="date"
+                android:textColorHint="@color/darkGreen"
+                android:textSize="15sp"
+                android:textStyle="bold"
                 android:visibility="gone"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="50dp" />
+                app:met_baseColor="@color/darkGreen"
+                app:met_floatingLabel="normal"
+                app:met_primaryColor="@color/darkGreen"
+                app:met_singleLineEllipsis="true" />
+
 
             <TextView
                 android:id="@+id/textViewDateCalculatedCalveAndDelivery"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="10dp"
+                android:layout_width="255dp"
+                android:layout_height="62dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginBottom="5dp"
+                android:fontFamily="@font/libre_baskerville"
                 android:gravity="start"
                 android:text=""
+                android:textColor="@color/darkGreen"
                 android:textSize="14sp"
-                android:visibility="gone"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="10dp" />
-
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btnInsertAnimal"
-                android:layout_width="match_parent"
+                android:layout_width="279dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_gravity="center"
                 android:backgroundTint="@color/blue"
-                android:padding="15dp"
                 android:text="@string/insert_animal"
-                android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="UnusedAttribute" />
+                tools:targetApi="lollipop" />
 
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottom_navigation_view"
-                android:layout_width="match_parent"
-                android:layout_height="43dp"
-                app:itemBackground="@color/green"
-                app:itemIconTint="@drawable/item_selected"
-                app:itemTextColor="@drawable/item_selected"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:menu="@menu/bottom_nav_menu" />
 
         </LinearLayout>
     </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        app:itemBackground="@color/green"
+        app:itemIconTint="@drawable/item_selected"
+        app:itemTextColor="@drawable/item_selected"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>

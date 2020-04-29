@@ -2,34 +2,33 @@ package com.example.farm.emissions;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.farm.AnimalActivity;
 import com.example.farm.MainActivity;
 import com.example.farm.R;
-import com.example.farm.UpdateAnimalActivity;
 import com.example.farm.VetActivity;
 import com.example.farm.googlemaps.MapsActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BeefCalculationActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -39,23 +38,32 @@ public class BeefCalculationActivity extends AppCompatActivity implements Bottom
     private TextInputLayout textInputAverageCowWeight;
     private MaterialEditText editTextAverageCowWeight, editTextAverageBullWeight;
     private Button btnCalculate;
-    private ArrayList<Integer> maleFemaleQuantity = new ArrayList<>();
+    private ArrayList<Integer> maleFemaleQuantity;
     BottomNavigationView bottomNavigationView;
+    private FirebaseAuth firebaseAuth;
+    private String currentUser;
+    private ConstraintLayout constraintLayout;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beef_calculation);
-
+        maleFemaleQuantity = new ArrayList<>();
         editTextAverageCowWeight = findViewById(R.id.editTextAverageCowWeight);
         editTextAverageBullWeight = findViewById(R.id.editTextAverageBullWeight);
         btnCalculate = findViewById(R.id.calculateBtn);
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setSelectedItemId(R.id.ic_emissions);
         bottomNavigationView.setOnNavigationItemSelectedListener(BeefCalculationActivity.this);
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentUser = firebaseAuth.getCurrentUser().getUid();
+        constraintLayout = findViewById(R.id.constraintLayoutBeef);
 
-
-        final Task<QuerySnapshot> maleQuery = db.collection("animals").whereEqualTo("gender", "Male").get()
+        final Task<QuerySnapshot> maleQuery = db.collection("animals").whereEqualTo("user_id",currentUser).whereEqualTo("gender", "Male").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -72,7 +80,7 @@ public class BeefCalculationActivity extends AppCompatActivity implements Bottom
         });
 
 
-        final Task<QuerySnapshot> femaleQuery = db.collection("animals").whereEqualTo("gender", "Female").get()
+        final Task<QuerySnapshot> femaleQuery = db.collection("animals").whereEqualTo("user_id",currentUser).whereEqualTo("gender", "Female").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -124,37 +132,66 @@ public class BeefCalculationActivity extends AppCompatActivity implements Bottom
 
 
     public void calculateBeefEmissions(View view) {
-        if (maleFemaleQuantity.size() > 0) {
-            int numberOfCows = maleFemaleQuantity.get(1);
+
+        String cowWeight= editTextAverageCowWeight.getText().toString();
+        String bullWeight= editTextAverageBullWeight.getText().toString();
+
+        if (maleFemaleQuantity.size() > 0 && !weightHasValidationError(cowWeight,bullWeight) ) {
             int numberOfBulls = maleFemaleQuantity.get(0);
-            double totalCowWeight = getTotalCowWeight(numberOfCows);
-            double totalBullWeight = getTotalBullWeight(numberOfBulls);
-            double totalCowEmissions = totalCowWeight * 25.43;
-            double totalBullEmissions = totalBullWeight * 25.43;
-            double totalBeefEmissions = totalBullEmissions + totalCowEmissions;
-            Intent intent = new Intent(BeefCalculationActivity.this, BeefRecommendationActivity.class);
-            intent.putExtra("numberOfBulls", numberOfBulls);
-            intent.putExtra("numberOfCows", numberOfCows);
-            intent.putExtra("totalCowEmissions", totalCowEmissions);
-            intent.putExtra("totalBullEmissions", totalBullEmissions);
-            intent.putExtra("totalBeefEmissions",totalBeefEmissions);
-            startActivity(intent);
-        } else {
-            Log.d("Quantity", "Male Female number retrieval failed");
+            int numberOfCows = maleFemaleQuantity.get(1);
+
+                double totalCowWeight = getTotalCowWeight(numberOfCows,cowWeight);
+                double totalBullWeight = getTotalBullWeight(numberOfBulls,bullWeight);
+                double totalCowEmissions = totalCowWeight * 25.43;
+                double totalBullEmissions = totalBullWeight * 25.43;
+                double totalBeefEmissions = totalBullEmissions + totalCowEmissions;
+
+                Intent intent = new Intent(BeefCalculationActivity.this, BeefEmissionResultActivity.class);
+                intent.putExtra("numberOfBulls", numberOfBulls);
+                intent.putExtra("numberOfCows", numberOfCows);
+                intent.putExtra("totalCowEmissions", totalCowEmissions);
+                intent.putExtra("totalBullEmissions", totalBullEmissions);
+                intent.putExtra("totalBeefEmissions", totalBeefEmissions);
+                startActivity(intent);
+            }
+        else {
+            Log.d("Quantity", "Male Female Number Retrieval Failed");
+        }
+    }
+
+    private double getTotalCowWeight(int numberOfCows,String cowWeight) {
+
+        if(!cowWeight.isEmpty()) {
+            Double totalCowWeight = Double.parseDouble(cowWeight) * numberOfCows;
+            return totalCowWeight;
+        }
+        return 0;
+    }
+
+    private double getTotalBullWeight(int numberOfBulls,String bullWeight) {
+
+        if(!bullWeight.isEmpty()) {
+            Double totalBullWeight = Double.parseDouble(bullWeight) * numberOfBulls;
+            return totalBullWeight;
+        }
+        return 0;
+    }
+
+
+    private boolean weightHasValidationError(String cowWeight,String bullWeight){
+        if(cowWeight.isEmpty() && bullWeight.isEmpty()){
+            editTextAverageCowWeight.setError("Average Cow Weight is Required");
+            editTextAverageBullWeight.setError("Average Bull Weight is Required");
+            makeSnackBarMessage("Please enter data in at least one field");
+            return true;
+        }else {
+            return false;
         }
     }
 
 
-    public double getTotalCowWeight(int numberOfCows) {
-        String cowWeight = editTextAverageCowWeight.getText().toString();
-        Double totalCowWeight = Double.parseDouble(cowWeight) * numberOfCows;
-        return totalCowWeight;
-    }
-
-    public double getTotalBullWeight(int numberOfBulls) {
-        String bullWeight = editTextAverageBullWeight.getText().toString();
-        Double totalBullWeight = Double.parseDouble(bullWeight) * numberOfBulls;
-        return totalBullWeight;
+    private void makeSnackBarMessage( String message){
+        Snackbar.make(constraintLayout, message, Snackbar.LENGTH_SHORT).show();
     }
 
 }

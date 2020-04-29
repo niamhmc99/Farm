@@ -14,9 +14,8 @@ import android.provider.Settings;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.farm.MainActivity;
+import com.example.farm.AnimalsExpectingToCalveActivity;
 import com.example.farm.R;
-import com.example.farm.SplashScreenActivity;
 
 import java.util.Date;
 
@@ -29,27 +28,14 @@ public class OnReceive extends BroadcastReceiver {
 
     //    generating push notification
     private void sendNotification(Context context,String messageBody, String title) {
-
-        Intent intent = new Intent(context, SplashScreenActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-//        if(!pickInfo.equals(""))
-//        {
-//            Log.d(TAG, "Data: Pick");
-////            PickInfo pickInfoItem= new Gson().fromJson(pickInfo, PickInfo.class);
-////            pickInfoItem.setStatus(1);
-//            CommonMethods.setStringPreference(this,getString(R.string.app_name),PickInfo.class.getSimpleName(),pickInfo);
-//            intent.putExtra(PickInfo.class.getSimpleName(),pickInfo);
-//        }
-
-//        if(isAppIsInBackground(this)) {
-//            Log.d(TAG, "Data: Notification");
-//        }
+//
+//        Intent intent = new Intent(context, SplashScreenActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         showNotification(context, title, messageBody);
     }
         public void showNotification (Context context, String title, String messageBody){
 
-            Intent intent = new Intent(context, MainActivity.class);
+            Intent intent = new Intent(context, AnimalsExpectingToCalveActivity.class);
 
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);

@@ -32,8 +32,6 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        //Displaying data in log
-        //It is optional
         Log.d(TAG, "OK");
         Log.d(TAG, "From: " + remoteMessage.getFrom());
         Log.d(TAG, "Data: " + remoteMessage.getData().toString());
@@ -67,14 +65,12 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
                 uid = remoteMessage.getData().get("sender");
             }
         }
-        //Calling method to generate notification
         if(FirebaseAuth.getInstance().getCurrentUser() != null && !FirebaseAuth.getInstance().getCurrentUser().getUid().equals(uid)) {
             sendNotification(message, title);
         }
     }
 
     //    This method is only generating push notification
-//    It is same as we did in earlier posts
     private void sendNotification(String messageBody, String title) {
 
         Intent intent = new Intent(this, SplashScreenActivity.class);
@@ -103,9 +99,6 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
 
-        //Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        //Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_app_notification_icon);
-
         String channel_id = createNotificationChannel(context);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, channel_id)
@@ -125,37 +118,26 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
     }
 
     public String createNotificationChannel(Context context) {
-
-        // NotificationChannels are required for Notifications on O (API 26) and above.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-            // The id of the channel.
             String channelId = "Channel_id";
 
-            // The user-visible name of the channel.
             CharSequence channelName = "Application_name";
-            // The user-visible description of the channel.
             String channelDescription = "Application_name Alert";
             int channelImportance = NotificationManager.IMPORTANCE_DEFAULT;
             boolean channelEnableVibrate = true;
-//            int channelLockscreenVisibility = Notification.;
 
-            // Initializes NotificationChannel.
             NotificationChannel notificationChannel = new NotificationChannel(channelId, channelName, channelImportance);
             notificationChannel.setDescription(channelDescription);
             notificationChannel.enableVibration(channelEnableVibrate);
 //            notificationChannel.setLockscreenVisibility(channelLockscreenVisibility);
 
-            // Adds NotificationChannel to system. Attempting to create an existing notification
-            // channel with its original values performs no operation, so it's safe to perform the
-            // below sequence.
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             assert notificationManager != null;
             notificationManager.createNotificationChannel(notificationChannel);
 
             return channelId;
         } else {
-            // Returns null for pre-O (26) devices.
             return null;
         }
     }

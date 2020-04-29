@@ -8,10 +8,14 @@
     <color name="colorBlack">#FF090101</color>
     <color name="colorSky">#95E2DE</color>
     <color name="blue">#229EE6</color>
+    <color name="darkBlue">#0067A3</color>
     <color name="splashDarkGrey">#171819</color>
     <color name="green">#64A407</color>
     <color name="lightGreen">#C2E297</color>
+    <color name="lime">#c9e265</color>
     <color name="darkGreen">#395701</color>
     <color name="brown">#D08F3E38</color>
+    <color name="darkGreenCoverImage">#1a301d</color>
+
 
 </resources>

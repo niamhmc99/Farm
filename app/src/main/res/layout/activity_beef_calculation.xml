@@ -5,60 +5,73 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/constraintLayoutBeef"
+    android:background="@color/white"
     tools:context=".emissions.BeefCalculationActivity">
+
+    <ImageView
+        android:layout_width="112dp"
+        android:layout_height="90dp"
+        android:src="@drawable/cowcalf"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.064"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.129" />
 
     <TextView
         android:id="@+id/txtViewBeef"
-        android:layout_width="378dp"
-        android:layout_height="131dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:fontFamily="@font/fredericka_the_great"
+        android:layout_width="360dp"
+        android:layout_height="141dp"
+        android:fontFamily="@font/libre_baskerville_bold"
+        android:gravity="center"
         android:text="@string/beefEmission"
         android:textColor="@color/darkGreen"
         android:textSize="50sp"
-        android:layout_marginTop="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_navigation_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.082" />
-
+        app:layout_constraintVertical_bias="0.142" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/editTextAverageCowWeight"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="97dp"
+        android:fontFamily="@font/libre_baskerville_bold"
         android:hint="@string/averageWeightCow"
         android:inputType="numberDecimal"
         android:textColorHint="@color/darkGreen"
-        android:textSize="23sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.344"
+        app:layout_constraintVertical_bias="0.468"
         app:met_baseColor="@color/darkGreen"
-        app:met_floatingLabel="highlight"
+        app:met_floatingLabel="normal"
         app:met_primaryColor="@color/darkGreen"
         app:met_singleLineEllipsis="true" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/editTextAverageBullWeight"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="97dp"
+        android:fontFamily="@font/libre_baskerville_bold"
         android:hint="@string/averageWeightBull"
         android:inputType="numberDecimal"
         android:textColorHint="@color/darkGreen"
-        android:textSize="23sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.667"
         app:met_baseColor="@color/darkGreen"
-        app:met_floatingLabel="highlight"
+        app:met_floatingLabel="normal"
         app:met_primaryColor="@color/darkGreen"
         app:met_singleLineEllipsis="true" />
 
@@ -67,18 +80,20 @@
         style="@style/Widget.MaterialComponents.Button.Icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/libre_baskerville_bold"
         android:onClick="calculateBeefEmissions"
         android:text="@string/calculate"
+        android:textColor="@color/white"
         android:textSize="18sp"
         app:backgroundTint="@color/green"
         app:icon="@drawable/co2_icon"
-        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.595" />
+        app:layout_constraintVertical_bias="0.732" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"

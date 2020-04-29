@@ -1,9 +1,9 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/blue_recycleview">
+    android:background="@drawable/blue_with_grass">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -18,15 +18,28 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/tvAnimalsInCalve"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:text="@string/list_of_animals_expecting_to_calve"
+            android:fontFamily="@font/libre_baskerville_bold"
+            android:textSize="18sp"
+            android:textColor="@color/darkGreen"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/tvScanBarcode"
             android:layout_width="wrap_content"
             android:layout_height="46dp"
             android:layout_gravity="center_horizontal"
             android:drawableLeft="@drawable/ic_barcode"
             android:drawablePadding="5dp"
-            android:fontFamily="@font/fredericka_the_great"
+            android:fontFamily="@font/libre_baskerville_bold"
             android:text="@string/scan_barcode"
-            android:textColor="@color/white"
+            android:textColor="@color/darkGreen"
             android:textSize="25sp"
             android:textStyle="bold"
             android:drawableStart="@drawable/ic_barcode" />
@@ -36,12 +49,13 @@
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/recyclerViewAnimal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="526dp"
                 android:scrollbars="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
@@ -54,20 +68,20 @@
                 app:backgroundTint="@color/blue"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.954"
+                app:layout_constraintHorizontal_bias="0.947"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.923" />
+                app:layout_constraintVertical_bias="0.907" />
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottom_navigation_view"
-                android:layout_width="411dp"
-                android:layout_height="41dp"
+                android:layout_width="wrap_content"
+                android:layout_height="43dp"
                 android:layout_gravity="bottom"
                 app:itemBackground="@color/green"
                 app:itemIconTint="@drawable/item_selected"
                 app:itemTextColor="@drawable/item_selected"
-                app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:menu="@menu/bottom_nav_menu" />
@@ -76,4 +90,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

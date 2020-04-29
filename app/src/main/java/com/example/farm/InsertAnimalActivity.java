@@ -17,6 +17,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -35,7 +36,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.farm.dueDateAlarm.OnReceive;
@@ -53,8 +53,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -65,25 +63,26 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 import java.util.UUID;
 
 import id.zelory.compressor.Compressor;
 
+import static com.example.farm.dueDateAlarm.UtilHelper.getDeliveryDate;
+import static com.example.farm.dueDateAlarm.UtilHelper.getNotifyDate;
+import static com.example.farm.dueDateAlarm.UtilHelper.getNotifyDateStr;
+
 
 public class InsertAnimalActivity extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemSelectedListener {
     private final String  TAG= "InsertAnimalActivity";
-    private EditText  editTextTagNumber, editTextAnimalName, editTextDob, editTextDam, editTextsire, editTextBreed;
+    private EditText  editTextTagNumber, editTextAnimalName, editTextDob, editTextDam, editTextsire, editTextBreed, editTextDateOfInsemination;
     private Button btnInsertAnimal;
-    private TextView textViewRegisteredTimeStamp, textViewDateOfInsemination,textViewDateCalculatedCalveAndDelivery;;
+    private TextView textViewDateCalculatedCalveAndDelivery;
     private ProgressBar addanimalProgress;
     private Spinner spinnerGender, spinnerAiStockBull, spinnerCalvingDiff;
     private CheckBox checkBoxInCalve;
@@ -93,7 +92,6 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
     private Uri mainImageURI = null;
 
     private String user_id;
-
     private boolean isChanged = false;
     private StorageReference storageReference;
     private FirebaseAuth firebaseAuth;
@@ -111,8 +109,9 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
     private static final String KEY_BREED = "breed";
     private static final String KEY_USERID = "user_id";
     private static final String KEY_AnimalProfilePic = "animalProfilePic";
-    private static final String KEY_AnimalRegisteredTimestamp = "animalTimeAddedHerd";
-
+    private static final String KEY_IN_CALVE = "inCalve";
+    private static final String KEY_DOI = "doi";
+    private static final String KEY_DOC = "doc";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,9 +130,11 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         editTextAnimalName = findViewById(R.id.editTextName);
         editTextDam = findViewById(R.id.editTextDAM);
         editTextDob = findViewById(R.id.editTextDob);
+        editTextDob.setFocusable(false);
+        editTextDob.setKeyListener(null);
         spinnerGender = findViewById(R.id.spinnerGender);
         spinnerCalvingDiff = findViewById(R.id.spinnerCalvingDiff);
-        editTextsire =findViewById(R.id.ediTextSire);
+        editTextsire =findViewById(R.id.editTextSire);
         editTextBreed =findViewById(R.id.editTextBreed);
         spinnerAiStockBull =findViewById(R.id.spinnerAiStockBull);
         animalProfilePic = findViewById(R.id.animal_image);
@@ -141,26 +142,26 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         btnInsertAnimal = findViewById(R.id.btnInsertAnimal);
         addanimalProgress = findViewById(R.id.progressBar);
         checkBoxInCalve = findViewById(R.id.checkBoxInCalve);
-        textViewDateOfInsemination = findViewById(R.id.textViewDateOfInsemination);
+        editTextDateOfInsemination = findViewById(R.id.textViewDateOfInsemination);
+        editTextDateOfInsemination.setFocusable(false);
+        editTextDateOfInsemination.setKeyListener(null);
         textViewDateCalculatedCalveAndDelivery = findViewById(R.id.textViewDateCalculatedCalveAndDelivery);
-       // textViewRegisteredTimeStamp =findViewById(R.id.animalRegisterTimestamp);
 
         //Check point for in calve check or uncheck
         checkBoxInCalve.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b) {
-                    textViewDateOfInsemination.setVisibility(View.VISIBLE);
-                    textViewDateOfInsemination.setText("Date of insemination");
+                    editTextDateOfInsemination.setVisibility(View.VISIBLE);
                     textViewDateCalculatedCalveAndDelivery.setVisibility(View.GONE);
                 }
                 else {
-                    textViewDateOfInsemination.setVisibility(View.GONE);
+                    editTextDateOfInsemination.setVisibility(View.GONE);
                     textViewDateCalculatedCalveAndDelivery.setVisibility(View.GONE);
                 }
             }
         });
-        textViewDateOfInsemination.setOnClickListener(new View.OnClickListener() {
+        editTextDateOfInsemination.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar now = Calendar.getInstance();
@@ -168,7 +169,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
                         String date = year+"-"+(monthOfYear+1)+"-"+dayOfMonth;
-                        textViewDateOfInsemination.setText(date);
+                        editTextDateOfInsemination.setText(date);
                         //Calculating Expected, delivery and notification date
                         textViewDateCalculatedCalveAndDelivery.setText("Expected Delivery date is on "+getDeliveryDate(date)+" and you will be notified on "+getNotifyDateStr(date));
                         textViewDateCalculatedCalveAndDelivery.setVisibility(View.VISIBLE);
@@ -176,6 +177,47 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                 }, now
                         .get(Calendar.YEAR), now.get(Calendar.MONTH),
                         now.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        editTextDob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar dobCalendar = Calendar.getInstance();
+                new DatePickerDialog(InsertAnimalActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                        String date = year+"-"+(monthOfYear+1)+"-"+dayOfMonth;
+                        editTextDob.setText(date);
+                    }
+                }, dobCalendar
+                        .get(Calendar.YEAR), dobCalendar.get(Calendar.MONTH),
+                        dobCalendar.get(Calendar.DAY_OF_MONTH)).show();
+
+            }
+        });
+
+        spinnerGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position==1){
+                    checkBoxInCalve.setVisibility(View.VISIBLE);
+                    editTextDateOfInsemination.setVisibility(View.GONE);
+                    textViewDateCalculatedCalveAndDelivery.setVisibility(View.GONE);
+                }
+                else{
+                    checkBoxInCalve.setChecked(false);
+                    checkBoxInCalve.setVisibility(View.GONE);
+                    editTextDateOfInsemination.setText("");
+                    editTextDateOfInsemination.setVisibility(View.GONE);
+                    textViewDateCalculatedCalveAndDelivery.setText("");
+                    textViewDateCalculatedCalveAndDelivery.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                    checkBoxInCalve.setVisibility(View.GONE);
             }
         });
 
@@ -196,7 +238,9 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                         RequestOptions placeholderRequest = new RequestOptions();
                         placeholderRequest.placeholder(R.drawable.animalsmall);
 
-                        Glide.with(InsertAnimalActivity.this).setDefaultRequestOptions(placeholderRequest).load(image).into(animalProfilePic);
+                        Glide.with(InsertAnimalActivity.this)
+                                .setDefaultRequestOptions(placeholderRequest)
+                                .load(image).into(animalProfilePic);
                     }
                 } else {
                     String error = task.getException().getMessage();
@@ -221,6 +265,8 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                 final String strBreed = editTextBreed.getText().toString().trim();
                 final String strSelectedAIStockBull = String.valueOf(spinnerAiStockBull.getSelectedItem());
                 final String strUserID = FirebaseAuth.getInstance().getCurrentUser().getUid().trim();
+                final String dateOfInsemination = editTextDateOfInsemination.getText().toString().trim();
+                final boolean inCalve= checkBoxInCalve.isChecked();
                 animal.setTimeAdded(new Timestamp(new Date()));
                 final String strRegisteredTimestamp = String.valueOf(animal.getTimeAdded());
 
@@ -241,7 +287,6 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
 
                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
                         compressedImageFile.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                        byte[] thumbData = baos.toByteArray();
 
                    final StorageReference filePath = storageReference.child("images/"+ UUID.randomUUID().toString());
 
@@ -256,7 +301,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                                        public void onSuccess(Uri uri)
                                         {
                                            String downloadUrl = uri.toString();
-                                            storeFirestore(downloadUrl, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID, strRegisteredTimestamp);
+                                            storeFirestore(downloadUrl, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID,inCalve,dateOfInsemination);
                                         }
                                     });
                                 }
@@ -267,12 +312,10 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                         });
                     }
                     } else {
-                        storeFirestore(null, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID, strRegisteredTimestamp);
+                        storeFirestore(null, strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire, strUserID,inCalve, dateOfInsemination);
                     }
                 }
-
             });
-
 
             animalProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -326,9 +369,9 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         return true;
     }
 
-    private void storeFirestore(String downloadUrl, final String strTag, final String strName, String strDob, String strSelectedGender, String strBreed, String strDam, String strSelectedCalvingDif, String strSelectedAIStockBull, String strSire, String strUserID, String strRegisteredTimestamp) {
+    private void storeFirestore(String downloadUrl, final String strTag, final String strName, String strDob, String strSelectedGender, String strBreed, String strDam, String strSelectedCalvingDif, String strSelectedAIStockBull, String strSire, String strUserID,boolean inCalve,String dateOfInsemination) {
 
-            Map<String, Object> animalMap = new HashMap<>();
+            final Map<String, Object> animalMap = new HashMap<>();
             animalMap.put(KEY_TAGNUMBER, strTag);
             animalMap.put(KEY_ANIMALNAME, strName);
             animalMap.put(KEY_DOB, strDob);
@@ -340,40 +383,27 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             animalMap.put(KEY_AiOrStockbull, strSelectedAIStockBull);
             animalMap.put(KEY_USERID, strUserID);
             animalMap.put(KEY_AnimalProfilePic, downloadUrl);
-//        strRegisteredTimestamp = setTimeAdded(new Timestamp(new Date()));
+             if(inCalve && spinnerGender.getSelectedItemPosition()==1) {
+                animalMap.put(KEY_IN_CALVE, true);
+                animalMap.put(KEY_DOI,dateOfInsemination);
+                animalMap.put(KEY_DOC,textViewDateCalculatedCalveAndDelivery.getText().toString());
+            } else {
+                animalMap.put(KEY_IN_CALVE, false);
+                animalMap.put(KEY_DOI,"");
+                animalMap.put(KEY_DOC,"");
+             }
 
-            animalMap.put(KEY_AnimalRegisteredTimestamp, strRegisteredTimestamp);
+            if ((!hasValidationErrors(strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire,inCalve,dateOfInsemination))){
 
-            if (!hasValidationErrors(strTag, strName, strDob, strSelectedGender, strBreed, strDam, strSelectedCalvingDif, strSelectedAIStockBull, strSire)) {
-
-                firestoreDB.collection("animals")
-                        .add(animalMap)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d(TAG, "Animal inserted into herd with ID: " + documentReference.getId());
-                                //Alarm will set here after successful animal insertion
-                                setAlarm(strName, strTag);
-                                Toast.makeText(InsertAnimalActivity.this, "The animal profile has been created.", Toast.LENGTH_LONG).show();
-                                Intent mainIntent = new Intent(InsertAnimalActivity.this, AnimalActivity.class);
-                                startActivity(mainIntent);
-                                finish();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error adding animal into herd", e);
-                                Toast.makeText(InsertAnimalActivity.this, "(FIRESTORE Error) : " + e, Toast.LENGTH_LONG).show();
-                            }
-                        });
+                insertAnimal(animalMap,strName,strTag);
             }
             addanimalProgress.setVisibility(View.INVISIBLE);
         }
 
 
 
-        private boolean hasValidationErrors(String tagNumber, String animalName, String dob, String selectedGender, String breed, String dam, String selectedCalvingDifficulty, String selectedAIStockBull, String sire) {
+
+        private boolean hasValidationErrors(String tagNumber, String animalName, String dob, String selectedGender, String breed, String dam, String selectedCalvingDifficulty, String selectedAIStockBull, String sire,boolean inCalve,String dateOfInsemination) {
             if (tagNumber.trim().isEmpty()) {
                 editTextTagNumber.setError("Tag Number is required");
                 makeSnackBarMessage("Please insert Tag Number.");
@@ -389,8 +419,8 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             } else if (selectedGender.isEmpty()) {
                 TextView errorText = (TextView) spinnerGender.getSelectedView();
                 errorText.setError("");
-                errorText.setTextColor(Color.RED);//just to highlight that this is an error
-                errorText.setText("Please select the Aniamls Gender");//changes the selected item text to this
+                errorText.setTextColor(Color.RED);
+                errorText.setText("Please select the Aniamls Gender");
                 makeSnackBarMessage("Please insert the Animals Sex.");
                 return true;
             } else if (dam.isEmpty()) {
@@ -400,8 +430,8 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             } else if (selectedCalvingDifficulty.isEmpty()) {
                 TextView errorText = (TextView) spinnerCalvingDiff.getSelectedView();
                 errorText.setError("");
-                errorText.setTextColor(Color.RED);//just to highlight that this is an error
-                errorText.setText("Select the Calving Difficulty number");//changes the selected item text to this
+                errorText.setTextColor(Color.RED);
+                errorText.setText("Select the Calving Difficulty number");
                 makeSnackBarMessage("Please insert the Calving Difficulty.");
                 return true;
             } else if (sire.isEmpty()) {
@@ -411,52 +441,62 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
             } else if (selectedAIStockBull.isEmpty()) {
                 TextView errorText = (TextView) spinnerAiStockBull.getSelectedView();
                 errorText.setError("");
-                errorText.setTextColor(Color.RED);//just to highlight that this is an error
-                errorText.setText("Please select the Sire Type for the animal");//changes the selected item text to this
+                errorText.setTextColor(Color.RED);
+                errorText.setText("Please select the Sire Type for the animal");
                 makeSnackBarMessage("Please insert the Sire Type.");
                 return true;
             } else if (breed.isEmpty()) {
                 editTextBreed.setError("Breed of Animal is required");
                 makeSnackBarMessage("Please insert Animal Breed.");
                 return true;
-            } else {
+            } else if (inCalve && dateOfInsemination.isEmpty()){
+                editTextDateOfInsemination.setError("Date of Insemination is required");
+                makeSnackBarMessage("If inCalve is checked insemination date must be entered");
+                return true;
+            }
+            else {
                 return false;
             }
         }
 
-    private void checkingIfTagNumberExist(final String tagNumberToCompare) {
-        final Query mQuery = firestoreDB.collection("animals").whereEqualTo("tagNumber", tagNumberToCompare);
-        mQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Log.d(TAG, "checkingIfusernameExist: checking if username exists");
+    private void insertAnimal(final Map<String, Object> animalMap,final String strName,final String strTag){
 
-                if (task.isSuccessful()) {
-                    for (DocumentSnapshot ds : task.getResult()) {
-                        String userNames = ds.getString("username");
-                        if (userNames.equals(tagNumberToCompare)) {
-                            Log.d(TAG, "checkingIfusernameExist: FOUND A MATCH - Tag number already exists");
-                            Toast.makeText(InsertAnimalActivity.this, "TagNumber Already Exists", Toast.LENGTH_SHORT).show();
-
+        firestoreDB.collection("animals")
+                .whereEqualTo("tagNumber", strTag)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot snapshot= task.getResult();
+                           if (snapshot.size()==0){
+                               firestoreDB.collection("animals")
+                                       .add(animalMap)
+                                       .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                           @Override
+                                           public void onSuccess(DocumentReference documentReference) {
+                                               //Alarm will set here after successful animal insertion
+                                               setAlarm(strName, strTag);
+                                               Toast.makeText(InsertAnimalActivity.this, "The animal profile has been created.", Toast.LENGTH_LONG).show();
+                                               Intent mainIntent = new Intent(InsertAnimalActivity.this, AnimalActivity.class);
+                                               startActivity(mainIntent);
+                                               finish();
+                                           }
+                                       })
+                                       .addOnFailureListener(new OnFailureListener() {
+                                           @Override
+                                           public void onFailure(@NonNull Exception e) {
+                                               Log.w(TAG, "Error adding animal into herd", e);
+                                               Toast.makeText(InsertAnimalActivity.this, "(FIRESTORE Error) : " + e, Toast.LENGTH_LONG).show(); }
+                                       });
+                           }
+                           else {
+                               Toast.makeText(InsertAnimalActivity.this, "Tag Number already exists", Toast.LENGTH_LONG).show();
+                           }
                         }
                     }
+                });
 
-                }
-                //checking if task contains any payload. if no, then update
-                if (task.getResult().size() == 0) {
-                    try {
-
-                        Log.d(TAG, "onComplete: MATCH NOT FOUND - username is available");
-                        Toast.makeText(InsertAnimalActivity.this, "TagNumber changed", Toast.LENGTH_SHORT).show();
-                        //Updating new username............
-
-
-                    } catch (NullPointerException e) {
-                        Log.e(TAG, "NullPointerException: " + e.getMessage());
-                    }
-                }
-            }
-        });
     }
 
     private void addItemsOnSpinnerCalvingDiff() {
@@ -498,14 +538,11 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
 
     }
 
-
     private void BringImagePicker() {
-
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setAspectRatio(1, 1)
                 .start(InsertAnimalActivity.this);
-
     }
 
     @Override
@@ -521,7 +558,7 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
                 isChanged = true;
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
+                result.getError();
             }
         }
     }
@@ -530,94 +567,20 @@ public class InsertAnimalActivity extends AppCompatActivity implements  BottomNa
         Snackbar.make(constraintLayout, message, Snackbar.LENGTH_SHORT).show();
     }
 
-    //Calculating expected calve date
-    private String getCalveDate(String dateInput) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setTimeZone(TimeZone.getDefault());
-        Date date = null;
-        try {
-            date = sdf.parse(dateInput);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            calendar.add(Calendar.DAY_OF_MONTH,183);
-            dateInput = sdf.format(calendar.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return dateInput;
-    }
-
-    //Calculating insemination end of delivery date
-    private String getDeliveryDate(String dateInput) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setTimeZone(TimeZone.getDefault());
-        Date date = null;
-        try {
-            date = sdf.parse(dateInput);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            calendar.add(Calendar.DAY_OF_MONTH,283);
-            dateInput = sdf.format(calendar.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return dateInput;
-    }
-
-    //(Calculating notification date as string
-    private String getNotifyDateStr(String dateInput) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setTimeZone(TimeZone.getDefault());
-        Date date = null;
-        try {
-            date = sdf.parse(dateInput);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            calendar.add(Calendar.DAY_OF_MONTH,276); // 283 - 7 days = one week before expected due date
-            dateInput = sdf.format(calendar.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return dateInput;
-    }
-
-    //Calculating notification date
-    private Date getNotifyDate(String dateInput) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setTimeZone(TimeZone.getDefault());
-        Date date = null;
-        try {
-            date = sdf.parse(dateInput);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-//            calendar.add(Calendar.SECOND,10);
-            calendar.add(Calendar.DAY_OF_MONTH,276);
-            date = calendar.getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return date;
-    }
-
-    //Alarm for notification will using this
     private void setAlarm(String strName, String strTag)
     {
-        if(checkBoxInCalve.isChecked() && !textViewDateOfInsemination.getText().toString().equals(getString(R.string.date_of_insemination))) {
+        if(checkBoxInCalve.isChecked() && !editTextDateOfInsemination.getText().toString().equals(getString(R.string.date_of_insemination))) {
             Intent intent = new Intent(InsertAnimalActivity.this, OnReceive.class);
             intent.putExtra("title", "Calving Date notification");
-            intent.putExtra("message", strName + " " + strTag + " is due to calve in/on  " + getDeliveryDate(textViewDateOfInsemination.getText().toString()));
+            intent.putExtra("message", strName + " " + strTag + " is due to calve in/on  " + getDeliveryDate(editTextDateOfInsemination.getText().toString()));
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(InsertAnimalActivity.this, 2020, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             assert alarmManager != null;
             alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
-                    + (getNotifyDate(textViewDateOfInsemination.getText().toString()).getTime()-new Date().getTime()), pendingIntent);
-            Log.d("Alarm Date", "calving alarm "+ getNotifyDate(textViewDateOfInsemination.getText().toString()));
+                    + (getNotifyDate(editTextDateOfInsemination.getText().toString()).getTime()-new Date().getTime()), pendingIntent);
+            Log.d("Alarm Date", "calving alarm "+ getNotifyDate(editTextDateOfInsemination.getText().toString()));
         }
     }
 

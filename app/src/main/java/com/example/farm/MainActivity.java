@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (auth.getCurrentUser() == null) {
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+//                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     finish();
                 }
             }
@@ -82,16 +82,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     private void getUserName(NavigationView navigationView) {
-
         View headerLayout = navigationView.getHeaderView(0);
         TextView username = headerLayout.findViewById(R.id.farmersEmail);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
         if(currentUser!=null) {
             username.setText(currentUser.getEmail());
         }
-
     }
+
     @Override
     protected void onResume() {
         if (auth.getCurrentUser() == null) {
@@ -126,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void clickWeather(View view) {
         imageButtonWeather = findViewById(R.id.imageButtonWeather);
-        startActivity(new Intent(MainActivity.this, WeatherActivity2.class));
+        startActivity(new Intent(MainActivity.this, WeatherActivity.class));
     }
 
     public void clickToDoList(View view) {
@@ -165,20 +163,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public void getUsers() {
-//        DocumentReference docRef = db.collection("users").document("SF");
-//// asynchronously retrieve the document
-//       // ApiFuture<DocumentSnapshot> future = docRef.get();
-//// ...
-//// future.get() blocks on response
-//       // DocumentSnapshot document = future.get();
-//        if (document.exists()) {
-//            System.out.println("Document data: " + document.getData());
-//        } else {
-//            System.out.println("No such document!");
-//        }
-    }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         closeDrawer();
@@ -190,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(MainActivity.this, AnimalActivity.class));
                 break;
             case R.id.nav_weather:
-                startActivity(new Intent(MainActivity.this, WeatherActivity2.class));
+                startActivity(new Intent(MainActivity.this, WeatherActivity.class));
                 break;
             case R.id.nav_nearbyPlaces:
                 startActivity(new Intent(MainActivity.this, MapsActivity.class));
@@ -198,11 +182,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_vets:
                 startActivity(new Intent(MainActivity.this, VetActivity.class));
                 break;
+            case R.id.nav_toDoList:
+                startActivity(new Intent(MainActivity.this, ToDoListActivity.class));
+                break;
             case R.id.nav_expenses:
                 startActivity(new Intent(MainActivity.this, InvoiceReceiptActivity.class));
                 break;
             case R.id.nav_carbonEmissions:
                 startActivity(new Intent(MainActivity.this, EmissionsActivity.class));
+                break;
+            case R.id.nav_logout:
+                auth.signOut();
                 break;
         }
         return true;
