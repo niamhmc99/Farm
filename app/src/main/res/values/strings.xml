@@ -54,7 +54,7 @@
     <string name="cancel">Cancel</string>
     <string name="total_beef_emissions">Total Beef Emissions (KGs): </string>
     <string name="invoiceOrReceipt">Invoice or Receipt</string>
-    <string name="category">Category</string>
+    <string name="category">Category:</string>
     <string name="select_invoice_type">Select Invoice/ Receipt </string>
     <string name="select_category">Select Category</string>
     <string name="insert_bill">Insert</string>
@@ -113,9 +113,10 @@
     <string name="date_of_appointment">Date of Appointment</string>
     <string name="animal_name">Name</string>
     <string name="vets_map_button">Vets</string>
-    <string name="amount">Amount €</string>
-    <string name="date">Date</string>
+    <string name="amount">Amount: € </string>
+    <string name="date">Date: </string>
     <string name="expected_calving_date">Expected Calving Date</string>
+    <string name="list_of_animals_expecting_to_calve">List of Animals Expecting to Calve</string>
 
 
 </resources>
