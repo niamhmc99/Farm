@@ -9,8 +9,7 @@
     </style>
 
     <style name="AppTheme.NoActionBar">
-        <item name="android:statusBarColor" tools:targetApi="lollipop"> @color/green</item>
-        <item name="colorPrimary">@color/green</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop"> @color/darkGreenCoverImage</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

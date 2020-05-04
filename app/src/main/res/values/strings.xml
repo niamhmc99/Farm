@@ -69,7 +69,7 @@
     <string name="scan_barcode">Scan Barcode</string>
     <string name="beef_emissions">BEEF EMISSIONS :</string>
     <string name="number_of_bulls">Number of Bulls:</string>
-    <string name="total_dairy_emissions_per_annum">Total Dairy Emissions Per Annum: </string>
+    <string name="total_dairy_emissions_per_annum">Total Dairy Emissions Per Annum (KGs): </string>
     <string name="click_calendar_to_change_date">Click Calendar to Change Date.</string>
     <string name="update_the_animals_info_in_your_herd">Update the Animals info in your Herd:</string>
     <string name="dam">Dam</string>

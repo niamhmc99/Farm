@@ -26,10 +26,7 @@ public class OnReceive extends BroadcastReceiver {
         sendNotification(context,intN.getStringExtra("message"),intN.getStringExtra("title"));
     }
 
-    //    generating push notification
     private void sendNotification(Context context,String messageBody, String title) {
-//
-//        Intent intent = new Intent(context, SplashScreenActivity.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         showNotification(context, title, messageBody);
     }
@@ -66,10 +63,7 @@ public class OnReceive extends BroadcastReceiver {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
                 String channelId = "Channel_id";
-
-                // The user-visible name of the channel.
                 CharSequence channelName = "Application_name";
-                // The user-visible description of the channel.
                 String channelDescription = "Application_name Alert";
                 int channelImportance = NotificationManager.IMPORTANCE_DEFAULT;
                 boolean channelEnableVibrate = true;

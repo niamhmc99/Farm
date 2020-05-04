@@ -227,7 +227,7 @@
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/editTextSire"
-                android:layout_width="258dp"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/libre_baskerville"
@@ -286,7 +286,7 @@
 
             <Button
                 android:id="@+id/btnInsertAnimal"
-                android:layout_width="279dp"
+                android:layout_width="258dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:backgroundTint="@color/blue"
